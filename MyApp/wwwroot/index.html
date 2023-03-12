@@ -1,0 +1,136 @@
+<html>
+<head>
+<title>My App</title>
+<style>
+    body { padding: 1em 1em 5em 1em; }
+    body, input[type=text] { font: 20px/28px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif }
+    input { padding:.25em .5em; margin-right:.5em; }
+    a { color:#007bff; text-decoration:none }
+    a:hover { text-decoration:underline }
+    #result { display:inline-block; color:#28a745; font-size:28px }
+    pre { border-radius:10px; overflow:hidden }
+    h2, h3, strong { font-weight:500 }
+</style>
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/atom-one-dark.min.css">
+<script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script><!--safari polyfill-->
+<script type="importmap">
+{
+    "imports": {
+        "@servicestack/client": "https://unpkg.com/@servicestack/client@2/dist/servicestack-client.min.mjs"
+    }
+}
+</script>
+</head>
+<body>
+
+<h2><a href="/ui/Hello">Hello</a> API</h2>
+<input type="text" id="txtName">
+<div id="result"></div>
+
+<script type="module">
+import { JsonApiClient, $1, on } from '@servicestack/client'
+import { Hello } from '/types/mjs'
+
+const client = JsonApiClient.create()
+on('#txtName', {
+    /** @param {Event} el */
+    async keyup(el) {
+        const api = await client.api(new Hello({ name:el.target.value }))
+        $1('#result').innerHTML = api.response.result
+    }
+})
+
+$1('#txtName').value = 'World'
+$1('#txtName').dispatchEvent(new KeyboardEvent('keyup'))
+</script>
+
+<div id="content" style="max-width:105ch"></div>
+
+<template id="docs">
+## View in API Explorer
+
+- [Call API](/ui/Hello)
+- [View API Details](/ui/Hello?tab=details)
+- [Browse API source code in different langauges](/ui/Hello?tab=code)
+
+### Using JsonServiceClient in Web Pages
+
+Easiest way to call APIs is to use [@servicestack/client](https://docs.servicestack.net/javascript-client) with
+the built-in [/types/mjs](/types/mjs) which returns your APIs in annotated typed ES6 class DTOs where it can be 
+referenced directly from a [JavaScript Module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
+
+We recommend using an [importmap](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) 
+to specify where to load **@servicestack/client** from, e.g:
+
+```html
+&lt;script type="importmap"&gt;
+{
+  "imports": {
+    "@servicestack/client":"https://unpkg.com/@servicestack/client@2/dist/servicestack-client.mjs"
+  }
+}
+&lt;/script&gt;
+```
+
+This lets us reference the **@servicestack/client** package name in our source code instead of its physical location:
+    
+```html
+&lt;input type="text" id="txtName"&gt;
+&lt;div id="result"&gt;&lt;/div&gt;
+```
+
+```html
+&lt;script type="module"&gt;
+import { JsonApiClient, $1, on } from '@servicestack/client'
+import { Hello } from '/types/mjs'
+
+const client = JsonApiClient.create()
+on('#txtName', {
+    async keyup(el) {
+        const api = await client.api(new Hello({ name:el.target.value }))
+        $1('#result').innerHTML = api.response.result
+    }
+})
+&lt;/script&gt;
+```
+
+### Enable static analysis and intelli-sense 
+
+For better IDE intelli-sense during development, save the annotated Typed DTOs to disk with the [x dotnet tool](https://docs.servicestack.net/dotnet-tool):
+
+```bash
+$ x mjs
+```
+
+Then reference it instead to enable IDE static analysis when calling Typed APIs from JavaScript:
+
+```js
+import { Hello } from '/js/dtos.mjs'
+client.api(new Hello({ name }))
+```
+    
+To also enable static analysis for **@servicestack/client**, install the dependency-free library as a dev dependency:
+    
+```bash
+$ npm install -D @servicestack/client
+```
+
+Where only its TypeScript definitions are used by the IDE during development to enable its type-checking and intelli-sense.
+</template>
+
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+function decode(html) {
+    const txt = document.createElement("textarea")
+    txt.innerHTML = html
+    return txt.value
+}
+document.querySelector('#content').innerHTML = marked.parse(decode(document.querySelector('#docs').innerHTML))
+hljs.highlightAll()
+</script>
+
+</div>
+
+</body>
+</html>

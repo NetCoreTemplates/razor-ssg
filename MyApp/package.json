@@ -1,0 +1,5 @@
+{
+    "scripts": {
+        "dtos": "x mjs"
+    }
+}
