@@ -1,8 +1,4 @@
-﻿using Funq;
-using ServiceStack;
-using MyApp.ServiceInterface;
-
-[assembly: HostingStartup(typeof(MyApp.AppHost))]
+﻿[assembly: HostingStartup(typeof(MyApp.AppHost))]
 
 namespace MyApp;
 
@@ -15,16 +11,13 @@ public class AppHost : AppHostBase, IHostingStartup
 
     public AppHost() : base("MyApp", typeof(MyServices).Assembly) {}
 
-    public override void Configure(Container container)
+    public override void Configure(Funq.Container container)
     {
-        // enable server-side rendering, see: https://sharpscript.net/docs/sharp-pages
-        Plugins.Add(new SharpPagesFeature {
-            EnableSpaFallback = true
-        }); 
-
-        SetConfig(new HostConfig
-        {
-            AddRedirectParamsToQueryString = true,
-        });
     }
+}
+
+public class Hello : IReturn<StringResponse> {}
+public class MyServices : Service
+{
+    public object Any(Hello request) => new StringResponse { Result = $"Hello, World!" };
 }

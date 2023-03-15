@@ -1,0 +1,76 @@
+@page "/posts/{slug}"
+@model PostModel
+@inject Blog Blog
+
+@implements IRenderStatic<PostModel>
+@functions {
+    public List<PostModel> GetStaticProps(RenderContext ctx)
+    {
+        var blog = ctx.Resolve<Blog>();
+        return blog.Posts.Map(doc => new PostModel(blog).Populate(doc));
+    }
+}
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<link rel="stylesheet" href="/css/typography.css">
+
+<div class="container px-5 mb-32 mx-auto">
+    @if (!string.IsNullOrEmpty(Model.Title))
+    {
+        <article class="mt-20">
+            <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
+                @Model.Title
+            </h1>
+            <div class="hidden md:block md:mb-12">
+                <a class="flex items-center text-xl font-bold" href="@Blog.GetAuthorLink(Model.Author)">
+                    <img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="@Model.AuthorProfileUrl">
+                    <span>@Model.Author</span>
+                </a>
+            </div>
+            <div class="mb-8 md:mb-16 sm:mx-0">
+                <div class="sm:mx-0">
+                    <img src="@Model.Splash" alt="@Model.Title Background" class="shadow-small">
+                </div>
+            </div>
+            <div class="mb-4 max-w-2xl mx-auto flex flex-wrap">
+                @foreach (var tag in Model.Tags)
+                {
+                    <a href="@Blog.GetTagLink(tag)" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">@tag</a>
+                }
+            </div>
+            @if (Model.Date != null)
+            {
+                <div class="max-w-2xl mx-auto">
+                    <div class="mb-6 text-lg text-gray-500">
+                        <time datetime="@Blog.GetDateTimestamp(Model.Date)">@Blog.GetDateLabel(Model.Date)</time>
+                        <span aria-hidden="true">&middot;</span>
+                        <span>@Blog.MinutesRead(Model.WordCount) min read</span>
+                    </div>
+                </div>
+            }
+            <div class="max-w-2xl mx-auto">
+                <div class="prose lg:prose-xl max-w-none mb-32">
+                    @Html.Raw(Model.HtmlContent)
+                </div>
+            </div>
+        </article>
+    }
+    else
+    {
+        <h2 class="py-8 text-center text-3xl font-bold text-gray-900 dark:text-gray-100 sm:text-4xl">
+            Post was not found
+        </h2>
+    }
+</div>
+
+<script type="module">
+import { init } from "/mjs/app.mjs"
+init()
+</script>
+
+<link rel="stylesheet" href="//unpkg.com/@@highlightjs/cdn-assets/styles/atom-one-dark.min.css">
+<script src="//unpkg.com/@@highlightjs/cdn-assets/highlight.min.js"></script>
+<script>hljs.highlightAll()</script>

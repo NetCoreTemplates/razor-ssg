@@ -1,0 +1,71 @@
+﻿@page "/whatsnew"
+@attribute [RenderStatic]
+@inject WhatsNew WhatsNew
+@{
+    ViewData["Title"] = "What's New";
+
+    var releases = WhatsNew.Features.Keys.OrderByDescending(x => x).ToList();
+}
+<link rel="stylesheet" href="/css/typography.css">
+<style>
+.prose a {
+    --tw-text-opacity: 1;color: rgba(59, 130, 246, var(--tw-text-opacity)); /*text-blue-500*/
+    -webkit-transition: all ease 0.25s;
+            transition: all ease 0.25s;
+    text-decoration: none;
+}
+.prose a:hover {
+    --tw-text-opacity: 1;color: rgba(37, 99, 235, var(--tw-text-opacity)); /*text-blue-600*/
+    text-decoration: none;
+}
+.prose p {
+    color: rgb(55 65 81); /*text-gray-700*/
+}
+.dark .prose p {
+    color: rgb(229 231 235); /*text-gray-200*/
+}
+</style>
+
+<div class="container mx-auto px-5">
+    <section class="flex-col md:flex-row flex justify-center mt-16 mb-16 md:mb-12">
+        <h1 class="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight text-slate-900 sm:text-7xl">
+            Latest features & highlights
+        </h1>
+    </section>
+</div>
+
+<div class="relative px-6 pt-16 pb-20 lg:px-8 lg:pt-24 lg:pb-28">
+
+    <div class="relative mx-auto max-w-7xl">
+    @foreach (var release in releases)
+    {
+        var features = WhatsNew.Features[release];
+        var releaseDate = features[0].Date.Value;
+        
+        <h2 class="text-center mb-4 text-6xl md:text-7xl font-bold tracking-tighter leading-tight">@release</h2>
+        <div class="text-center text-lg font-normal text-gray-500 mb-8">@($"{releaseDate:MMMM d, yyyy}")</div>
+
+        @foreach (var feature in features)
+        {
+            <div class="flex flex-wrap my-24">
+                <div class="w-full sm:w-1/2 wow fadeInRight animated px-4 whatsnew-container-item-img" data-wow-offset="10" data-wow-duration="1.5s">
+                    <a href="@feature.Url"><img src="@feature.Image" alt=""></a>
+                </div>
+                <div class="w-full sm:w-1/2 text-left wow fadeInLeft animated px-4" data-wow-offset="10" data-wow-duration="1.5s">
+                    <h3 class="m-0 mb-4">
+                        <a class="text-2xl font-normal text-blue-500 hover:text-blue-600" href="@feature.Url">@feature.Title</a>
+                    </h3>
+                    <div class="prose max-w-none">
+                        @Html.Raw(feature.Preview)
+                    </div>
+                    <div class="text-center sm:text-left my-10">
+                        <a href="@feature.Url" class="rounded-md bg-blue-600 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+                            Learn more
+                        </a>
+                    </div>
+                </div>
+            </div>        
+        }
+    }
+    </div>
+</div>

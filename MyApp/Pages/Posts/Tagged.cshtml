@@ -1,0 +1,31 @@
+@page "/posts/tagged/{slug}"
+@model TaggedModel
+@inject Blog Blog
+@implements IRenderStatic<TaggedModel>
+@functions {
+    public List<TaggedModel> GetStaticProps(RenderContext ctx) => ctx.Resolve<Blog>()
+        .TagSlugMap.Keys.Map(x => new TaggedModel { Slug = x });
+}
+
+@{
+    var tag = Blog.GetTagBySlug(Model.Slug);
+    ViewData["Title"] = $"{tag} tagged posts";
+}
+
+<div class="relative bg-gray-50 dark:bg-gray-900 px-6 pt-16 pb-20 lg:px-8 lg:pt-24 lg:pb-28">
+    <div class="absolute inset-0">
+        <div class="h-1/3 bg-white dark:bg-black sm:h-2/3"></div>
+    </div>
+    <div class="relative mx-auto max-w-7xl">
+        @await Html.PartialAsync("BlogTitle", $"All posts tagged in <b>{tag}</b>")
+    </div>
+    <div class="mt-12 relative mx-auto max-w-7xl">
+        @await Html.PartialAsync("BlogPosts", Blog.GetPosts(tag:tag ?? "unknown"))
+        
+        <div class="mt-8 text-center">
+            <a class="text-sm font-semibold hover:underline" href="@Blog.GetPostsLink()">view all posts</a>
+        </div>
+    </div>
+
+</div>
+

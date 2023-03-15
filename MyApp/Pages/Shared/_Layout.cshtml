@@ -1,0 +1,61 @@
+﻿@inherits Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>
+<!doctype html>
+<html lang="en">
+@{
+    var dev = HostContext.AppHost.IsDevelopmentEnvironment();
+    var min = dev ? "" : "[hash].min";
+}
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg" href="/img/logo.svg">
+    <title>@ViewData["Title"] - My App</title>
+    <script>
+    let colorScheme = localStorage.getItem('color-scheme')
+    setColorScheme()
+    function setColorScheme() {
+        if (colorScheme === 'dark')
+            document.querySelector('html').classList.add('dark')
+        else
+            document.querySelector('html').classList.remove('dark')
+    }
+    </script>
+    <link rel="stylesheet" href="/css/app.css">
+
+    @Html.BundleJs(new BundleOptions {
+        Sources = {
+            "/lib/js/"
+        },
+        SaveToDisk = !dev,
+        OutputTo = $"/js/lib.bundle{min}.js"
+    })
+
+    @if (Context.Request.Headers.UserAgent.Any(x => x.Contains("Safari") && !x.Contains("Chrome"))) {
+        <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    }
+    @Html.ImportMap(new() {
+        ["vue"]                  = ("/lib/mjs/vue.mjs",                 "/lib/mjs/vue.min.mjs"),
+        ["@servicestack/client"] = ("/lib/mjs/servicestack-client.mjs", "/lib/mjs/servicestack-client.min.mjs"),
+        ["@servicestack/vue"]    = ("/lib/mjs/servicestack-vue.mjs",    "/lib/mjs/servicestack-vue.min.mjs"),
+    })
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+@await Html.PartialAsync("Header")
+
+<div class="min-h-screen">
+    <main role="main" class="pb-3" hx-ext="class-tools">
+        @RenderBody()
+    </main>
+</div>
+
+@await Html.PartialAsync("Footer")
+
+<script type="module">
+import { init } from "/mjs/app.mjs"
+init()
+</script>
+
+@await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>
