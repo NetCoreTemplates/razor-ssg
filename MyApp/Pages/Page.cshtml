@@ -1,0 +1,29 @@
+﻿@page "/{slug}"
+@model MyApp.Page
+@inject MarkdownPages Markdown
+
+@{
+    var doc = Markdown.GetBySlug(Model.Slug);
+    if (doc == null)
+    {
+        Response.Redirect("/404");
+        return;
+    }
+    if (doc.Layout != null) 
+        Layout = doc.Layout == "none"
+            ? null
+            : doc.Layout;
+    ViewData["Title"] = doc.Title;
+}
+
+<link rel="stylesheet" href="/css/typography.css">
+<section class="flex-col md:flex-row flex justify-center mt-16 mb-16 md:mb-12">
+    <h1 class="mx-auto font-display text-5xl font-medium tracking-tight text-slate-900 sm:text-7xl">
+        @doc.Title
+    </h1>
+</section>    
+<div class="mx-auto">
+    <div class="mx-auto prose lg:prose-xl mb-16">
+        @Html.Raw(doc.Preview)
+    </div>
+</div>

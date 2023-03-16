@@ -7,14 +7,11 @@
     <link rel="icon" type="image/svg" href="/img/logo.svg">
     <title>@ViewData["Title"] - My App</title>
     <script>
-    let colorScheme = localStorage.getItem('color-scheme')
-    setColorScheme()
-    function setColorScheme() {
-        if (colorScheme === 'dark')
-            document.querySelector('html').classList.add('dark')
-        else
-            document.querySelector('html').classList.remove('dark')
-    }
+    const cls = document.querySelector('html').classList
+    if (localStorage.getItem('color-scheme') === 'dark')
+        cls.add('dark')
+    else
+        cls.remove('dark')
     </script>
     <link rel="stylesheet" href="/css/app.css">
 

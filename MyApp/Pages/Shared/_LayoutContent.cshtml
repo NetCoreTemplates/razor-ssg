@@ -1,0 +1,29 @@
+﻿@inherits Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg" href="/img/logo.svg">
+    <title>@ViewData["Title"] - ServiceStack</title>
+    <script>
+    const cls = document.querySelector('html').classList
+    if (localStorage.getItem('color-scheme') === 'dark')
+        cls.add('dark')
+    else
+        cls.remove('dark')
+    </script>
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+@await Html.PartialAsync("Header")
+
+<div class="min-h-screen">
+    <main role="main" class="pt-14 pb-3">
+        @RenderBody()
+    </main>
+</div>
+
+@await Html.PartialAsync("Footer")
+</body>
+</html>

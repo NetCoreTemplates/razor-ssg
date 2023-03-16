@@ -6,71 +6,50 @@ using ServiceStack.Logging;
 
 namespace MyApp;
 
-public class WhatsNew
+public class MarkdownPages : MarkdownPagesBase
 {
-    private readonly ILogger<WhatsNew> log;
-    public WhatsNew(ILogger<WhatsNew> log) => this.log = log;
-    public IVirtualFiles VirtualFiles { get; set; } = default!;
-    public Dictionary<string, List<MarkdownFileInfo>> Features { get; set; } = new();
-
-    public MarkdownPipeline CreatePipeline()
-    {
-        var pipeline = new MarkdownPipelineBuilder()
-            .UseYamlFrontMatter()
-            .UseAdvancedExtensions()
-            .Build();
-        return pipeline;
-    }
-
-    public MarkdownFileInfo? Load(string path) => Load(path, CreatePipeline());
-
-    public MarkdownFileInfo? Load(string path, MarkdownPipeline pipeline)
-    {
-        var file = VirtualFiles.GetFile(path)
-            ?? throw new FileNotFoundException(path.LastRightPart('/'));
-        var content = file.ReadAllText();
-
-        var writer = new StringWriter();
-        var renderer = new Markdig.Renderers.HtmlRenderer(writer);
-        pipeline.Setup(renderer);
-
-        var document = Markdown.Parse(content, pipeline);
-        renderer.Render(document);
-
-        var block = document
-            .Descendants<Markdig.Extensions.Yaml.YamlFrontMatterBlock>()
-            .FirstOrDefault();
-
-        var doc = block?
-            .Lines // StringLineGroup[]
-            .Lines // StringLine[]
-            .Select(x => $"{x}\n")
-            .ToList()
-            .Select(x => x.Replace("---", string.Empty))
-            .Where(x => !string.IsNullOrWhiteSpace(x))
-            .Select(x => KeyValuePairs.Create(x.LeftPart(':').Trim(), x.RightPart(':').Trim()))
-            .ToObjectDictionary()
-            .ConvertTo<MarkdownFileInfo>();
-
-        if (doc?.Title == null)
-        {
-            log.LogWarning("No frontmatter found for {0}, ignoring...", file.VirtualPath);
-            return null;
-        }
-
-        doc.Path = file.VirtualPath;
-        doc.FileName = file.Name;
-        doc.Content = content;
-        writer.Flush();
-        doc.Preview = writer.ToString();
-
-        return doc;
-    }
+    public MarkdownPages(ILogger<MarkdownPages> log) : base(log){}
+    public List<MarkdownFileInfo> Pages { get; set; } = new();
     
-    public void LoadFeatures(string fromDirectory)
+    public MarkdownFileInfo? GetBySlug(string slug) => Pages.FirstOrDefault(x => x.Slug == slug);
+
+    public void LoadFrom(string fromDirectory)
+    {
+        Pages.Clear();
+        var fs = AssertVirtualFiles();
+        var files = fs.GetDirectory(fromDirectory).GetAllFiles().ToList();
+        var log = LogManager.GetLogger(GetType());
+        log.InfoFormat("Found {0} pages", files.Count);
+
+        var pipeline = CreatePipeline();
+
+        foreach (var file in files)
+        {
+            try
+            {
+                var doc = Load(file.VirtualPath, pipeline);
+                if (doc == null)
+                    continue;
+
+                Pages.Add(doc);
+            }
+            catch (Exception e)
+            {
+                log.Error(e, "Couldn't load {0}: {1}", file.VirtualPath, e.Message);
+            }
+        }
+    }
+}
+
+public class WhatsNew : MarkdownPagesBase
+{
+    public WhatsNew(ILogger<WhatsNew> log) : base(log){}
+    public Dictionary<string, List<MarkdownFileInfo>> Features { get; set; } = new();
+    
+    public void LoadFrom(string fromDirectory)
     {
         Features.Clear();
-        var fs = VirtualFiles ?? throw new NullReferenceException($"{nameof(VirtualFiles)} is not populated");
+        var fs = AssertVirtualFiles();
         var dirs = fs.GetDirectory(fromDirectory).GetDirectories().ToList();
         log.LogInformation("Found {0} whatsnew directories", dirs.Count);
 
@@ -111,11 +90,9 @@ public class WhatsNew
     }
 }
 
-public class Blog
+public class Blog : MarkdownPagesBase
 {
-    private readonly ILogger<Blog> log;
-    public Blog(ILogger<Blog> log) => this.log = log;
-    public IVirtualFiles VirtualFiles { get; set; } = default!;
+    public Blog(ILogger<Blog> log) : base(log){}
     public List<MarkdownFileInfo> Posts { get; set; } = new();
 
     public string FallbackProfileUrl { get; set; } = Svg.ToDataUri(Svg.Create(Svg.Body.User, stroke:"none").Replace("fill='currentColor'","fill='#0891b2'"));
@@ -208,36 +185,14 @@ public class Blog
     public int MinutesRead(int? words) => (int)Math.Ceiling((words ?? 1) / (double)WordsPerMin);
     public MarkdownFileInfo? FindPostBySlug(string name) => Posts.FirstOrDefault(x => x.Slug == name);
 
-    public MarkdownFileInfo? Load(string path) => Load(path, CreatePipeline());
-
-    public MarkdownFileInfo? Load(string path, MarkdownPipeline pipeline)
+    public override MarkdownFileInfo? Load(string path, MarkdownPipeline? pipeline = null)
     {
         var file = VirtualFiles.GetFile(path)
                    ?? throw new FileNotFoundException(path.LastRightPart('/'));
         var content = file.ReadAllText();
 
         var writer = new StringWriter();
-        var renderer = new Markdig.Renderers.HtmlRenderer(writer);
-        pipeline.Setup(renderer);
-
-        var document = Markdown.Parse(content, pipeline);
-        renderer.Render(document);
-
-        var block = document
-            .Descendants<Markdig.Extensions.Yaml.YamlFrontMatterBlock>()
-            .FirstOrDefault();
-
-        var doc = block?
-            .Lines // StringLineGroup[]
-            .Lines // StringLine[]
-            .Select(x => $"{x}\n")
-            .ToList()
-            .Select(x => x.Replace("---", string.Empty))
-            .Where(x => !string.IsNullOrWhiteSpace(x))
-            .Select(x => KeyValuePairs.Create(x.LeftPart(':').Trim(), x.RightPart(':').Trim()))
-            .ToObjectDictionary()
-            .ConvertTo<MarkdownFileInfo>();
-
+        var doc = CreateMarkdownFile(content, writer, pipeline);
         if (doc?.Title == null)
         {
             log.LogWarning("No frontmatter found for {0}, ignoring...", file.VirtualPath);
@@ -265,20 +220,11 @@ public class Blog
 
         return doc;
     }
-    
-    public MarkdownPipeline CreatePipeline()
-    {
-        var pipeline = new MarkdownPipelineBuilder()
-            .UseYamlFrontMatter()
-            .UseAdvancedExtensions()
-            .Build();
-        return pipeline;
-    }
 
-    public void LoadPosts(string fromDirectory)
+    public void LoadFrom(string fromDirectory)
     {
         Posts.Clear();
-        var fs = VirtualFiles ?? throw new NullReferenceException($"{nameof(VirtualFiles)} is not populated");
+        var fs = AssertVirtualFiles();
         var files = fs.GetDirectory(fromDirectory).GetAllFiles().ToList();
         var log = LogManager.GetLogger(GetType());
         log.InfoFormat("Found {0} posts", files.Count);
@@ -303,4 +249,97 @@ public class Blog
 
         GenerateSlugs();
     }
+}
+
+public class MarkdownFileInfo
+{
+    public string Path { get; set; } = default!;
+    public string? Slug { get; set; }
+    public string? Layout { get; set; }
+    public string? FileName { get; set; }
+    public string? HtmlFileName { get; set; }
+    public string? Title { get; set; }
+    public string? Summary { get; set; }
+    public string? Image { get; set; }
+    public string? Author { get; set; }
+    public List<string> Tags { get; set; } = new();
+    public DateTime? Date { get; set; }
+    public string? Content { get; set; }
+    public string? Url { get; set; }
+    public string? Preview { get; set; }
+    public string? HtmlPage { get; set; }
+    public int? WordCount { get; set; }
+    public int? LineCount { get; set; }
+}
+
+public abstract class MarkdownPagesBase
+{
+    protected readonly ILogger log;
+    public MarkdownPagesBase(ILogger log) => this.log = log;
+    public IVirtualFiles VirtualFiles { get; set; } = default!;
+    
+    public virtual MarkdownPipeline CreatePipeline()
+    {
+        var pipeline = new MarkdownPipelineBuilder()
+            .UseYamlFrontMatter()
+            .UseAdvancedExtensions()
+            .Build();
+        return pipeline;
+    }
+
+    public virtual MarkdownFileInfo? CreateMarkdownFile(string content, TextWriter writer, MarkdownPipeline? pipeline = null)
+    {
+        pipeline ??= CreatePipeline();
+        
+        var renderer = new Markdig.Renderers.HtmlRenderer(writer);
+        pipeline.Setup(renderer);
+
+        var document = Markdown.Parse(content, pipeline);
+        renderer.Render(document);
+
+        var block = document
+            .Descendants<Markdig.Extensions.Yaml.YamlFrontMatterBlock>()
+            .FirstOrDefault();
+
+        var doc = block?
+            .Lines // StringLineGroup[]
+            .Lines // StringLine[]
+            .Select(x => $"{x}\n")
+            .ToList()
+            .Select(x => x.Replace("---", string.Empty))
+            .Where(x => !string.IsNullOrWhiteSpace(x))
+            .Select(x => KeyValuePairs.Create(x.LeftPart(':').Trim(), x.RightPart(':').Trim()))
+            .ToObjectDictionary()
+            .ConvertTo<MarkdownFileInfo>();
+
+        return doc;
+    }
+
+    public virtual MarkdownFileInfo? Load(string path, MarkdownPipeline? pipeline = null)
+    {
+        var file = VirtualFiles.GetFile(path)
+            ?? throw new FileNotFoundException(path.LastRightPart('/'));
+        var content = file.ReadAllText();
+
+        var writer = new StringWriter();
+
+        var doc = CreateMarkdownFile(content, writer, pipeline);
+        if (doc?.Title == null)
+        {
+            log.LogWarning("No frontmatter found for {0}, ignoring...", file.VirtualPath);
+            return null;
+        }
+
+        doc.Path = file.VirtualPath;
+        doc.FileName = file.Name;
+        doc.Slug = doc.FileName.WithoutExtension().GenerateSlug();
+        doc.Content = content;
+        writer.Flush();
+        doc.Preview = writer.ToString();
+
+        return doc;
+    }
+
+    protected IVirtualFiles AssertVirtualFiles() => 
+        VirtualFiles ?? throw new NullReferenceException($"{nameof(VirtualFiles)} is not populated");
 }
