@@ -5,7 +5,6 @@ const defaultPrefix = 'https://unpkg.com'
 const files = {
   js: {
       'htmx.js':                         '/htmx.org@1/dist/htmx.js',
-      'htmxclasses.js':                  '/htmx.org@1/dist/ext/class-tools.js',
   },
   mjs: {
       'vue.mjs':                         '/vue@3/dist/vue.esm-browser.js',

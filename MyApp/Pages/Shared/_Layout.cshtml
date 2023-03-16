@@ -1,10 +1,6 @@
 ﻿@inherits Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>
 <!doctype html>
 <html lang="en">
-@{
-    var dev = HostContext.AppHost.IsDevelopmentEnvironment();
-    var min = dev ? "" : "[hash].min";
-}
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,17 +18,7 @@
     </script>
     <link rel="stylesheet" href="/css/app.css">
 
-    @Html.BundleJs(new BundleOptions {
-        Sources = {
-            "/lib/js/"
-        },
-        SaveToDisk = !dev,
-        OutputTo = $"/js/lib.bundle{min}.js"
-    })
-
-    @if (Context.Request.Headers.UserAgent.Any(x => x.Contains("Safari") && !x.Contains("Chrome"))) {
-        <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
-    }
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
     @Html.ImportMap(new() {
         ["vue"]                  = ("/lib/mjs/vue.mjs",                 "/lib/mjs/vue.min.mjs"),
         ["@servicestack/client"] = ("/lib/mjs/servicestack-client.mjs", "/lib/mjs/servicestack-client.min.mjs"),
@@ -50,6 +36,7 @@
 
 @await Html.PartialAsync("Footer")
 
+<script src="/lib/js/htmx.js"></script>
 <script type="module">
 import { init } from "/mjs/app.mjs"
 init()
