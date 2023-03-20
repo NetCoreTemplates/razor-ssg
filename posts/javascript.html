@@ -147,7 +147,8 @@ development can be considered optional as we can now utilize modern browser feat
 and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide">modern language features</a> for a
 sophisticated development workflow without the need for any npm build tools.</p>
 <h3 id="bringing-simplicity-back">Bringing Simplicity Back</h3>
-<p>This template focuses on simplicity and eschews many aspects that has complicated modern JavaScript development,
+<p>The <a href="https://github.com/NetCoreTemplates/vue-mjs">vue-mjs</a> template focuses on simplicity and eschews many aspects that has
+complicated modern JavaScript development,
 specifically:</p>
 <ul>
 <li>No npm node_modules or build tools</li>
@@ -163,7 +164,7 @@ required functionality, which can be any JS library, preferably utilizing ESM bu
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">JavaScript Module</a>, taking advantage of the module system
 native to modern browsers able to efficiently download the declarative matrix of dependencies each script needs.</p>
 <h3 id="best-libraries-for-progressive-multi-page-apps">Best libraries for progressive Multi Page Apps</h3>
-<p>By default this template includes a collection of libraries we believe offers the best modern development experience in Progressive
+<p>It includes a collection of libraries we believe offers the best modern development experience in Progressive
 MPA Web Apps, specifically:</p>
 <h4 id="tailwind-cli"><a href="https://tailwindcss.com/docs/installation">Tailwind CLI</a></h4>
 <p>Tailwind enables a responsive, utility-first CSS framework for creating maintainable CSS at scale without the need for any CSS
@@ -220,7 +221,8 @@ and <a href="https://docs.servicestack.net/vue/gallery/modals">ModalDialog</a>:<
 <div class="text-center"><div data-component="Plugin" id="plugin" class="text-2xl py-4"></div></div>
 <h3 id="servicestackvue">@servicestack/vue</h3>
 <p><a href="https://github.com/ServiceStack/servicestack-vue">@servicestack/vue</a> is our growing Vue 3 Tailwind component library with a number of rich Tailwind components useful
-in .NET Web Apps, including Input Components with auto form validation binding which is used by all HTML forms in this template.</p>
+in .NET Web Apps, including Input Components with auto form validation binding which is used by all HTML forms in
+the <a href="https://github.com/NetCoreTemplates/vue-mjs">vue-mjs</a> template.</p>
 <div data-component="VueComponentGallery"></div>
 <h3 id="servicestackclient">@servicestack/client</h3>
 <p><a href="https://docs.servicestack.net/javascript-client">@servicestack/client</a> is our generic JS/TypeScript client library
@@ -534,8 +536,7 @@ production builds when running in <strong>Production</strong>, alleviating the n
 </code></pre>
 <h4 id="polyfill-for-safari">Polyfill for Safari</h4>
 <p>Unfortunately Safari is the last modern browser to <a href="https://caniuse.com/import-maps">support import maps</a> which is only now in
-Technical Preview. Luckily this feature can be polyfilled with the <a href="https://github.com/guybedford/es-module-shims">ES Module Shims</a>
-that's configured in this template:</p>
+Technical Preview. Luckily this feature can be polyfilled with the <a href="https://github.com/guybedford/es-module-shims">ES Module Shims</a>:</p>
 <pre><code class="language-html">@if (Context.Request.Headers.UserAgent.Any(x =&gt; x.Contains(&quot;Safari&quot;) &amp;&amp; !x.Contains(&quot;Chrome&quot;)))
 {
     &lt;script async src=&quot;https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js&quot;&gt;&lt;/script&gt;
@@ -573,7 +574,7 @@ main navigation links:</p>
 &lt;/nav&gt;
 </code></pre>
 <p>htmx has lots of useful <a href="https://htmx.org/examples/">real world examples</a> that can be activated with declarative attributes,
-another feature this template uses is the <a href="https://htmx.org/extensions/class-tools/">class-tools</a> extension to hide elements from
+another useful feature is the <a href="https://htmx.org/extensions/class-tools/">class-tools</a> extension to hide elements from
 appearing until after the page is loaded:</p>
 <pre><code class="language-html">&lt;div id=&quot;signin&quot;&gt;&lt;/div&gt;
 &lt;div class=&quot;hidden mt-5 flex justify-center&quot; classes=&quot;remove hidden:load&quot;&gt;
