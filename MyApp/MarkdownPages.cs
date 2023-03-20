@@ -11,7 +11,7 @@ public class MarkdownPages : MarkdownPagesBase
     public MarkdownPages(ILogger<MarkdownPages> log) : base(log){}
     public List<MarkdownFileInfo> Pages { get; set; } = new();
     
-    public MarkdownFileInfo? GetBySlug(string slug) => Pages.FirstOrDefault(x => x.Slug == slug);
+    public MarkdownFileInfo? GetBySlug(string slug) => Fresh(Pages.FirstOrDefault(x => x.Slug == slug));
 
     public void LoadFrom(string fromDirectory)
     {
@@ -45,6 +45,13 @@ public class WhatsNew : MarkdownPagesBase
 {
     public WhatsNew(ILogger<WhatsNew> log) : base(log){}
     public Dictionary<string, List<MarkdownFileInfo>> Features { get; set; } = new();
+
+    public List<MarkdownFileInfo> GetFeatures(string release)
+    {
+        return Features.TryGetValue(release, out var doc)
+            ? Fresh(doc)
+            : new List<MarkdownFileInfo>();
+    }
     
     public void LoadFrom(string fromDirectory)
     {
@@ -285,6 +292,41 @@ public abstract class MarkdownPagesBase
             .UseAdvancedExtensions()
             .Build();
         return pipeline;
+    }
+
+    public virtual List<MarkdownFileInfo> Fresh(List<MarkdownFileInfo> docs)
+    {
+        if (docs.IsEmpty())
+            return docs;
+        foreach (var doc in docs)
+        {
+            Fresh(doc);
+        }
+        return docs;
+    }
+    
+    public virtual MarkdownFileInfo? Fresh(MarkdownFileInfo? doc)
+    {
+        // Ignore reloading source .md if run in production or as AppTask
+        if (doc == null || !HostContext.DebugMode || AppTasks.IsRunAsAppTask())
+            return doc;
+        var newDoc = Load(doc.Path);
+        if (newDoc != null)
+        {
+            doc.Layout = newDoc.Layout;
+            doc.Title = newDoc.Title;
+            doc.Summary = newDoc.Summary;
+            doc.Image = newDoc.Image;
+            doc.Author = newDoc.Author;
+            doc.Tags = newDoc.Tags;
+            doc.Content = newDoc.Content;
+            doc.Url = newDoc.Url;
+            doc.Preview = newDoc.Preview;
+            doc.HtmlPage = newDoc.HtmlPage;
+            doc.WordCount = newDoc.WordCount;
+            doc.LineCount = newDoc.LineCount;
+        }
+        return doc;
     }
 
     public virtual MarkdownFileInfo? CreateMarkdownFile(string content, TextWriter writer, MarkdownPipeline? pipeline = null)
