@@ -22,9 +22,9 @@ export default {
       <ShellCommand class="mb-2">dotnet watch</ShellCommand>
 
       <div class="mt-8 text-center">
-        <div class="flex justify-center">
-          <a class="bg-purple-500 text-purple-50 rounded px-2 py-0.5 mx-1" href="/posts/rider">rider</a>
-          <a class="bg-purple-500 text-purple-50 rounded px-2 py-0.5 mx-1" href="/posts/vs">visualstudio</a>
+        <div class="flex justify-center gap-x-2">
+          <PrimaryButton color="purple" href="/posts/rider">rider</PrimaryButton>
+          <PrimaryButton color="purple" href="/posts/vs">visualstudio</PrimaryButton>
         </div>
       </div>        
     </div>`,
