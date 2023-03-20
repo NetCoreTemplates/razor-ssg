@@ -26,8 +26,6 @@ public class PostModel : PageModel
         if (string.IsNullOrEmpty(Title) && Slug != null)
         {
             var doc = Blog.FindPostBySlug(Slug);
-            if (doc != null && HostContext.AppHost.IsDevelopmentEnvironment())
-                doc = Blog.Load(doc.Path);
             if (doc != null)
             {
                 Populate(doc);

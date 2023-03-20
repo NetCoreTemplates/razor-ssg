@@ -43,4 +43,21 @@ public class ConfigureSsg : IHostingStartup
                     RazorSsg.PrerenderAsync(appHost, razorFiles, distDir).GetAwaiter().GetResult();
                 });
             });
+
+    public List<AuthorInfo> Authors { get; } = new() 
+    {
+        new AuthorInfo("Lucy Bates", "/img/authors/author1.svg")
+        {
+            TwitterUrl = "https://twitter.com/lucy",
+            GitHubUrl = "https://github.com/lucy",
+        },
+        new AuthorInfo("Gayle Smith", "/img/authors/author2.svg")
+        {
+            TwitterUrl = "https://twitter.com/gayle",
+        },
+        new AuthorInfo("Brandon Foley", "/img/authors/author3.svg")
+        {
+            GitHubUrl = "https://github.com/brandon",
+        },
+    };
 }

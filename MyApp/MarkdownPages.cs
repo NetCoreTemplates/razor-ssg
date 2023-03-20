@@ -97,6 +97,21 @@ public class WhatsNew : MarkdownPagesBase
     }
 }
 
+public class AuthorInfo
+{
+    public string Name { get; set; }
+    public string ProfileUrl { get; set; }
+    public string? GitHubUrl { get; set; }
+    public string? TwitterUrl { get; set; }
+    public string? MastodonUrl { get; set; }
+
+    public AuthorInfo(string name, string profileUrl)
+    {
+        Name = name;
+        ProfileUrl = profileUrl;
+    }
+}
+
 public class Blog : MarkdownPagesBase
 {
     public Blog(ILogger<Blog> log) : base(log){}
@@ -105,14 +120,9 @@ public class Blog : MarkdownPagesBase
     public string FallbackProfileUrl { get; set; } = Svg.ToDataUri(Svg.Create(Svg.Body.User, stroke:"none").Replace("fill='currentColor'","fill='#0891b2'"));
     public string FallbackSplashUrl { get; set; } = "https://source.unsplash.com/random/2000x1000/?stationary";
 
-    public Dictionary<string, string> AuthorProfileUrls { get; set; } = new()
-    {
-        ["Lucy Bates"] = "/img/authors/author1.svg",
-        ["Gayle Smith"] = "/img/authors/author2.svg",
-        ["Brandon Foley"] = "/img/authors/author3.svg",
-    };
+    public List<AuthorInfo> Authors { get; set; } = new();
 
-    public Dictionary<string, string> AuthorSlugMap { get; } = new();
+    public Dictionary<string, AuthorInfo> AuthorSlugMap { get; } = new();
     public Dictionary<string, string> TagSlugMap { get; } = new();
 
     public void GenerateSlugs()
@@ -120,16 +130,12 @@ public class Blog : MarkdownPagesBase
         AuthorSlugMap.Clear();
         TagSlugMap.Clear();
         
-        foreach (var author in AuthorProfileUrls.Keys)
+        foreach (var author in Authors)
         {
-            AuthorSlugMap[author.GenerateSlug()] = author;
+            AuthorSlugMap[author.Name.GenerateSlug()] = author;
         }
         foreach (var post in Posts)
         {
-            if (post.Author != null && !AuthorProfileUrls.ContainsKey(post.Author))
-            {
-                AuthorSlugMap[post.Author.GenerateSlug()] = post.Author;
-            }
             foreach (var tag in post.Tags.Safe())
             {
                 TagSlugMap[tag.GenerateSlug()] = tag;
@@ -137,9 +143,10 @@ public class Blog : MarkdownPagesBase
         }
     }
     
-    public string GetAuthorProfileUrl(string? name) => name != null && AuthorProfileUrls.TryGetValue(name, out var url)
-        ? url
-        : FallbackProfileUrl;
+    public string GetAuthorProfileUrl(string? name) => (name != null
+        ? Authors.FirstOrDefault(x => x.Name == name)
+        : null)?.ProfileUrl
+        ?? FallbackProfileUrl;
 
     public List<MarkdownFileInfo> GetPosts(string? author = null, string? tag = null, int? year = null)
     {
@@ -163,7 +170,7 @@ public class Blog : MarkdownPagesBase
     public string GetDateLabel(DateTime? date) => X.Map(date ?? DateTime.UtcNow, d => d.ToString("MMMM d, yyyy"))!;
     public string GetDateTimestamp(DateTime? date) => X.Map(date ?? DateTime.UtcNow, d => d.ToString("O"))!;
 
-    public string? GetAuthorBySlug(string? slug)
+    public AuthorInfo? GetAuthorBySlug(string? slug)
     {
         return AuthorSlugMap.TryGetValue(slug, out var author)
             ? author
@@ -190,7 +197,7 @@ public class Blog : MarkdownPagesBase
     public int WordCount(string str) => str.Split(WordBoundaries, StringSplitOptions.RemoveEmptyEntries).Length;
     public int LineCount(string str) => str.CountOccurrencesOf('\n');
     public int MinutesRead(int? words) => (int)Math.Ceiling((words ?? 1) / (double)WordsPerMin);
-    public MarkdownFileInfo? FindPostBySlug(string name) => Posts.FirstOrDefault(x => x.Slug == name);
+    public MarkdownFileInfo? FindPostBySlug(string name) => Fresh(Posts.FirstOrDefault(x => x.Slug == name));
 
     public override MarkdownFileInfo? Load(string path, MarkdownPipeline? pipeline = null)
     {
@@ -257,6 +264,7 @@ public class Blog : MarkdownPagesBase
         GenerateSlugs();
     }
 }
+
 
 public class MarkdownFileInfo
 {
