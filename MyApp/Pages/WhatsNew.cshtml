@@ -39,8 +39,8 @@
     <div class="relative mx-auto max-w-7xl">
     @foreach (var release in releases)
     {
-        var features = WhatsNew.Features[release];
-        var releaseDate = features[0].Date.Value;
+        var features = WhatsNew.GetFeatures(release);
+        var releaseDate = features[0].Date!.Value;
         
         <h2 class="text-center mb-4 text-6xl md:text-7xl font-bold tracking-tighter leading-tight">@release</h2>
         <div class="text-center text-lg font-normal text-gray-500 mb-8">@($"{releaseDate:MMMM d, yyyy}")</div>
