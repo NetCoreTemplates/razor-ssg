@@ -2,6 +2,16 @@
 @model MyApp.Page
 @inject MarkdownPages Markdown
 
+@implements IRenderStatic<MyApp.Page>
+@functions {
+    public List<Page> GetStaticProps(RenderContext ctx)
+    {
+        var markdown = ctx.Resolve<MarkdownPages>();
+        return markdown.Pages.Map(page => new Page { Slug = page.Slug });
+    }
+}
+
+
 @{
     var doc = Markdown.GetBySlug(Model.Slug);
     if (doc == null)
@@ -18,12 +28,12 @@
 
 <link rel="stylesheet" href="/css/typography.css">
 <section class="flex-col md:flex-row flex justify-center mt-16 mb-16 md:mb-12">
-    <h1 class="mx-auto text-4xl tracking-tight font-extrabold text-gray-900 dark:text-gray-50 sm:text-5xl md:text-7xl">
+    <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 dark:text-gray-50 sm:text-5xl md:text-6xl">
         @doc.Title
     </h1>
 </section>    
 <div class="mx-auto">
-    <div class="mx-auto prose lg:prose-xl mb-16">
+    <div class="mx-auto prose lg:prose-xl mb-24">
         @Html.Raw(doc.Preview)
     </div>
 </div>
