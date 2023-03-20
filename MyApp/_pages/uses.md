@@ -1,5 +1,5 @@
 ---
-title: Software and gadgets I use & love
+title: Things I use & love
 ---
 
 ## Software I use, gadgets I love, and other things I recommend.
