@@ -15,25 +15,26 @@ JavaScript has progressed significantly in recent times where many of the toolin
 that we used to rely on external tools for is now available in modern browsers alleviating the need for
 complex tooling and npm dependencies that have historically plagued modern web development.
 
-The good news is that the complex npm tooling that was previously considered mandatory in modern JavaScript App 
+The good news is that the complex npm tooling that was previously considered mandatory in modern JavaScript App
 development can be considered optional as we can now utilize modern browser features like  
 [async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function),
-[JavaScript Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), 
-[dynamic imports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import), 
+[JavaScript Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules),
+[dynamic imports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import),
 [import maps](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap)
-and [modern language features](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide) for a 
-sophisticated development workflow without the need for any npm build tools. 
+and [modern language features](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide) for a
+sophisticated development workflow without the need for any npm build tools.
 
 ### Bringing Simplicity Back
 
-This template focuses on simplicity and eschews many aspects that has complicated modern JavaScript development,
+The [vue-mjs](https://github.com/NetCoreTemplates/vue-mjs) template focuses on simplicity and eschews many aspects that has
+complicated modern JavaScript development,
 specifically:
 
- - No npm node_modules or build tools
- - No client side routing
- - No heavy client state
+- No npm node_modules or build tools
+- No client side routing
+- No heavy client state
 
-Effectively abandoning the traditional SPA approach in lieu of a simpler [MPA](https://docs.astro.build/en/concepts/mpa-vs-spa/) 
+Effectively abandoning the traditional SPA approach in lieu of a simpler [MPA](https://docs.astro.build/en/concepts/mpa-vs-spa/)
 development model using Razor Pages for Server Rendered content with any interactive UIs progressively enhanced with JavaScript.
 
 #### Freedom to use any JS library
@@ -46,7 +47,7 @@ native to modern browsers able to efficiently download the declarative matrix of
 
 ### Best libraries for progressive Multi Page Apps
 
-By default this template includes a collection of libraries we believe offers the best modern development experience in Progressive
+It includes a collection of libraries we believe offers the best modern development experience in Progressive
 MPA Web Apps, specifically:
 
 #### [Tailwind CLI](https://tailwindcss.com/docs/installation)
@@ -84,9 +85,9 @@ const Counter = {
 
 <div data-component="Counter" class="text-center text-2xl py-2 cursor-pointer select-none"></div>
 
-These components can be mounted using the standard [Vue 3 mount](https://vuejs.org/api/application.html#app-mount) API, but to 
+These components can be mounted using the standard [Vue 3 mount](https://vuejs.org/api/application.html#app-mount) API, but to
 make it easier we've added additional APIs for declaratively mounting components to pages using the `data-component` and `data-props`
-attributes, especially useful for including Vue components in Markdown content like this, e.g:  
+attributes, especially useful for including Vue components in Markdown content like this, e.g:
 
 ```html
 <div data-component="Hello" data-props="{ name: 'Vue 3' }"></div>
@@ -100,7 +101,7 @@ mount('#counter', Counter)
 ```
 
 Both methods create components with access to all your Shared Components and any 3rd Party Plugins which
-we can preview in this example that uses **@servicestack/vue**'s 
+we can preview in this example that uses **@servicestack/vue**'s
 [PrimaryButton](https://docs.servicestack.net/vue/gallery/navigation#primarybutton)
 and [ModalDialog](https://docs.servicestack.net/vue/gallery/modals):
 
@@ -123,15 +124,16 @@ const Plugin = {
 <div class="text-center"><div data-component="Plugin" id="plugin" class="text-2xl py-4"></div></div>
 
 ### @servicestack/vue
-[@servicestack/vue](https://github.com/ServiceStack/servicestack-vue) is our growing Vue 3 Tailwind component library with a number of rich Tailwind components useful 
-in .NET Web Apps, including Input Components with auto form validation binding which is used by all HTML forms in this template. 
+[@servicestack/vue](https://github.com/ServiceStack/servicestack-vue) is our growing Vue 3 Tailwind component library with a number of rich Tailwind components useful
+in .NET Web Apps, including Input Components with auto form validation binding which is used by all HTML forms in
+the [vue-mjs](https://github.com/NetCoreTemplates/vue-mjs) template.
 
 <div data-component="VueComponentGallery"></div>
 
 ### @servicestack/client
 [@servicestack/client](https://docs.servicestack.net/javascript-client) is our generic JS/TypeScript client library
-which enables a terse, typed API for using your App's typed DTOs from the built-in 
-[JavaScript ES6 Classes](https://docs.servicestack.net/javascript-add-servicestack-reference) support to enable an effortless 
+which enables a terse, typed API for using your App's typed DTOs from the built-in
+[JavaScript ES6 Classes](https://docs.servicestack.net/javascript-add-servicestack-reference) support to enable an effortless
 end-to-end Typed development model for calling your APIs **without any build steps**, e.g:
 
 ```html
@@ -165,7 +167,7 @@ import { Hello } from '/js/dtos.mjs'
 client.api(new Hello({ name }))
 ```
 
-You'll typically use all these libraries in your **API-enabled** components as seen in the 
+You'll typically use all these libraries in your **API-enabled** components as seen in the
 [HelloApi.mjs](https://github.com/NetCoreTemplates/vue-mjs/blob/main/MyApp/wwwroot/mjs/components/HelloApi.mjs)
 component on the home page which calls the [Hello](/ui/Hello) API on each key press:
 
@@ -206,13 +208,13 @@ We'll also go through and explain other features used in this component:
 
 #### `/*html*/`
 
-Although not needed in [Rider](rider) (which can automatically infer HTML in strings), the `/*html*/` type hint can be used 
+Although not needed in [Rider](rider) (which can automatically infer HTML in strings), the `/*html*/` type hint can be used
 to instruct tooling like the [es6-string-html](https://marketplace.visualstudio.com/items?itemName=Tobermory.es6-string-html)
-VS Code extension to provide syntax highlighting and an enhanced authoring experience for HTML content in string literals. 
+VS Code extension to provide syntax highlighting and an enhanced authoring experience for HTML content in string literals.
 
 ### useClient
 
-[useClient()](https://docs.servicestack.net/vue/use-client) provides managed APIs around the `JsonServiceClient` 
+[useClient()](https://docs.servicestack.net/vue/use-client) provides managed APIs around the `JsonServiceClient`
 instance registered in Vue App's with:
 
 ```js
@@ -220,7 +222,7 @@ let client = JsonApiClient.create()
 app.provide('client', client)
 ```
 
-Which maintains contextual information around your API calls like **loading** and **error** states, used by `@servicestack/vue` components to 
+Which maintains contextual information around your API calls like **loading** and **error** states, used by `@servicestack/vue` components to
 enable its auto validation binding. Other functionality in this provider include:
 
 ```js
@@ -249,7 +251,7 @@ let api = await client.api(new Hello({ name }))
 
 #### useClient - unRefs
 
-But as DTOs are typed, passing reference values will report a type annotation warning in IDEs with type-checking enabled, 
+But as DTOs are typed, passing reference values will report a type annotation warning in IDEs with type-checking enabled,
 which can be resolved by explicitly unwrapping DTO ref values with `unRefs`:
 
 ```js
@@ -258,7 +260,7 @@ let api = await client.api(new Hello(unRefs({ name })))
 
 #### useClient - setError
 
-`setError` can be used to populate client-side validation errors which the 
+`setError` can be used to populate client-side validation errors which the
 [SignUp.mjs](https://github.com/NetCoreTemplates/vue-mjs/blob/main/MyApp/wwwroot/Pages/SignUp.mjs)
 component uses to report an invalid submissions when passwords don't match:
 
@@ -396,13 +398,13 @@ instant API-enabled form with validation binding by just specifying the Request 
 
 <div class="not-prose" data-component="AutoCreateForm" data-props="{ type:'CreateBooking', formStyle:'card' }"></div>
 
-The AutoForm components are powered by your [App Metadata](https://docs.servicestack.net/vue/use-appmetadata) which allows creating 
+The AutoForm components are powered by your [App Metadata](https://docs.servicestack.net/vue/use-appmetadata) which allows creating
 highly customized UIs from [declarative C# attributes](https://docs.servicestack.net/locode/declarative) whose customizations are
 reused across all ServiceStack Auto UIs, including:
 
- - [API Explorer](https://docs.servicestack.net/api-explorer) 
- - [Locode](https://docs.servicestack.net/locode/)
- - [Blazor Tailwind Components](https://docs.servicestack.net/templates-blazor-components)
+- [API Explorer](https://docs.servicestack.net/api-explorer)
+- [Locode](https://docs.servicestack.net/locode/)
+- [Blazor Tailwind Components](https://docs.servicestack.net/templates-blazor-components)
 
 ### Form Input Components
 
@@ -427,8 +429,8 @@ signIn(@await Html.ApiAsJsonAsync(new Authenticate()))
 </script>
 ```
 
-Where it enables access to the below [useAuth()](https://docs.servicestack.net/vue/use-auth) utils for inspecting the 
-current authenticated user:  
+Where it enables access to the below [useAuth()](https://docs.servicestack.net/vue/use-auth) utils for inspecting the
+current authenticated user:
 
 ```js
 const { 
@@ -478,7 +480,7 @@ function validateSafeName(e) {
 
 #### TypeScript Language Service
 
-Whilst the code-base doesn't use TypeScript syntax in its code base directly, it still benefits from TypeScript's language services 
+Whilst the code-base doesn't use TypeScript syntax in its code base directly, it still benefits from TypeScript's language services
 in IDEs for the included libraries from the TypeScript definitions included in `/lib/typings`, downloaded in
 [postinstall.js](https://github.com/NetCoreTemplates/vue-mjs/blob/main/MyApp/postinstall.js) after **npm install**.
 
@@ -504,7 +506,7 @@ import { useClient } from "@servicestack/vue"
 import { JsonApiClient, $1, on } from "@servicestack/client"
 ```
 
-It's a great solution for specifying using local unminified debug builds during **Development**, and more optimal CDN hosted 
+It's a great solution for specifying using local unminified debug builds during **Development**, and more optimal CDN hosted
 production builds when running in **Production**, alleviating the need to rely on complex build tools to perform this code transformation for us:
 
 ```csharp
@@ -516,7 +518,7 @@ production builds when running in **Production**, alleviating the need to rely o
 })
 ```
 
-Note: Specifying exact versions of each dependency improves initial load times by eliminating latency from redirects. 
+Note: Specifying exact versions of each dependency improves initial load times by eliminating latency from redirects.
 
 Or if you don't want your Web App to reference any external dependencies, have the ImportMap reference local minified production builds instead:
 
@@ -532,8 +534,7 @@ Or if you don't want your Web App to reference any external dependencies, have t
 #### Polyfill for Safari
 
 Unfortunately Safari is the last modern browser to [support import maps](https://caniuse.com/import-maps) which is only now in
-Technical Preview. Luckily this feature can be polyfilled with the [ES Module Shims](https://github.com/guybedford/es-module-shims)
-that's configured in this template:
+Technical Preview. Luckily this feature can be polyfilled with the [ES Module Shims](https://github.com/guybedford/es-module-shims):
 
 ```html
 @if (Context.Request.Headers.UserAgent.Any(x => x.Contains("Safari") && !x.Contains("Chrome")))
@@ -548,8 +549,8 @@ SPAs are notorious for being slow to load due to needing to download large blobs
 with their JS framework to mount their App component before it starts fetching the data from the server it needs to render its components.
 
 A complex solution to this problem is to server render the initial HTML content then re-render it again on the client after the page loads.
-A simpler solution is to avoid unnecessary ajax calls by embedding the JSON data the component needs in the page that loads it, which is what 
-[/TodoMvc](/TodoMvc) does to load its initial list of todos using the [Service Gateway](https://docs.servicestack.net/service-gateway) 
+A simpler solution is to avoid unnecessary ajax calls by embedding the JSON data the component needs in the page that loads it, which is what
+[/TodoMvc](/TodoMvc) does to load its initial list of todos using the [Service Gateway](https://docs.servicestack.net/service-gateway)
 to invoke APIs in process and embed its JSON response with:
 
 ```html
@@ -573,7 +574,7 @@ after the component is loaded.
 ### Fast Page Loading
 
 We can get SPA-like page loading performance using htmx's [Boosting](https://htmx.org/docs/#boosting) feature which avoids full page reloads
-by converting all anchor tags to use Ajax to load page content into the page body, improving perceived performance from needing to reload 
+by converting all anchor tags to use Ajax to load page content into the page body, improving perceived performance from needing to reload
 scripts and CSS in `<head>`.
 
 This is used in [Header.cshtml](https://github.com/NetCoreTemplates/vue-mjs/blob/main/MyApp/Pages/Shared/Header.cshtml) to **boost** all
@@ -587,8 +588,8 @@ main navigation links:
 </nav>
 ```
 
-htmx has lots of useful [real world examples](https://htmx.org/examples/) that can be activated with declarative attributes, 
-another feature this template uses is the [class-tools](https://htmx.org/extensions/class-tools/) extension to hide elements from 
+htmx has lots of useful [real world examples](https://htmx.org/examples/) that can be activated with declarative attributes,
+another useful feature is the [class-tools](https://htmx.org/extensions/class-tools/) extension to hide elements from
 appearing until after the page is loaded:
 
 ```html
@@ -598,15 +599,15 @@ appearing until after the page is loaded:
 </div>
 ```
 
-Which is used to reduce UI yankiness from showing server rendered content before JS components have loaded. 
+Which is used to reduce UI yankiness from showing server rendered content before JS components have loaded.
 
 ### @servicestack/vue Library
 
-[@servicestack/vue](https://docs.servicestack.net/vue/) is our cornerstone library for enabling a highly productive 
-Vue.js development model across our [Vue Tailwind Project templates](https://docs.servicestack.net/templates-vue) which 
+[@servicestack/vue](https://docs.servicestack.net/vue/) is our cornerstone library for enabling a highly productive
+Vue.js development model across our [Vue Tailwind Project templates](https://docs.servicestack.net/templates-vue) which
 we'll continue to significantly invest in to unlock even greater productivity benefits in all Vue Tailwind Apps.
 
-In addition to a variety of high-productive components, it also contains a core library of functionality 
-underpinning the Vue Components that most Web Apps should also find useful: 
+In addition to a variety of high-productive components, it also contains a core library of functionality
+underpinning the Vue Components that most Web Apps should also find useful:
 
 <div data-component="VueComponentLibrary" class="mt-4"></div>
