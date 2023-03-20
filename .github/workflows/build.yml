@@ -1,0 +1,41 @@
+name: Build
+
+on:
+  pull_request: { }
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2.0.0
+
+      - name: setup .net core
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: 6.0.100
+
+      - name: build
+        working-directory: ./MyApp
+        run: dotnet build .
+
+      - name: prerender
+        working-directory: ./MyApp
+        run: dotnet run --AppTasks=prerender --environment Production
+        
+      - name: Replace CNAME value
+        env:
+          deploy_cdn: ${{ secrets.DEPLOY_CDN }}
+        run: sed -i "s/\$DEPLOY_CDN/${deploy_cdn}/g" ./MyApp/wwwroot/CNAME
+
+      # Deploy UI to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./MyApp/dist
+          user_name: 'GitHub Action'
+          user_email: 'action@github.com'
