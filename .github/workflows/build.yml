@@ -21,15 +21,16 @@ jobs:
       - name: build
         working-directory: ./MyApp
         run: dotnet build .
-
-      - name: prerender
-        working-directory: ./MyApp
-        run: dotnet run --AppTasks=prerender --environment Production
         
       - name: Replace CNAME value
         env:
           deploy_cdn: ${{ secrets.DEPLOY_CDN }}
-        run: sed -i "s/DEPLOY_CDN/${deploy_cdn}/g" ./MyApp/wwwroot/CNAME
+        run: |
+          sed -i "s/DEPLOY_CDN/${deploy_cdn}/g" ./MyApp/wwwroot/CNAME
+
+      - name: prerender
+        working-directory: ./MyApp
+        run: dotnet run --AppTasks=prerender --environment Production
 
       # Deploy UI to GitHub Pages
       - name: Deploy to GitHub Pages
