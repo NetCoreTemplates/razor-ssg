@@ -5,8 +5,8 @@ namespace MyApp.Pages.Posts;
 
 public class PostModel : PageModel
 {
-    public Blog Blog { get; }
-    public PostModel(Blog blog) => Blog = blog;
+    public MarkdownBlog Blog { get; }
+    public PostModel(MarkdownBlog blog) => Blog = blog;
 
     [FromQuery]
     public bool Static { get; set; }

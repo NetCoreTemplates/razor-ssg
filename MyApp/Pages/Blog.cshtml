@@ -1,6 +1,6 @@
 ﻿@page "/blog"
 @attribute [RenderStatic]
-@inject Blog Blog
+@inject MarkdownBlog Blog
 @{
     ViewData["Title"] = "MyApp Blog";
 }
@@ -77,7 +77,7 @@
                                     <div class="flex space-x-1 text-sm text-gray-500">
                                         <time datetime="@Blog.GetDateTimestamp(post.Date)">@Blog.GetDateLabel(post.Date)</time>
                                         <span aria-hidden="true">&middot;</span>
-                                        <span>@Blog.MinutesRead(post.WordCount) min read</span>
+                                        <span>@Blog.MinutesToRead(post.WordCount) min read</span>
                                     </div>
                                 </div>
                             </div>
@@ -117,7 +117,7 @@
                                             <div class="flex space-x-1 text-sm text-gray-500">
                                                 <time datetime="@Blog.GetDateTimestamp(post.Date)">@Blog.GetDateLabel(post.Date)</time>
                                                 <span aria-hidden="true">&middot;</span>
-                                                <span>@Blog.MinutesRead(post.WordCount) min read</span>
+                                                <span>@Blog.MinutesToRead(post.WordCount) min read</span>
                                             </div>
                                         </div>
                                     </div>

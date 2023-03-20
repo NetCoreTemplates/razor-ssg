@@ -1,9 +1,9 @@
 @page "/posts/year/{year}"
 @model YearModel
-@inject Blog Blog
+@inject MarkdownBlog Blog
 @implements IRenderStatic<YearModel>
 @functions {
-    public List<YearModel> GetStaticProps(RenderContext ctx) => ctx.Resolve<Blog>()
+    public List<YearModel> GetStaticProps(RenderContext ctx) => ctx.Resolve<MarkdownBlog>()
         .Posts.Select(x => x.Date.Value.Year).Distinct().Map(x => new YearModel { Year = x });
 }
 

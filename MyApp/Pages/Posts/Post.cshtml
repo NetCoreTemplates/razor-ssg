@@ -1,12 +1,12 @@
 @page "/posts/{slug}"
 @model PostModel
-@inject Blog Blog
+@inject MarkdownBlog Blog
 
 @implements IRenderStatic<PostModel>
 @functions {
     public List<PostModel> GetStaticProps(RenderContext ctx)
     {
-        var blog = ctx.Resolve<Blog>();
+        var blog = ctx.Resolve<MarkdownBlog>();
         return blog.Posts.Map(doc => new PostModel(blog).Populate(doc));
     }
 }
@@ -75,7 +75,7 @@
                     <div class="mb-6 text-lg text-gray-500">
                         <time datetime="@Blog.GetDateTimestamp(Model.Date)">@Blog.GetDateLabel(Model.Date)</time>
                         <span aria-hidden="true">&middot;</span>
-                        <span>@Blog.MinutesRead(Model.WordCount) min read</span>
+                        <span>@Blog.MinutesToRead(Model.WordCount) min read</span>
                     </div>
                 </div>
             }

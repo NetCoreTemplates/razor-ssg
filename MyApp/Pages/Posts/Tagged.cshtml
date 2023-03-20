@@ -1,9 +1,9 @@
 @page "/posts/tagged/{slug}"
 @model TaggedModel
-@inject Blog Blog
+@inject MarkdownBlog Blog
 @implements IRenderStatic<TaggedModel>
 @functions {
-    public List<TaggedModel> GetStaticProps(RenderContext ctx) => ctx.Resolve<Blog>()
+    public List<TaggedModel> GetStaticProps(RenderContext ctx) => ctx.Resolve<MarkdownBlog>()
         .TagSlugMap.Keys.Map(x => new TaggedModel { Slug = x });
 }
 

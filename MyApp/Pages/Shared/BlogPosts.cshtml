@@ -1,6 +1,6 @@
 ﻿@page
 @model List<MarkdownFileInfo>
-@inject Blog Blog
+@inject MarkdownBlog Blog
 
 <div class="mx-auto grid max-w-lg gap-5 lg:max-w-none lg:grid-cols-3">
     @foreach (var post in Model)
@@ -37,7 +37,7 @@
                         <div class="flex space-x-1 text-sm text-gray-500">
                             <time datetime="@Blog.GetDateTimestamp(post.Date)">@Blog.GetDateLabel(post.Date)</time>
                             <span aria-hidden="true">&middot;</span>
-                            <span>@Blog.MinutesRead(post.WordCount) min read</span>
+                            <span>@Blog.MinutesToRead(post.WordCount) min read</span>
                         </div>
                     </div>
                 </div>

@@ -11,22 +11,23 @@ public class ConfigureSsg : IHostingStartup
         {
             services.AddSingleton<RazorPagesEngine>();
             services.AddSingleton<MarkdownPages>();
-            services.AddSingleton<WhatsNew>();
-            services.AddSingleton<Blog>();
+            services.AddSingleton<MarkdownWhatsNew>();
+            services.AddSingleton<MarkdownBlog>();
         })
         .ConfigureAppHost(
             appHost => appHost.Plugins.Add(new CleanUrlsFeature()),
             afterPluginsLoaded: appHost =>
             {
-                var markdownPages = appHost.Resolve<MarkdownPages>();
-                var whatsNew = appHost.Resolve<WhatsNew>();
-                var blogPosts = appHost.Resolve<Blog>();
-                new MarkdownPagesBase[] { markdownPages, whatsNew, blogPosts }
-                    .Each(x => x.VirtualFiles = appHost.VirtualFiles);
+                var pages = appHost.Resolve<MarkdownPages>();
+                var whatsNew = appHost.Resolve<MarkdownWhatsNew>();
+                var blogPosts = appHost.Resolve<MarkdownBlog>();
+                
+                var markdownFeatures = new IMarkdownPages[] { pages, whatsNew, blogPosts }; 
+                markdownFeatures.Each(x => x.VirtualFiles = appHost.VirtualFiles);
 
                 blogPosts.Authors = Authors;
 
-                markdownPages.LoadFrom("_pages");
+                pages.LoadFrom("_pages");
                 whatsNew.LoadFrom("_whatsnew");
                 blogPosts.LoadFrom("_posts");
             },
@@ -62,4 +63,9 @@ public class ConfigureSsg : IHostingStartup
             GitHubUrl = "https://github.com/brandon",
         },
     };
+}
+
+// Add additional frontmatter info to include
+public class MarkdownFileInfo : MarkdownFileBase
+{
 }

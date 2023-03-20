@@ -1,6 +1,6 @@
 @page "/posts"
 @attribute [RenderStatic("/posts/index.html")]
-@inject Blog Blog
+@inject MarkdownBlog Blog
 @{
     ViewData["Title"] = "Blog";
     var allPosts = Blog.GetPosts();

@@ -1,10 +1,10 @@
 @page "/posts/author/{slug}"
 @model AuthorModel
-@inject Blog Blog
+@inject MarkdownBlog Blog
 
 @implements IRenderStatic<AuthorModel>
 @functions {
-    public List<AuthorModel> GetStaticProps(RenderContext ctx) => ctx.Resolve<Blog>()
+    public List<AuthorModel> GetStaticProps(RenderContext ctx) => ctx.Resolve<MarkdownBlog>()
         .AuthorSlugMap.Keys.Map(x => new AuthorModel { Slug = x });
 }
 
