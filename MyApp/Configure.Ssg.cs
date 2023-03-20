@@ -24,6 +24,8 @@ public class ConfigureSsg : IHostingStartup
                 new MarkdownPagesBase[] { markdownPages, whatsNew, blogPosts }
                     .Each(x => x.VirtualFiles = appHost.VirtualFiles);
 
+                blogPosts.Authors = Authors;
+
                 markdownPages.LoadFrom("_pages");
                 whatsNew.LoadFrom("_whatsnew");
                 blogPosts.LoadFrom("_posts");
