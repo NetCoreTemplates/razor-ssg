@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg" href="/img/logo.svg">
+    <title>Prerendering Razor Pages - My App</title>
+    <script>
+    const cls = document.querySelector('html').classList
+    if (localStorage.getItem('color-scheme') === 'dark')
+        cls.add('dark')
+    else
+        cls.remove('dark')
+    </script>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+{
+    "imports": {
+        "vue": "/lib/mjs/vue.min.mjs",
+        "@servicestack/client": "/lib/mjs/servicestack-client.min.mjs",
+        "@servicestack/vue": "/lib/mjs/servicestack-vue.min.mjs"
+    }
+}
+</script>
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+<header class="border-b border-gray-200 dark:border-gray-600 pr-3">
+    <div class="flex flex-wrap items-center">
+        <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
+            <div class="cursor-pointer">
+                <a hx-boost="true" class="navbar-brand flex items-center" href="/">
+                    <img class="w-8 h-8 sm:ml-2 sm:w-12 sm:h-12" src="/img/logo.svg" alt="MyApp logo">
+                    <span class="hidden sm:block text-2xl font-semibold">MyApp</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-grow flex-shrink flex-nowrap justify-end items-center">
+            <nav class="relative flex flex-grow leading-6 font-semibold text-slate-700 dark:text-slate-200">
+                <ul class="flex flex-wrap items-center justify-end w-full m-0 pb-2 sm:pb-0">
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/whatsnew" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    What's New
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/blog" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Blog
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/posts" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400 text-blue-700 dark:text-blue-300">
+                                    Archive
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/speaking" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Speaking
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/about" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    About
+                                </a>
+                            </li>
+                    <li class="relative flex flex-wrap just-fu-start m-0">
+                        <div data-component="DarkModeToggle" class="ml-2 w-10"></div>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</header>
+<script type="module">
+import { mountAll } from "/mjs/app.mjs"
+mountAll()
+</script>
+
+
+<div class="min-h-screen">
+    <main role="main" class="pb-3" hx-ext="class-tools">
+        
+
+
+<link rel="stylesheet" href="/css/typography.css">
+
+<div class="container px-5 mb-32 mx-auto">
+        <article class="mt-20">
+            <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
+                Prerendering Razor Pages
+            </h1>
+            <div class="hidden md:block md:mb-12">
+                <a class="flex items-center text-xl font-bold" href="/posts/author/lucy-bates">
+                    <img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="/img/authors/author1.svg">
+                    <span>Lucy Bates</span>
+                </a>
+            </div>
+            <div class="mb-8 md:mb-16 sm:mx-0">
+                <div class="sm:mx-0">
+                    <img src="https://images.unsplash.com/photo-1522526886914-6e8d4fd91399?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" alt="Prerendering Razor Pages Background" class="shadow-small">
+                </div>
+            </div>
+            <div class="mb-4 max-w-2xl mx-auto flex flex-wrap">
+                    <a href="/posts/tagged/csharp" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">c#</a>
+                    <a href="/posts/tagged/dev" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">dev</a>
+                    <a href="/posts/tagged/markdown" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">markdown</a>
+            </div>
+                <div class="max-w-2xl mx-auto">
+                    <div class="mb-6 text-lg text-gray-500">
+                        <time datetime="2023-01-11T00:00:00.0000000">January 11, 2023</time>
+                        <span aria-hidden="true">&middot;</span>
+                        <span>6 min read</span>
+                    </div>
+                </div>
+            <div class="max-w-2xl mx-auto">
+                <div class="prose lg:prose-xl max-w-none mb-32">
+                    <p>Prerendering static content is a popular technique used by <a href="https://jamstack.org">JAMStack</a> Apps to improve the
+performance, reliability and scalability of Web Apps that's able to save unnecessary computation at runtime by
+generating static content at deployment which can be optionally hosted from a CDN for even greater performance.</p>
+<p>As such we thought it a valuable technique to include in this template to show how it can be easily achieved
+within a Razor Pages Application. Since prerendered content is only updated at deployment, it's primarily only
+useful for static content like this Blog which is powered by the static markdown content in
+<a href="https://github.com/NetCoreTemplates/vue-mjs/tree/main/MyApp/wwwroot/_blog/posts">_blog/posts</a> whose content
+is prerendered to:</p>
+<ul>
+<li><a href="/blog">/blog</a></li>
+</ul>
+<h3 id="parsing-markdown-files">Parsing Markdown Files</h3>
+<p>All the functionality to load and render Markdown files is maintained in
+<a href="https://github.com/NetCoreTemplates/vue-mjs/blob/main/MyApp/Configure.Markdown.cs">Configure.Markdown.cs</a>,
+most of which is spent populating the POCO below from the content and frontmatter of each Markdown file:</p>
+<pre><code class="language-csharp">public class MarkdownFileInfo
+{
+    public string Path { get; set; } = default!;
+    public string? Slug { get; set; }
+    public string? FileName { get; set; }
+    public string? HtmlFileName { get; set; }
+    public string? Title { get; set; }
+    public string? Summary { get; set; }
+    public string? Splash { get; set; }
+    public string? Author { get; set; }
+    public List&lt;string&gt; Tags { get; set; } = new();
+    public DateTime? Date { get; set; }
+    public string? Content { get; set; }
+    public string? Preview { get; set; }
+    public string? HtmlPage { get; set; }
+    public int? WordCount { get; set; }
+    public int? LineCount { get; set; }
+}
+</code></pre>
+<p>Which uses the popular <a href="https://github.com/xoofx/markdig">Markdig</a> library to parse the frontmatter into a
+Dictionary that it populates the POCO with using the built-in <a href="https://docs.servicestack.net/auto-mapping">Automapping</a>:</p>
+<pre><code class="language-csharp">var content = VirtualFiles.GetFile(path).ReadAllText();
+var document = Markdown.Parse(content, pipeline);
+var block = document
+    .Descendants&lt;Markdig.Extensions.Yaml.YamlFrontMatterBlock&gt;()
+    .FirstOrDefault();
+var doc = block?
+    .Lines // StringLineGroup[]
+    .Lines // StringLine[]
+    .Select(x =&gt; $&quot;{x}\n&quot;)
+    .ToList()
+    .Select(x =&gt; x.Replace(&quot;---&quot;, string.Empty))
+    .Where(x =&gt; !string.IsNullOrWhiteSpace(x))
+    .Select(x =&gt; KeyValuePairs.Create(x.LeftPart(':').Trim(), x.RightPart(':').Trim()))
+    .ToObjectDictionary()
+    .ConvertTo&lt;MarkdownFileInfo&gt;();
+</code></pre>
+<p>Since this is a <a href="https://jekyllrb.com/docs/step-by-step/08-blogging/">Jekyll inspired blog</a> it derives the <strong>date</strong> and <strong>slug</strong> for each
+post from its file name which has the nice property of maintaining markdown blog posts in chronological order:</p>
+<pre><code class="language-csharp">doc.Slug = file.Name.RightPart('_').LastLeftPart('.');
+doc.HtmlFileName = $&quot;{file.Name.RightPart('_').LastLeftPart('.')}.html&quot;;
+
+var datePart = file.Name.LeftPart('_');
+if (DateTime.TryParseExact(datePart, &quot;yyyy-MM-dd&quot;, CultureInfo.InvariantCulture,
+        DateTimeStyles.AdjustToUniversal, out var date))
+{
+    doc.Date = date;
+}
+</code></pre>
+<p>The rendering itself is done using Markdig's <code>HtmlRenderer</code> which renders the Markdown content into a HTML fragment:</p>
+<pre><code class="language-csharp">var pipeline = new MarkdownPipelineBuilder()
+    .UseYamlFrontMatter()
+    .UseAdvancedExtensions()
+    .Build();
+var writer = new StringWriter();
+var renderer = new Markdig.Renderers.HtmlRenderer(writer);
+pipeline.Setup(renderer);
+//...
+
+renderer.Render(document);
+writer.Flush();
+doc.Preview = writer.ToString();
+</code></pre>
+<p>At this point we've populated Markdown Blog Posts into a POCO which is the data source used to implement all the blog's functionality.</p>
+<p>We can now start prerendering entire HTML Pages by rendering the markdown inside the
+<a href="https://github.com/NetCoreTemplates/vue-mjs/blob/main/MyApp/Pages/Posts/Post.cshtml">Post.cshtml</a> Razor Page by populating its PageModel
+from the <code>MarkdownFileInfo</code> POCO. It also sets a <code>Static</code> flag that tells the Razor Page that this page is being statically rendered so
+it can render the appropriate links.</p>
+<pre><code class="language-csharp">var page = razorPages.GetView(&quot;/Pages/Posts/Post.cshtml&quot;);
+var model = new Pages.Posts.PostModel(this) { Static = true }.Populate(doc);
+doc.HtmlPage = RenderToHtml(page.View, model);
+
+public string RenderToHtml(IView? page, PageModel model)
+{
+    using var ms = MemoryStreamFactory.GetStream();
+    razorPages.WriteHtmlAsync(ms, page, model).GetAwaiter().GetResult();
+    ms.Position = 0;
+    var html = Encoding.UTF8.GetString(ms.ReadFullyAsMemory().Span);
+    return html;
+}
+</code></pre>
+<p>The use of <code>GetResult()</code> on an async method isn't ideal, but something we have to live with until there's a better way
+to run async code on Startup.</p>
+<p>The actual rendering of the Razor Page is done with ServiceStack's <code>RazorPagesEngine</code> feature which sets up the necessary
+Http, View and Page contexts to render Razor Pages, registered in ASP.NET Core's IOC at:</p>
+<pre><code class="language-csharp">.ConfigureServices(services =&gt; {
+    services.AddSingleton&lt;RazorPagesEngine&gt;();
+})
+</code></pre>
+<p>The process of saving the prerendered content is then simply a matter of saving the rendered Razor Page at the preferred locations,
+done for each post and the <a href="/blog">/blog</a> index page using the
+<a href="https://github.com/NetCoreTemplates/vue-mjs/blob/main/MyApp/Pages/Posts/Index.cshtml">Posts/Index.cshtml</a> Razor Page:</p>
+<pre><code class="language-csharp">foreach (var file in files)
+{
+    // prerender /blog/{slug}.html
+    if (renderTo != null)
+    {
+        log.InfoFormat(&quot;Writing {0}/{1}...&quot;, renderTo, doc.HtmlFileName);
+        fs.WriteFile($&quot;{renderTo}/{doc.HtmlFileName}&quot;, doc.HtmlPage);
+    }
+}
+
+// prerender /blog/index.html
+if (renderTo != null)
+{
+    log.InfoFormat(&quot;Writing {0}/index.html...&quot;, renderTo);
+    RenderToFile(razorPages.GetView(&quot;/Pages/Posts/Index.cshtml&quot;).View, 
+        new Pages.Posts.IndexModel { Static = true }, $&quot;{renderTo}/index.html&quot;);
+}
+</code></pre>
+<h3 id="prerendering-pages-task">Prerendering Pages Task</h3>
+<p>Next we need to come up with a solution to run this from the command-line.
+<a href="https://docs.servicestack.net/app-tasks">App Tasks</a> is ideal for this which lets you run one-off tasks within the full context of your App
+but without the overhead of maintaining a separate .exe with duplicated App configuration &amp; logic, instead we can run the .NET App to
+run the specified Tasks then exit before launching its HTTP Server.</p>
+<p>To do this we'll register this task with the <strong>prerender</strong> AppTask name:</p>
+<pre><code class="language-csharp">AppTasks.Register(&quot;prerender&quot;, args =&gt; blogPosts.LoadPosts(&quot;_blog/posts&quot;, renderTo: &quot;blog&quot;));
+</code></pre>
+<p>Which we can run now from the command-line with:</p>
+<pre><code class="language-bash">$ dotnet run --AppTasks=prerender
+</code></pre>
+<p>To make it more discoverable, this is also registered as an npm script in <code>package.json</code>:</p>
+<pre><code class="language-json">{
+    &quot;scripts&quot;: {
+        &quot;prerender&quot;: &quot;dotnet run --AppTasks=prerender&quot;
+    }
+}
+</code></pre>
+<p>That can now be run to prerender this blog to <code>/wwwroot/blog</code> with:</p>
+<pre><code class="language-bash">$ npm run prerender
+</code></pre>
+<h3 id="prerendering-at-deployment">Prerendering at Deployment</h3>
+<p>To ensure this is always run at deployment it's also added as an MS Build task in <strong>MyApp.csproj</strong>:</p>
+<pre><code class="language-xml">&lt;Target Name=&quot;AppTasks&quot; AfterTargets=&quot;Build&quot; Condition=&quot;$(APP_TASKS) != ''&quot;&gt;
+    &lt;CallTarget Targets=&quot;Prerender&quot; Condition=&quot;$(APP_TASKS.Contains('prerender'))&quot; /&gt;
+&lt;/Target&gt;
+&lt;Target Name=&quot;Prerender&quot;&gt;
+    &lt;Message Text=&quot;Prerender...&quot; /&gt;
+    &lt;Exec Command=&quot;dotnet run --AppTasks=prerender&quot; /&gt;
+&lt;/Target&gt;
+</code></pre>
+<p>Configured to run when the .NET App is published in the GitHub Actions deployment task in
+<a href="https://github.com/NetCoreTemplates/vue-mjs/blob/main/.github/workflows/release.yml">/.github/workflows/release.yml</a>:</p>
+<pre><code class="language-yaml"> # Publish .NET Project
+ - name: Publish dotnet project
+   working-directory: ./MyApp
+   run: | 
+     dotnet publish -c Release /p:APP_TASKS=prerender
+</code></pre>
+<p>Where it's able to control which App Tasks are run at deployment.</p>
+<h3 id="pretty-urls-for-static.html-pages">Pretty URLs for static .html pages</h3>
+<p>A nicety we can add to serving static <code>.html</code> pages is giving them <a href="https://en.wikipedia.org/wiki/Clean_URL">Pretty URLs</a>
+by registering the Plugin:</p>
+<pre><code class="language-csharp">Plugins.Add(new CleanUrlsFeature());
+</code></pre>
+<p>Which allows prerendered pages to be accessed with and without its file extension:</p>
+<ul>
+<li><a href="/blog/prerendering">/blog/prerendering</a></li>
+<li><a href="/blog/prerendering.html">/blog/prerendering.html</a></li>
+</ul>
+<h3 id="section"></h3>
+
+                </div>
+            </div>
+        </article>
+</div>
+
+<script type="module">
+import { init } from "/mjs/app.mjs"
+init()
+</script>
+
+<link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets/styles/atom-one-dark.min.css">
+<script src="//unpkg.com/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script>hljs.highlightAll()</script>
+
+    </main>
+</div>
+
+<footer class="bg-stone-50 dark:bg-black border-t border-stone-200 dark:border-gray-600">
+    <div class="container mx-auto px-5">
+        <div class="py-28 flex flex-col lg:flex-row items-center">
+            <h3 class="text-4xl lg:text-6xl font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2">A ServiceStack Project</h3>
+            <div class="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
+                <a href="https://docs.servicestack.net" class="mx-3 bg-black dark:bg-gray-700 hover:bg-white dark:hover:bg-gray-200 hover:text-black border border-black text-white font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0">Read Documentation</a>
+                <a href="https://github.com/NetCoreTemplates/razor-ssg" class="mx-3 font-bold hover:underline">View on GitHub</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="/lib/js/htmx.js"></script>
+<script type="module">
+import { init } from "/mjs/app.mjs"
+init()
+</script>
+
+
+
+</body>
+</html>

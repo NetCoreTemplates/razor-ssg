@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg" href="/img/logo.svg">
+    <title>Getting Started - My App</title>
+    <script>
+    const cls = document.querySelector('html').classList
+    if (localStorage.getItem('color-scheme') === 'dark')
+        cls.add('dark')
+    else
+        cls.remove('dark')
+    </script>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+{
+    "imports": {
+        "vue": "/lib/mjs/vue.min.mjs",
+        "@servicestack/client": "/lib/mjs/servicestack-client.min.mjs",
+        "@servicestack/vue": "/lib/mjs/servicestack-vue.min.mjs"
+    }
+}
+</script>
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+<header class="border-b border-gray-200 dark:border-gray-600 pr-3">
+    <div class="flex flex-wrap items-center">
+        <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
+            <div class="cursor-pointer">
+                <a hx-boost="true" class="navbar-brand flex items-center" href="/">
+                    <img class="w-8 h-8 sm:ml-2 sm:w-12 sm:h-12" src="/img/logo.svg" alt="MyApp logo">
+                    <span class="hidden sm:block text-2xl font-semibold">MyApp</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-grow flex-shrink flex-nowrap justify-end items-center">
+            <nav class="relative flex flex-grow leading-6 font-semibold text-slate-700 dark:text-slate-200">
+                <ul class="flex flex-wrap items-center justify-end w-full m-0 pb-2 sm:pb-0">
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/whatsnew" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    What's New
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/blog" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Blog
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/posts" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400 text-blue-700 dark:text-blue-300">
+                                    Archive
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/speaking" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Speaking
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/about" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    About
+                                </a>
+                            </li>
+                    <li class="relative flex flex-wrap just-fu-start m-0">
+                        <div data-component="DarkModeToggle" class="ml-2 w-10"></div>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</header>
+<script type="module">
+import { mountAll } from "/mjs/app.mjs"
+mountAll()
+</script>
+
+
+<div class="min-h-screen">
+    <main role="main" class="pb-3" hx-ext="class-tools">
+        
+
+
+<link rel="stylesheet" href="/css/typography.css">
+
+<div class="container px-5 mb-32 mx-auto">
+        <article class="mt-20">
+            <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
+                Getting Started
+            </h1>
+            <div class="hidden md:block md:mb-12">
+                <a class="flex items-center text-xl font-bold" href="/posts/author/gayle-smith">
+                    <img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="/img/authors/author2.svg">
+                    <span>Gayle Smith</span>
+                </a>
+            </div>
+            <div class="mb-8 md:mb-16 sm:mx-0">
+                <div class="sm:mx-0">
+                    <img src="https://images.unsplash.com/photo-1533090161767-e6ffed986c88?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" alt="Getting Started Background" class="shadow-small">
+                </div>
+            </div>
+            <div class="mb-4 max-w-2xl mx-auto flex flex-wrap">
+                    <a href="/posts/tagged/js" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">js</a>
+                    <a href="/posts/tagged/dev" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">dev</a>
+                    <a href="/posts/tagged/tailwind" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">tailwind</a>
+            </div>
+                <div class="max-w-2xl mx-auto">
+                    <div class="mb-6 text-lg text-gray-500">
+                        <time datetime="2023-01-21T00:00:00.0000000">January 21, 2023</time>
+                        <span aria-hidden="true">&middot;</span>
+                        <span>2 min read</span>
+                    </div>
+                </div>
+            <div class="max-w-2xl mx-auto">
+                <div class="prose lg:prose-xl max-w-none mb-32">
+                    <h3 id="setup">Setup</h3>
+<p>If project wasn't created with <a href="https://docs.servicestack.net/dotnet-new">x new</a>, ensure postinstall tasks are run with:</p>
+<pre><code class="language-bash">$ npm install
+</code></pre>
+<h3 id="tailwind-configuration">Tailwind Configuration</h3>
+<p>This template is configured with a stand-alone <a href="https://tailwindcss.com/docs/installation">Tailwind CSS CLI</a>
+installation with a modified <strong>tailwind.input.css</strong> that includes <a href="https://github.com/tailwindlabs/tailwindcss-forms">@tailwindcss/forms</a>
+and <a href="https://github.com/tailwindlabs/tailwindcss-aspect-ratio">@tailwindcss/aspect-ratio</a> plugins so that no <strong>node_modules</strong> dependencies are needed.</p>
+<p>The <a href="https://tailwindcss.com/docs/typography-plugin">@tailwindcss/typography</a> plugin css is contained in <code>css/typography.css</code> which
+applies a beautiful default style to unstyled HTML, ideal for Markdown content like this.</p>
+<h3 id="running-tailwind-during-development">Running Tailwind during development</h3>
+<p>Run tailwind in a new terminal during development to auto update your <strong>app.css</strong>:</p>
+<pre><code class="language-bash">$ npm run ui:dev
+</code></pre>
+<p>For an optimal development experience run it together with <code>dotnet watch</code> to preview changes on each save.</p>
+<p>Or if using JetBrains Rider, <strong>ui:dev</strong> can be run directly from Rider in <strong>package.json</strong>:</p>
+<p><img src="https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/servicestack-reference/scripts-tailwind.png" alt="" /></p>
+<h3 id="using-jsonserviceclient-in-web-pages">Using JsonServiceClient in Web Pages</h3>
+<p>Easiest way to call APIs is to use <a href="https://docs.servicestack.net/javascript-client">@servicestack/client</a> with
+the built-in <a href="/types/mjs">/types/mjs</a> which returns your APIs annotated typed JS DTOs that can be used immediately
+(i.e. without any build steps):</p>
+<pre><code class="language-html">&lt;input type=&quot;text&quot; id=&quot;txtName&quot;&gt;
+&lt;div id=&quot;result&quot;&gt;&lt;/div&gt;
+</code></pre>
+<pre><code class="language-html">&lt;script type=&quot;module&quot;&gt;
+import { JsonApiClient, $1, on } from '@servicestack/client'
+import { Hello } from '/types/mjs'
+
+on('#txtName', {
+    async keyup(el) {
+        const client = JsonApiClient.create()
+        const api = await client.api(new Hello({ name:el.target.value }))
+        $1('#result').innerHTML = api.response.result
+    }
+})
+&lt;/script&gt;
+</code></pre>
+<p>For better IDE intelli-sense during development, save the annotated Typed DTOs to disk with:</p>
+<pre><code class="language-bash">$ npm run dtos
+</code></pre>
+<p>Where it will enable IDE static analysis when calling Typed APIs from JavaScript:</p>
+<pre><code class="language-js">import { Hello } from '/mjs/dtos.mjs'
+client.api(new Hello({ name }))
+</code></pre>
+
+                </div>
+            </div>
+        </article>
+</div>
+
+<script type="module">
+import { init } from "/mjs/app.mjs"
+init()
+</script>
+
+<link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets/styles/atom-one-dark.min.css">
+<script src="//unpkg.com/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script>hljs.highlightAll()</script>
+
+    </main>
+</div>
+
+<footer class="bg-stone-50 dark:bg-black border-t border-stone-200 dark:border-gray-600">
+    <div class="container mx-auto px-5">
+        <div class="py-28 flex flex-col lg:flex-row items-center">
+            <h3 class="text-4xl lg:text-6xl font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2">A ServiceStack Project</h3>
+            <div class="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
+                <a href="https://docs.servicestack.net" class="mx-3 bg-black dark:bg-gray-700 hover:bg-white dark:hover:bg-gray-200 hover:text-black border border-black text-white font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0">Read Documentation</a>
+                <a href="https://github.com/NetCoreTemplates/razor-ssg" class="mx-3 font-bold hover:underline">View on GitHub</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="/lib/js/htmx.js"></script>
+<script type="module">
+import { init } from "/mjs/app.mjs"
+init()
+</script>
+
+
+
+</body>
+</html>

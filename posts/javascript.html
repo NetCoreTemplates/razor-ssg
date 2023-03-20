@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg" href="/img/logo.svg">
+    <title>Simple, Modern JavaScript - My App</title>
+    <script>
+    const cls = document.querySelector('html').classList
+    if (localStorage.getItem('color-scheme') === 'dark')
+        cls.add('dark')
+    else
+        cls.remove('dark')
+    </script>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+{
+    "imports": {
+        "vue": "/lib/mjs/vue.min.mjs",
+        "@servicestack/client": "/lib/mjs/servicestack-client.min.mjs",
+        "@servicestack/vue": "/lib/mjs/servicestack-vue.min.mjs"
+    }
+}
+</script>
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+<header class="border-b border-gray-200 dark:border-gray-600 pr-3">
+    <div class="flex flex-wrap items-center">
+        <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
+            <div class="cursor-pointer">
+                <a hx-boost="true" class="navbar-brand flex items-center" href="/">
+                    <img class="w-8 h-8 sm:ml-2 sm:w-12 sm:h-12" src="/img/logo.svg" alt="MyApp logo">
+                    <span class="hidden sm:block text-2xl font-semibold">MyApp</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-grow flex-shrink flex-nowrap justify-end items-center">
+            <nav class="relative flex flex-grow leading-6 font-semibold text-slate-700 dark:text-slate-200">
+                <ul class="flex flex-wrap items-center justify-end w-full m-0 pb-2 sm:pb-0">
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/whatsnew" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    What's New
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/blog" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Blog
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/posts" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400 text-blue-700 dark:text-blue-300">
+                                    Archive
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/speaking" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Speaking
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/about" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    About
+                                </a>
+                            </li>
+                    <li class="relative flex flex-wrap just-fu-start m-0">
+                        <div data-component="DarkModeToggle" class="ml-2 w-10"></div>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</header>
+<script type="module">
+import { mountAll } from "/mjs/app.mjs"
+mountAll()
+</script>
+
+
+<div class="min-h-screen">
+    <main role="main" class="pb-3" hx-ext="class-tools">
+        
+
+
+<link rel="stylesheet" href="/css/typography.css">
+
+<div class="container px-5 mb-32 mx-auto">
+        <article class="mt-20">
+            <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
+                Simple, Modern JavaScript
+            </h1>
+            <div class="hidden md:block md:mb-12">
+                <a class="flex items-center text-xl font-bold" href="/posts/author/brandon-foley">
+                    <img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="/img/authors/author3.svg">
+                    <span>Brandon Foley</span>
+                </a>
+            </div>
+            <div class="mb-8 md:mb-16 sm:mx-0">
+                <div class="sm:mx-0">
+                    <img src="https://images.unsplash.com/photo-1497515114629-f71d768fd07c?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" alt="Simple, Modern JavaScript Background" class="shadow-small">
+                </div>
+            </div>
+            <div class="mb-4 max-w-2xl mx-auto flex flex-wrap">
+                    <a href="/posts/tagged/js" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">js</a>
+                    <a href="/posts/tagged/dev" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">dev</a>
+            </div>
+                <div class="max-w-2xl mx-auto">
+                    <div class="mb-6 text-lg text-gray-500">
+                        <time datetime="2023-01-20T00:00:00.0000000">January 20, 2023</time>
+                        <span aria-hidden="true">&middot;</span>
+                        <span>14 min read</span>
+                    </div>
+                </div>
+            <div class="max-w-2xl mx-auto">
+                <div class="prose lg:prose-xl max-w-none mb-32">
+                    <svg class="sm:float-left mr-8 w-24 h-24" style="margin-top:0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 630 630">
+<rect width="630" height="630" fill="#f7df1e"/>
+<path d="m423.2 492.19c12.69 20.72 29.2 35.95 58.4 35.95 24.53 0 40.2-12.26 40.2-29.2 0-20.3-16.1-27.49-43.1-39.3l-14.8-6.35c-42.72-18.2-71.1-41-71.1-89.2 0-44.4 33.83-78.2 86.7-78.2 37.64 0 64.7 13.1 84.2 47.4l-46.1 29.6c-10.15-18.2-21.1-25.37-38.1-25.37-17.34 0-28.33 11-28.33 25.37 0 17.76 11 24.95 36.4 35.95l14.8 6.34c50.3 21.57 78.7 43.56 78.7 93 0 53.3-41.87 82.5-98.1 82.5-54.98 0-90.5-26.2-107.88-60.54zm-209.13 5.13c9.3 16.5 17.76 30.45 38.1 30.45 19.45 0 31.72-7.61 31.72-37.2v-201.3h59.2v202.1c0 61.3-35.94 89.2-88.4 89.2-47.4 0-74.85-24.53-88.81-54.075z"/>
+</svg>
+<p>JavaScript has progressed significantly in recent times where many of the tooling &amp; language enhancements
+that we used to rely on external tools for is now available in modern browsers alleviating the need for
+complex tooling and npm dependencies that have historically plagued modern web development.</p>
+<p>The good news is that the complex npm tooling that was previously considered mandatory in modern JavaScript App
+development can be considered optional as we can now utilize modern browser features like<br />
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">async/await</a>,
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">JavaScript Modules</a>,
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import">dynamic imports</a>,
+<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap">import maps</a>
+and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide">modern language features</a> for a
+sophisticated development workflow without the need for any npm build tools.</p>
+<h3 id="bringing-simplicity-back">Bringing Simplicity Back</h3>
+<p>This template focuses on simplicity and eschews many aspects that has complicated modern JavaScript development,
+specifically:</p>
+<ul>
+<li>No npm node_modules or build tools</li>
+<li>No client side routing</li>
+<li>No heavy client state</li>
+</ul>
+<p>Effectively abandoning the traditional SPA approach in lieu of a simpler <a href="https://docs.astro.build/en/concepts/mpa-vs-spa/">MPA</a>
+development model using Razor Pages for Server Rendered content with any interactive UIs progressively enhanced with JavaScript.</p>
+<h4 id="freedom-to-use-any-js-library">Freedom to use any JS library</h4>
+<p>Avoiding the SPA route ends up affording more flexibility on which JS libraries each page can use as without heavy bundled JS
+blobs of all JS used in the entire App, it's free to only load the required JS each page needs to best implement its
+required functionality, which can be any JS library, preferably utilizing ESM builds that can be referenced from a
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">JavaScript Module</a>, taking advantage of the module system
+native to modern browsers able to efficiently download the declarative matrix of dependencies each script needs.</p>
+<h3 id="best-libraries-for-progressive-multi-page-apps">Best libraries for progressive Multi Page Apps</h3>
+<p>By default this template includes a collection of libraries we believe offers the best modern development experience in Progressive
+MPA Web Apps, specifically:</p>
+<h4 id="tailwind-cli"><a href="https://tailwindcss.com/docs/installation">Tailwind CLI</a></h4>
+<p>Tailwind enables a responsive, utility-first CSS framework for creating maintainable CSS at scale without the need for any CSS
+preprocessors like Sass, which is configured to run from an npx script to avoid needing any node_module dependencies.</p>
+<h4 id="vue-3"><a href="https://vuejs.org/guide/introduction.html">Vue 3</a></h4>
+<p>Vue is a popular Progressive JavaScript Framework that makes it easy to create interactive Reactive Components whose
+<a href="https://vuejs.org/api/composition-api-setup.html">Composition API</a> offers a nice development model without requiring any
+pre-processors like JSX.</p>
+<p>Where creating a component is as simple as:</p>
+<pre><code class="language-js">const Hello = {
+    template: `&lt;b&gt;Hello, {{name}}!&lt;/b&gt;`,
+    props: { name:String }
+}
+</code></pre>
+<div data-component="Hello" data-props="{ name: 'Vue 3' }" class="text-center text-2xl py-2"></div>
+<p>Or a simple reactive example:</p>
+<pre><code class="language-js">import { ref } from &quot;vue&quot;
+
+const Counter = {
+    template: `&lt;b @click=&quot;count++&quot;&gt;Counter {{count}}&lt;/b&gt;`,
+    setup() {
+        let count = ref(1)
+        return { count }
+    }
+}
+</code></pre>
+<div data-component="Counter" class="text-center text-2xl py-2 cursor-pointer select-none"></div>
+<p>These components can be mounted using the standard <a href="https://vuejs.org/api/application.html#app-mount">Vue 3 mount</a> API, but to
+make it easier we've added additional APIs for declaratively mounting components to pages using the <code>data-component</code> and <code>data-props</code>
+attributes, especially useful for including Vue components in Markdown content like this, e.g:</p>
+<pre><code class="language-html">&lt;div data-component=&quot;Hello&quot; data-props=&quot;{ name: 'Vue 3' }&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>Alternatively they can be programatically added using the custom <code>mount</code> method in <code>api.mjs</code>:</p>
+<pre><code class="language-js">import { mount } from &quot;/mjs/api.mjs&quot;
+mount('#counter', Counter)
+</code></pre>
+<p>Both methods create components with access to all your Shared Components and any 3rd Party Plugins which
+we can preview in this example that uses <strong>@servicestack/vue</strong>'s
+<a href="https://docs.servicestack.net/vue/gallery/navigation#primarybutton">PrimaryButton</a>
+and <a href="https://docs.servicestack.net/vue/gallery/modals">ModalDialog</a>:</p>
+<pre><code class="language-js">const Plugin = {
+    template:`&lt;div&gt;
+        &lt;PrimaryButton @click=&quot;show=true&quot;&gt;Open Modal&lt;/PrimaryButton&gt;
+        &lt;ModalDialog v-if=&quot;show&quot; @done=&quot;show=false&quot;&gt;
+            &lt;div class=&quot;p-8&quot;&gt;Hello @servicestack/vue!&lt;/div&gt;
+        &lt;/ModalDialog&gt;
+    &lt;/div&gt;`,
+    setup() {
+        const show = ref(false)
+        return { show }
+    }
+}
+</code></pre>
+<div class="text-center"><div data-component="Plugin" id="plugin" class="text-2xl py-4"></div></div>
+<h3 id="servicestackvue">@servicestack/vue</h3>
+<p><a href="https://github.com/ServiceStack/servicestack-vue">@servicestack/vue</a> is our growing Vue 3 Tailwind component library with a number of rich Tailwind components useful
+in .NET Web Apps, including Input Components with auto form validation binding which is used by all HTML forms in this template.</p>
+<div data-component="VueComponentGallery"></div>
+<h3 id="servicestackclient">@servicestack/client</h3>
+<p><a href="https://docs.servicestack.net/javascript-client">@servicestack/client</a> is our generic JS/TypeScript client library
+which enables a terse, typed API for using your App's typed DTOs from the built-in
+<a href="https://docs.servicestack.net/javascript-add-servicestack-reference">JavaScript ES6 Classes</a> support to enable an effortless
+end-to-end Typed development model for calling your APIs <strong>without any build steps</strong>, e.g:</p>
+<pre><code class="language-html">&lt;input type=&quot;text&quot; id=&quot;txtName&quot;&gt;
+&lt;div id=&quot;result&quot;&gt;&lt;/div&gt;
+
+&lt;script type=&quot;module&quot;&gt;
+import { JsonApiClient, $1, on } from '@servicestack/client'
+import { Hello } from '/types/mjs'
+
+on('#txtName', {
+    async keyup(el) {
+        const client = JsonApiClient.create()
+        const api = await client.api(new Hello({ name:el.target.value }))
+        $1('#result').innerHTML = api.response.result
+    }
+})
+&lt;/script&gt;
+</code></pre>
+<p>For better IDE intelli-sense during development, save the annotated Typed DTOs to disk with:</p>
+<pre><code class="language-bash">$ npm run dtos
+</code></pre>
+<p>That can be referenced instead to unlock your IDE's static analysis type-checking and intelli-sense benefits during development:</p>
+<pre><code class="language-js">import { Hello } from '/js/dtos.mjs'
+client.api(new Hello({ name }))
+</code></pre>
+<p>You'll typically use all these libraries in your <strong>API-enabled</strong> components as seen in the
+<a href="https://github.com/NetCoreTemplates/vue-mjs/blob/main/MyApp/wwwroot/mjs/components/HelloApi.mjs">HelloApi.mjs</a>
+component on the home page which calls the <a href="/ui/Hello">Hello</a> API on each key press:</p>
+<pre><code class="language-js">import { ref } from &quot;vue&quot;
+import { useClient } from &quot;@servicestack/vue&quot;
+import { Hello } from &quot;../dtos.mjs&quot;
+
+export default {
+    template:/*html*/`&lt;div class=&quot;flex flex-wrap justify-center&quot;&gt;
+        &lt;TextInput v-model=&quot;name&quot; @keyup=&quot;update&quot; /&gt;
+        &lt;div class=&quot;ml-3 mt-2 text-lg&quot;&gt;{{ result }}&lt;/div&gt;
+    &lt;/div&gt;`,
+    props:['value'],
+    setup(props) {
+        let name = ref(props.value)
+        let result = ref('')
+        let client = useClient()
+
+        async function update() {
+            let api = await client.api(new Hello({ name }))
+            if (api.succeeded) {
+                result.value = api.response.result
+            }
+        }
+        update()
+
+        return { name, update, result }
+    }
+}
+</code></pre>
+<p>Which we can also mount below:</p>
+<div data-component="HelloApi" data-props="{ value: 'Vue 3' }" class="w-full font-semibold"></div>
+<p>We'll also go through and explain other features used in this component:</p>
+<h4 id="html"><code>/*html*/</code></h4>
+<p>Although not needed in <a href="rider">Rider</a> (which can automatically infer HTML in strings), the <code>/*html*/</code> type hint can be used
+to instruct tooling like the <a href="https://marketplace.visualstudio.com/items?itemName=Tobermory.es6-string-html">es6-string-html</a>
+VS Code extension to provide syntax highlighting and an enhanced authoring experience for HTML content in string literals.</p>
+<h3 id="useclient">useClient</h3>
+<p><a href="https://docs.servicestack.net/vue/use-client">useClient()</a> provides managed APIs around the <code>JsonServiceClient</code>
+instance registered in Vue App's with:</p>
+<pre><code class="language-js">let client = JsonApiClient.create()
+app.provide('client', client)
+</code></pre>
+<p>Which maintains contextual information around your API calls like <strong>loading</strong> and <strong>error</strong> states, used by <code>@servicestack/vue</code> components to
+enable its auto validation binding. Other functionality in this provider include:</p>
+<pre><code class="language-js">let { 
+    api, apiVoid, apiForm, apiFormVoid, // Managed Typed ServiceClient APIs
+    loading, error,                     // Maintains 'loading' and 'error' states
+    setError, addFieldError,            // Add custom errors in client
+    unRefs                              // Returns a dto with all Refs unwrapped
+} = useClient()
+</code></pre>
+<p>Typically you would need to unwrap <code>ref</code> values when calling APIs, i.e:</p>
+<pre><code class="language-js">let client = JsonApiClient.create()
+let api = await client.api(new Hello({ name:name.value }))
+</code></pre>
+<h4 id="useclient-api">useClient - api</h4>
+<p>This is unnecessary in useClient <code>api*</code> methods which automatically unwraps ref values, allowing for the more pleasant API call:</p>
+<pre><code class="language-js">let api = await client.api(new Hello({ name }))
+</code></pre>
+<h4 id="useclient-unrefs">useClient - unRefs</h4>
+<p>But as DTOs are typed, passing reference values will report a type annotation warning in IDEs with type-checking enabled,
+which can be resolved by explicitly unwrapping DTO ref values with <code>unRefs</code>:</p>
+<pre><code class="language-js">let api = await client.api(new Hello(unRefs({ name })))
+</code></pre>
+<h4 id="useclient-seterror">useClient - setError</h4>
+<p><code>setError</code> can be used to populate client-side validation errors which the
+<a href="https://github.com/NetCoreTemplates/vue-mjs/blob/main/MyApp/wwwroot/Pages/SignUp.mjs">SignUp.mjs</a>
+component uses to report an invalid submissions when passwords don't match:</p>
+<pre><code class="language-js">const { api, setError } = useClient()
+async function onSubmit() {
+    if (password.value !== confirmPassword.value) {
+        setError({ fieldName:'confirmPassword', message:'Passwords do not match' })
+        return
+    }
+    //...
+}
+</code></pre>
+<h3 id="form-validation">Form Validation</h3>
+<p>All <code>@servicestack/vue</code> Input Components support contextual validation binding that's typically populated from API
+<a href="https://docs.servicestack.net/error-handling">Error Response DTOs</a> but can also be populated from client-side validation
+as done above.</p>
+<h4 id="explicit-error-handling">Explicit Error Handling</h4>
+<p>This populated <code>ResponseStatus</code> DTO can either be manually passed into each component's <strong>status</strong> property as done in <a href="/TodoMvc">/TodoMvc</a>:</p>
+<pre><code class="language-html">&lt;template id=&quot;TodoMvc-template&quot;&gt;
+    &lt;div class=&quot;mb-3&quot;&gt;
+        &lt;text-input :status=&quot;store.error&quot; id=&quot;text&quot; label=&quot;&quot; placeholder=&quot;What needs to be done?&quot;
+                    v-model=&quot;store.newTodo&quot; v-on:keyup.enter.stop=&quot;store.addTodo()&quot;&gt;&lt;/text-input&gt;
+    &lt;/div&gt;
+    &lt;!-- ... --&gt;
+&lt;/template&gt;
+</code></pre>
+<p>Where if you try adding an empty Todo the <code>CreateTodo</code> API will fail and populate its <code>store.error</code> reactive property with the
+APIs Error Response DTO which the <code>&lt;TextInput /&gt;</code> component checks to display any field validation errors adjacent to the HTML Input
+with matching <code>id</code> fields:</p>
+<pre><code class="language-js">let store = {
+    /** @type {Todo[]} */
+    todos: [],
+    newTodo:'',
+    error:null,
+    async addTodo() {
+        this.todos.push(new Todo({ text:this.newTodo }))
+        let api = await client.api(new CreateTodo({ text:this.newTodo }))
+        if (api.succeeded)
+            this.newTodo = ''
+        else
+            this.error = api.error
+    },
+    //...
+}
+</code></pre>
+<h4 id="implicit-error-handling">Implicit Error Handling</h4>
+<p>More often you'll want to take advantage of the implicit validation support in <code>useClient()</code> which makes its state available to child
+components, alleviating the need to explicitly pass it in each component as seen in razor-tailwind's
+<a href="https://github.com/NetCoreTemplates/razor-tailwind/blob/main/MyApp/wwwroot/Pages/Contacts.mjs">Contacts.mjs</a> <code>Edit</code> component for its
+<a href="https://vue-mjs.web-templates.io/Contacts">/Contacts</a> page which doesn't do any manual error handling:</p>
+<pre><code class="language-js">const Edit = {
+    template:/*html*/`&lt;SlideOver @done=&quot;close&quot; title=&quot;Edit Contact&quot;&gt;
+    &lt;form @submit.prevent=&quot;submit&quot;&gt;
+      &lt;input type=&quot;submit&quot; class=&quot;hidden&quot;&gt;
+      &lt;fieldset&gt;
+        &lt;ErrorSummary except=&quot;title,name,color,filmGenres,age,agree&quot; class=&quot;mb-4&quot; /&gt;
+        &lt;div class=&quot;grid grid-cols-6 gap-6&quot;&gt;
+          &lt;div class=&quot;col-span-6 sm:col-span-3&quot;&gt;
+            &lt;SelectInput id=&quot;title&quot; v-model=&quot;request.title&quot; :options=&quot;enumOptions('Title')&quot; /&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;col-span-6 sm:col-span-3&quot;&gt;
+            &lt;TextInput id=&quot;name&quot; v-model=&quot;request.name&quot; required placeholder=&quot;Contact Name&quot; /&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;col-span-6 sm:col-span-3&quot;&gt;
+            &lt;SelectInput id=&quot;color&quot; v-model=&quot;request.color&quot; :options=&quot;colorOptions&quot; /&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;col-span-6 sm:col-span-3&quot;&gt;
+            &lt;SelectInput id=&quot;favoriteGenre&quot; v-model=&quot;request.favoriteGenre&quot; :options=&quot;enumOptions('FilmGenre')&quot; /&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;col-span-6 sm:col-span-3&quot;&gt;
+            &lt;TextInput type=&quot;number&quot; id=&quot;age&quot; v-model=&quot;request.age&quot; /&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/fieldset&gt;
+    &lt;/form&gt;
+    &lt;template #footer&gt;
+      &lt;div class=&quot;flex justify-between space-x-3&quot;&gt;
+        &lt;div&gt;&lt;ConfirmDelete @delete=&quot;onDelete&quot;&gt;Delete&lt;/ConfirmDelete&gt;&lt;/div&gt;
+        &lt;div&gt;&lt;PrimaryButton @click=&quot;submit&quot;&gt;Update Contact&lt;/PrimaryButton&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/template&gt;
+  &lt;/SlideOver&gt;`,
+    props:['contact'],
+    emits:['done'],
+    setup(props, { emit }) {
+        const client = useClient()
+        const request = ref(new UpdateContact(props.contact))
+        const colorOptions = propertyOptions(getProperty('UpdateContact','Color'))
+
+        async function submit() {
+            const api = await client.api(request.value)
+            if (api.succeeded) close()
+        }
+
+        async function onDelete () {
+            const api = await client.apiVoid(new DeleteContact({ id:props.id }))
+            if (api.succeeded) close()
+        }
+
+        const close = () =&gt; emit('done')
+
+        return { request, enumOptions, colorOptions, submit, onDelete, close }
+    }
+}
+</code></pre>
+<p>Effectively making form validation binding a transparent detail where all <code>@servicestack/vue</code>
+Input Components are able to automatically apply contextual validation errors next to the fields they apply to:</p>
+<p><img src="https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/scripts/edit-contact-validation.png" alt="" /></p>
+<h3 id="autoform-components">AutoForm Components</h3>
+<p>We can elevate our productivity even further with
+<a href="https://docs.servicestack.net/vue/gallery/autoform">Auto Form Components</a> that can automatically generate an
+instant API-enabled form with validation binding by just specifying the Request DTO you want to create the form of, e.g:</p>
+<pre><code class="language-html">&lt;AutoCreateForm type=&quot;CreateBooking&quot; formStyle=&quot;card&quot; /&gt;
+</code></pre>
+<div class="not-prose" data-component="AutoCreateForm" data-props="{ type:'CreateBooking', formStyle:'card' }"></div>
+<p>The AutoForm components are powered by your <a href="https://docs.servicestack.net/vue/use-appmetadata">App Metadata</a> which allows creating
+highly customized UIs from <a href="https://docs.servicestack.net/locode/declarative">declarative C# attributes</a> whose customizations are
+reused across all ServiceStack Auto UIs, including:</p>
+<ul>
+<li><a href="https://docs.servicestack.net/api-explorer">API Explorer</a></li>
+<li><a href="https://docs.servicestack.net/locode/">Locode</a></li>
+<li><a href="https://docs.servicestack.net/templates-blazor-components">Blazor Tailwind Components</a></li>
+</ul>
+<h3 id="form-input-components">Form Input Components</h3>
+<p>In addition to including Tailwind versions of the standard <a href="https://docs.servicestack.net/vue/gallery/form-inputs">HTML Form Inputs</a> controls to create beautiful Tailwind Forms,
+it also contains a variety of integrated high-level components:</p>
+<ul>
+<li><a href="https://docs.servicestack.net/vue/gallery/fileinput">FileInput</a></li>
+<li><a href="https://docs.servicestack.net/vue/gallery/taginput">TagInput</a></li>
+<li><a href="https://docs.servicestack.net/vue/gallery/autocomplete">Autocomplete</a></li>
+</ul>
+<h3 id="useauth">useAuth</h3>
+<p>Your Vue.js code can access Authenticated Users using <a href="https://docs.servicestack.net/vue/use-auth">useAuth()</a>
+which can also be populated without the overhead of an Ajax request by embedding the response of the built-in
+<a href="/ui/Authenticate?tab=details">Authenticate API</a> inside <code>_Layout.cshtml</code> with:</p>
+<pre><code class="language-html">&lt;script type=&quot;module&quot;&gt;
+import { useAuth } from &quot;@@servicestack/vue&quot;
+const { signIn } = useAuth()
+signIn(@await Html.ApiAsJsonAsync(new Authenticate()))
+&lt;/script&gt;
+</code></pre>
+<p>Where it enables access to the below <a href="https://docs.servicestack.net/vue/use-auth">useAuth()</a> utils for inspecting the
+current authenticated user:</p>
+<pre><code class="language-js">const { 
+    signIn,           // Sign In the currently Authenticated User
+    signOut,          // Sign Out currently Authenticated User
+    user,             // Access Authenticated User info in a reactive Ref&lt;AuthenticateResponse&gt;
+    isAuthenticated,  // Check if the current user is Authenticated in a reactive Ref&lt;boolean&gt;
+    hasRole,          // Check if the Authenticated User has a specific role
+    hasPermission,    // Check if the Authenticated User has a specific permission
+    isAdmin           // Check if the Authenticated User has the Admin role
+} = useAuth()
+</code></pre>
+<p>This is used in <a href="https://github.com/NetCoreTemplates/vue-mjs/blob/main/MyApp/wwwroot/Pages/Bookings.mjs">Bookings.mjs</a>
+to control whether the <code>&lt;AutoEditForm&gt;</code> component should enable its delete functionality:</p>
+<pre><code class="language-js">export default {
+    template/*html*/:`
+    &lt;AutoEditForm type=&quot;UpdateBooking&quot; :deleteType=&quot;canDelete ? 'DeleteBooking' : null&quot; /&gt;
+    `,
+    setup(props) {
+        const { hasRole } = useAuth()
+        const canDelete = computed(() =&gt; hasRole('Manager'))
+        return { canDelete }
+    }
+}
+</code></pre>
+<h4 id="jsdoc"><a href="https://jsdoc.app">JSDoc</a></h4>
+<p>We get great value from using <a href="https://www.typescriptlang.org">TypeScript</a> to maintain our libraries typed code bases, however it
+does mandate using an external tool to convert it to valid JS before it can be run, something the new Razor Vue.js templates expressly avoids.</p>
+<p>Instead it adds JSDoc type annotations to code where it adds value, which at the cost of slightly more verbose syntax enables much of the
+same static analysis and intelli-sense benefits of TypeScript, but without needing any tools to convert it to valid JavaScript, e.g:</p>
+<pre><code class="language-js">/** @param {KeyboardEvent} e */
+function validateSafeName(e) {
+    if (e.key.match(/[\W]+/g)) {
+        e.preventDefault()
+        return false
+    }
+}
+</code></pre>
+<h4 id="typescript-language-service">TypeScript Language Service</h4>
+<p>Whilst the code-base doesn't use TypeScript syntax in its code base directly, it still benefits from TypeScript's language services
+in IDEs for the included libraries from the TypeScript definitions included in <code>/lib/typings</code>, downloaded in
+<a href="https://github.com/NetCoreTemplates/vue-mjs/blob/main/MyApp/postinstall.js">postinstall.js</a> after <strong>npm install</strong>.</p>
+<h3 id="import-maps">Import Maps</h3>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap">Import Maps</a> is a useful browser feature that allows
+specifying optimal names for modules, that can be used to map package names to the implementation it should use, e.g:</p>
+<pre><code class="language-csharp">@Html.StaticImportMap(new() {
+    [&quot;vue&quot;]                  = &quot;/lib/mjs/vue.mjs&quot;,
+    [&quot;@servicestack/client&quot;] = &quot;/lib/mjs/servicestack-client.mjs&quot;,
+    [&quot;@servicestack/vue&quot;]    = &quot;/lib/mjs/servicestack-vue.mjs&quot;,
+})
+</code></pre>
+<p>Where they can be freely maintained in one place without needing to update any source code references.
+This allows source code to be able to import from the package name instead of its physical location:</p>
+<pre><code class="language-js">import { ref } from &quot;vue&quot;
+import { useClient } from &quot;@servicestack/vue&quot;
+import { JsonApiClient, $1, on } from &quot;@servicestack/client&quot;
+</code></pre>
+<p>It's a great solution for specifying using local unminified debug builds during <strong>Development</strong>, and more optimal CDN hosted
+production builds when running in <strong>Production</strong>, alleviating the need to rely on complex build tools to perform this code transformation for us:</p>
+<pre><code class="language-csharp">@Html.ImportMap(new()
+{
+    [&quot;vue&quot;]                  = (&quot;/lib/mjs/vue.mjs&quot;,                 &quot;https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js&quot;),
+    [&quot;@servicestack/client&quot;] = (&quot;/lib/mjs/servicestack-client.mjs&quot;, &quot;https://unpkg.com/@servicestack/client@2/dist/servicestack-client.min.mjs&quot;),
+    [&quot;@servicestack/vue&quot;]    = (&quot;/lib/mjs/servicestack-vue.mjs&quot;,    &quot;https://unpkg.com/@servicestack/vue@3/dist/servicestack-vue.min.mjs&quot;)
+})
+</code></pre>
+<p>Note: Specifying exact versions of each dependency improves initial load times by eliminating latency from redirects.</p>
+<p>Or if you don't want your Web App to reference any external dependencies, have the ImportMap reference local minified production builds instead:</p>
+<pre><code class="language-csharp">@Html.ImportMap(new()
+{
+    [&quot;vue&quot;]                  = (&quot;/lib/mjs/vue.mjs&quot;,                 &quot;/lib/mjs/vue.min.mjs&quot;),
+    [&quot;@servicestack/client&quot;] = (&quot;/lib/mjs/servicestack-client.mjs&quot;, &quot;/lib/mjs/servicestack-client.min.mjs&quot;),
+    [&quot;@servicestack/vue&quot;]    = (&quot;/lib/mjs/servicestack-vue.mjs&quot;,    &quot;/lib/mjs/servicestack-vue.min.mjs&quot;)
+})
+</code></pre>
+<h4 id="polyfill-for-safari">Polyfill for Safari</h4>
+<p>Unfortunately Safari is the last modern browser to <a href="https://caniuse.com/import-maps">support import maps</a> which is only now in
+Technical Preview. Luckily this feature can be polyfilled with the <a href="https://github.com/guybedford/es-module-shims">ES Module Shims</a>
+that's configured in this template:</p>
+<pre><code class="language-html">@if (Context.Request.Headers.UserAgent.Any(x =&gt; x.Contains(&quot;Safari&quot;) &amp;&amp; !x.Contains(&quot;Chrome&quot;)))
+{
+    &lt;script async src=&quot;https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js&quot;&gt;&lt;/script&gt;
+}
+</code></pre>
+<h3 id="fast-component-loading">Fast Component Loading</h3>
+<p>SPAs are notorious for being slow to load due to needing to download large blobs of JavaScript bundles that it needs to initialize
+with their JS framework to mount their App component before it starts fetching the data from the server it needs to render its components.</p>
+<p>A complex solution to this problem is to server render the initial HTML content then re-render it again on the client after the page loads.
+A simpler solution is to avoid unnecessary ajax calls by embedding the JSON data the component needs in the page that loads it, which is what
+<a href="/TodoMvc">/TodoMvc</a> does to load its initial list of todos using the <a href="https://docs.servicestack.net/service-gateway">Service Gateway</a>
+to invoke APIs in process and embed its JSON response with:</p>
+<pre><code class="language-html">&lt;script&gt;todos = @await ApiResultsAsJsonAsync(new QueryTodos())&lt;/script&gt;
+&lt;script type=&quot;module&quot;&gt;
+import TodoMvc from &quot;/Pages/TodoMvc.mjs&quot;
+import { mount } from &quot;/mjs/app.mjs&quot;
+mount('#todomvc', TodoMvc, { todos })
+&lt;/script&gt;
+</code></pre>
+<p>Where <code>ApiResultsAsJsonAsync</code> is a simplified helper that uses the <code>Gateway</code> to call your API and returns its unencoded JSON response:</p>
+<pre><code class="language-csharp">(await Gateway.ApiAsync(new QueryTodos())).Response?.Results.AsRawJson();
+</code></pre>
+<p>The result of which should render the List of Todos instantly when the page loads since it doesn't need to perform any additional Ajax requests
+after the component is loaded.</p>
+<h3 id="fast-page-loading">Fast Page Loading</h3>
+<p>We can get SPA-like page loading performance using htmx's <a href="https://htmx.org/docs/#boosting">Boosting</a> feature which avoids full page reloads
+by converting all anchor tags to use Ajax to load page content into the page body, improving perceived performance from needing to reload
+scripts and CSS in <code>&lt;head&gt;</code>.</p>
+<p>This is used in <a href="https://github.com/NetCoreTemplates/vue-mjs/blob/main/MyApp/Pages/Shared/Header.cshtml">Header.cshtml</a> to <strong>boost</strong> all
+main navigation links:</p>
+<pre><code class="language-html">&lt;nav hx-boost=&quot;true&quot;&gt;
+    &lt;ul&gt;
+        &lt;li&gt;&lt;a href=&quot;/Blog&quot;&gt;Blog&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;
+</code></pre>
+<p>htmx has lots of useful <a href="https://htmx.org/examples/">real world examples</a> that can be activated with declarative attributes,
+another feature this template uses is the <a href="https://htmx.org/extensions/class-tools/">class-tools</a> extension to hide elements from
+appearing until after the page is loaded:</p>
+<pre><code class="language-html">&lt;div id=&quot;signin&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;hidden mt-5 flex justify-center&quot; classes=&quot;remove hidden:load&quot;&gt;
+    @Html.SrcPage(&quot;SignIn.mjs&quot;)
+&lt;/div&gt;
+</code></pre>
+<p>Which is used to reduce UI yankiness from showing server rendered content before JS components have loaded.</p>
+<h3 id="servicestackvue-library">@servicestack/vue Library</h3>
+<p><a href="https://docs.servicestack.net/vue/">@servicestack/vue</a> is our cornerstone library for enabling a highly productive
+Vue.js development model across our <a href="https://docs.servicestack.net/templates-vue">Vue Tailwind Project templates</a> which
+we'll continue to significantly invest in to unlock even greater productivity benefits in all Vue Tailwind Apps.</p>
+<p>In addition to a variety of high-productive components, it also contains a core library of functionality
+underpinning the Vue Components that most Web Apps should also find useful:</p>
+<div data-component="VueComponentLibrary" class="mt-4"></div>
+
+                </div>
+            </div>
+        </article>
+</div>
+
+<script type="module">
+import { init } from "/mjs/app.mjs"
+init()
+</script>
+
+<link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets/styles/atom-one-dark.min.css">
+<script src="//unpkg.com/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script>hljs.highlightAll()</script>
+
+    </main>
+</div>
+
+<footer class="bg-stone-50 dark:bg-black border-t border-stone-200 dark:border-gray-600">
+    <div class="container mx-auto px-5">
+        <div class="py-28 flex flex-col lg:flex-row items-center">
+            <h3 class="text-4xl lg:text-6xl font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2">A ServiceStack Project</h3>
+            <div class="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
+                <a href="https://docs.servicestack.net" class="mx-3 bg-black dark:bg-gray-700 hover:bg-white dark:hover:bg-gray-200 hover:text-black border border-black text-white font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0">Read Documentation</a>
+                <a href="https://github.com/NetCoreTemplates/razor-ssg" class="mx-3 font-bold hover:underline">View on GitHub</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="/lib/js/htmx.js"></script>
+<script type="module">
+import { init } from "/mjs/app.mjs"
+init()
+</script>
+
+
+
+</body>
+</html>

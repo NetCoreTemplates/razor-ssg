@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg" href="/img/logo.svg">
+    <title>Deployment with GitHub Actions - My App</title>
+    <script>
+    const cls = document.querySelector('html').classList
+    if (localStorage.getItem('color-scheme') === 'dark')
+        cls.add('dark')
+    else
+        cls.remove('dark')
+    </script>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+{
+    "imports": {
+        "vue": "/lib/mjs/vue.min.mjs",
+        "@servicestack/client": "/lib/mjs/servicestack-client.min.mjs",
+        "@servicestack/vue": "/lib/mjs/servicestack-vue.min.mjs"
+    }
+}
+</script>
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+<header class="border-b border-gray-200 dark:border-gray-600 pr-3">
+    <div class="flex flex-wrap items-center">
+        <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
+            <div class="cursor-pointer">
+                <a hx-boost="true" class="navbar-brand flex items-center" href="/">
+                    <img class="w-8 h-8 sm:ml-2 sm:w-12 sm:h-12" src="/img/logo.svg" alt="MyApp logo">
+                    <span class="hidden sm:block text-2xl font-semibold">MyApp</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-grow flex-shrink flex-nowrap justify-end items-center">
+            <nav class="relative flex flex-grow leading-6 font-semibold text-slate-700 dark:text-slate-200">
+                <ul class="flex flex-wrap items-center justify-end w-full m-0 pb-2 sm:pb-0">
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/whatsnew" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    What's New
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/blog" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Blog
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/posts" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400 text-blue-700 dark:text-blue-300">
+                                    Archive
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/speaking" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Speaking
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/about" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    About
+                                </a>
+                            </li>
+                    <li class="relative flex flex-wrap just-fu-start m-0">
+                        <div data-component="DarkModeToggle" class="ml-2 w-10"></div>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</header>
+<script type="module">
+import { mountAll } from "/mjs/app.mjs"
+mountAll()
+</script>
+
+
+<div class="min-h-screen">
+    <main role="main" class="pb-3" hx-ext="class-tools">
+        
+
+
+<link rel="stylesheet" href="/css/typography.css">
+
+<div class="container px-5 mb-32 mx-auto">
+        <article class="mt-20">
+            <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
+                Deployment with GitHub Actions
+            </h1>
+            <div class="hidden md:block md:mb-12">
+                <a class="flex items-center text-xl font-bold" href="/posts/author/gayle-smith">
+                    <img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="/img/authors/author2.svg">
+                    <span>Gayle Smith</span>
+                </a>
+            </div>
+            <div class="mb-8 md:mb-16 sm:mx-0">
+                <div class="sm:mx-0">
+                    <img src="https://images.unsplash.com/photo-1485841890310-6a055c88698a?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" alt="Deployment with GitHub Actions Background" class="shadow-small">
+                </div>
+            </div>
+            <div class="mb-4 max-w-2xl mx-auto flex flex-wrap">
+                    <a href="/posts/tagged/github-actions" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">github-actions</a>
+                    <a href="/posts/tagged/devops" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">devops</a>
+            </div>
+                <div class="max-w-2xl mx-auto">
+                    <div class="mb-6 text-lg text-gray-500">
+                        <time datetime="2023-01-01T00:00:00.0000000">January 1, 2023</time>
+                        <span aria-hidden="true">&middot;</span>
+                        <span>4 min read</span>
+                    </div>
+                </div>
+            <div class="max-w-2xl mx-auto">
+                <div class="prose lg:prose-xl max-w-none mb-32">
+                    <h1 id="servicestack-github-action-deployments">ServiceStack GitHub Action Deployments</h1>
+<p>The <a href="https://github.com/NetCoreTemplates/razor-tailwind/blob/main/.github/workflows/release.yml">release.yml</a>
+in this template enables GitHub Actions CI deployment to a dedicated server with SSH access.</p>
+<h2 id="overview">Overview</h2>
+<p><code>release.yml</code> is designed to work with a ServiceStack app deploying directly to a single server via SSH. A docker image is built and stored on GitHub's <code>ghcr.io</code> docker registry when a GitHub Release is created.</p>
+<p>GitHub Actions specified in <code>release.yml</code> then copy files remotely via scp and use <code>docker-compose</code> to run the app remotely via SSH.</p>
+<h2 id="whats-the-process-of-release.yml">What's the process of <code>release.yml</code>?</h2>
+<p><img src="https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/mix/release-ghr-vanilla-diagram.png" alt="" /></p>
+<h2 id="deployment-server-setup">Deployment server setup</h2>
+<p>To get this working, a server needs to be setup with the following:</p>
+<ul>
+<li>SSH access</li>
+<li>docker</li>
+<li>docker-compose</li>
+<li>ports 443 and 80 for web access of your hosted application</li>
+</ul>
+<p>This can be your own server or any cloud hosted server like Digital Ocean, AWS, Azure etc. We use <a href="http://cloud.hetzner.com/">Hetzner Cloud</a>
+to deploy all ServiceStack's <a href="https://github.com/NetCoreTemplates/">GitHub Project Templates</a> as it was the
+<a href="https://servicestack.net/blog/finding-best-us-value-cloud-provider">best value US cloud provider</a> we've found.</p>
+<p>When setting up your server, you'll want to use a dedicated SSH key for access to be used by GitHub Actions. GitHub Actions will need the <em>private</em> SSH key within a GitHub Secret to authenticate. This can be done via ssh-keygen and copying the public key to the authorized clients on the server.</p>
+<p>To let your server handle multiple ServiceStack applications and automate the generation and management of TLS certificates, an additional docker-compose file is provided in this template, <code>nginx-proxy-compose.yml</code>. This docker-compose file is ready to run and can be copied to the deployment server.</p>
+<p>For example, once copied to remote <code>~/nginx-proxy-compose.yml</code>, the following command can be run on the remote server.</p>
+<pre><code>docker-compose -f ~/nginx-proxy-compose.yml up -d
+</code></pre>
+<p>This will run an nginx reverse proxy along with a companion container that will watch for additional containers in the same docker network and attempt to initialize them with valid TLS certificates.</p>
+<h3 id="github-actions-secrets">GitHub Actions secrets</h3>
+<p>The <code>release.yml</code> uses the following secrets.</p>
+<table>
+<thead>
+<tr>
+<th>Required Secrets</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DEPLOY_HOST</code></td>
+<td>Hostname used to SSH deploy .NET App to, this can either be an IP address or subdomain with A record pointing to the server</td>
+</tr>
+<tr>
+<td><code>DEPLOY_USERNAME</code></td>
+<td>Username to log in with via SSH e.g, <strong>ubuntu</strong>, <strong>ec2-user</strong>, <strong>root</strong></td>
+</tr>
+<tr>
+<td><code>DEPLOY_KEY</code></td>
+<td>SSH private key used to remotely access deploy .NET App</td>
+</tr>
+<tr>
+<td><code>LETSENCRYPT_EMAIL</code></td>
+<td>Email required for Let's Encrypt automated TLS certificates</td>
+</tr>
+</tbody>
+</table>
+<p>These secrets can use the <a href="https://cli.github.com/manual/gh_secret_set">GitHub CLI</a> for ease of creation. Eg, using the GitHub CLI the following can be set.</p>
+<pre><code class="language-bash">gh secret set DEPLOY_HOST -b&quot;&lt;DEPLOY_HOST&gt;&quot;
+gh secret set DEPLOY_USERNAME -b&quot;&lt;DEPLOY_USERNAME&gt;&quot;
+gh secret set DEPLOY_KEY &lt; key.pem # DEPLOY_KEY
+gh secret set LETSENCRYPT_EMAIL -b&quot;&lt;LETSENCRYPT_EMAIL&gt;&quot;
+</code></pre>
+<p>These secrets are used to populate variables within GitHub Actions and other configuration files.</p>
+<h2 id="deployments">Deployments</h2>
+<p>A published version of your .NET App created with the standard dotnet publish tool:</p>
+<pre><code class="language-yaml">dotnet publish -c Release
+</code></pre>
+<p>is used to build a production build of your .NET App inside the standard <code>Dockerfile</code> for dockerizing .NET Applications.</p>
+<p>Additional custom deployment tasks can be added to your project's package.json <strong>postinstall</strong> script which also gets run at deployment.</p>
+<p>If preferred additional MS Build tasks can be run by passing in custom parameters in the publish command, e.g:</p>
+<pre><code class="language-yaml">dotnet publish -c Release /p:APP_TASKS=prerender
+</code></pre>
+<p>Which your <code>MyApp.csproj</code> can detect with a target that checks for it:</p>
+<pre><code class="language-xml">&lt;!-- Prerender tasks run in release.yml --&gt;
+&lt;Target Name=&quot;AppTasks&quot; AfterTargets=&quot;Build&quot; Condition=&quot;$(APP_TASKS) != ''&quot;&gt;
+    &lt;CallTarget Targets=&quot;Prerender&quot; Condition=&quot;$(APP_TASKS.Contains('prerender'))&quot; /&gt;
+&lt;/Target&gt;
+&lt;Target Name=&quot;Prerender&quot;&gt;
+    &lt;Message Text=&quot;Prerender...&quot; /&gt;
+&lt;/Target&gt;
+</code></pre>
+<h2 id="pushing-updates-and-rollbacks">Pushing updates and rollbacks</h2>
+<p>By default, deployments occur on commit to your main branch. A new Docker image for your ServiceStack API is produced, pushed to GHCR.io and hosted on your Linux server with Docker Compose.</p>
+<p>The template also will run the release process on the creation of a GitHub Release making it easier to switch to manual production releases.</p>
+<p>Additionally, the <code>release.yml</code> workflow can be run manually specifying a version. This enables production rollbacks based on previously tagged releases.
+A release must have already been created for the rollback build to work, it doesn't create a new Docker build based on previous code state, only redeploys as existing Docker image.</p>
+
+                </div>
+            </div>
+        </article>
+</div>
+
+<script type="module">
+import { init } from "/mjs/app.mjs"
+init()
+</script>
+
+<link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets/styles/atom-one-dark.min.css">
+<script src="//unpkg.com/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script>hljs.highlightAll()</script>
+
+    </main>
+</div>
+
+<footer class="bg-stone-50 dark:bg-black border-t border-stone-200 dark:border-gray-600">
+    <div class="container mx-auto px-5">
+        <div class="py-28 flex flex-col lg:flex-row items-center">
+            <h3 class="text-4xl lg:text-6xl font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2">A ServiceStack Project</h3>
+            <div class="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
+                <a href="https://docs.servicestack.net" class="mx-3 bg-black dark:bg-gray-700 hover:bg-white dark:hover:bg-gray-200 hover:text-black border border-black text-white font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0">Read Documentation</a>
+                <a href="https://github.com/NetCoreTemplates/razor-ssg" class="mx-3 font-bold hover:underline">View on GitHub</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="/lib/js/htmx.js"></script>
+<script type="module">
+import { init } from "/mjs/app.mjs"
+init()
+</script>
+
+
+
+</body>
+</html>

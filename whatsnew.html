@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg" href="/img/logo.svg">
+    <title>What&#x27;s New - My App</title>
+    <script>
+    const cls = document.querySelector('html').classList
+    if (localStorage.getItem('color-scheme') === 'dark')
+        cls.add('dark')
+    else
+        cls.remove('dark')
+    </script>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+{
+    "imports": {
+        "vue": "/lib/mjs/vue.min.mjs",
+        "@servicestack/client": "/lib/mjs/servicestack-client.min.mjs",
+        "@servicestack/vue": "/lib/mjs/servicestack-vue.min.mjs"
+    }
+}
+</script>
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+<header class="border-b border-gray-200 dark:border-gray-600 pr-3">
+    <div class="flex flex-wrap items-center">
+        <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
+            <div class="cursor-pointer">
+                <a hx-boost="true" class="navbar-brand flex items-center" href="/">
+                    <img class="w-8 h-8 sm:ml-2 sm:w-12 sm:h-12" src="/img/logo.svg" alt="MyApp logo">
+                    <span class="hidden sm:block text-2xl font-semibold">MyApp</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-grow flex-shrink flex-nowrap justify-end items-center">
+            <nav class="relative flex flex-grow leading-6 font-semibold text-slate-700 dark:text-slate-200">
+                <ul class="flex flex-wrap items-center justify-end w-full m-0 pb-2 sm:pb-0">
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/whatsnew" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400 text-blue-700 dark:text-blue-300">
+                                    What's New
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/blog" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Blog
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/posts" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Archive
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/speaking" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Speaking
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/about" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    About
+                                </a>
+                            </li>
+                    <li class="relative flex flex-wrap just-fu-start m-0">
+                        <div data-component="DarkModeToggle" class="ml-2 w-10"></div>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</header>
+<script type="module">
+import { mountAll } from "/mjs/app.mjs"
+mountAll()
+</script>
+
+
+<div class="min-h-screen">
+    <main role="main" class="pb-3" hx-ext="class-tools">
+        <link rel="stylesheet" href="/css/typography.css">
+<style>
+.prose a {
+    --tw-text-opacity: 1;color: rgba(59, 130, 246, var(--tw-text-opacity)); /*text-blue-500*/
+    -webkit-transition: all ease 0.25s;
+            transition: all ease 0.25s;
+    text-decoration: none;
+}
+.prose a:hover {
+    --tw-text-opacity: 1;color: rgba(37, 99, 235, var(--tw-text-opacity)); /*text-blue-600*/
+    text-decoration: none;
+}
+.prose p {
+    color: rgb(55 65 81); /*text-gray-700*/
+}
+.dark .prose p {
+    color: rgb(229 231 235); /*text-gray-200*/
+}
+</style>
+
+<div class="container mx-auto px-5">
+    <section class="flex-col md:flex-row flex justify-center mt-16 mb-16 md:mb-12">
+        <h1 class="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight text-slate-900 sm:text-7xl">
+            Latest features & highlights
+        </h1>
+    </section>
+</div>
+
+<div class="relative px-6 pt-16 pb-20 lg:px-8 lg:pt-24 lg:pb-28">
+
+    <div class="relative mx-auto max-w-7xl">
+        <h2 class="text-center mb-4 text-6xl md:text-7xl font-bold tracking-tighter leading-tight">Planetaria</h2>
+        <div class="text-center text-lg font-normal text-gray-500 mb-8">April 10, 2023</div>
+            <div class="flex flex-wrap my-24">
+                <div class="w-full sm:w-1/2 wow fadeInRight animated px-4 whatsnew-container-item-img" data-wow-offset="10" data-wow-duration="1.5s">
+                    <a href="http://planetaria.tech"><img src="/img/whatsnew/Planetaria/cover.svg" alt=""></a>
+                </div>
+                <div class="w-full sm:w-1/2 text-left wow fadeInLeft animated px-4" data-wow-offset="10" data-wow-duration="1.5s">
+                    <h3 class="m-0 mb-4">
+                        <a class="text-2xl font-normal text-blue-500 hover:text-blue-600" href="http://planetaria.tech">Planetaria</a>
+                    </h3>
+                    <div class="prose max-w-none">
+                        <p>Welcome to the world of Planetaria, a groundbreaking new product that is poised to revolutionize the way we explore space.
+At Planetaria, we believe that the wonders of space should be accessible to everyone, not just a privileged few.
+That's why we've created technology that empowers civilians to explore space on their own terms, without needing to rely
+on government agencies or billionaire entrepreneurs.</p>
+<p>Our mission is to democratize space exploration and enable people from all walks of life to experience the thrill of
+venturing beyond our planet. With Planetaria, you'll have the tools and resources you need to embark on your own space missions,
+whether you're a hobbyist, a scientist, or an adventurer. From designing and building your own spacecraft to conducting experiments
+in microgravity, the possibilities are endless.</p>
+
+                    </div>
+                    <div class="text-center sm:text-left my-10">
+                        <a href="http://planetaria.tech" class="rounded-md bg-blue-600 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+                            Learn more
+                        </a>
+                    </div>
+                </div>
+            </div>        
+        <h2 class="text-center mb-4 text-6xl md:text-7xl font-bold tracking-tighter leading-tight">OpenShuttle</h2>
+        <div class="text-center text-lg font-normal text-gray-500 mb-8">April 9, 2023</div>
+            <div class="flex flex-wrap my-24">
+                <div class="w-full sm:w-1/2 wow fadeInRight animated px-4 whatsnew-container-item-img" data-wow-offset="10" data-wow-duration="1.5s">
+                    <a href="https://example.org"><img src="/img/whatsnew/OpenShuttle/cover.svg" alt=""></a>
+                </div>
+                <div class="w-full sm:w-1/2 text-left wow fadeInLeft animated px-4" data-wow-offset="10" data-wow-duration="1.5s">
+                    <h3 class="m-0 mb-4">
+                        <a class="text-2xl font-normal text-blue-500 hover:text-blue-600" href="https://example.org">OpenShuttle</a>
+                    </h3>
+                    <div class="prose max-w-none">
+                        <p>Introducing OpenShuttle, the revolutionary new product that is set to change the space industry forever. OpenShuttle is a cutting-edge
+platform that provides detailed schematics for the very first rocket designed by me, which successfully made it to orbit.
+This incredible product is designed to give space enthusiasts and professionals alike access to the groundbreaking technology that
+was used to achieve this monumental feat.</p>
+<p>OpenShuttle is the result of years of hard work and dedication, and I am thrilled to finally be able to share it with the world.
+With its detailed schematics, OpenShuttle provides an unprecedented level of insight into the inner workings of the rocket,
+allowing users to explore the technology that made history.</p>
+
+                    </div>
+                    <div class="text-center sm:text-left my-10">
+                        <a href="https://example.org" class="rounded-md bg-blue-600 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+                            Learn more
+                        </a>
+                    </div>
+                </div>
+            </div>        
+        <h2 class="text-center mb-4 text-6xl md:text-7xl font-bold tracking-tighter leading-tight">Animaginary</h2>
+        <div class="text-center text-lg font-normal text-gray-500 mb-8">April 8, 2023</div>
+            <div class="flex flex-wrap my-24">
+                <div class="w-full sm:w-1/2 wow fadeInRight animated px-4 whatsnew-container-item-img" data-wow-offset="10" data-wow-duration="1.5s">
+                    <a href="https://example.org"><img src="/img/whatsnew/Animaginary/cover.svg" alt=""></a>
+                </div>
+                <div class="w-full sm:w-1/2 text-left wow fadeInLeft animated px-4" data-wow-offset="10" data-wow-duration="1.5s">
+                    <h3 class="m-0 mb-4">
+                        <a class="text-2xl font-normal text-blue-500 hover:text-blue-600" href="https://example.org">Animaginary</a>
+                    </h3>
+                    <div class="prose max-w-none">
+                        <p>Introducing Animaginary, the next generation web animation library that's taking the world by storm.
+Animaginary is a high performance library that's hand-written in optimized WebAssembly (WASM),
+making it one of the fastest and most efficient animation tools available today.</p>
+<p>Built with performance in mind, Animaginary delivers stunning animations that are both smooth and seamless, even on lower-end devices.
+The library is designed to provide developers with a powerful toolset that makes it easy to create
+complex animations that would otherwise be time-consuming and challenging to build.</p>
+
+                    </div>
+                    <div class="text-center sm:text-left my-10">
+                        <a href="https://example.org" class="rounded-md bg-blue-600 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+                            Learn more
+                        </a>
+                    </div>
+                </div>
+            </div>        
+    </div>
+</div>
+
+    </main>
+</div>
+
+<footer class="bg-stone-50 dark:bg-black border-t border-stone-200 dark:border-gray-600">
+    <div class="container mx-auto px-5">
+        <div class="py-28 flex flex-col lg:flex-row items-center">
+            <h3 class="text-4xl lg:text-6xl font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2">A ServiceStack Project</h3>
+            <div class="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
+                <a href="https://docs.servicestack.net" class="mx-3 bg-black dark:bg-gray-700 hover:bg-white dark:hover:bg-gray-200 hover:text-black border border-black text-white font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0">Read Documentation</a>
+                <a href="https://github.com/NetCoreTemplates/razor-ssg" class="mx-3 font-bold hover:underline">View on GitHub</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="/lib/js/htmx.js"></script>
+<script type="module">
+import { init } from "/mjs/app.mjs"
+init()
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg" href="/img/logo.svg">
+    <title>c# tagged posts - My App</title>
+    <script>
+    const cls = document.querySelector('html').classList
+    if (localStorage.getItem('color-scheme') === 'dark')
+        cls.add('dark')
+    else
+        cls.remove('dark')
+    </script>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+{
+    "imports": {
+        "vue": "/lib/mjs/vue.min.mjs",
+        "@servicestack/client": "/lib/mjs/servicestack-client.min.mjs",
+        "@servicestack/vue": "/lib/mjs/servicestack-vue.min.mjs"
+    }
+}
+</script>
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+<header class="border-b border-gray-200 dark:border-gray-600 pr-3">
+    <div class="flex flex-wrap items-center">
+        <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
+            <div class="cursor-pointer">
+                <a hx-boost="true" class="navbar-brand flex items-center" href="/">
+                    <img class="w-8 h-8 sm:ml-2 sm:w-12 sm:h-12" src="/img/logo.svg" alt="MyApp logo">
+                    <span class="hidden sm:block text-2xl font-semibold">MyApp</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-grow flex-shrink flex-nowrap justify-end items-center">
+            <nav class="relative flex flex-grow leading-6 font-semibold text-slate-700 dark:text-slate-200">
+                <ul class="flex flex-wrap items-center justify-end w-full m-0 pb-2 sm:pb-0">
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/whatsnew" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    What's New
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/blog" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Blog
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/posts" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400 text-blue-700 dark:text-blue-300">
+                                    Archive
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/speaking" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Speaking
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="/about" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    About
+                                </a>
+                            </li>
+                    <li class="relative flex flex-wrap just-fu-start m-0">
+                        <div data-component="DarkModeToggle" class="ml-2 w-10"></div>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</header>
+<script type="module">
+import { mountAll } from "/mjs/app.mjs"
+mountAll()
+</script>
+
+
+<div class="min-h-screen">
+    <main role="main" class="pb-3" hx-ext="class-tools">
+        
+
+<div class="relative bg-gray-50 dark:bg-gray-900 px-6 pt-16 pb-20 lg:px-8 lg:pt-24 lg:pb-28">
+    <div class="absolute inset-0">
+        <div class="h-1/3 bg-white dark:bg-black sm:h-2/3"></div>
+    </div>
+    <div class="relative mx-auto max-w-7xl">
+        
+<div class="text-center">
+    <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl">From the blog</h2>
+    <p class="mx-auto mt-3 max-w-2xl text-xl text-gray-500 sm:mt-4">
+        All posts tagged in <b>c#</b>
+    </p>
+</div>
+    </div>
+    <div class="mt-12 relative mx-auto max-w-7xl">
+        
+<div class="mx-auto grid max-w-lg gap-5 lg:max-w-none lg:grid-cols-3">
+        <div class="flex flex-col overflow-hidden rounded-lg shadow-lg">
+            <div class="flex-shrink-0">
+                <a href="/posts/rider">
+                    <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1472289065668-ce650ac443d2?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1679&amp;q=80" alt="">
+                </a>
+            </div>
+            <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
+                <div class="flex-1">
+                    <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
+                        Article
+                    </p>
+                    <a href="/posts/rider" class="mt-2 block">
+                        <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="Develop using JetBrains Rider">
+                            Develop using JetBrains Rider
+                        </p>
+                        <p class="mt-3 text-base text-gray-500">Setting up &amp; exploring development workflow in Rider</p>
+                    </a>
+                </div>
+                <div class="mt-6 flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="/posts/author/gayle-smith">
+                            <span class="sr-only">Gayle Smith</span>
+                            <img class="h-10 w-10 rounded-full" src="/img/authors/author2.svg" alt="Develop using JetBrains Rider background">
+                        </a>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-gray-900">
+                            <a href="/posts/author/gayle-smith" class="hover:underline">Gayle Smith</a>
+                        </p>
+                        <div class="flex space-x-1 text-sm text-gray-500">
+                            <time datetime="2023-01-11T00:00:00.0000000">January 11, 2023</time>
+                            <span aria-hidden="true">&middot;</span>
+                            <span>3 min read</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col overflow-hidden rounded-lg shadow-lg">
+            <div class="flex-shrink-0">
+                <a href="/posts/prerendering">
+                    <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1522526886914-6e8d4fd91399?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1679&amp;q=80" alt="">
+                </a>
+            </div>
+            <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
+                <div class="flex-1">
+                    <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
+                        Article
+                    </p>
+                    <a href="/posts/prerendering" class="mt-2 block">
+                        <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="Prerendering Razor Pages">
+                            Prerendering Razor Pages
+                        </p>
+                        <p class="mt-3 text-base text-gray-500">Improving Blog Performance with Prerendering</p>
+                    </a>
+                </div>
+                <div class="mt-6 flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="/posts/author/lucy-bates">
+                            <span class="sr-only">Lucy Bates</span>
+                            <img class="h-10 w-10 rounded-full" src="/img/authors/author1.svg" alt="Prerendering Razor Pages background">
+                        </a>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-gray-900">
+                            <a href="/posts/author/lucy-bates" class="hover:underline">Lucy Bates</a>
+                        </p>
+                        <div class="flex space-x-1 text-sm text-gray-500">
+                            <time datetime="2023-01-11T00:00:00.0000000">January 11, 2023</time>
+                            <span aria-hidden="true">&middot;</span>
+                            <span>6 min read</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col overflow-hidden rounded-lg shadow-lg">
+            <div class="flex-shrink-0">
+                <a href="/posts/vs">
+                    <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1679&amp;q=80" alt="">
+                </a>
+            </div>
+            <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
+                <div class="flex-1">
+                    <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
+                        Article
+                    </p>
+                    <a href="/posts/vs" class="mt-2 block">
+                        <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="Develop using Visual Studio">
+                            Develop using Visual Studio
+                        </p>
+                        <p class="mt-3 text-base text-gray-500">Exploring development workflow in VS Code and Visual Studio .NET</p>
+                    </a>
+                </div>
+                <div class="mt-6 flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="/posts/author/lucy-bates">
+                            <span class="sr-only">Lucy Bates</span>
+                            <img class="h-10 w-10 rounded-full" src="/img/authors/author1.svg" alt="Develop using Visual Studio background">
+                        </a>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-gray-900">
+                            <a href="/posts/author/lucy-bates" class="hover:underline">Lucy Bates</a>
+                        </p>
+                        <div class="flex space-x-1 text-sm text-gray-500">
+                            <time datetime="2023-01-10T00:00:00.0000000">January 10, 2023</time>
+                            <span aria-hidden="true">&middot;</span>
+                            <span>6 min read</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+        
+        <div class="mt-8 text-center">
+            <a class="text-sm font-semibold hover:underline" href="/posts">view all posts</a>
+        </div>
+    </div>
+
+</div>
+
+
+    </main>
+</div>
+
+<footer class="bg-stone-50 dark:bg-black border-t border-stone-200 dark:border-gray-600">
+    <div class="container mx-auto px-5">
+        <div class="py-28 flex flex-col lg:flex-row items-center">
+            <h3 class="text-4xl lg:text-6xl font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2">A ServiceStack Project</h3>
+            <div class="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
+                <a href="https://docs.servicestack.net" class="mx-3 bg-black dark:bg-gray-700 hover:bg-white dark:hover:bg-gray-200 hover:text-black border border-black text-white font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0">Read Documentation</a>
+                <a href="https://github.com/NetCoreTemplates/razor-ssg" class="mx-3 font-bold hover:underline">View on GitHub</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="/lib/js/htmx.js"></script>
+<script type="module">
+import { init } from "/mjs/app.mjs"
+init()
+</script>
+
+
+
+</body>
+</html>
