@@ -3,8 +3,9 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/svg" href="/img/logo.svg">
+    <link rel="icon" type="image/svg" href="img/logo.svg">
     <title>Migrating from Jekyll to VitePress - My App</title>
+    <base href="/" />
     <script>
     const cls = document.querySelector('html').classList
     if (localStorage.getItem('color-scheme') === 'dark')
@@ -12,15 +13,15 @@
     else
         cls.remove('dark')
     </script>
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="css/app.css">
 
     <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
     <script type="importmap">
 {
     "imports": {
-        "vue": "/lib/mjs/vue.min.mjs",
-        "@servicestack/client": "/lib/mjs/servicestack-client.min.mjs",
-        "@servicestack/vue": "/lib/mjs/servicestack-vue.min.mjs"
+        "vue": "./lib/mjs/vue.min.mjs",
+        "@servicestack/client": "./lib/mjs/servicestack-client.min.mjs",
+        "@servicestack/vue": "./lib/mjs/servicestack-vue.min.mjs"
     }
 }
 </script>
@@ -31,7 +32,7 @@
         <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
             <div class="cursor-pointer">
                 <a class="navbar-brand flex items-center" href="/">
-                    <img class="w-8 h-8 sm:ml-2 sm:w-12 sm:h-12" src="/img/logo.svg" alt="MyApp logo">
+                    <svg class="w-8 h-8 sm:ml-2 sm:w-12 sm:h-12" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="currentColor" d="M10 6c1.544 1.76 2.276 4.15 2.217 6.61c3.968 1.67 9.924 6.12 11.181 12.39H28C26.051 14.31 14.918 6.77 10 6zm-2 7c4.67 4.913.81 11.582-4 12h18.97C21.5 18.289 11.95 13.533 8 13z"/></svg>
                     <span class="hidden sm:block text-2xl font-semibold">MyApp</span>
                 </a>
             </div>
@@ -89,7 +90,7 @@ mountAll()
         
 
 
-<link rel="stylesheet" href="/css/typography.css">
+<link rel="stylesheet" href="css/typography.css">
 
 <div class="container px-5 mb-32 mx-auto">
         <article class="mt-20">
@@ -549,9 +550,9 @@ init()
 </footer>
 
 
-<script src="/lib/js/htmx.js"></script>
+<script src="lib/js/htmx.js"></script>
 <script type="module">
-import { init } from "/mjs/app.mjs"
+import { init } from "./mjs/app.mjs"
 init()
 </script>
 
