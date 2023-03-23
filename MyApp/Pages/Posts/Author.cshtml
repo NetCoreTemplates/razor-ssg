@@ -10,6 +10,11 @@
 
 @{
     var author = Blog.GetAuthorBySlug(Model.Slug);
+    if (author == null)
+    {
+        Response.Redirect("/404");
+        return;
+    }
     ViewData["Title"] = $"{author.Name} posts";
 }
 
@@ -21,7 +26,7 @@
         @await Html.PartialAsync("BlogTitle", $"All posts written by <b>{author.Name}</b>")
     </div>
     <div class="mt-12 relative mx-auto max-w-7xl">
-        @await Html.PartialAsync("BlogPosts", Blog.GetPosts(author:author.Name ?? "unknown"))
+        @await Html.PartialAsync("BlogPosts", Blog.GetPosts(author:author.Name))
 
         <div class="mt-8 text-center">
             <a class="text-sm font-semibold hover:underline" href="@Blog.GetPostsLink()">view all posts</a>
