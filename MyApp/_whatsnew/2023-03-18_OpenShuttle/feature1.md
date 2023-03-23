@@ -1,5 +1,4 @@
 ---
-draft: true
 title: OpenShuttle
 url: https://example.org
 image: /img/whatsnew/OpenShuttle/cover.svg

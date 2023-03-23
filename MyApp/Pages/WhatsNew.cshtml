@@ -40,6 +40,7 @@
     @foreach (var release in releases)
     {
         var features = WhatsNew.GetFeatures(release);
+        if (features.Count == 0) continue;
         var releaseDate = features[0].Date!.Value;
         
         <h2 class="text-center mb-4 text-6xl md:text-7xl font-bold tracking-tighter leading-tight">@release</h2>
