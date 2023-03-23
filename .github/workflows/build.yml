@@ -47,7 +47,7 @@ jobs:
             echo "Prerendering for deployment to $site_base_href"
             dotnet run --AppTasks=prerender --environment Production --BaseHref "$site_base_href"
           else
-            echo "Prerendering for deployment to $(cat ./MyApp/wwwroot/CNAME)"
+            echo "Prerendering for deployment to $(cat ./wwwroot/CNAME)"
             dotnet run --AppTasks=prerender --environment Production
           fi
 
