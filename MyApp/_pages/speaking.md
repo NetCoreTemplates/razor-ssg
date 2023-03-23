@@ -1,5 +1,6 @@
 ---
 title: Speaking
+layout: _LayoutContent
 ---
 
 ## I’ve spoken at events all around the world and been interviewed for many podcasts.
