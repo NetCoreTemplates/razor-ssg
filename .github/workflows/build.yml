@@ -30,10 +30,26 @@ jobs:
           deploy_cdn: ${{ secrets.DEPLOY_CDN }}
         run: |
           sed -i "s/DEPLOY_CDN/${deploy_cdn}/g" ./MyApp/wwwroot/CNAME
-
+          cname_val=$(cat ./MyApp/wwwroot/CNAME)
+          repo_name=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]' | cut -d '/' -f 2)
+          org_name=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
+          if [ -z "$cname_val" ] 
+          then
+            echo "ssg_base_href=$(echo https://$org_name.github.io/$repo_name)" >> $GITHUB_ENV
+          fi
+            
       - name: prerender
         working-directory: ./MyApp
-        run: dotnet run --AppTasks=prerender --environment Production
+        run: |
+          site_base_href=${{ env.ssg_base_href }}
+          if [ ! -z "$site_base_href" ]
+          then
+            echo "Prerendering for deployment to $site_base_href"
+            dotnet run --AppTasks=prerender --environment Production --BaseHref "$site_base_href"
+          else
+            echo "Prerendering for deployment to $(cat ./MyApp/wwwroot/CNAME)"
+            dotnet run --AppTasks=prerender --environment Production
+          fi
 
       # Deploy UI to GitHub Pages
       - name: Deploy to GitHub Pages
