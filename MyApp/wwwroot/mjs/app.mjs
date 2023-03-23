@@ -1,4 +1,4 @@
-import { createApp, reactive, ref, computed } from "vue"
+import { createApp, reactive, ref } from "vue"
 import { JsonApiClient, $1, $$ } from "@servicestack/client"
 import ServiceStackVue from "@servicestack/vue"
 import HelloApi from "./components/HelloApi.mjs"
