@@ -18,7 +18,7 @@
         <div class="h-1/3 bg-white dark:bg-black sm:h-2/3"></div>
     </div>
     <div class="relative mx-auto max-w-7xl">
-        @await Html.PartialAsync("BlogTitle", $"All posts written by <b>{author}</b>")
+        @await Html.PartialAsync("BlogTitle", $"All posts written by <b>{author.Name}</b>")
     </div>
     <div class="mt-12 relative mx-auto max-w-7xl">
         @await Html.PartialAsync("BlogPosts", Blog.GetPosts(author:author.Name ?? "unknown"))
