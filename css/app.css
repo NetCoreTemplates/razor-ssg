@@ -878,6 +878,11 @@ select{
   bottom: 0px;
 }
 
+.inset-x-0 {
+  left: 0px;
+  right: 0px;
+}
+
 .top-2 {
   top: 0.5rem;
 }
@@ -902,6 +907,14 @@ select{
   right: 0px;
 }
 
+.left-1\/2 {
+  left: 50%;
+}
+
+.isolate {
+  isolation: isolate;
+}
+
 .z-10 {
   z-index: 10;
 }
@@ -912,6 +925,10 @@ select{
 
 .z-0 {
   z-index: 0;
+}
+
+.-z-10 {
+  z-index: -10;
 }
 
 .col-span-6 {
@@ -1179,6 +1196,10 @@ select{
   margin-top: 0px;
 }
 
+.-ml-24 {
+  margin-left: -6rem;
+}
+
 .block {
   display: block;
 }
@@ -1287,6 +1308,10 @@ select{
   height: 8rem;
 }
 
+.h-\[64rem\] {
+  height: 64rem;
+}
+
 .max-h-60 {
   max-height: 15rem;
 }
@@ -1381,6 +1406,10 @@ select{
 
 .w-96 {
   width: 24rem;
+}
+
+.w-\[50\.0625rem\] {
+  width: 50.0625rem;
 }
 
 .min-w-full {
@@ -1516,6 +1545,10 @@ select{
 
 .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.transform-gpu {
+  transform: translate3d(var(--tw-translate-x), var(--tw-translate-y), 0) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 @-webkit-keyframes spin {
@@ -1747,6 +1780,10 @@ select{
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.overflow-visible {
+  overflow: visible;
 }
 
 .overflow-x-auto {
@@ -2092,6 +2129,14 @@ select{
 
 .fill-gray-300 {
   fill: #d1d5db;
+}
+
+.fill-gray-50 {
+  fill: #f9fafb;
+}
+
+.stroke-gray-200 {
+  stroke: #e5e7eb;
 }
 
 .object-cover {
@@ -2885,6 +2930,11 @@ select{
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
+.blur-3xl {
+  --tw-blur: blur(64px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
@@ -2975,6 +3025,11 @@ select{
 
 .\[vite\:vue\] {
   vite: vue;
+}
+
+.\[mask-image\:radial-gradient\(32rem_32rem_at_center\2c white\2c transparent\)\] {
+  -webkit-mask-image: radial-gradient(32rem 32rem at center,white,transparent);
+          mask-image: radial-gradient(32rem 32rem at center,white,transparent);
 }
 
 .file\:mr-4::-webkit-file-upload-button {
@@ -4476,6 +4531,10 @@ select{
     margin-top: 11rem;
   }
 
+  .lg\:ml-24 {
+    margin-left: 6rem;
+  }
+
   .lg\:table-cell {
     display: table-cell;
   }
@@ -4577,6 +4636,10 @@ select{
 @media (min-width: 1280px) {
   .xl\:col-span-6 {
     grid-column: span 6 / span 6;
+  }
+
+  .xl\:ml-48 {
+    margin-left: 12rem;
   }
 
   .xl\:inline {
