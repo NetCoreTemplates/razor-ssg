@@ -71,12 +71,12 @@ public class MarkdownBlog : MarkdownPagesBase<MarkdownFileInfo>
         return latestPosts.OrderByDescending(x => x.Date).ToList();
     }
 
-    public string GetPostLink(MarkdownFileInfo post) => $"/posts/{post.Slug}";
+    public string GetPostLink(MarkdownFileInfo post) => $"posts/{post.Slug}";
 
-    public string GetPostsLink() => "/posts";
-    public string GetAuthorLink(string author) => $"/posts/author/{author.GenerateSlug()}";
-    public string GetYearLink(int year) => $"/posts/year/{year}";
-    public string GetTagLink(string tag) => $"/posts/tagged/{tag.GenerateSlug()}";
+    public string GetPostsLink() => "posts";
+    public string GetAuthorLink(string author) => $"posts/author/{author.GenerateSlug()}";
+    public string GetYearLink(int year) => $"posts/year/{year}";
+    public string GetTagLink(string tag) => $"posts/tagged/{tag.GenerateSlug()}";
     public string GetDateLabel(DateTime? date) => X.Map(date ?? DateTime.UtcNow, d => d.ToString("MMMM d, yyyy"))!;
     public string GetDateTimestamp(DateTime? date) => X.Map(date ?? DateTime.UtcNow, d => d.ToString("O"))!;
 
