@@ -1,4 +1,5 @@
 ---
+draft: true
 title: Prerendering Razor Pages
 summary: Improving Blog Performance with Prerendering
 tags: c#,dev,markdown

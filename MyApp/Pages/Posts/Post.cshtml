@@ -7,11 +7,16 @@
     public List<PostModel> GetStaticProps(RenderContext ctx)
     {
         var blog = ctx.Resolve<MarkdownBlog>();
-        return blog.Posts.Map(doc => new PostModel(blog).Populate(doc));
+        return blog.VisiblePosts.Map(doc => new PostModel(blog).Populate(doc));
     }
 }
 
 @{
+    if (Model.Layout != null) 
+        Layout = Model.Layout == "none"
+            ? null
+            : Model.Layout;
+    
     ViewData["Title"] = Model.Title;
     var author = Blog.Authors.FirstOrDefault(x => x.Name == Model.Author);
 }

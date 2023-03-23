@@ -8,10 +8,9 @@ public class PostModel : PageModel
     public MarkdownBlog Blog { get; }
     public PostModel(MarkdownBlog blog) => Blog = blog;
 
-    [FromQuery]
-    public bool Static { get; set; }
     [FromRoute]
     public string? Slug { get; set; }
+    public string? Layout { get; set; }
     public string? Title { get; set; }
     public string? Author { get; set; }
     public string? Splash { get; set; }
@@ -35,6 +34,7 @@ public class PostModel : PageModel
 
     public PostModel Populate(MarkdownFileInfo doc)
     {
+        Layout = doc.Layout;
         Title = doc.Title;
         Slug = doc.Slug;
         Tags = doc.Tags;

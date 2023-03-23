@@ -6,13 +6,13 @@ namespace Ssg;
 
 public class MarkdownWhatsNew : MarkdownPagesBase<MarkdownFileInfo>
 {
-    public MarkdownWhatsNew(ILogger<MarkdownWhatsNew> log) : base(log) {}
+    public MarkdownWhatsNew(ILogger<MarkdownWhatsNew> log, IWebHostEnvironment env) : base(log,env) {}
     public Dictionary<string, List<MarkdownFileInfo>> Features { get; set; } = new();
 
     public List<MarkdownFileInfo> GetFeatures(string release)
     {
-        return Features.TryGetValue(release, out var doc)
-            ? Fresh(doc)
+        return Features.TryGetValue(release, out var docs)
+            ? Fresh(docs.Where(IsVisible).ToList())
             : new List<MarkdownFileInfo>();
     }
     
@@ -21,7 +21,7 @@ public class MarkdownWhatsNew : MarkdownPagesBase<MarkdownFileInfo>
         Features.Clear();
         var fs = AssertVirtualFiles();
         var dirs = fs.GetDirectory(fromDirectory).GetDirectories().ToList();
-        log.LogInformation("Found {0} whatsnew directories", dirs.Count);
+        Log.LogInformation("Found {0} whatsnew directories", dirs.Count);
 
         var pipeline = CreatePipeline();
 
@@ -31,7 +31,7 @@ public class MarkdownWhatsNew : MarkdownPagesBase<MarkdownFileInfo>
             if (!DateTime.TryParseExact(datePart, "yyyy-MM-dd", CultureInfo.InvariantCulture,
                     DateTimeStyles.AdjustToUniversal, out var date))
             {
-                log.LogWarning("Could not parse date '{0}', ignoring...", datePart);
+                Log.LogWarning("Could not parse date '{0}', ignoring...", datePart);
                 continue;
             }
 
@@ -53,7 +53,7 @@ public class MarkdownWhatsNew : MarkdownPagesBase<MarkdownFileInfo>
                 }
                 catch (Exception e)
                 {
-                    log.LogError(e, "Couldn't load {0}: {1}", file.VirtualPath, e.Message);
+                    Log.LogError(e, "Couldn't load {0}: {1}", file.VirtualPath, e.Message);
                 }
             }
         }

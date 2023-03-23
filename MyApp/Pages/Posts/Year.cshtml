@@ -4,7 +4,7 @@
 @implements IRenderStatic<YearModel>
 @functions {
     public List<YearModel> GetStaticProps(RenderContext ctx) => ctx.Resolve<MarkdownBlog>()
-        .Posts.Select(x => x.Date.Value.Year).Distinct().Map(x => new YearModel { Year = x });
+        .VisiblePosts.Select(x => x.Date.GetValueOrDefault().Year).Distinct().Map(x => new YearModel { Year = x });
 }
 
 @{

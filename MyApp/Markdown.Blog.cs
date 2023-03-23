@@ -23,9 +23,11 @@ public class AuthorInfo
 
 public class MarkdownBlog : MarkdownPagesBase<MarkdownFileInfo>
 {
-    public MarkdownBlog(ILogger<MarkdownBlog> log) : base(log) {}
-    public List<MarkdownFileInfo> Posts { get; set; } = new();
+    public MarkdownBlog(ILogger<MarkdownBlog> log, IWebHostEnvironment env) : base(log,env) {}
+    List<MarkdownFileInfo> Posts { get; set; } = new();
 
+    public List<MarkdownFileInfo> VisiblePosts => Posts.Where(IsVisible).ToList();
+    
     public string FallbackProfileUrl { get; set; } = Svg.ToDataUri(Svg.Create(Svg.Body.User, stroke:"none").Replace("fill='currentColor'","fill='#0891b2'"));
     public string FallbackSplashUrl { get; set; } = "https://source.unsplash.com/random/2000x1000/?stationary";
 
@@ -59,14 +61,13 @@ public class MarkdownBlog : MarkdownPagesBase<MarkdownFileInfo>
 
     public List<MarkdownFileInfo> GetPosts(string? author = null, string? tag = null, int? year = null)
     {
-        IEnumerable<MarkdownFileInfo> latestPosts = Posts
-            .Where(x => x.Date < DateTime.UtcNow);
+        IEnumerable<MarkdownFileInfo> latestPosts = Posts.Where(IsVisible);
         if (author != null)
             latestPosts = latestPosts.Where(x => x.Author == author);
         if (tag != null)
             latestPosts = latestPosts.Where(x => x.Tags.Contains(tag));
         if (year != null)
-            latestPosts = latestPosts.Where(x => x.Date.Value.Year == year);
+            latestPosts = latestPosts.Where(x => x.Date.GetValueOrDefault().Year == year);
         return latestPosts.OrderByDescending(x => x.Date).ToList();
     }
 
@@ -101,7 +102,7 @@ public class MarkdownBlog : MarkdownPagesBase<MarkdownFileInfo>
             : splash;
     }
 
-    public MarkdownFileInfo? FindPostBySlug(string name) => Fresh(Posts.FirstOrDefault(x => x.Slug == name));
+    public MarkdownFileInfo? FindPostBySlug(string name) => Fresh(VisiblePosts.FirstOrDefault(x => x.Slug == name));
 
     public override MarkdownFileInfo? Load(string path, MarkdownPipeline? pipeline = null)
     {
@@ -113,7 +114,7 @@ public class MarkdownBlog : MarkdownPagesBase<MarkdownFileInfo>
         var doc = CreateMarkdownFile(content, writer, pipeline);
         if (doc?.Title == null)
         {
-            log.LogWarning("No frontmatter found for {0}, ignoring...", file.VirtualPath);
+            Log.LogWarning("No frontmatter found for {0}, ignoring...", file.VirtualPath);
             return null;
         }
 
@@ -125,7 +126,7 @@ public class MarkdownBlog : MarkdownPagesBase<MarkdownFileInfo>
         if (!DateTime.TryParseExact(datePart, "yyyy-MM-dd", CultureInfo.InvariantCulture,
                 DateTimeStyles.AdjustToUniversal, out var date))
         {
-            log.LogWarning("Could not parse date '{0}', ignoring...", datePart);
+            Log.LogWarning("Could not parse date '{0}', ignoring...", datePart);
             return null;
         }
 

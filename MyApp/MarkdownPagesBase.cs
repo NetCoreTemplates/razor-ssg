@@ -12,14 +12,24 @@ public class MarkdownFileBase
     public string? Layout { get; set; }
     public string? FileName { get; set; }
     public string? HtmlFileName { get; set; }
+    /// <summary>
+    /// Whether to hide this document in Production
+    /// </summary>
+    public bool Draft { get; set; }
     public string? Title { get; set; }
     public string? Summary { get; set; }
     public string? Image { get; set; }
     public string? Author { get; set; }
     public List<string> Tags { get; set; } = new();
+    /// <summary>
+    /// Date document is published. Documents with future Dates are only shown in Development 
+    /// </summary>
     public DateTime? Date { get; set; }
     public string? Content { get; set; }
     public string? Url { get; set; }
+    /// <summary>
+    /// The rendered HTML of the Markdown
+    /// </summary>
     public string? Preview { get; set; }
     public string? HtmlPage { get; set; }
     public int? WordCount { get; set; }
@@ -34,6 +44,7 @@ public class MarkdownFileBase
         Layout = newDoc.Layout;
         Title = newDoc.Title;
         Summary = newDoc.Summary;
+        Draft = newDoc.Draft;
         Image = newDoc.Image;
         Author = newDoc.Author;
         Tags = newDoc.Tags;
@@ -55,8 +66,15 @@ public interface IMarkdownPages
 }
 public abstract class MarkdownPagesBase<T> : IMarkdownPages where T : MarkdownFileBase
 {
-    protected readonly ILogger log;
-    public MarkdownPagesBase(ILogger log) => this.log = log;
+    protected ILogger Log { get; }
+    protected IWebHostEnvironment Environment { get; }
+
+    public MarkdownPagesBase(ILogger log, IWebHostEnvironment env)
+    {
+        this.Log = log;
+        this.Environment = env;
+    }
+    
     public IVirtualFiles VirtualFiles { get; set; } = default!;
     
     public virtual MarkdownPipeline CreatePipeline()
@@ -82,7 +100,7 @@ public abstract class MarkdownPagesBase<T> : IMarkdownPages where T : MarkdownFi
     public virtual T? Fresh(T? doc)
     {
         // Ignore reloading source .md if run in production or as AppTask
-        if (doc == null || !HostContext.DebugMode || AppTasks.IsRunAsAppTask())
+        if (doc == null || !Environment.IsDevelopment() || AppTasks.IsRunAsAppTask())
             return doc;
         var newDoc = Load(doc.Path);
         doc.Update(newDoc);
@@ -131,7 +149,7 @@ public abstract class MarkdownPagesBase<T> : IMarkdownPages where T : MarkdownFi
         var doc = CreateMarkdownFile(content, writer, pipeline);
         if (doc?.Title == null)
         {
-            log.LogWarning("No frontmatter found for {0}, ignoring...", file.VirtualPath);
+            Log.LogWarning("No frontmatter found for {0}, ignoring...", file.VirtualPath);
             return null;
         }
 
@@ -146,6 +164,9 @@ public abstract class MarkdownPagesBase<T> : IMarkdownPages where T : MarkdownFi
 
         return doc;
     }
+
+    public virtual bool IsVisible(T doc) => Environment.IsDevelopment() || 
+        !doc.Draft && (doc.Date == null || doc.Date.Value <= DateTime.UtcNow);
     
     public int WordsPerMin { get; set; } = 225;
     public char[] WordBoundaries { get; set; } = { ' ', '.', '?', '!', '(', ')', '[', ']' };

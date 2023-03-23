@@ -6,10 +6,11 @@ namespace Ssg;
 
 public class MarkdownPages : MarkdownPagesBase<MarkdownFileInfo>
 {
-    public MarkdownPages(ILogger<MarkdownPages> log) : base(log) {}
-    public List<MarkdownFileInfo> Pages { get; set; } = new();
-    
-    public MarkdownFileInfo? GetBySlug(string slug) => Fresh(Pages.FirstOrDefault(x => x.Slug == slug));
+    public MarkdownPages(ILogger<MarkdownPages> log, IWebHostEnvironment env) : base(log,env) {}
+    List<MarkdownFileInfo> Pages { get; set; } = new();
+    public List<MarkdownFileInfo> VisiblePages => Pages.Where(IsVisible).ToList();
+
+    public MarkdownFileInfo? GetBySlug(string slug) => Fresh(VisiblePages.FirstOrDefault(x => x.Slug == slug));
 
     public void LoadFrom(string fromDirectory)
     {
