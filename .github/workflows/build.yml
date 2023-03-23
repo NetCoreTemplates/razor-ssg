@@ -35,7 +35,7 @@ jobs:
           org_name=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
           if [ -z "$cname_val" ] 
           then
-            echo "ssg_base_href=$(echo https://$org_name.github.io/$repo_name)" >> $GITHUB_ENV
+            echo "ssg_base_href=$(echo https://$org_name.github.io/$repo_name/)" >> $GITHUB_ENV
           fi
             
       - name: prerender
