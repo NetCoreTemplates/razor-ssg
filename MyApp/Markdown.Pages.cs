@@ -1,4 +1,4 @@
-﻿// run node postinstall.js to update with latest version
+﻿// run node postinstall.js to update to latest version
 using ServiceStack.IO;
 using ServiceStack.Logging;
 
