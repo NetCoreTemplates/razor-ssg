@@ -18,6 +18,7 @@
 
     <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
     @Html.ImportMap(new() {
+        ["app.mjs"]              = ("./mjs/app.mjs",                     "./mjs/app.mjs"),
         ["vue"]                  = ("./lib/mjs/vue.mjs",                 "./lib/mjs/vue.min.mjs"),
         ["@servicestack/client"] = ("./lib/mjs/servicestack-client.mjs", "./lib/mjs/servicestack-client.min.mjs"),
         ["@servicestack/vue"]    = ("./lib/mjs/servicestack-vue.mjs",    "./lib/mjs/servicestack-vue.min.mjs"),
@@ -36,7 +37,7 @@
 
 <script src="lib/js/htmx.js"></script>
 <script type="module">
-import { init } from "./mjs/app.mjs"
+import { init } from "app.mjs"
 init()
 </script>
 
