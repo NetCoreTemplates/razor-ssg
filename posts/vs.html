@@ -19,6 +19,7 @@
     <script type="importmap">
 {
     "imports": {
+        "app.mjs": "./mjs/app.mjs",
         "vue": "./lib/mjs/vue.min.mjs",
         "@servicestack/client": "./lib/mjs/servicestack-client.min.mjs",
         "@servicestack/vue": "./lib/mjs/servicestack-vue.min.mjs"
@@ -80,7 +81,7 @@
     </div>
 </header>
 <script type="module">
-import { mountAll } from "/mjs/app.mjs"
+import { mountAll } from "app.mjs"
 mountAll()
 </script>
 
@@ -191,7 +192,7 @@ for more info, checkout <a href="deploy">GitHub Actions Deployments</a>.</p>
 </div>
 
 <script type="module">
-import { init } from "/mjs/app.mjs"
+import { init } from "app.mjs"
 init()
 </script>
 
@@ -278,7 +279,7 @@ init()
 
 <script src="lib/js/htmx.js"></script>
 <script type="module">
-import { init } from "./mjs/app.mjs"
+import { init } from "app.mjs"
 init()
 </script>
 
