@@ -14,6 +14,16 @@
         cls.remove('dark')
     </script>
     <link rel="stylesheet" href="/css/app.css">
+    @{
+        var args = Environment.GetCommandLineArgs();
+        var baseHref = Array.IndexOf(args, "--BaseHref") >= 0
+            ? args[Array.IndexOf(args, "--BaseHref") + 1]
+            : null;
+    }
+    @if (baseHref != null)
+    {
+        <base href="@baseHref" />
+    }
 
     <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
     @Html.ImportMap(new() {
