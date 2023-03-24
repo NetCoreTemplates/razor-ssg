@@ -6,8 +6,6 @@ author: Brandon Foley
 image: https://images.unsplash.com/photo-1451187580459-43490279c0fa?crop=entropy&fit=crop&h=1000&w=2000
 ---
 
-<link rel="stylesheet" href="./css/lite-yt-embed.css">
-
 At <a href="./">ServiceStack</a>, we have been using AWS for hosting for over 10 years. It has served us well, but it suffers from complex pricing and possibility of bill shock due to its fractured pay-as-you-go design.
 
 Thankfully, more and more companies are providing simpler offerings for hosting needs, and AWS themselves launched [Lightsail](https://aws.amazon.com/lightsail) as their answer to market demands for simple hosting options that package everything you need for basic hosting.
@@ -100,7 +98,7 @@ The requests throughput of that this test illustrated ~100rps can suit many many
 
 <div class="mx-auto mt-4 mb-4">
     <div class="inline-flex justify-center w-full">
-      <img src="./images/litestream/litestream-costs.svg" alt="">
+      <img src="./img/posts/hetzner-cloud/litestream-costs.svg" alt="">
     </div>
 <div class="text-gray-500 text-center">Previous test result price comparison without AWS using Provisioned IOPS.</div>
 </div>
