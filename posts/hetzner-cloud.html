@@ -134,8 +134,8 @@ mountAll()
                 </div>
             <div class="max-w-3xl mx-auto">
                 <div class="prose lg:prose-xl max-w-none mb-32">
-                    <link rel="stylesheet" href="/css/lite-yt-embed.css">
-<p>At <a href="/">ServiceStack</a>, we have been using AWS for hosting for over 10 years. It has served us well, but it suffers from complex pricing and possibility of bill shock due to its fractured pay-as-you-go design.</p>
+                    <link rel="stylesheet" href="./css/lite-yt-embed.css">
+<p>At <a href="./">ServiceStack</a>, we have been using AWS for hosting for over 10 years. It has served us well, but it suffers from complex pricing and possibility of bill shock due to its fractured pay-as-you-go design.</p>
 <p>Thankfully, more and more companies are providing simpler offerings for hosting needs, and AWS themselves launched <a href="https://aws.amazon.com/lightsail">Lightsail</a> as their answer to market demands for simple hosting options that package everything you need for basic hosting.</p>
 <p>These simpler hosting options tend to bundle several things together as one fixed monthly price. A VM with a specific compute and memory allocation, as well as data transfer, and storage.</p>
 <h2 id="looking-at-different-us-offerings">Looking at different US offerings</h2>
@@ -158,7 +158,7 @@ We were also testing out <a href="https://litestream.io">Litestream</a> as a pos
 <div class="mx-auto mt-4 mb-4">
   <a href="https://litestream.io">
       <div class="inline-flex justify-center w-full">
-        <img src="/img/posts/hetzner-cloud/litestream.svg" alt="">
+        <img src="./img/posts/hetzner-cloud/litestream.svg" alt="">
       </div>
       <div class="text-gray-500 text-center">litestream.io</div>
   </a>
@@ -176,19 +176,19 @@ And the embedded nature of SQLite removes the uncertainty of the process of upgr
 <p>These series of steps had 2 write requests and 8 read, separated by 2 seconds per step. We then setup a Gatling simulation that ramped up adding new users to our system from 5 per second to 15 per second, to add a growing number of users over 10 minutes, then sustained over another 10 minutes.</p>
 <div class="mx-auto mt-4 mb-4">
     <div class="inline-flex justify-center w-full">
-      <img src="/img/posts/hetzner-cloud/aws-gatling-result.png" alt="">
+      <img src="./img/posts/hetzner-cloud/aws-gatling-result.png" alt="">
     </div>
 <div class="text-gray-500 text-center">AWS Gatling Result.</div>
 </div>
 <div class="mx-auto mt-4 mb-4">
     <div class="inline-flex justify-center w-full">
-      <img src="/img/posts/hetzner-cloud/azure-gatling-result.png" alt="">
+      <img src="./img/posts/hetzner-cloud/azure-gatling-result.png" alt="">
     </div>
 <div class="text-gray-500 text-center">Azure Gatling Result.</div>
 </div>
 <div class="mx-auto mt-4 mb-4">
     <div class="inline-flex justify-center w-full">
-      <img src="/img/posts/hetzner-cloud/hetzner-gatling-result.png" alt="">
+      <img src="./img/posts/hetzner-cloud/hetzner-gatling-result.png" alt="">
     </div>
 <div class="text-gray-500 text-center">Hetzner Gatling Result.</div>
 </div>
@@ -196,7 +196,7 @@ And the embedded nature of SQLite removes the uncertainty of the process of upgr
 The requests throughput of that this test illustrated ~100rps can suit many many use cases, and SQLite is <a href="https://www.sqlite.org/whentouse.html#:%7E:text=An%20SQLite%20database%20is%20limited,to%20something%20less%20than%20this.">really only limited by its single writer design</a>. We did previous tests of upto 250rps on the same Hetzner Cloud instance with SQLite, but this was starting to reach the maximum throughput, again purely to do with the single writer limitation.</p>
 <div class="mx-auto mt-4 mb-4">
     <div class="inline-flex justify-center w-full">
-      <img src="/images/litestream/litestream-costs.svg" alt="">
+      <img src="./images/litestream/litestream-costs.svg" alt="">
     </div>
 <div class="text-gray-500 text-center">Previous test result price comparison without AWS using Provisioned IOPS.</div>
 </div>
@@ -213,7 +213,7 @@ The requests throughput of that this test illustrated ~100rps can suit many many
 <p>Without provisioned IOPs, it drops to around <strong>$132/month</strong> as an estimated cost. The <strong>$300/month</strong> default feature for a &quot;Production&quot; database is very hard for AWS to justify, and I think more of a sign of their poor performing GP2 storage option. Although this will only impact very &quot;chatty&quot; types of applications that need higher IOPs throughput, the difference in performance from RDS vs providers like DigitalOcean and Hetzner can be quite stark.</p>
 <div class="mx-auto mt-4 mb-4">
     <div class="inline-flex justify-center w-full">
-      <img src="/img/posts/hetzner-cloud/aws-rds-with-provisioned-iops.png" alt="">
+      <img src="./img/posts/hetzner-cloud/aws-rds-with-provisioned-iops.png" alt="">
     </div>
 <div class="text-gray-500 text-center">AWS RDS now defaults to provisioned IOPs for a Production setup, drastically increasing costs.</div>
 </div>
@@ -271,7 +271,7 @@ The requests throughput of that this test illustrated ~100rps can suit many many
 <p>The above specs were provided as &quot;Production&quot; defaults when using a single database instance. Azure SQL Database defaults to costing $373, during the load test, the database CPU hit ~25%.</p>
 <div class="mx-auto mt-4 mb-4">
     <div class="inline-flex justify-center w-full">
-      <img src="/img/posts/hetzner-cloud/azure-db-cpu-during-test.png" alt="">
+      <img src="./img/posts/hetzner-cloud/azure-db-cpu-during-test.png" alt="">
     </div>
 <div class="text-gray-500 text-center">Azure SQL database without tuning performs poorly for cost, likely due to lack of indexes</div>
 </div>
@@ -302,7 +302,7 @@ The requests throughput of that this test illustrated ~100rps can suit many many
 <p>While we were primarily looking for one of the lowest cost options with simplified pricing, Hetzner Cloud pleasantly surprised us with a few features the larger providers could learn from.</p>
 <div class="mx-auto mt-4 mb-4">
     <div class="inline-flex justify-center w-full">
-      <img src="/img/posts/hetzner-cloud/hetzner-cloud-buy.png" alt="">
+      <img src="./img/posts/hetzner-cloud/hetzner-cloud-buy.png" alt="">
     </div>
 <div class="text-gray-500 text-center">Hetzner Cloud Pricing.</div>
 </div>
@@ -313,7 +313,7 @@ In my testing from the time the &quot;Create&quot; button was clicked, my SSH co
 <p>Another part of the responsiveness is their &quot;Live&quot; graphs for monitoring. It is surprisingly low latency and an extremely stark difference between AWS charging extra for &quot;Detailed&quot; monitoring on EC2 instances. The graphs update every 3-5 seconds in the browser and look to be over a few seconds behind real-time.</p>
 <div class="mx-auto mt-4 mb-4">
     <div class="inline-flex justify-center w-full">
-      <img src="/img/posts/hetzner-cloud/hetzner-cloud-live-graphs.gif" alt="">
+      <img src="./img/posts/hetzner-cloud/hetzner-cloud-live-graphs.gif" alt="">
     </div>
 <div class="text-gray-500 text-center">Live monitoring updates every 3-5 seconds.</div>
 </div>
