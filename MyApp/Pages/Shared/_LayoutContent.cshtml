@@ -15,6 +15,14 @@
         cls.remove('dark')
     </script>
     <link rel="stylesheet" href="css/app.css">
+    
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    @Html.ImportMap(new() {
+        ["app.mjs"]              = ("./mjs/app.mjs",                     "./mjs/app.mjs"),
+        ["vue"]                  = ("./lib/mjs/vue.mjs",                 "./lib/mjs/vue.min.mjs"),
+        ["@servicestack/client"] = ("./lib/mjs/servicestack-client.mjs", "./lib/mjs/servicestack-client.min.mjs"),
+        ["@servicestack/vue"]    = ("./lib/mjs/servicestack-vue.mjs",    "./lib/mjs/servicestack-vue.min.mjs"),
+    })
 </head>
 <body class="bg-white dark:bg-black dark:text-white">
 
