@@ -583,7 +583,7 @@ main navigation links:
 ```html
 <nav hx-boost="true">
     <ul>
-        <li><a href="/Blog">Blog</a></li>
+        <li><a href="./Blog">Blog</a></li>
     </ul>
 </nav>
 ```

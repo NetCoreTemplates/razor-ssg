@@ -1,7 +1,7 @@
 ---
 title: Animaginary
 url: https://example.org
-image: /img/whatsnew/Animaginary/cover.svg
+image: ./img/whatsnew/Animaginary/cover.svg
 ---
 
 Introducing Animaginary, the next generation web animation library that's taking the world by storm. 

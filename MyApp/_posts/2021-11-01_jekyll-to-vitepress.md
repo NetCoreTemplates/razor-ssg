@@ -24,8 +24,8 @@ Since Jekyll support has been officially sunset, we decided to migrate our docs 
 This has given us the ability to update our docs locally with instant on save update to view the final result quickly while we edit/create docs.
 
 <div class="my-8 ml-20 flex justify-center">
-    <img style="max-height:150px" src="/img/posts/jekyll-to-vitepress/vite.svg" alt="Vite logo">
-    <img style="max-height:150px" src="/img/posts/jekyll-to-vitepress/vuepress.png" alt="VitePress logo">
+    <img style="max-height:150px" src="./img/posts/jekyll-to-vitepress/vite.svg" alt="Vite logo">
+    <img style="max-height:150px" src="./img/posts/jekyll-to-vitepress/vuepress.png" alt="VitePress logo">
 </div>
 
 

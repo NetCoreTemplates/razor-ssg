@@ -1,7 +1,7 @@
 ---
 title: OpenShuttle
 url: https://example.org
-image: /img/whatsnew/OpenShuttle/cover.svg
+image: ./img/whatsnew/OpenShuttle/cover.svg
 ---
 
 Introducing OpenShuttle, the revolutionary new product that is set to change the space industry forever. OpenShuttle is a cutting-edge
