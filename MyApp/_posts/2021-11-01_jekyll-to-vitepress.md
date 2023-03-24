@@ -58,7 +58,7 @@ This list might look bad for VitePress, but it comes down to a young library tha
 
 The stand out feature and one of the most compelling reason for us to undertake this migration was not the default theme (although that helped) but the user experience when editing documentation locally.
 
-![](/img/posts/jekyll-to-vitepress/vitepress-update-large.gif)
+![](img/posts/jekyll-to-vitepress/vitepress-update-large.gif)
 
 In contrast, editing this blog post for our main site which is still currently using Jekyll, it takes between 6-8 seconds for a small single page change. Previously our docs page with over 300 pages could take over a minute depending on the type of change.
 
@@ -337,7 +337,7 @@ There is a good chance that some of the behaviour and lacking features will make
 
 And we knew this going in as it is very clearly outlined on the front page of their docs:
 
-![](/img/posts/jekyll-to-vitepress/vitepress-warning.png)
+![](img/posts/jekyll-to-vitepress/vitepress-warning.png)
 
 However, while there are still outstanding issues, the developer experience of Vue 3 combined with Vite and an SSG theme 
 aimed at producing documentation is extremely compelling.

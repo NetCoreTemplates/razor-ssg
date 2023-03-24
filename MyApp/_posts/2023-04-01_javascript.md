@@ -169,7 +169,7 @@ client.api(new Hello({ name }))
 
 You'll typically use all these libraries in your **API-enabled** components as seen in the
 [HelloApi.mjs](https://github.com/NetCoreTemplates/vue-mjs/blob/main/MyApp/wwwroot/mjs/components/HelloApi.mjs)
-component on the home page which calls the [Hello](/ui/Hello) API on each key press:
+component on the home page which calls the [Hello](https://vue-mjs.web-templates.io/ui/Hello) API on each key press:
 
 ```js
 import { ref } from "vue"
@@ -283,7 +283,7 @@ as done above.
 
 #### Explicit Error Handling
 
-This populated `ResponseStatus` DTO can either be manually passed into each component's **status** property as done in [/TodoMvc](/TodoMvc):
+This populated `ResponseStatus` DTO can either be manually passed into each component's **status** property as done in [/TodoMvc](https://vue-mjs.web-templates.io/TodoMvc):
 
 ```html
 <template id="TodoMvc-template">
@@ -419,7 +419,7 @@ it also contains a variety of integrated high-level components:
 
 Your Vue.js code can access Authenticated Users using [useAuth()](https://docs.servicestack.net/vue/use-auth)
 which can also be populated without the overhead of an Ajax request by embedding the response of the built-in
-[Authenticate API](/ui/Authenticate?tab=details) inside `_Layout.cshtml` with:
+[Authenticate API](https://vue-mjs.web-templates.io/ui/Authenticate?tab=details) inside `_Layout.cshtml` with:
 
 ```html
 <script type="module">
@@ -550,7 +550,7 @@ with their JS framework to mount their App component before it starts fetching t
 
 A complex solution to this problem is to server render the initial HTML content then re-render it again on the client after the page loads.
 A simpler solution is to avoid unnecessary ajax calls by embedding the JSON data the component needs in the page that loads it, which is what
-[/TodoMvc](/TodoMvc) does to load its initial list of todos using the [Service Gateway](https://docs.servicestack.net/service-gateway)
+[/TodoMvc](https://vue-mjs.web-templates.io/TodoMvc) does to load its initial list of todos using the [Service Gateway](https://docs.servicestack.net/service-gateway)
 to invoke APIs in process and embed its JSON response with:
 
 ```html

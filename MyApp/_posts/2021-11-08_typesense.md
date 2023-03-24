@@ -225,11 +225,11 @@ This means if our search index is updated even a day after the actual documentat
 
 Search on our documentation site is a very light workload for Typesense. Running as an ECS service on a 2 vCPU instance, the service struggled to get close to 1% with constant typeahead searching.
 
-![](/img/posts/typesense/typesense-cpu-utilization.png)
+![](img/posts/typesense/typesense-cpu-utilization.png)
 
 And since our docs site index is so small, the memory footprint is also tiny and stable at ~50MB or ~10% of the the service's soft memory limit.
 
-![](/img/posts/typesense/typesense-memory-utilization.png)
+![](img/posts/typesense/typesense-memory-utilization.png)
 
 This means we will be able to host this using a single EC2 instance among various other or the ServiceStack hosted example applications and use the same [deployment patterns we've shared in our GitHub Actions templates](https://docs.servicestack.net/mix-github-actions-aws-ecs).
 
@@ -368,7 +368,7 @@ to further fine-tune search results for your use-case.
 
 ## Search Results
 
-![](/img/posts/typesense/typesense-dart.gif)
+![](img/posts/typesense/typesense-dart.gif)
 
 The results are **excellent**, [see for yourself](https://docs.servicestack.net) by using the search at the top right or using Ctrl+K shortcut key on our docs site. 
 It handles typos really well, it is very quick and has become the fastest way to navigate our extensive documentation.

@@ -17,7 +17,7 @@ useful for static content like this Blog which is powered by the static markdown
 [_blog/posts](https://github.com/NetCoreTemplates/vue-mjs/tree/main/MyApp/wwwroot/_blog/posts) whose content
 is prerendered to: 
 
-  - [/blog](/blog)
+  - [/blog](https://vue-mjs.web-templates.io/blog)
 
 ### Parsing Markdown Files
 
@@ -134,7 +134,7 @@ Http, View and Page contexts to render Razor Pages, registered in ASP.NET Core's
 ```
 
 The process of saving the prerendered content is then simply a matter of saving the rendered Razor Page at the preferred locations,
-done for each post and the [/blog](/blog) index page using the
+done for each post and the [/blog](https://vue-mjs.web-templates.io/blog) index page using the
 [Posts/Index.cshtml](https://github.com/NetCoreTemplates/vue-mjs/blob/main/MyApp/Pages/Posts/Index.cshtml) Razor Page:
 
 ```csharp
@@ -230,7 +230,7 @@ Plugins.Add(new CleanUrlsFeature());
 
 Which allows prerendered pages to be accessed with and without its file extension:
 
- - [/blog/prerendering](/blog/prerendering)
- - [/blog/prerendering.html](/blog/prerendering.html)
+ - [/blog/prerendering](https://vue-mjs.web-templates.io/blog/prerendering)
+ - [/blog/prerendering.html](https://vue-mjs.web-templates.io/blog/prerendering.html)
 
 ### 
