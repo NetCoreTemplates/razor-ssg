@@ -1083,16 +1083,12 @@ select{
   margin-top: 9rem;
 }
 
-.-ml-24 {
-  margin-left: -6rem;
-}
-
 .mb-16 {
   margin-bottom: 4rem;
 }
 
-.ml-1 {
-  margin-left: 0.25rem;
+.-ml-24 {
+  margin-left: -6rem;
 }
 
 .mr-1 {
@@ -1149,6 +1145,10 @@ select{
 
 .mt-1 {
   margin-top: 0.25rem;
+}
+
+.ml-1 {
+  margin-left: 0.25rem;
 }
 
 .ml-0\.5 {
@@ -1959,9 +1959,9 @@ select{
   background-color: rgb(15 23 42 / var(--tw-bg-opacity));
 }
 
-.bg-blue-500 {
+.bg-slate-700 {
   --tw-bg-opacity: 1;
-  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
+  background-color: rgb(51 65 85 / var(--tw-bg-opacity));
 }
 
 .bg-slate-400\/10 {
@@ -2093,11 +2093,6 @@ select{
   background-color: rgb(21 128 61 / var(--tw-bg-opacity));
 }
 
-.bg-slate-700 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(51 65 85 / var(--tw-bg-opacity));
-}
-
 .bg-opacity-75 {
   --tw-bg-opacity: 0.75;
 }
@@ -2203,14 +2198,24 @@ select{
   padding-right: 1.25rem;
 }
 
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+.py-2\.5 {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+
+.px-3\.5 {
+  padding-left: 0.875rem;
+  padding-right: 0.875rem;
 }
 
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .py-8 {
@@ -2256,16 +2261,6 @@ select{
 .py-12 {
   padding-top: 3rem;
   padding-bottom: 3rem;
-}
-
-.py-2\.5 {
-  padding-top: 0.625rem;
-  padding-bottom: 0.625rem;
-}
-
-.px-3\.5 {
-  padding-left: 0.875rem;
-  padding-right: 0.875rem;
 }
 
 .pr-3 {
@@ -2622,11 +2617,6 @@ select{
 .text-blue-500 {
   --tw-text-opacity: 1;
   color: rgb(59 130 246 / var(--tw-text-opacity));
-}
-
-.text-blue-100 {
-  --tw-text-opacity: 1;
-  color: rgb(219 234 254 / var(--tw-text-opacity));
 }
 
 .text-cyan-600 {
@@ -3163,11 +3153,6 @@ select{
   background-color: rgb(51 65 85 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-blue-600:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(37 99 235 / var(--tw-bg-opacity));
-}
-
 .hover\:bg-slate-400\/20:hover {
   background-color: rgb(148 163 184 / 0.2);
 }
@@ -3265,11 +3250,6 @@ select{
 .hover\:text-blue-600:hover {
   --tw-text-opacity: 1;
   color: rgb(37 99 235 / var(--tw-text-opacity));
-}
-
-.hover\:text-white:hover {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .hover\:text-indigo-500:hover {
