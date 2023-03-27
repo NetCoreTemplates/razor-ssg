@@ -4,9 +4,12 @@ import { map } from "@servicestack/client"
 export default {
     template:`<div class="lang relative bg-gray-700 text-gray-300 pl-5 py-3 sm:rounded flex">
     <div class="flex ml-2 w-full justify-between cursor-pointer" @click="copy">
-      <label class="">
-        <slot></slot>
-      </label>
+      <div>
+          <span>$ </span>
+          <label class="">
+            <slot>{{text}}</slot>
+          </label>
+      </div>
       <small class="text-xs text-gray-400 px-3 -mt-1">sh</small>
     </div>
     <div v-if="successText" class="-mr-24 right-0 absolute text-md text-gray-200 bg-green-700 px-1 rounded">
@@ -16,6 +19,7 @@ export default {
       </div>
     </div>
   </div>`,
+    props:['text'],
     setup(props) {
         let successText = ref('')
         /** @param {MouseEvent} e */
