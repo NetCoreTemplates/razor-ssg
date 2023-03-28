@@ -24,11 +24,8 @@ jobs:
         working-directory: ./MyApp
         run: dotnet build .
         
-      - name: Replace CNAME value
-        env:
-          deploy_cdn: ${{ secrets.DEPLOY_CDN }}
+      - name: Assign default GitHub URL base path
         run: |
-          sed -i "s/DEPLOY_CDN/${deploy_cdn}/g" ./MyApp/wwwroot/CNAME
           cname_val=$(cat ./MyApp/wwwroot/CNAME)
           repo_name=$(echo ${{ github.repository }} | cut -d '/' -f 2)
           org_name=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
