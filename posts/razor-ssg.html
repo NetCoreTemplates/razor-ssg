@@ -179,8 +179,8 @@ Vue Component to create new Razor SSG App's below with:</p>
 <p>Although with full control over the websites <code>_Layout.cshtml</code>, you're free to use any preferred JS Module or Web Component you prefer.</p>
 <h3 id="github-codespaces-friendly">GitHub Codespaces friendly</h3>
 <p>In addition to having a pure Razor + .NET solution to create fast, CDN-hostable static websites, it also aims to provide a
-great experience from GitHub Codespaces, where you can create, test, check-in and have the included GitHub Actions deploy
-to GitHub Pages CDN from your iPad!</p>
+great experience from GitHub Codespaces, where you can create, modify, preview &amp; check-in changes before the included GitHub Actions
+auto deploy changes to its GitHub Pages CDN - all from your iPad!</p>
 <h2 id="razor-pages">Razor Pages</h2>
 <p>Your website can be built using either Markdown <code>.md</code> or Razor <code>.cshtml</code> pages, although it's generally recommended to
 use Markdown to capture the static content for your website for improved productivity and ease of maintenance.</p>
@@ -665,13 +665,14 @@ by registering a CNAME DNS entry for your preferred Custom Domain, e.g:</p>
 </ul>
 <p>The last point ultimately prompted us to seek an alternative solution as we were previously using Jekyll from Windows/WSL which
 made it awkward to manage the code-base and assets from a different filesystem and upgrading to the latest Jekyll broke our
-RubyMine support forcing us to using text editors to manage.</p>
+RubyMine support forcing us to using text editors to maintain content.</p>
 <p>Deterred by the growing complexity of current SSG solutions, we decided to create a new solution using C#/Razor
 (our preferred technology for generating server HTML) with a clean implementation that allowed full control
 letting us adopt our preferred approach to <a href="https://vue-mjs.web-templates.io/posts/javascript">Simple, Modern JavaScript</a>
 without any build-tooling or SPA complexity.</p>
-<p>We're very pleased with the results of <a href="https://servicestack.net">https://servicestack.net</a> new Razor SSG generated website
-whose source code is being publicly maintained at:</p>
+<p>We're happy with the results of <a href="https://servicestack.net">https://servicestack.net</a> new Razor SSG website:</p>
+<p><a href="https://servicestack.net"><img src="https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/ssg/servicestack.net-home-1440.png" alt="" /></a></p>
+<p>Whose source code is being publicly maintained at:</p>
 <ul>
 <li><a href="https://github.com/servicestack/servicestack.net">https://github.com/servicestack/servicestack.net</a></li>
 </ul>
