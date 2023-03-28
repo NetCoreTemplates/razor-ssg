@@ -30,7 +30,7 @@ jobs:
         run: |
           sed -i "s/DEPLOY_CDN/${deploy_cdn}/g" ./MyApp/wwwroot/CNAME
           cname_val=$(cat ./MyApp/wwwroot/CNAME)
-          repo_name=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]' | cut -d '/' -f 2)
+          repo_name=$(echo ${{ github.repository }} | cut -d '/' -f 2)
           org_name=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
           if [ -z "$cname_val" ] 
           then
