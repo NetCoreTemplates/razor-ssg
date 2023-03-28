@@ -28,7 +28,7 @@ const files = {
   }
 }
 
-const defaultHostPrefix = 'https://raw.githubusercontent.com/ServiceStack/servicestack.net/main/MyApp/'
+const defaultHostPrefix = 'https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/main/MyApp/'
 const hostFiles = [
     'Markdown.Blog.cs',
     'Markdown.Pages.cs',
