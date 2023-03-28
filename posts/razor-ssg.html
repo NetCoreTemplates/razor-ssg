@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/svg" href="img/logo.svg">
-    <title>Introducing Razor SSG - My App</title>
+    <title>Introducing Razor SSG - ServiceStack</title>
     <base href="/" />
     <script>
     const cls = document.querySelector('html').classList
@@ -14,7 +14,7 @@
         cls.remove('dark')
     </script>
     <link rel="stylesheet" href="css/app.css">
-
+    
     <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
     <script type="importmap">
 {
@@ -28,6 +28,31 @@
 </script>
 </head>
 <body class="bg-white dark:bg-black dark:text-white">
+
+<!-- Background backdrop, visually different from main _Layout -->
+<svg class="absolute inset-x-0 top-0 -z-10 h-[64rem] w-full stroke-gray-200 [mask-image:radial-gradient(32rem_32rem_at_center,white,transparent)]" aria-hidden="true">
+  <defs>
+    <pattern id="1f932ae7-37de-4c0a-a8b0-a6e3b4d44b84" width="200" height="200" x="50%" y="-1" patternUnits="userSpaceOnUse">
+      <path d="M.5 200V.5H200" fill="none"/>
+    </pattern>
+  </defs>
+  <svg x="50%" y="-1" class="overflow-visible fill-gray-50">
+    <path d="M-200 0h201v201h-201Z M600 0h201v201h-201Z M-400 600h201v201h-201Z M200 800h201v201h-201Z" stroke-width="0"/>
+  </svg>
+  <rect width="100%" height="100%" stroke-width="0" fill="url(#1f932ae7-37de-4c0a-a8b0-a6e3b4d44b84)"/>
+</svg>
+<div class="absolute top-0 left-1/2 right-0 -z-10 -ml-24 transform-gpu overflow-hidden blur-3xl lg:ml-24 xl:ml-48">
+  <svg viewBox="0 0 801 1036" aria-hidden="true" class="w-[50.0625rem]">
+    <path fill="url(#70656b7e-db44-4b9b-b7d2-1f06791bed52)" fill-opacity=".3" d="m282.279 843.371 32.285 192.609-313.61-25.32 281.325-167.289-58.145-346.888c94.5 92.652 277.002 213.246 251.009-45.597C442.651 127.331 248.072 10.369 449.268.891c160.956-7.583 301.235 116.434 351.256 179.39L507.001 307.557l270.983 241.04-495.705 294.774Z"/>
+    <defs>
+      <linearGradient id="70656b7e-db44-4b9b-b7d2-1f06791bed52" x1="508.179" x2="-28.677" y1="-116.221" y2="1091.63" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#9089FC"/>
+        <stop offset="1" stop-color="#FF80B5"/>
+      </linearGradient>
+    </defs>
+  </svg>
+</div>
+
 <header class="border-b border-gray-200 dark:border-gray-600 pr-3">
     <div class="flex flex-wrap items-center">
         <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
@@ -87,8 +112,8 @@ mountAll()
 
 
 <div class="min-h-screen">
-    <main role="main" class="pb-3" hx-ext="class-tools">
-        
+  <main role="main" class="pt-14 pb-3">
+    
 
 
 <link rel="stylesheet" href="css/typography.css">
@@ -151,11 +176,11 @@ Vue Component to create new Razor SSG App's below with:</p>
 <pre><code class="language-html">&lt;div class=&quot;not-prose text-base&quot; data-component=&quot;GettingStarted&quot;&gt;&lt;/div&gt;
 </code></pre>
 <div class="not-prose text-base flex justify-center" data-component="GettingStarted"></div>
-<p>Although with full control over the websites <code>_Layout.cshtml</code>, you're free to use any preferred JS Module or Web Component you wish.</p>
+<p>Although with full control over the websites <code>_Layout.cshtml</code>, you're free to use any preferred JS Module or Web Component you prefer.</p>
 <h3 id="github-codespaces-friendly">GitHub Codespaces friendly</h3>
-<p>In addition to having a pure Razor + .NET solution to create fast, CDN-hostable static websites, it also aims to be able
-to provide a good experience from GitHub Codespaces, where you'll be able to create, test, check-in and have the included GitHub
-Actions deploy to GitHub Pages CDN from your iPad!</p>
+<p>In addition to having a pure Razor + .NET solution to create fast, CDN-hostable static websites, it also aims to provide a
+great experience from GitHub Codespaces, where you can create, test, check-in and have the included GitHub Actions deploy
+to GitHub Pages CDN from your iPad!</p>
 <h2 id="razor-pages">Razor Pages</h2>
 <p>Your website can be built using either Markdown <code>.md</code> or Razor <code>.cshtml</code> pages, although it's generally recommended to
 use Markdown to capture the static content for your website for improved productivity and ease of maintenance.</p>
@@ -387,11 +412,185 @@ are broadly available for all features:</p>
 <li><strong>Drafts</strong> - Prevent posts being worked on from being published with <code>draft: true</code></li>
 <li><strong>Future Dates</strong> - Posts with a future date wont be published until that date</li>
 </ul>
+<h3 id="initializing-and-loading-markdown-features">Initializing and Loading Markdown Features</h3>
+<p>All markdown features are initialized in the same way in <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Configure.Ssg.cs">Configure.Ssg.cs</a>
+where they're registered in ASP.NET Core's IOC and initialized after the App's plugins are loaded
+by injecting with the App's <a href="https://docs.servicestack.net/virtual-file-system">Virtual Files provider</a>
+before using it to read from the directory where the markdown content for each feature is maintained:</p>
+<pre><code class="language-csharp">public class ConfigureSsg : IHostingStartup
+{
+    public void Configure(IWebHostBuilder builder) =&gt; builder
+        .ConfigureServices(services =&gt;
+        {
+            services.AddSingleton&lt;RazorPagesEngine&gt;();
+            services.AddSingleton&lt;MarkdownPages&gt;();
+            services.AddSingleton&lt;MarkdownWhatsNew&gt;();
+            services.AddSingleton&lt;MarkdownBlog&gt;();
+        })
+        .ConfigureAppHost(afterPluginsLoaded: appHost =&gt; {
+            var pages = appHost.Resolve&lt;MarkdownPages&gt;();
+            var whatsNew = appHost.Resolve&lt;MarkdownWhatsNew&gt;();
+            var blogPosts = appHost.Resolve&lt;MarkdownBlog&gt;();
+            
+            var features = new IMarkdownPages[] { pages, whatsNew, blogPosts }; 
+            features.Each(x =&gt; x.VirtualFiles = appHost.VirtualFiles);
+
+            // Custom initialization
+            blogPosts.Authors = Authors;
+
+            // Load feature markdown content
+            pages.LoadFrom(&quot;_pages&quot;);
+            whatsNew.LoadFrom(&quot;_whatsnew&quot;);
+            blogPosts.LoadFrom(&quot;_posts&quot;);
+        });
+    });
+    //...
+}
+</code></pre>
+<p>These dependencies are then injected in the feature's Razor Pages to query and render the loaded markdown content.</p>
+<h3 id="custom-frontmatter">Custom Frontmatter</h3>
+<p>You can extend the <code>MarkdownFileInfo</code> type used to maintain the markdown content and metadata of each loaded Markdown file
+by adding any additional metadata you want included as C# properties on:</p>
+<pre><code class="language-csharp">// Add additional frontmatter info to include
+public class MarkdownFileInfo : MarkdownFileBase
+{
+}
+</code></pre>
+<p>Any additional properties are automatically populated using ServiceStack's
+<a href="https://docs.servicestack.net/auto-mapping">built-in Automapping</a> which includes rich support for converting string frontmatter
+values into native .NET types.</p>
+<h3 id="updating-to-latest-versions">Updating to latest versions</h3>
+<p>You can easily update all the JavaScript dependencies used in
+<a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/postinstall.js">postinstall.js</a> by running:</p>
+<div class="not-prose text-base" data-component="ShellCommand" data-props="{ text: 'node postinstall.js' }"></div>
+<p>This will also update the Markdown features <code>*.cs</code> implementations which is delivered as source files instead of an external
+NuGet package to enable full customization, easier debugging whilst supporting easy upgrades.</p>
+<p>If you do customize any of the <code>.cs</code> files, you'll want to exclude them from being updated by removing them from:</p>
+<pre><code class="language-js">const hostFiles = [
+    'Markdown.Blog.cs',
+    'Markdown.Pages.cs',
+    'Markdown.WhatsNew.cs',
+    'MarkdownPagesBase.cs',
+]
+</code></pre>
+<h3 id="markdown-tag-helper">Markdown Tag Helper</h3>
+<p>The included <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/MarkdownTagHelper.cs">MarkdownTagHelper.cs</a> can be used
+in hybrid Razor Pages like <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/About.cshtml">About.cshtml</a>
+to render the <a href="/about">/about</a> page which requires the flexibility of Razor Pages with a static content component which you
+prefer to maintain inline with Markdown.</p>
+<p>The <code>&lt;markdown /&gt;</code> tag helper renders plain HTML, which you can apply <a href="https://tailwindcss.com/docs/typography-plugin">Tailwind's @typography</a>
+styles by including <strong>typography.css</strong> and annotating it with your preferred <code>prose</code> variant, e.g:</p>
+<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;css/typography.css&quot;&gt;
+&lt;markdown class=&quot;prose&quot;&gt;
+  Markdown content...
+&lt;/markdown&gt;
+</code></pre>
 <h2 id="static-static-generation-ssg">Static Static Generation (SSG)</h2>
 <p>All features up till now describes how this template implements a Markdown powered Razor Pages .NET application, where this template
 differs in its published output, where instead of a .NET App deployed to a VM or App server it generates static <code>*.html</code> files that's
-bundled together with <code>/wwwroot</code> static assets in the <code>/dist</code> folder</p>
+bundled together with <code>/wwwroot</code> static assets in the <code>/dist</code> folder that can be previewed by launching a HTTP Server from that
+folder with the built-in npm script:</p>
 <div class="not-prose text-base" data-component="ShellCommand" data-props="{ text: 'npm run serve' }"></div>
+<p>To run <strong>npx http-server</strong> on <code>http://localhost:8080</code> that you can open in a browser to preview the published version of your
+site as it would be when hosted on a CDN.</p>
+<h3 id="static-razor-pages">Static Razor Pages</h3>
+<p>The static generation functionality works by scanning all your Razor Pages and prerendering the pages with prerendering instructions.</p>
+<h3 id="pages-with-static-routes">Pages with Static Routes</h3>
+<p>Pages with static routes can be marked to be prerendered by annotating it with the <code>[RenderStatic]</code> attribute as done in
+<a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/About.cshtml">About.cshtml</a>:</p>
+<pre><code class="language-csharp">@page &quot;/about&quot;
+@attribute [RenderStatic]
+</code></pre>
+<p>Which saves the pre-rendered page using the pages route with a .html suffix, e.g: <code>/{@page route}.html</code> whilst pages with static
+routes with a trailing <code>/</code> are saved to <code>/{@page route}/index.html</code> as done for
+<a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Posts/Index.cshtml">Posts/Index.cshtml</a>:</p>
+<pre><code class="language-csharp">@page &quot;/posts/&quot;
+@attribute [RenderStatic]
+</code></pre>
+<h4 id="explicit-generated-paths">Explicit generated paths</h4>
+<p>To keep the generated pages in-sync with using the same routes as your Razor Pages in development it's recommended to use the implied
+rendered paths, but if preferred you can specify which path the page should be rendered to instead with:</p>
+<pre><code class="language-csharp">@page &quot;/posts/&quot;
+@attribute [RenderStatic(&quot;/posts/index.html&quot;)]
+</code></pre>
+<h3 id="pages-with-dynamic-routes">Pages with Dynamic Routes</h3>
+<p>Prerendering dynamic pages follows <a href="https://nextjs.org/docs/basic-features/data-fetching/get-static-props">Next.js getStaticProps</a>
+convention which you can implement using <code>IRenderStatic&lt;PageModel&gt;</code> by returning a Page Model for each page that should be generated
+as done in <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Posts/Post.cshtml">Posts/Post.cshtml</a> and
+<a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Page.cshtml">Page.cshtml</a>:</p>
+<pre><code class="language-csharp">@page &quot;/{slug}&quot;
+@model MyApp.Page
+
+@implements IRenderStatic&lt;MyApp.Page&gt;
+@functions {
+    public List&lt;Page&gt; GetStaticProps(RenderContext ctx)
+    {
+        var markdown = ctx.Resolve&lt;MarkdownPages&gt;();
+        return markdown.VisiblePages.Map(page =&gt; new Page { Slug = page.Slug! });
+    }
+}
+...
+</code></pre>
+<p>In this case it returns a Page Model for every <strong>Visible</strong> markdown page in
+<a href="https://github.com/NetCoreTemplates/razor-ssg/tree/main/MyApp/_pages">/_pages</a> that ends up rendering the following pages in <code>/dist</code>:</p>
+<ul>
+<li><code>/privacy.html</code></li>
+<li><code>/speaking.html</code></li>
+<li><code>/uses.html</code></li>
+</ul>
+<h3 id="limitations">Limitations</h3>
+<p>The primary limitations for developing statically generated Apps is that a <strong>snapshot</strong> of entire App is generated at deployment,
+which prohibits being able to render different content <strong>per request</strong>, e.g. for Authenticated users which would require executing
+custom JavaScript after the page loads to dynamically alter the page's initial content.</p>
+<p>Otherwise in practice you'll be able develop your Razor Pages utilizing Razor's full feature-set, the primary concessions stem
+from Pages being executed in a static context which prohibits pages from returning dynamic content per request, instead any
+&quot;different views&quot; should be maintained in separate pages.</p>
+<h4 id="no-querystring-params">No QueryString Params</h4>
+<p>As the generated pages should adopt the same routes as your Razor Pages you'll need to avoid relying on <strong>?QueryString</strong> params
+and instead capture all required parameters for a page in its <strong>@page route</strong> as done for:</p>
+<p><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Posts/Author.cshtml">Posts/Author.cshtml</a></p>
+<pre><code class="language-csharp">@page &quot;/posts/author/{slug}&quot;
+@model AuthorModel
+@inject MarkdownBlog Blog
+
+@implements IRenderStatic&lt;AuthorModel&gt;
+@functions {
+    public List&lt;AuthorModel&gt; GetStaticProps(RenderContext ctx) =&gt; ctx.Resolve&lt;MarkdownBlog&gt;()
+        .AuthorSlugMap.Keys.Map(x =&gt; new AuthorModel { Slug = x });
+}
+...
+</code></pre>
+<p>Which lists all posts by an Author, e.g: <a href="/posts/author/lucy-bates">/posts/author/lucy-bates</a>, likewise required for:</p>
+<p><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Posts/Tagged.cshtml">Posts/Tagged.cshtml</a></p>
+<pre><code class="language-csharp">@page &quot;/posts/tagged/{slug}&quot;
+@model TaggedModel
+@inject MarkdownBlog Blog
+
+@implements IRenderStatic&lt;TaggedModel&gt;
+@functions {
+    public List&lt;TaggedModel&gt; GetStaticProps(RenderContext ctx) =&gt; ctx.Resolve&lt;MarkdownBlog&gt;()
+        .TagSlugMap.Keys.Map(x =&gt; new TaggedModel { Slug = x });
+}
+...
+</code></pre>
+<p>Which lists all related posts with a specific tag, e.g: <a href="/posts/tagged/markdown">/posts/tagged/markdown</a>, and for:</p>
+<p><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Posts/Year.cshtml">Posts/Year.cshtml</a></p>
+<pre><code class="language-csharp">@page &quot;/posts/year/{year}&quot;
+@model YearModel
+@inject MarkdownBlog Blog
+
+@implements IRenderStatic&lt;YearModel&gt;
+@functions {
+    public List&lt;YearModel&gt; GetStaticProps(RenderContext ctx) =&gt; ctx.Resolve&lt;MarkdownBlog&gt;()
+        .VisiblePosts.Select(x =&gt; x.Date.GetValueOrDefault().Year)
+            .Distinct().Map(x =&gt; new YearModel { Year = x });
+}
+
+...
+</code></pre>
+<p>Which lists all posts published in a specific year, e.g: <a href="/posts/year/2023">/posts/year/2023</a>.</p>
+<p>Conceivably these &quot;different views&quot; could've been implemented by the same page with different <code>?author</code>, <code>?tag</code> and <code>?year</code>
+QueryString params, but are instead extracted into different pages to support its statically generated <code>*.html</code> outputs.</p>
 
                 </div>
             </div>
@@ -407,7 +606,7 @@ init()
 <script src="//unpkg.com/@highlightjs/cdn-assets/highlight.min.js"></script>
 <script>hljs.highlightAll()</script>
 
-    </main>
+  </main>
 </div>
 
 <footer class="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
@@ -482,15 +681,6 @@ init()
     </p>
   </div>
 </footer>
-
-
-<script src="lib/js/htmx.js"></script>
-<script type="module">
-import { init } from "app.mjs"
-init()
-</script>
-
-
 
 </body>
 </html>
