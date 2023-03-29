@@ -16,6 +16,10 @@ Alternatively write new project files directly into an razor-ssg repository, usi
     $ cd <ProjectName>
     $ x new razor-ssg
 
+## Development Tasks
+
+Tasks to run during development:
+
 ### Run Tailwind in Background
 
     $ npm run ui:dev
@@ -24,9 +28,9 @@ Alternatively write new project files directly into an razor-ssg repository, usi
 
     $ dotnet watch
 
-### Build production release
+## Local Production Tasks
 
-    $ npm run build
+Tasks to prerender and preview production ssg website build:
 
 ### Prerender website
 
