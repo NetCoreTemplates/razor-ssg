@@ -169,6 +169,16 @@ mountAll()
                 <div class="prose lg:prose-xl max-w-none mb-32">
                     <p>Razor SSG is a Razor Pages powered Markdown alternative to <a href="https://jekyllrb.com/">Ruby's Jekyll</a> &amp;
 <a href="https://nextjs.org">Next.js</a> that's ideal for generating static websites &amp; blogs using C#, Razor Pages &amp; Markdown.</p>
+<h3 id="github-codespaces-friendly">GitHub Codespaces Friendly</h3>
+<p>In addition to having a pure Razor + .NET solution to create fast, CDN-hostable static websites, it also aims to provide a
+great experience from GitHub Codespaces, where you can create, modify, preview &amp; check-in changes before the included GitHub Actions
+auto deploy changes to its GitHub Pages CDN - all from your iPad!</p>
+<p><a href="https://github.com/features/codespaces"><img src="/img/posts/razor-ssg/codespaces.png" alt="" /></a></p>
+<p>To see this in action, we walk through the entire workflow of creating, updating and adding features to a custom Razor SSG website
+from just a browser using Codespaces, that auto publishes changes to your GitHub Repo's <strong>gh-pages</strong> branch where it's hosted for
+free on GitHub Pages CDN:</p>
+<iframe class="youtube" src="https://www.youtube.com/embed/MRQMBrXi5Sc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+<h3 id="enhance-with-simple-modern-javascript">Enhance with simple, modern JavaScript</h3>
 <p>For enhanced interactivity, static markdown content can be <a href="/posts/javascript">progressively enhanced</a> with Vue 3 components,
 as done in this example that embed's the
 <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/mjs/components/GettingStarted.mjs">GettingStarted.mjs</a>
@@ -177,11 +187,6 @@ Vue Component to create new Razor SSG App's below with:</p>
 </code></pre>
 <div class="not-prose text-base flex justify-center" data-component="GettingStarted"></div>
 <p>Although with full control over the websites <code>_Layout.cshtml</code>, you're free to use any preferred JS Module or Web Component you prefer.</p>
-<h3 id="github-codespaces-friendly">GitHub Codespaces friendly</h3>
-<p>In addition to having a pure Razor + .NET solution to create fast, CDN-hostable static websites, it also aims to provide a
-great experience from GitHub Codespaces, where you can create, modify, preview &amp; check-in changes before the included GitHub Actions
-auto deploy changes to its GitHub Pages CDN - all from your iPad!</p>
-<p><a href="https://github.com/features/codespaces"><img src="/img/posts/razor-ssg/codespaces.png" alt="" /></a></p>
 <h2 id="razor-pages">Razor Pages</h2>
 <p>Your website can be built using either Markdown <code>.md</code> or Razor <code>.cshtml</code> pages, although it's generally recommended to
 use Markdown to capture the static content for your website for improved productivity and ease of maintenance.</p>
