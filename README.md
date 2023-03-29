@@ -2,9 +2,9 @@
 
 .NET 6.0 razor-ssg Static Generated Razor Pages Project Template
 
-[![](https://raw.githubusercontent.com/ServiceStack/Assets/master/csharp-templates/razor-ssg.png)](http://web.web-templates.io/)
+[![](https://raw.githubusercontent.com/ServiceStack/Assets/master/csharp-templates/razor-ssg.png)](https://razor-ssg.web-templates.io)
 
-> Browse [source code](https://github.com/NetCoreTemplates/razor-ssg), view live demo [web.web-templates.io](http://web.web-templates.io) and install with [dotnet-new](https://docs.servicestack.net/dotnet-new):
+> Browse [source code](https://github.com/NetCoreTemplates/razor-ssg), view live demo [web.web-templates.io](https://razor-ssg.web-templates.io) and install with [dotnet-new](https://docs.servicestack.net/dotnet-new):
 
     $ dotnet tool install -g x
 
@@ -15,6 +15,10 @@ Alternatively write new project files directly into an razor-ssg repository, usi
     $ git clone https://github.com/<User>/<ProjectName>.git
     $ cd <ProjectName>
     $ x new razor-ssg
+
+## Documentation
+
+Documentation for this template is included at [/posts/razor-ssg](https://razor-ssg.web-templates.io/posts/razor-ssg).
 
 ## Development Tasks
 
