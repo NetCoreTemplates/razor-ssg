@@ -32,7 +32,7 @@ jobs:
           echo "CNAME config detected: $custom_domain"
           repo_name=$(echo ${{ github.repository }} | cut -d '/' -f 2)
           org_name=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
-          if [ ! -f "./MyApp/wwwroot/CNAME" ] || [ custom_domain ] 
+          if [ ! -f "./MyApp/wwwroot/CNAME" ] && [ ! custom_domain ] 
           then
             echo "ssg_base_href=$(echo https://$org_name.github.io/$repo_name/)" >> $GITHUB_ENV
           else
