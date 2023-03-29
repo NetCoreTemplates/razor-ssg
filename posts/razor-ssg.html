@@ -183,9 +183,9 @@ free on GitHub Pages CDN:</p>
 as done in this example that embed's the
 <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/mjs/components/GettingStarted.mjs">GettingStarted.mjs</a>
 Vue Component to create new Razor SSG App's below with:</p>
-<pre><code class="language-html">&lt;div class=&quot;not-prose text-base&quot; data-component=&quot;GettingStarted&quot;&gt;&lt;/div&gt;
+<pre><code class="language-html">&lt;div data-component=&quot;GettingStarted&quot; data-props=&quot;{template:'razor-ssg'}&quot;&gt;&lt;/div&gt;
 </code></pre>
-<div class="not-prose text-base flex justify-center" data-component="GettingStarted"></div>
+<div class="py-8 not-prose text-base flex justify-center" data-component="GettingStarted" data-props="{template:'razor-ssg'}"></div>
 <p>Although with full control over the websites <code>_Layout.cshtml</code>, you're free to use any preferred JS Module or Web Component you prefer.</p>
 <h2 id="razor-pages">Razor Pages</h2>
 <p>Your website can be built using either Markdown <code>.md</code> or Razor <code>.cshtml</code> pages, although it's generally recommended to
@@ -227,7 +227,8 @@ content, a <strong>.cs</strong> class to load the markdown and a <strong>.cshtml
 </table>
 <p>Lets see what this looks like in practice by walking through the &quot;Pages&quot; feature:</p>
 <h2 id="pages-feature">Pages Feature</h2>
-<p>The pages feature simply makes all pages in the <strong>_pages</strong> folder, available from <code>/{filename}</code> where the included pages:</p>
+<p>The pages feature simply makes all pages in the <strong>_pages</strong> folder, available from <code>/{filename}</code>.</p>
+<p>Where the included pages:</p>
 <h3 id="pages"><a href="https://github.com/NetCoreTemplates/razor-ssg/tree/main/MyApp/_pages">/_pages</a></h3>
 <ul>
 <li>privacy.md</li>
@@ -240,7 +241,7 @@ content, a <strong>.cs</strong> class to load the markdown and a <strong>.cshtml
 <li><a href="/speaking">/speaking</a></li>
 <li><a href="/uses">/uses</a></li>
 </ul>
-<h3 id="loading">Loading</h3>
+<h3 id="loading-pages-markdown">Loading Pages Markdown</h3>
 <p>The code that loads the Pages feature markdown content is in <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Markdown.Pages.cs">Markdown.Pages.cs</a>:</p>
 <pre><code class="language-csharp">public class MarkdownPages : MarkdownPagesBase&lt;MarkdownFileInfo&gt;
 {
@@ -277,7 +278,7 @@ content, a <strong>.cs</strong> class to load the markdown and a <strong>.cshtml
 <p>Which ultimately just loads Markdown files using the configured <a href="https://github.com/xoofx/markdig">Markdig</a> pipeline in its <code>Pages</code>
 collection which is made available via its <code>VisiblePages</code> property which returns all documents in development whilst hiding
 <strong>Draft</strong> and content published at a <strong>Future Date</strong> from production builds.</p>
-<h3 id="rendering">Rendering</h3>
+<h3 id="rendering-markdown-pages">Rendering Markdown Pages</h3>
 <p>The pages are then rendered in <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Page.cshtml">Page.cshtml</a> Razor Page
 that's available from <code>/{slug}</code></p>
 <pre><code class="language-csharp">@page &quot;/{slug}&quot;
