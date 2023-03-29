@@ -28,7 +28,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          custom_domain=$(gh api "/repos/${{ github.repository }}/pages" | jq '.cname // empty')
+          custom_domain=$(gh api "/repos/${{ github.repository }}/pages" | jq -r '.cname // empty')
           echo "CNAME config detected: $custom_domain"
           repo_name=$(echo ${{ github.repository }} | cut -d '/' -f 2)
           org_name=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
@@ -42,6 +42,11 @@ jobs:
               echo "$custom_domain" >> ./MyApp/wwwroot/CNAME
             fi
           fi
+          
+      - name: Build tailwind
+        working-directory: ./MyApp
+        run: |
+          npm run build
             
       - name: prerender
         working-directory: ./MyApp
