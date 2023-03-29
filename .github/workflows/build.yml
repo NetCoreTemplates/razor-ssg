@@ -25,6 +25,8 @@ jobs:
         run: dotnet build .
         
       - name: Assign default GitHub URL base path
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           custom_domain=$(gh api "/repos/${{ github.repository }}/pages" | jq '.cname')
           echo "CNAME config detected: $custom_domain"
