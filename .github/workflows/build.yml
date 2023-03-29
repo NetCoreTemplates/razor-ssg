@@ -38,7 +38,7 @@ jobs:
           else
             if [ custom_domain ]
             then
-              // Persist CNAME settings
+              # Persist CNAME settings
               echo "$custom_domain" >> ./MyApp/wwwroot/CNAME
             fi
           fi
