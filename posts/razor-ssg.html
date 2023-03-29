@@ -650,11 +650,12 @@ by registering a CNAME DNS entry for your preferred Custom Domain, e.g:</p>
 </tr>
 </tbody>
 </table>
-<p>Then saving the domain name to <code>/wwwroot/CNAME</code>, e.g:</p>
-<pre><code>mydomain.org
+<p>That you can either <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-a-subdomain">configure in your Repo settings</a>
+or if you prefer to maintain it with your code-base, save the domain name to <code>/wwwroot/CNAME</code>, e.g:</p>
+<pre><code>www.mydomain.org
 </code></pre>
-<h3 id="used-by-the-new-servicestack.net">Used by the new servicestack.net</h3>
-<p>Whilst still only at <strong>v1</strong> release, we found it already had a number of advantages over our existing Jekyll static website:</p>
+<h3 id="benefits-after-migrating-from-jekyll">Benefits after migrating from Jekyll</h3>
+<p>Whilst still only at <strong>v1</strong> release, we found it already had a number of advantages over the existing Jekyll static website:</p>
 <ul>
 <li>Faster live reloads</li>
 <li>C#/Razor more type-save &amp; productive than Ruby/Liquid</li>
@@ -663,29 +664,32 @@ by registering a CNAME DNS entry for your preferred Custom Domain, e.g:</p>
 <li>Ability to reuse our .NET libraries</li>
 <li>Better development experience</li>
 </ul>
-<p>The last point ultimately prompted us to seek an alternative solution as we were previously using Jekyll from Windows/WSL which
-made it awkward to manage the code-base and assets from a different filesystem and upgrading to the latest Jekyll broke our
-RubyMine support forcing us to using text editors to manage content.</p>
+<p>The last point ultimately prompted seeking an alternative solution as previously Jekyll was used from Windows/WSL which
+was awkward to manage from a different filesystem with Jekyll upgrades breaking RubyMine support forcing the use of
+text editors to maintain its code-base and content.</p>
+<h3 id="used-by-the-new-servicestack.net">Used by the new <a href="https://servicestack.net">servicestack.net</a></h3>
 <p>Deterred by the growing complexity of current SSG solutions, we decided to create a new solution using C#/Razor
 (our preferred technology for generating server HTML) with a clean implementation that allowed full control
-letting us adopt our preferred approach to <a href="https://vue-mjs.web-templates.io/posts/javascript">Simple, Modern JavaScript</a>
-without any build-tooling or SPA complexity.</p>
+with an <strong>npm dependency-free</strong> solution letting us adopt our preferred approach to
+<a href="https://vue-mjs.web-templates.io/posts/javascript">Simple, Modern JavaScript</a> without any build-tooling or SPA complexity.</p>
 <p>We're happy with the results of <a href="https://servicestack.net">https://servicestack.net</a> new Razor SSG website:</p>
 <p><a href="https://servicestack.net"><img src="https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/ssg/servicestack.net-home-1440.png" alt="" /></a></p>
-<p>The source code of which is publicly maintained at:</p>
+<p>A clean, crisp code-base utilizing simple JS Module Vue 3 components, the source code of which is publicly maintained at:</p>
 <ul>
 <li><a href="https://github.com/servicestack/servicestack.net">https://github.com/servicestack/servicestack.net</a></li>
 </ul>
-<p>Which serves as a good example at how well this template scales for larger websites which only needed one new
-Markdown feature to display our growing video library:</p>
+<p>Which serves as a good example at how well this template scales for larger websites.</p>
+<h4 id="markdown-videos-feature">Markdown Videos Feature</h4>
+<p>Which only needed one new Markdown feature to display our growing video library:</p>
 <ul>
 <li><a href="https://github.com/ServiceStack/servicestack.net/tree/main/MyApp/_videos">/_videos</a> - Directory of Markdown Video collections</li>
 <li><a href="https://github.com/ServiceStack/servicestack.net/blob/main/MyApp/Markdown.Videos.cs">Markdown.Videos.cs</a> - Loading Video feature markdown content</li>
 <li><a href="https://github.com/ServiceStack/servicestack.net/blob/main/MyApp/Pages/Shared/VideoGroup.cshtml">Shared/VideoGroup.cshtml</a> - Razor Page for displaying Video Collection</li>
 </ul>
 <p>Which you're free to reuse in your own websites needing a similar feature.</p>
-<p>In future we'll look at expanding this template with generic Markdown features, or maintain a shared community collection
-of Markdown features if there ends up being a community contribution of new features.</p>
+<h4 id="feedback-feature-requests-welcome">Feedback &amp; Feature Requests Welcome</h4>
+<p>In future we'll look at expanding this template with generic Markdown features suitable for websites, blogs &amp; portfolios,
+or maintain a shared community collection if there ends up being community contributions of Razor SSG &amp; Markdown features.</p>
 <p>In the meantime, we welcome any feedback or new feature requests at:</p>
 <h3 id="httpsservicestack.netideas"><a href="https://servicestack.net/ideas">https://servicestack.net/ideas</a></h3>
 
