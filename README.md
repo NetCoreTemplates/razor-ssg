@@ -18,7 +18,7 @@ Alternatively write new project files directly into an razor-ssg repository, usi
 
 ## Development Tasks
 
-Tasks to run during development:
+Tasks to run live reload Tailwind and .NET Razor Pages App during development:
 
 ### Run Tailwind in Background
 
@@ -38,4 +38,4 @@ Tasks to prerender and preview production ssg website build:
 
 ### Preview pre-rendered website
 
-    $ npm run server
+    $ npm run serve
