@@ -26,12 +26,15 @@ jobs:
         
       - name: Assign default GitHub URL base path
         run: |
-          cname_val=$(cat ./MyApp/wwwroot/CNAME)
+          custom_domain=$(gh api "/repos/${{ github.repository }}/pages" | jq '.cname')
+          echo "CNAME config detected: $custom_domain"
           repo_name=$(echo ${{ github.repository }} | cut -d '/' -f 2)
           org_name=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
-          if [ -z "$cname_val" ] 
+          if [ ! -f "./MyApp/wwwroot/CNAME" ] || [ custom_domain ] 
           then
             echo "ssg_base_href=$(echo https://$org_name.github.io/$repo_name/)" >> $GITHUB_ENV
+          else
+            echo "ssg_base_href=/" >> $GITHUB_ENV
           fi
             
       - name: prerender
