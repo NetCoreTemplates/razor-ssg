@@ -36,7 +36,11 @@ jobs:
           then
             echo "ssg_base_href=$(echo https://$org_name.github.io/$repo_name/)" >> $GITHUB_ENV
           else
-            echo "ssg_base_href=/" >> $GITHUB_ENV
+            if [ custom_domain ]
+            then
+              // Persist CNAME settings
+              echo "$custom_domain" >> ./MyApp/wwwroot/CNAME
+            fi
           fi
             
       - name: prerender
