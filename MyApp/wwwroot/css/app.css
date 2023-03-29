@@ -1251,6 +1251,10 @@ select{
   max-height: 15rem;
 }
 
+.max-h-\[130px\] {
+  max-height: 130px;
+}
+
 .min-h-0 {
   min-height: 0px;
 }
