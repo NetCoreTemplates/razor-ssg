@@ -42,6 +42,11 @@ jobs:
               echo "$custom_domain" >> ./MyApp/wwwroot/CNAME
             fi
           fi
+          
+      - name: Build tailwind
+        working-directory: ./MyApp
+        run: |
+          npm run build
             
       - name: prerender
         working-directory: ./MyApp
