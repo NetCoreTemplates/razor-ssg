@@ -26,16 +26,29 @@
 <div class="container px-5 mb-32 mx-auto">
     @if (!string.IsNullOrEmpty(Model.Title))
     {
+        var authorHref = Blog.GetAuthorLink(Model.Author);
         <article class="mt-20">
             <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
                 @Model.Title
             </h1>
             <div class="md:mb-12 flex items-center">
-                <a href="@Blog.GetAuthorLink(Model.Author)">
+                @if (authorHref != null)
+                {
+                    <a href="@authorHref"><img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="@Model.AuthorProfileUrl"></a>
+                }
+                else
+                {
                     <img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="@Model.AuthorProfileUrl">
-                </a>
+                }
                 <div class="flex flex-col">
-                    <a class="text-xl font-semibold hover:underline" href="@Blog.GetAuthorLink(Model.Author)">@Model.Author</a>
+                    @if (authorHref != null)
+                    {
+                        <a class="text-xl font-semibold hover:underline" href="@Blog.GetAuthorLink(Model.Author)">@Model.Author</a>
+                    }
+                    else
+                    {
+                        <span class="text-xl font-semibold">@Model.Author</span>
+                    }
                     @if (author?.GitHubUrl != null || author?.TwitterUrl != null)
                     {
                         <ul role="list" class="flex">

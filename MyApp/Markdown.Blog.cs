@@ -74,7 +74,10 @@ public class MarkdownBlog : MarkdownPagesBase<MarkdownFileInfo>
     public string GetPostLink(MarkdownFileInfo post) => $"posts/{post.Slug}";
 
     public string GetPostsLink() => "posts";
-    public string GetAuthorLink(string author) => $"posts/author/{author.GenerateSlug()}";
+    public string? GetAuthorLink(string? author) => author != null && Authors.Any(x => x.Name.Equals(author, StringComparison.OrdinalIgnoreCase))
+        ? $"posts/author/{author.GenerateSlug()}"
+        : null;
+    
     public string GetYearLink(int year) => $"posts/year/{year}";
     public string GetTagLink(string tag) => $"posts/tagged/{tag.GenerateSlug()}";
     public string GetDateLabel(DateTime? date) => X.Map(date ?? DateTime.UtcNow, d => d.ToString("MMMM d, yyyy"))!;
