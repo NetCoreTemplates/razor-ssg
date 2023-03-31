@@ -496,7 +496,7 @@ differs in its published output, where instead of a .NET App deployed to a VM or
 bundled together with <code>/wwwroot</code> static assets in the <code>/dist</code> folder that can be previewed by launching a HTTP Server from that
 folder with the built-in npm script:</p>
 <div class="not-prose text-base" data-component="ShellCommand" data-props="{ text: 'npm run serve' }"></div>
-<p>To run <strong>npx http-server</strong> on <code>http://localhost:8080</code> that you can open in a browser to preview the published version of your
+<p>That runs <strong>npx http-server</strong> on <code>http://localhost:8080</code> that you can open in a browser to preview the published version of your
 site as it would be when hosted on a CDN.</p>
 <h3 id="static-razor-pages">Static Razor Pages</h3>
 <p>The static generation functionality works by scanning all your Razor Pages and prerendering the pages with prerendering instructions.</p>
@@ -507,8 +507,7 @@ site as it would be when hosted on a CDN.</p>
 @attribute [RenderStatic]
 </code></pre>
 <p>Which saves the pre-rendered page using the pages route with a .html suffix, e.g: <code>/{@page route}.html</code> whilst pages with static
-routes with a trailing <code>/</code> are saved to <code>/{@page route}/index.html</code> as done for
-<a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Posts/Index.cshtml">Posts/Index.cshtml</a>:</p>
+routes with a trailing <code>/</code> are saved to <code>/{@page route}/index.html</code>:</p>
 <pre><code class="language-csharp">@page &quot;/posts/&quot;
 @attribute [RenderStatic]
 </code></pre>
