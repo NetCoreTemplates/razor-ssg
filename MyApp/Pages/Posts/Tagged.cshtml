@@ -1,6 +1,7 @@
 @page "/posts/tagged/{slug}"
 @model TaggedModel
 @inject MarkdownBlog Blog
+
 @implements IRenderStatic<TaggedModel>
 @functions {
     public List<TaggedModel> GetStaticProps(RenderContext ctx) => ctx.Resolve<MarkdownBlog>()
@@ -8,8 +9,13 @@
 }
 
 @{
-    var tag = Blog.GetTagBySlug(Model.Slug);
-    ViewData["Title"] = $"{tag} tagged posts";
+    var selectedTag = Blog.GetTagBySlug(Model.Slug);
+    ViewData["Title"] = $"{selectedTag} tagged posts";
+    
+    var allPosts = Blog.GetPosts();
+    var allTags = allPosts.SelectMany(x => x.Tags).Distinct();
+    var tagCounts = new Dictionary<string, int>();
+    allTags.Each(tag => tagCounts[tag] = allPosts.Count(x => x.Tags.Safe().Contains(tag)));
 }
 
 <div class="relative bg-gray-50 dark:bg-gray-900 px-6 pt-16 pb-20 lg:px-8 lg:pt-24 lg:pb-28">
@@ -17,10 +23,25 @@
         <div class="h-1/3 bg-white dark:bg-black sm:h-2/3"></div>
     </div>
     <div class="relative mx-auto max-w-7xl">
-        @await Html.PartialAsync("BlogTitle", $"All posts tagged in <b>{tag}</b>")
+        @await Html.PartialAsync("BlogTitle", $"All posts tagged in <b>{selectedTag}</b>")
+    </div>
+    <div class="relative my-4 mx-auto max-w-7xl">
+        <div class="flex flex-wrap justify-center">
+            @foreach (var tag in allTags.OrderByDescending(tag => tagCounts[tag]))
+            {
+                if (tag == selectedTag)
+                {
+                    <span class="mr-2 mb-2 text-xs leading-5 font-semibold bg-indigo-600 text-white rounded-full py-1 px-3 flex items-center space-x-2">@tag</span>
+                }
+                else
+                {
+                    <a href="@Blog.GetTagLink(tag)" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">@tag</a>
+                }
+            }
+        </div>
     </div>
     <div class="mt-12 relative mx-auto max-w-7xl">
-        @await Html.PartialAsync("BlogPosts", Blog.GetPosts(tag:tag ?? "unknown"))
+        @await Html.PartialAsync("BlogPosts", Blog.GetPosts(tag:selectedTag ?? "unknown"))
         
         <div class="mt-8 text-center">
             <a class="text-sm font-semibold hover:underline" href="@Blog.GetPostsLink()">view all posts</a>

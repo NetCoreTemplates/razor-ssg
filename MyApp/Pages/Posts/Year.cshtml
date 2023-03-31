@@ -1,6 +1,7 @@
 @page "/posts/year/{year}"
 @model YearModel
 @inject MarkdownBlog Blog
+
 @implements IRenderStatic<YearModel>
 @functions {
     public List<YearModel> GetStaticProps(RenderContext ctx) => ctx.Resolve<MarkdownBlog>()
@@ -9,6 +10,7 @@
 
 @{
     ViewData["Title"] = $"{Model.Year} posts";
+    var allYears = Blog.VisiblePosts.Select(x => x.Date.Value.Year).Distinct().OrderByDescending(x => x);
 }
 
 <div class="relative bg-gray-50 dark:bg-gray-900 px-6 pt-16 pb-20 lg:px-8 lg:pt-24 lg:pb-28">
@@ -17,6 +19,21 @@
     </div>
     <div class="relative mx-auto max-w-7xl">
         @await Html.PartialAsync("BlogTitle", $"All posts published in <b>{Model.Year}</b>")
+    </div>
+    <div class="mt-4 relative mb-8 mx-auto max-w-7xl">
+        <div class="flex flex-wrap justify-center">
+            @foreach (var year in allYears)
+            {
+                if (Model.Year == year)
+                {
+                    <b class="ml-3 text-sm font-semibold">@year</b>
+                }
+                else
+                {
+                    <a class="ml-3 text-sm text-indigo-700 font-semibold hover:underline" href="@Blog.GetYearLink(year)">@year</a>
+                }
+            }
+        </div>
     </div>
     <div class="mt-12 relative mx-auto max-w-7xl">
         @await Html.PartialAsync("BlogPosts", Blog.GetPosts(year:Model.Year))
