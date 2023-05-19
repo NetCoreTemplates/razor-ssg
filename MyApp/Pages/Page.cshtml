@@ -7,7 +7,7 @@
     public List<Page> GetStaticProps(RenderContext ctx)
     {
         var markdown = ctx.Resolve<MarkdownPages>();
-        return markdown.VisiblePages.Map(page => new Page { Slug = page.Slug! });
+        return markdown.GetVisiblePages().Map(page => new Page { Slug = page.Slug! });
     }
 }
 

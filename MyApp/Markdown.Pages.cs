@@ -6,11 +6,15 @@ namespace Ssg;
 
 public class MarkdownPages : MarkdownPagesBase<MarkdownFileInfo>
 {
+    public override string Id => "pages";
     public MarkdownPages(ILogger<MarkdownPages> log, IWebHostEnvironment env) : base(log,env) {}
     List<MarkdownFileInfo> Pages { get; set; } = new();
-    public List<MarkdownFileInfo> VisiblePages => Pages.Where(IsVisible).ToList();
+    public List<MarkdownFileInfo> GetVisiblePages(string? prefix=null) => prefix == null 
+        ? Pages.Where(x => IsVisible(x) && !x.Slug!.Contains('/')).OrderBy(x => x.Order).ToList()
+        : Pages.Where(x => IsVisible(x) && x.Slug!.StartsWith(prefix.WithTrailingSlash())).OrderBy(x => x.Order).ToList();
 
-    public MarkdownFileInfo? GetBySlug(string slug) => Fresh(VisiblePages.FirstOrDefault(x => x.Slug == slug));
+    public MarkdownFileInfo? GetBySlug(string slug) => 
+        Fresh(Pages.Where(IsVisible).FirstOrDefault(x => x.Slug == slug));
 
     public void LoadFrom(string fromDirectory)
     {
@@ -30,6 +34,12 @@ public class MarkdownPages : MarkdownPagesBase<MarkdownFileInfo>
                 if (doc == null)
                     continue;
 
+                var relativePath = file.VirtualPath.Substring(fromDirectory.Length + 1);
+                if (relativePath.IndexOf('/') >= 0)
+                {
+                    doc.Slug = relativePath.LeftPart('/') + '/' + doc.Slug;
+                }
+
                 Pages.Add(doc);
             }
             catch (Exception e)
@@ -38,4 +48,6 @@ public class MarkdownPages : MarkdownPagesBase<MarkdownFileInfo>
             }
         }
     }
+
+    public override List<MarkdownFileBase> GetAll() => Pages.Where(IsVisible).Map(doc => ToMetaDoc(doc, x => x.Url = $"/{x.Slug}"));
 }

@@ -12,7 +12,9 @@ public class ConfigureSsg : IHostingStartup
             services.AddSingleton<RazorPagesEngine>();
             services.AddSingleton<MarkdownPages>();
             services.AddSingleton<MarkdownWhatsNew>();
+            services.AddSingleton<MarkdownVideos>();
             services.AddSingleton<MarkdownBlog>();
+            services.AddSingleton<MarkdownMeta>();
         })
         .ConfigureAppHost(
             appHost => appHost.Plugins.Add(new CleanUrlsFeature()),
@@ -20,15 +22,18 @@ public class ConfigureSsg : IHostingStartup
             {
                 var pages = appHost.Resolve<MarkdownPages>();
                 var whatsNew = appHost.Resolve<MarkdownWhatsNew>();
+                var videos = appHost.Resolve<MarkdownVideos>();
                 var blogPosts = appHost.Resolve<MarkdownBlog>();
+                var meta = appHost.Resolve<MarkdownMeta>();
                 
-                var markdownFeatures = new IMarkdownPages[] { pages, whatsNew, blogPosts }; 
-                markdownFeatures.Each(x => x.VirtualFiles = appHost.VirtualFiles);
+                meta.Features = new() { pages, whatsNew, videos, blogPosts };
+                meta.Features.ForEach(x => x.VirtualFiles = appHost.VirtualFiles);
 
                 blogPosts.Authors = Authors;
 
                 pages.LoadFrom("_pages");
                 whatsNew.LoadFrom("_whatsnew");
+                videos.LoadFrom("_videos");
                 blogPosts.LoadFrom("_posts");
             },
             afterAppHostInit: appHost =>

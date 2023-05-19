@@ -4,7 +4,6 @@ const writeTo = './wwwroot/lib'
 const defaultPrefix = 'https://unpkg.com'
 const files = {
   js: {
-      'htmx.js':                         '/htmx.org@1/dist/htmx.js',
       'highlight.js':                    '/@highlightjs/cdn-assets/highlight.min.js',
   },
   mjs: {
@@ -25,15 +24,18 @@ const files = {
       '@vue/shared.d.ts':                '/@vue/shared@3/dist/shared.d.ts',
       '@servicestack/client/index.d.ts': '/@servicestack/client/dist/index.d.ts',  
       '@servicestack/vue/index.d.ts':    '/@servicestack/vue@3/dist/index.d.ts',
+  },
+  tailwind: {
+    'creatorkit.js': 'https://raw.githubusercontent.com/NetCoreApps/CreatorKit/main/CreatorKit/wwwroot/tailwind/all.components.txt'
   }
 }
 
 const defaultHostPrefix = 'https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/main/MyApp/'
 const hostFiles = [
-    'Markdown.Blog.cs',
-    'Markdown.Pages.cs',
-    'Markdown.WhatsNew.cs',
-    'MarkdownPagesBase.cs',
+    // 'Markdown.Blog.cs',
+    // 'Markdown.Pages.cs',
+    // 'Markdown.WhatsNew.cs',
+    // 'MarkdownPagesBase.cs',
 ]
 
 const path = require('path')

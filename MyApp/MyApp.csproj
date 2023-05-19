@@ -38,4 +38,9 @@
     <_ContentIncludedByDefault Remove="wwwroot\img\whatsnew\v6.6\vue-mjs.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\img\pages\" />
+    <Folder Include="_videos\" />
+  </ItemGroup>
+
 </Project>

@@ -6,6 +6,7 @@ namespace Ssg;
 
 public class MarkdownWhatsNew : MarkdownPagesBase<MarkdownFileInfo>
 {
+    public override string Id => "whatsnew";
     public MarkdownWhatsNew(ILogger<MarkdownWhatsNew> log, IWebHostEnvironment env) : base(log,env) {}
     public Dictionary<string, List<MarkdownFileInfo>> Features { get; set; } = new();
 
@@ -47,6 +48,7 @@ public class MarkdownWhatsNew : MarkdownPagesBase<MarkdownFileInfo>
                         continue;
                     
                     doc.Date = releaseDate;
+                    doc.Group = releaseVersion;
 
                     var releaseFeatures = Features.GetOrAdd(releaseVersion, v => new List<MarkdownFileInfo>());
                     releaseFeatures.Add(doc);
@@ -57,5 +59,15 @@ public class MarkdownWhatsNew : MarkdownPagesBase<MarkdownFileInfo>
                 }
             }
         }
+    }
+    
+    public override List<MarkdownFileBase> GetAll()
+    {
+        var to = new List<MarkdownFileBase>();
+        foreach (var entry in Features)
+        {
+            to.AddRange(entry.Value.Where(IsVisible).Map(doc => ToMetaDoc(doc, x => x.Content = StripFrontmatter(doc.Content))));
+        }
+        return to;
     }
 }

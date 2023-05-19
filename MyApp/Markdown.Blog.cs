@@ -23,6 +23,7 @@ public class AuthorInfo
 
 public class MarkdownBlog : MarkdownPagesBase<MarkdownFileInfo>
 {
+    public override string Id => "posts";
     public MarkdownBlog(ILogger<MarkdownBlog> log, IWebHostEnvironment env) : base(log,env) {}
     List<MarkdownFileInfo> Posts { get; set; } = new();
 
@@ -170,4 +171,7 @@ public class MarkdownBlog : MarkdownPagesBase<MarkdownFileInfo>
 
         GenerateSlugs();
     }
+
+    public override List<MarkdownFileBase> GetAll() => 
+        VisiblePosts.Map(doc => ToMetaDoc(doc, x => x.Url ??= $"/posts/{x.Slug}"));
 }

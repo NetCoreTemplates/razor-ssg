@@ -6,6 +6,7 @@ import GettingStarted from "./components/GettingStarted.mjs"
 import ShellCommand from "./components/ShellCommand.mjs"
 import VueComponentGallery from "./components/VueComponentGallery.mjs"
 import VueComponentLibrary from "./components/VueComponentLibrary.mjs"
+import { PagingNav, FileLayout } from './components/CreatorKitDocs.mjs'
 
 let client = null, Apps = []
 let AppData = {
@@ -48,6 +49,8 @@ const Components = {
     Plugin,
     VueComponentGallery,
     VueComponentLibrary,
+    PagingNav,
+    FileLayout,
 }
 
 const alreadyMounted = el => el.__vue_app__ 

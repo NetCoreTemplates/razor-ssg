@@ -1,8 +1,9 @@
-﻿using Markdig;
+﻿// run node postinstall.js to update to latest version
+using Markdig;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace MyApp;
+namespace Ssg;
 
 [HtmlTargetElement("markdown", TagStructure = TagStructure.NormalOrSelfClosing)]
 [HtmlTargetElement(Attributes = "markdown")]

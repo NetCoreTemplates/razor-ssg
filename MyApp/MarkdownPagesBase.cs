@@ -34,6 +34,8 @@ public class MarkdownFileBase
     public string? HtmlPage { get; set; }
     public int? WordCount { get; set; }
     public int? LineCount { get; set; }
+    public string? Group { get; set; }
+    public int? Order { get; set; }
 
     /// <summary>
     /// Update Markdown File to latest version
@@ -54,6 +56,8 @@ public class MarkdownFileBase
         HtmlPage = newDoc.HtmlPage;
         WordCount = newDoc.WordCount;
         LineCount = newDoc.LineCount;
+        Group = newDoc.Group;
+        Order = newDoc.Order;
 
         if (newDoc.Date != null)
             Date = newDoc.Date;
@@ -62,10 +66,13 @@ public class MarkdownFileBase
 
 public interface IMarkdownPages
 {
+    string Id { get; }
     IVirtualFiles VirtualFiles { get; set; }
+    List<MarkdownFileBase> GetAll();
 }
 public abstract class MarkdownPagesBase<T> : IMarkdownPages where T : MarkdownFileBase
 {
+    public abstract string Id { get; }
     protected ILogger Log { get; }
     protected IWebHostEnvironment Environment { get; }
 
@@ -161,6 +168,7 @@ public abstract class MarkdownPagesBase<T> : IMarkdownPages where T : MarkdownFi
         doc.LineCount = LineCount(content);
         writer.Flush();
         doc.Preview = writer.ToString();
+        doc.Date ??= file.LastModified;
 
         return doc;
     }
@@ -176,4 +184,40 @@ public abstract class MarkdownPagesBase<T> : IMarkdownPages where T : MarkdownFi
     
     protected IVirtualFiles AssertVirtualFiles() => 
         VirtualFiles ?? throw new NullReferenceException($"{nameof(VirtualFiles)} is not populated");
+
+    public virtual List<MarkdownFileBase> GetAll() => new();
+
+    public virtual string? StripFrontmatter(string? content)
+    {
+        if (content == null)
+            return null;
+        var startPos = content.IndexOf("---", StringComparison.CurrentCulture);
+        if (startPos == -1)
+            return content;
+        var endPos = content.IndexOf("---", startPos + 3, StringComparison.Ordinal);
+        if (endPos == -1)
+            return content;
+        return content.Substring(endPos + 3).Trim();
+    }
+
+    public virtual MarkdownFileBase ToMetaDoc(T x, Action<MarkdownFileBase>? fn = null)
+    {
+        var to = new MarkdownFileBase
+        {
+            Slug = x.Slug,
+            Title = x.Title,
+            Summary = x.Summary,
+            Date = x.Date,
+            Tags = x.Tags,
+            Author = x.Author,
+            Image = x.Image,
+            WordCount = x.WordCount,
+            LineCount = x.LineCount,
+            Url = x.Url,
+            Group = x.Group,
+            Order = x.Order,
+        };
+        fn?.Invoke(to);
+        return to;
+    }
 }
