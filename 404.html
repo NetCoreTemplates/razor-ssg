@@ -27,6 +27,16 @@
                                 </a>
                             </li>
                             <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="videos" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Videos
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="creatorkit/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Creator Kit
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
                                 <a href="blog" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
                                     Blog
                                 </a>
@@ -158,6 +168,23 @@ mountAll()
     </p>
   </div>
 </footer>
+
+<script type="module">
+//TODO: Replace with local and production URLs of CreatorKit .NET App or Remove if not using CreatorKit
+import { mail } from 'https://creatorkit.netcore.io/mjs/components/mail.mjs'
+import { post } from 'https://creatorkit.netcore.io/mjs/components/post.mjs'
+
+mail('[data-mail]', { 
+    mailingLists: ['MonthlyNewsletter'] 
+})
+
+post('[data-post]', {
+    commentLink: { 
+        href: '/community-rules',
+        label: 'read the community rules'
+    } 
+})
+</script>
 
 
 </body>

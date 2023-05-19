@@ -47,6 +47,16 @@
                                 </a>
                             </li>
                             <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="videos" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Videos
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="creatorkit/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Creator Kit
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
                                 <a href="blog" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
                                     Blog
                                 </a>
@@ -98,11 +108,14 @@ mountAll()
             <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
                 Tailwind Typography
             </h1>
-            <div class="md:mb-12 flex items-center">
-                    <img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="data:image/svg&#x2B;xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; fill=&#x27;none&#x27; viewBox=&#x27;0 0 24 24&#x27; stroke=&#x27;none&#x27; aria-hidden=&#x27;true&#x27;%3E%3Cpath fill=&#x27;%230891b2&#x27; d=&#x27;M12 2a5 5 0 1 0 5 5a5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3a3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z&#x27;/%3E%3C/svg%3E">
-                <div class="flex flex-col">
-                        <span class="text-xl font-semibold">Jesse O&#x27;Reilly</span>
+            <div class="flex justify-between">
+                <div class="md:mb-12 flex items-center">
+                        <img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="data:image/svg&#x2B;xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; fill=&#x27;none&#x27; viewBox=&#x27;0 0 24 24&#x27; stroke=&#x27;none&#x27; aria-hidden=&#x27;true&#x27;%3E%3Cpath fill=&#x27;%230891b2&#x27; d=&#x27;M12 2a5 5 0 1 0 5 5a5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3a3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z&#x27;/%3E%3C/svg%3E">
+                    <div class="flex flex-col">
+                            <span class="text-xl font-semibold">Jesse O&#x27;Reilly</span>
+                    </div>
                 </div>
+                <div class="mb-4 max-w-sm" data-mail="JoinMailingList" data-props="{ submitLabel:'Join our newsletter' }"></div>
             </div>
             <div class="mb-8 md:mb-16 sm:mx-0">
                 <div class="sm:mx-0">
@@ -189,6 +202,8 @@ mountAll()
         </article>
 </div>
 
+<div data-post="PostComments" class="my-48"></div>
+
 <script type="module">
 import { init } from "app.mjs"
 init()
@@ -274,8 +289,24 @@ init()
   </div>
 </footer>
 
+<script type="module">
+//TODO: Replace with local and production URLs of CreatorKit .NET App or Remove if not using CreatorKit
+import { mail } from 'https://creatorkit.netcore.io/mjs/components/mail.mjs'
+import { post } from 'https://creatorkit.netcore.io/mjs/components/post.mjs'
 
-<script src="lib/js/htmx.js"></script>
+mail('[data-mail]', { 
+    mailingLists: ['MonthlyNewsletter'] 
+})
+
+post('[data-post]', {
+    commentLink: { 
+        href: '/community-rules',
+        label: 'read the community rules'
+    } 
+})
+</script>
+
+
 <script type="module">
 import { init } from "app.mjs"
 init()
