@@ -41,10 +41,10 @@ public class ConfigureSsg : IHostingStartup
                 // prerender with: `$ npm run prerender` 
                 AppTasks.Register("prerender", args =>
                 {
-                    var appConfig = appHost.Resolve<AppConfig>();
+                    var baseUrl = GetBaseUrl() ?? "https://localhost:5002";
                     appHost.Resolve<MarkdownMeta>().RenderToAsync(
                         metaDir: appHost.ContentRootDirectory.RealPath.CombineWith("wwwroot/meta"),
-                        baseUrl: appConfig.BaseUrl).GetAwaiter().GetResult();
+                        baseUrl: baseUrl).GetAwaiter().GetResult();
 
                     var distDir = appHost.ContentRootDirectory.RealPath.CombineWith("dist");
                     if (Directory.Exists(distDir))
@@ -56,6 +56,19 @@ public class ConfigureSsg : IHostingStartup
                     RazorSsg.PrerenderAsync(appHost, razorFiles, distDir).GetAwaiter().GetResult();
                 });
             });
+
+    public static string? GetBaseUrl()
+    {
+        var args = Environment.GetCommandLineArgs()
+            .Select(arg => arg.TrimPrefixes("/", "--")).ToList();
+        var argPos = args.IndexOf("BaseUrl");
+        var baseUrl = (argPos >= 0 && argPos + 1 < args.Count
+            ? args[argPos + 1]
+            : null) ?? Environment.GetEnvironmentVariable("BASE_URL");
+        return !string.IsNullOrEmpty(baseUrl) 
+            ? baseUrl 
+            : RazorSsg.GetBaseHref();
+    }
 
     public List<AuthorInfo> Authors { get; } = new() 
     {

@@ -41,6 +41,7 @@ jobs:
             then
               echo "Persist CNAME '$custom_domain' to ./MyApp/wwwroot/CNAME"
               echo "$custom_domain" >> ./MyApp/wwwroot/CNAME
+              echo "custom_domain=$custom_domain" >> $GITHUB_ENV
             fi
           fi
 
@@ -53,13 +54,14 @@ jobs:
         working-directory: ./MyApp
         run: |
           site_base_href=${{ env.ssg_base_href }}
+          site_base_url="https://${{ env.custom_domain }}"
           if [ ! -z "$site_base_href" ]
           then
             echo "Prerendering for deployment to $site_base_href"
             dotnet run --AppTasks=prerender --environment Production --BaseHref "$site_base_href"
           else
-            echo "Prerendering for deployment to $(cat ./wwwroot/CNAME)"
-            dotnet run --AppTasks=prerender --environment Production
+            echo "Prerendering for deployment to $custom_domain"
+            dotnet run --AppTasks=prerender --environment Production --BaseUrl "$site_base_url"
           fi
 
       # Deploy UI to GitHub Pages
