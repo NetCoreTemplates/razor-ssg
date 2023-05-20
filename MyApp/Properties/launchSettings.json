@@ -22,6 +22,15 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "https://localhost:5002/"
+    },
+    "MyApp Prerender": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "commandLineArgs": "--AppTasks=prerender",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:5002/"
     }
   }
 }
