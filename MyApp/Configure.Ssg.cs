@@ -41,6 +41,11 @@ public class ConfigureSsg : IHostingStartup
                 // prerender with: `$ npm run prerender` 
                 AppTasks.Register("prerender", args =>
                 {
+                    var appConfig = appHost.Resolve<AppConfig>();
+                    appHost.Resolve<MarkdownMeta>().RenderToAsync(
+                        metaDir: appHost.ContentRootDirectory.RealPath.CombineWith("wwwroot/meta"),
+                        baseUrl: appConfig.BaseUrl).GetAwaiter().GetResult();
+
                     var distDir = appHost.ContentRootDirectory.RealPath.CombineWith("dist");
                     if (Directory.Exists(distDir))
                         FileSystemVirtualFiles.DeleteDirectory(distDir);
