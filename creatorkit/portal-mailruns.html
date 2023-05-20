@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg" href="img/logo.svg">
+    <title>Mail Runs - My App</title>
+    <base href="/" />
+    <script>
+    const cls = document.querySelector('html').classList
+    if (localStorage.getItem('color-scheme') === 'dark')
+        cls.add('dark')
+    else
+        cls.remove('dark')
+    </script>
+    <link rel="stylesheet" href="css/app.css">
+
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+{
+    "imports": {
+        "app.mjs": "./mjs/app.mjs",
+        "vue": "./lib/mjs/vue.min.mjs",
+        "@servicestack/client": "./lib/mjs/servicestack-client.min.mjs",
+        "@servicestack/vue": "./lib/mjs/servicestack-vue.min.mjs"
+    }
+}
+</script>
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+<header class="border-b border-gray-200 dark:border-gray-600 pr-3">
+    <div class="flex flex-wrap items-center">
+        <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
+            <div class="cursor-pointer">
+                <a class="navbar-brand flex items-center" href="./">
+                    <svg class="w-8 h-8 sm:ml-2 sm:w-12 sm:h-12" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="currentColor" d="M10 6c1.544 1.76 2.276 4.15 2.217 6.61c3.968 1.67 9.924 6.12 11.181 12.39H28C26.051 14.31 14.918 6.77 10 6zm-2 7c4.67 4.913.81 11.582-4 12h18.97C21.5 18.289 11.95 13.533 8 13z"/></svg>
+                    <span class="hidden sm:block text-2xl font-semibold">MyApp</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-grow flex-shrink flex-nowrap justify-end items-center">
+            <nav class="relative flex flex-grow leading-6 font-semibold text-slate-700 dark:text-slate-200">
+                <ul class="flex flex-wrap items-center justify-end w-full m-0 pb-2 sm:pb-0">
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="whatsnew" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    What's New
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="videos" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Videos
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="creatorkit/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Creator Kit
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="blog" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Blog
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="posts/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Archive
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="speaking" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Speaking
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="uses" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Uses
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="about" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    About
+                                </a>
+                            </li>
+                    <li class="relative flex flex-wrap just-fu-start m-0">
+                        <div data-component="DarkModeToggle" class="ml-2 w-10"></div>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</header>
+<script type="module">
+import { mountAll } from "app.mjs"
+mountAll()
+</script>
+
+
+<div class="min-h-screen">
+    <main role="main" class="pb-3" hx-ext="class-tools">
+        
+
+
+<link rel="stylesheet" href="css/typography.css">
+<div class="flex flex-wrap">
+    <div class="max-w-xs p-8 flex flex-1">
+        <nav class="flex flex-1 flex-col" aria-label="Sidebar">
+            <a href="creatorkit/" class="block flex items-center">
+                <svg class="h-6 w-6 shrink-0 text-sky-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"></path></svg>
+                <span class="p-2 pl-3 font-display font-medium text-slate-900 dark:text-white">Creator Kit</span>
+            </a>
+                <ul role="list" class="mb-6 mt-2 ml-3 space-y-2 border-l-2 border-slate-100 dark:border-slate-800 lg:mt-4 lg:space-y-4 lg:border-slate-200">
+                        <li class="relative">
+                            <!-- Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50" -->
+                            <a href="creatorkit/about" class="block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300">
+                                About
+                            </a>
+                        </li>
+                        <li class="relative">
+                            <!-- Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50" -->
+                            <a href="creatorkit/install" class="block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300">
+                                Install
+                            </a>
+                        </li>
+                        <li class="relative">
+                            <!-- Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50" -->
+                            <a href="creatorkit/customize" class="block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300">
+                                Customize
+                            </a>
+                        </li>
+                        <li class="relative">
+                            <!-- Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50" -->
+                            <a href="creatorkit/components" class="block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300">
+                                Components
+                            </a>
+                        </li>
+                        <li class="relative">
+                            <!-- Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50" -->
+                            <a href="creatorkit/integrations" class="block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300">
+                                Integrations
+                            </a>
+                        </li>
+                </ul>
+                    <h2 class="font-display font-medium text-slate-900 dark:text-white">Portal</h2>
+                <ul role="list" class="mb-6 mt-2 ml-3 space-y-2 border-l-2 border-slate-100 dark:border-slate-800 lg:mt-4 lg:space-y-4 lg:border-slate-200">
+                        <li class="relative">
+                            <!-- Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50" -->
+                            <a href="creatorkit/portal-overview" class="block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300">
+                                Overview
+                            </a>
+                        </li>
+                        <li class="relative">
+                            <!-- Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50" -->
+                            <a href="creatorkit/portal-messages" class="block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300">
+                                Messages
+                            </a>
+                        </li>
+                        <li class="relative">
+                            <!-- Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50" -->
+                            <a href="creatorkit/portal-mailruns" class="block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300">
+                                Mail Runs
+                            </a>
+                        </li>
+                        <li class="relative">
+                            <!-- Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50" -->
+                            <a href="creatorkit/portal-posts" class="block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300">
+                                Posts
+                            </a>
+                        </li>
+                </ul>
+        </nav>
+    </div>
+    <div>
+        <section class="flex-col md:flex-row flex justify-center mt-16 mb-16 md:mb-12">
+            <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 dark:text-gray-50 sm:text-5xl md:text-6xl">
+                Mail Runs
+            </h1>
+        </section>
+        <div class="mx-auto">
+            <div class="mx-auto prose lg:prose-xl mb-24">
+                <p>Mail Runs is where you would go to craft and send emails to an entire Mailing List group. It has the same Simple,
+Markdown and Custom HTML Email UIs as <a href="creatorkit/portal-messages">Messages</a> except instead of a single contact,
+it will generate and send individual emails to every contact in the specified <strong>Mailing List</strong>:</p>
+<p><img src="/img/pages/creatorkit/portal-mailrun-custom.png" alt="" /></p>
+<p>You'll also be able to send personalized emails with the contact's <code>{Email}</code>, <code>{FirstName}</code> and <code>{LastName}</code>
+template variables.</p>
+<h3 id="mailrun-implementation">MailRun Implementation</h3>
+<p>All Mail Run APIs inherit <code>MailRunBase</code> which contains the Mailing List that the Mail Run should send emails to:</p>
+<pre><code class="language-csharp">public abstract class MailRunBase
+{
+    [ValidateNotEmpty]
+    public MailingList MailingList { get; set; }
+}
+</code></pre>
+<p>It has the equivalent Standard, Markdown and Custom HTML Emails that messages has, which instead inherits from <code>MailRunBase</code>,
+e.g. here's the Request DTO definition that's used to render the above <strong>Custom HTML Email</strong> UI:</p>
+<pre><code class="language-csharp">[Renderer(typeof(RenderCustomHtml))]
+[Tag(Tag.Mail), ValidateIsAdmin]
+[Icon(Svg = Icons.RichHtml)]
+[Description(&quot;Custom HTML Email&quot;)]
+public class CustomHtmlMailRun : MailRunBase, IPost, IReturn&lt;MailRunResponse&gt;
+{
+    [ValidateNotEmpty]
+    [Input(Type = &quot;combobox&quot;, EvalAllowableValues = &quot;AppData.EmailLayoutOptions&quot;)]
+    public string Layout { get; set; }
+    [ValidateNotEmpty]
+    [Input(Type = &quot;combobox&quot;, EvalAllowableValues = &quot;AppData.EmailTemplateOptions&quot;)]
+    public string Template { get; set; }
+    [ValidateNotEmpty]
+    public string Subject { get; set; }
+    [ValidateNotEmpty]
+    [Input(Type = &quot;MarkdownEmailInput&quot;, Label = &quot;&quot;), FieldCss(Field = &quot;col-span-12&quot;, Input = &quot;h-56&quot;)]
+    public string? Body { get; set; }
+}
+</code></pre>
+<p>It's implementation differs slightly from the Messages
+<a href="creatorkit/portal-messages#custom-html-implementation">Custom HTML Implementation</a> as an email needs to be generated
+and sent per contact and are instead generated and saved to the <code>MailMessageRun</code> table:</p>
+<pre><code class="language-csharp">public async Task&lt;object&gt; Any(CustomHtmlMailRun request)
+{
+    var response = CreateMailRunResponse();
+    
+    var mailRun = await Renderer.CreateMailRunAsync(Db, new MailRun {
+        Layout = request.Layout,
+        Template = request.Template,
+    }, request);
+    
+    foreach (var sub in await Db.GetActiveSubscribersAsync(request.MailingList))
+    {
+        var viewRequest = request.ConvertTo&lt;RenderCustomHtml&gt;().FromContact(sub);
+        var bodyHtml = (string) await Gateway.SendAsync(typeof(string), viewRequest);
+
+        response.AddMessage(await Renderer.CreateMessageRunAsync(Db, new MailMessageRun
+        {
+            Message = new EmailMessage
+            {
+                To = sub.ToMailTos(),
+                Subject = request.Subject,
+                Body = request.Body,
+                BodyHtml = bodyHtml,
+            }
+        }.FromRequest(viewRequest), mailRun, sub));
+    }
+    
+    await Db.CompletedMailRunAsync(mailRun, response);
+    return response;
+}
+</code></pre>
+<h3 id="verifying-mail-run-messages">Verifying Mail Run Messages</h3>
+<p>Creating a Mail Run generates messages for each Contact in the Mailing List, but doesn't send them immediately,
+it instead opens the saved Mail Run so you have an opportunity to inspect the generated messages to decide whether
+you want to send or delete the messages.</p>
+<p><img src="/img/pages/creatorkit/portal-mailrun-newsletter-send.png" alt="" /></p>
+<p>Click <strong>View Messages</strong> to inspect a sample of the generated messages from the saved Mail Run then either
+<strong>Send Messages</strong> if you want to send them out or <strong>Delete</strong> to delete the Mail Run and start again.</p>
+<p>Whilst the Mail Run Messages are being sent out you can click Refresh to monitor progress.</p>
+<h2 id="generating-newsletters">Generating Newsletters</h2>
+<p>CreatorKit also includes a Mail Run API to generate a Monthly Newsletter - that it automatically generates from new
+content added to Razor SSG Websites that it discovers from its pre-rendered JSON metadata.</p>
+<p>Even if you're not using Razor SSG website it should still serve as a good example for how to implement a Mail Run for
+a custom mail campaign utilizing custom data sources.</p>
+<p>The <code>NewsletterMailRun</code> API has 2 optional properties for the Year and Month you want to generate the Newsletter for:</p>
+<pre><code class="language-csharp">[Renderer(typeof(RenderNewsletter))]
+[Tag(Tag.Emails)]
+[ValidateIsAdmin]
+[Description(&quot;Generate Newsletter&quot;)]
+[Icon(Svg = Icons.Newsletter)]
+public class NewsletterMailRun : MailRunBase, IPost, IReturn&lt;MailRunResponse&gt;
+{
+    public int? Month { get; set; }
+    public int? Year { get; set; }
+}
+</code></pre>
+<p>Which renders the <strong>Generate Newsletter</strong> UI:</p>
+<p><img src="/img/pages/creatorkit/portal-mailrun-newsletter.png" alt="" /></p>
+<p>The implementation follows the standard Mail Run implementation, using the <code>EmailRenderer</code> to creating a <code>MailMessageRun</code>
+for every contact in the mailing list.</p>
+<p>We can also see it will default to the current Month/Year if not provided and that it uses the
+<a href="https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit/emails/layouts/marketing.html">marketing.html</a> Layout and
+the <a href="https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit/emails/newsletter.html">newsletter.html</a>
+Email template:</p>
+<pre><code class="language-csharp">public async Task&lt;object&gt; Any(NewsletterMailRun request)
+{
+    var response = CreateMailRunResponse();
+    request.Year ??= DateTime.UtcNow.Year;
+    request.Month ??= DateTime.UtcNow.Month;
+
+    var viewRequest = request.ConvertTo&lt;RenderNewsletter&gt;();
+    var fromDate = new DateTime(request.Year.Value, request.Month.Value, 1);
+    var bodyHtml = (string) await Gateway.SendAsync(typeof(string), viewRequest);
+
+    var mailRun = await Renderer.CreateMailRunAsync(Db, new MailRun {
+        Layout = &quot;marketing&quot;,
+        Template = &quot;newsletter&quot;,
+    }, request);
+    
+    foreach (var sub in await Db.GetActiveSubscribersAsync(request.MailingList))
+    {
+        response.AddMessage(await Renderer.CreateMessageRunAsync(Db, new MailMessageRun
+        {
+            Message = new EmailMessage
+            {
+                To = sub.ToMailTos(),
+                Subject = string.Format(AppData.Info.NewsletterFmt, 
+                    $&quot;{fromDate:MMMM} {fromDate:yyyy}&quot;),
+                BodyHtml = bodyHtml,
+            }
+        }.FromRequest(viewRequest), mailRun, sub));
+    }
+
+    await Db.CompletedMailRunAsync(mailRun, response);
+    return response;
+}
+</code></pre>
+<p>The <strong>newsletter.html</strong> Email Template uses the #Script templating language to render the different Newsletter sections, e.g:</p>
+<pre><code class="language-html">{{#if meta.Posts.Count &gt; 0 }}
+{{ 'divider' |&gt; partial }}
+{{ 'section' |&gt; partial({ iconSrc:images.blog_48x48, title:'New Posts' }) }}
+&lt;tr&gt;
+    &lt;td width=&quot;100%&quot; align=&quot;left&quot; valign=&quot;top&quot;&gt;
+        {{#each meta.Posts }}
+            &lt;h3&gt;&lt;a href=&quot;{{ it.url }}&quot; target=&quot;_blank&quot;&gt;{{ it.title }} →&lt;/a&gt;&lt;/h3&gt;
+            &lt;p&gt;{{ it.summary }}&lt;/p&gt;
+        {{/each}}
+    &lt;/td&gt;
+&lt;/tr&gt;
+{{/if}}
+</code></pre>
+<p>Which uses the <code>RenderNewsletter</code> API to render the Newsletter emails and live previews which in addition to the App's
+template variables adds a <code>meta</code> property containing the Data Source for the contents in <strong>newsletter.html</strong>:</p>
+<pre><code class="language-csharp">public async Task&lt;object&gt; Any(RenderNewsletter request)
+{
+    var year = request.Year ?? DateTime.UtcNow.Year;
+    var fromDate = new DateTime(year, request.Month ?? 1, 1);
+    var meta = await MailData.SearchAsync(fromDate: fromDate,
+        toDate: request.Month != null ? new DateTime(year, request.Month.Value, 1).AddMonths(1) : null);
+    
+    var context = Renderer.CreateMailContext(layout:&quot;marketing&quot;, page:&quot;newsletter&quot;, 
+        args:new() {
+            [&quot;meta&quot;] = meta
+        });
+
+    return await Renderer.RenderToHtmlResultAsync(Db, context, request, args: new() {
+        [&quot;title&quot;] = $&quot;{fromDate:MMMM} {fromDate:yyyy}&quot;
+    });
+}
+</code></pre>
+<p>The implementation of <a href="https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit.ServiceInterface/MailData.cs">MailData</a>
+gets its data from <a href="https://razor-ssg.web-templates.io/meta/2023/all.json">/meta/2023/all.json</a> which is prerendered with
+all the new website content added in <strong>2023</strong> which is filtered further to only include content published within the
+selected date range:</p>
+<pre><code class="language-csharp">public class MailData
+{
+    public DateTime LastUpdated { get; set; }
+    public AppData AppData { get; }
+
+    public MailData(AppData appData)
+    {
+        AppData = appData;
+    }
+
+    public TimeSpan CacheDuration { get; set; } = TimeSpan.FromMinutes(10);
+    public ConcurrentDictionary&lt;int, SiteMeta&gt; MetaCache { get; } = new();
+
+    public async Task&lt;SiteMeta&gt; SearchAsync(DateTime? fromDate = null, DateTime? toDate = null)
+    {
+        var year = fromDate?.Year ?? DateTime.UtcNow.Year;
+        var metaCache = MetaCache.TryGetValue(year, out var siteMeta) 
+            &amp;&amp; siteMeta.CreatedDate &lt; DateTime.UtcNow.Add(CacheDuration)
+            ? siteMeta
+            : null;
+
+        if (metaCache == null)
+        {
+            var metaJson = await AppData.BaseUrl.CombineWith($&quot;/meta/{year}/all.json&quot;)
+                .GetJsonFromUrlAsync();
+            metaCache = metaJson.FromJson&lt;SiteMeta&gt;();
+            metaCache.CreatedDate = DateTime.UtcNow;
+            MetaCache[year] = metaCache;
+        }
+
+        var results = new SiteMeta
+        {
+            CreatedDate = metaCache.CreatedDate,
+            Pages = WithinRange(metaCache.Pages, fromDate, toDate).ToList(),
+            Posts = WithinRange(metaCache.Posts, fromDate, toDate).ToList(),
+            WhatsNew = WithinRange(metaCache.WhatsNew, fromDate, toDate).ToList(),
+            Videos = WithinRange(metaCache.Videos, fromDate, toDate).ToList(),
+        };
+        return results;
+    }
+
+    private static IEnumerable&lt;MarkdownFile&gt; WithinRange(
+        IEnumerable&lt;MarkdownFile&gt; docs, DateTime? fromDate, DateTime? toDate)
+    {
+        if (fromDate != null)
+            docs = docs.Where(x =&gt; x.Date &gt;= fromDate);
+        if (toDate != null)
+            docs = docs.Where(x =&gt; x.Date &lt; toDate);
+        return docs;
+    }
+}
+</code></pre>
+<p>The results of the external API Request are also cached for a short duration to speed up Live Previews when crafting
+emails.</p>
+
+                <div class="not-prose my-20">
+
+<nav class="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 px-4 sm:px-0">
+    <div class="-mt-px flex w-0 flex-1">
+        <a href="/creatorkit/portal-messages" class="inline-flex items-center border-t-2 border-transparent pt-4 pr-1 text-sm font-medium text-gray-500 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-200">
+            <!-- Heroicon name: mini/arrow-long-left -->
+            <svg class="mr-3 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M18 10a.75.75 0 01-.75.75H4.66l2.1 1.95a.75.75 0 11-1.02 1.1l-3.5-3.25a.75.75 0 010-1.1l3.5-3.25a.75.75 0 111.02 1.1l-2.1 1.95h12.59A.75.75 0 0118 10z" clip-rule="evenodd"></path>
+            </svg>
+            Messages
+        </a>
+    </div>
+    <div class="hidden md:-mt-px md:flex"></div>
+    <div class="-mt-px flex w-0 flex-1 justify-end">
+        <a href="/creatorkit/portal-posts" class="inline-flex items-center border-t-2 border-transparent pt-4 pl-1 text-sm font-medium text-gray-500 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-200">
+            Posts
+            <!-- Heroicon name: mini/arrow-long-right -->
+            <svg class="ml-3 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M2 10a.75.75 0 01.75-.75h12.59l-2.1-1.95a.75.75 0 111.02-1.1l3.5 3.25a.75.75 0 010 1.1l-3.5 3.25a.75.75 0 11-1.02-1.1l2.1-1.95H2.75A.75.75 0 012 10z" clip-rule="evenodd"></path>
+            </svg>
+        </a>
+    </div>
+</nav>    
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+<link rel="stylesheet" href="css/highlight.css">
+<script src="lib/js/highlight.js"></script>
+
+<script>hljs.highlightAll()</script>
+    </main>
+</div>
+
+<footer class="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+  <div class="mx-auto max-w-7xl overflow-hidden py-20 px-6 sm:py-24 lg:px-8">
+    <nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
+      <div class="pb-6">
+        <a href="whatsnew" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">What's New</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="blog" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Blog</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="posts" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Archive</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="speaking" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Speaking</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="uses" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Uses</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="about" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">About</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="privacy" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Privacy</a>
+      </div>
+    </nav>
+    <div class="mt-10 flex justify-center space-x-10">
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Facebook</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Instagram</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Twitter</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">GitHub</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">YouTube</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+    </div>
+    <p class="mt-10 text-center text-xs leading-5 text-gray-500">
+      <a href="https://github.com/NetCoreTemplates/razor-ssg">powered by razor</a>
+    </p>
+  </div>
+</footer>
+
+<script type="module">
+//TODO: Replace with local and production URLs of CreatorKit .NET App or Remove if not using CreatorKit
+import { mail } from 'https://creatorkit.netcore.io/mjs/components/mail.mjs'
+import { post } from 'https://creatorkit.netcore.io/mjs/components/post.mjs'
+
+mail('[data-mail]', { 
+    mailingLists: ['MonthlyNewsletter'] 
+})
+
+post('[data-post]', {
+    commentLink: { 
+        href: '/community-rules',
+        label: 'read the community rules'
+    } 
+})
+</script>
+
+
+<script type="module">
+import { init } from "app.mjs"
+init()
+</script>
+
+
+
+</body>
+</html>

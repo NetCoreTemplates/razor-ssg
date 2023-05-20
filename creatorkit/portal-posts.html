@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/svg" href="img/logo.svg">
-    <title> - My App</title>
+    <title>Posts - My App</title>
     <base href="/" />
     <script>
     const cls = document.querySelector('html').classList
@@ -101,6 +101,124 @@ mountAll()
         
 
 
+<link rel="stylesheet" href="css/typography.css">
+<div class="flex flex-wrap">
+    <div class="max-w-xs p-8 flex flex-1">
+        <nav class="flex flex-1 flex-col" aria-label="Sidebar">
+            <a href="creatorkit/" class="block flex items-center">
+                <svg class="h-6 w-6 shrink-0 text-sky-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"></path></svg>
+                <span class="p-2 pl-3 font-display font-medium text-slate-900 dark:text-white">Creator Kit</span>
+            </a>
+                <ul role="list" class="mb-6 mt-2 ml-3 space-y-2 border-l-2 border-slate-100 dark:border-slate-800 lg:mt-4 lg:space-y-4 lg:border-slate-200">
+                        <li class="relative">
+                            <!-- Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50" -->
+                            <a href="creatorkit/about" class="block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300">
+                                About
+                            </a>
+                        </li>
+                        <li class="relative">
+                            <!-- Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50" -->
+                            <a href="creatorkit/install" class="block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300">
+                                Install
+                            </a>
+                        </li>
+                        <li class="relative">
+                            <!-- Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50" -->
+                            <a href="creatorkit/customize" class="block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300">
+                                Customize
+                            </a>
+                        </li>
+                        <li class="relative">
+                            <!-- Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50" -->
+                            <a href="creatorkit/components" class="block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300">
+                                Components
+                            </a>
+                        </li>
+                        <li class="relative">
+                            <!-- Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50" -->
+                            <a href="creatorkit/integrations" class="block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300">
+                                Integrations
+                            </a>
+                        </li>
+                </ul>
+                    <h2 class="font-display font-medium text-slate-900 dark:text-white">Portal</h2>
+                <ul role="list" class="mb-6 mt-2 ml-3 space-y-2 border-l-2 border-slate-100 dark:border-slate-800 lg:mt-4 lg:space-y-4 lg:border-slate-200">
+                        <li class="relative">
+                            <!-- Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50" -->
+                            <a href="creatorkit/portal-overview" class="block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300">
+                                Overview
+                            </a>
+                        </li>
+                        <li class="relative">
+                            <!-- Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50" -->
+                            <a href="creatorkit/portal-messages" class="block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300">
+                                Messages
+                            </a>
+                        </li>
+                        <li class="relative">
+                            <!-- Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50" -->
+                            <a href="creatorkit/portal-mailruns" class="block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300">
+                                Mail Runs
+                            </a>
+                        </li>
+                        <li class="relative">
+                            <!-- Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50" -->
+                            <a href="creatorkit/portal-posts" class="block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300">
+                                Posts
+                            </a>
+                        </li>
+                </ul>
+        </nav>
+    </div>
+    <div>
+        <section class="flex-col md:flex-row flex justify-center mt-16 mb-16 md:mb-12">
+            <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 dark:text-gray-50 sm:text-5xl md:text-6xl">
+                Posts
+            </h1>
+        </section>
+        <div class="mx-auto">
+            <div class="mx-auto prose lg:prose-xl mb-24">
+                <p>The <strong>Manage Posts</strong> section provides editable <a href="https://docs.servicestack.net/vue/gallery/autoquerygrid">AutoQuery Grid components</a>
+to manage all the RDBMS tables used to implement CreatorKit's comment system like <strong>Threads</strong> which manages the <code>Thread</code>
+table which supports adding Thread comments to every unique URL:</p>
+<p><img src="/img/pages/creatorkit/portal-threads.png" alt="" /></p>
+<p>Most of the time will be spent either reading through and deleting bad comments and responding to reported comments
+which includes special behavior to filter reports to only show reports that have yet to be moderated.</p>
+<p>The <strong>Update Comment Report</strong> includes different moderation options you can choose to perform based on the severity of
+a comment ranging from flagging a comment which marks the comment as flagged and hides the comment content, deleting
+the comment which also deletes any replies, temporarily banning the user for a day, a week, a month to permanently
+banning the user until they're explicitly unbanned:</p>
+<p><img src="/img/pages/creatorkit/portal-report.png" alt="" /></p>
+<p>Thread Users are managed with the <a href="https://docs.servicestack.net/admin-ui-users">User Admin Feature</a> UI who can be
+banned for any duration up to <strong>Ban Until Date</strong> or permanently banned by Locking the User Account:</p>
+<p><img src="/img/pages/creatorkit/admin-users.png" alt="" /></p>
+
+                <div class="not-prose my-20">
+
+<nav class="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 px-4 sm:px-0">
+    <div class="-mt-px flex w-0 flex-1">
+        <a href="/creatorkit/portal-mailruns" class="inline-flex items-center border-t-2 border-transparent pt-4 pr-1 text-sm font-medium text-gray-500 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-200">
+            <!-- Heroicon name: mini/arrow-long-left -->
+            <svg class="mr-3 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M18 10a.75.75 0 01-.75.75H4.66l2.1 1.95a.75.75 0 11-1.02 1.1l-3.5-3.25a.75.75 0 010-1.1l3.5-3.25a.75.75 0 111.02 1.1l-2.1 1.95h12.59A.75.75 0 0118 10z" clip-rule="evenodd"></path>
+            </svg>
+            Mail Runs
+        </a>
+    </div>
+    <div class="hidden md:-mt-px md:flex"></div>
+    <div class="-mt-px flex w-0 flex-1 justify-end">
+    </div>
+</nav>    
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+<link rel="stylesheet" href="css/highlight.css">
+<script src="lib/js/highlight.js"></script>
+
+<script>hljs.highlightAll()</script>
     </main>
 </div>
 
