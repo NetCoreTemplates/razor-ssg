@@ -138,21 +138,36 @@ backups to AWS S3 or Cloudflare R2 using [Litestream](https://docs.servicestack.
 Alternatively [Configure.Db.cs](https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit/Configure.Db.cs) can 
 be changed to use preferred [RDBMS supported by OrmLite](https://docs.servicestack.net/ormlite/installation).
 
+### App Settings
+
+The **PublicBaseUrl** and **BaseUrl** properties in `appsettings.json` should be updated with the URL where your 
+CreatorKit instance is deployed to and replace **WebsiteBaseUrl** with the website you want to use CreatorKit emails
+to be addressed from: 
+
+```json
+{
+  "AppData": {
+    "PublicBaseUrl":  "https://creatorkit.netcore.io",
+    "BaseUrl":        "https://creatorkit.netcore.io",
+    "WebsiteBaseUrl": "https://razor-ssg.web-templates.io"
+  }
+}
+```
+
 ### CORS
 
-Unless you've configured to run CreatorKit `/api/*` behind a reverse proxy your website will be communicating to your 
-CreatorKit instance using CORS requests which will require your development and production hosts to be configured with
-the `CorsFeature` plugin in [Configure.AppHost.cs](https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit/Configure.AppHost.cs):
+Any additional Website URLs that CreatorKit's components will be used in should be included in the CORS **allowOriginWhitelist**
+to allow CORS requests from that website:
 
-```csharp
-Plugins.Add(new CorsFeature(allowedHeaders: "Content-Type,Authorization",
-    allowOriginWhitelist: new[]{
-        "https://localhost:5002",
-        "https://localhost:5001",
-        "http://localhost:5000",
-        "http://localhost:8080",
-        "https://example.org",
-    }, allowCredentials: true));
+```json
+{
+  "CorsFeature": {
+    "allowOriginWhitelist": [
+      "http://localhost:5000",
+      "http://localhost:8080"
+    ]
+  }
+}
 ```
 
 ### Customize

@@ -60,14 +60,14 @@ The **urls.txt** contains all URLs embedded in emails that you'll want to replac
 
 ```txt
 BaseUrl           {{BaseUrl}}
-AppBaseUrl        {{AppBaseUrl}}
-PublicAppBaseUrl  {{PublicAppBaseUrl}}
-Website           {{BaseUrl}}
-MailPreferences   {{BaseUrl}}/mail-preferences
-Unsubscribe       {{BaseUrl}}/mail-preferences
-Privacy           {{BaseUrl}}/privacy
-Contact           {{BaseUrl}}/#contact
-SignupConfirmed   {{BaseUrl}}/signup-confirmed
+PublicBaseUrl     {{PublicBaseUrl}}
+WebsiteBaseUrl    {{WebsiteBaseUrl}}
+Website           {{WebsiteBaseUrl}}
+MailPreferences   {{WebsiteBaseUrl}}/mail-preferences
+Unsubscribe       {{WebsiteBaseUrl}}/mail-preferences
+Privacy           {{WebsiteBaseUrl}}/privacy
+Contact           {{WebsiteBaseUrl}}/#contact
+SignupConfirmed   {{WebsiteBaseUrl}}/signup-confirmed
 Twitter           https://twitter.com/ServiceStack
 YouTube           https://www.youtube.com/channel/UC0kXKGVU4NHcwNdDdRiAJSA
 ```

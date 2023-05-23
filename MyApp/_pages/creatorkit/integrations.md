@@ -6,11 +6,11 @@ order: 5
 We recommend your website have pages for the following `info.txt` collection variables:
 
 ```txt
-MailPreferences   {{BaseUrl}}/mail-preferences
-Unsubscribe       {{BaseUrl}}/mail-preferences
-Privacy           {{BaseUrl}}/privacy
-Contact           {{BaseUrl}}/#contact
-SignupConfirmed   {{BaseUrl}}/signup-confirmed
+MailPreferences   {{WebsiteBaseUrl}}/mail-preferences
+Unsubscribe       {{WebsiteBaseUrl}}/mail-preferences
+Privacy           {{WebsiteBaseUrl}}/privacy
+Contact           {{WebsiteBaseUrl}}/#contact
+SignupConfirmed   {{WebsiteBaseUrl}}/signup-confirmed
 ```
 
 You're also free to change the URLs in `info.txt` to reference existing pages on your website where they exist.
