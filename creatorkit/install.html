@@ -278,18 +278,29 @@ OAuth Providers during development on its <code>https://localhost:5002</code>.</
 backups to AWS S3 or Cloudflare R2 using <a href="https://docs.servicestack.net/ormlite/litestream">Litestream</a>.</p>
 <p>Alternatively <a href="https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit/Configure.Db.cs">Configure.Db.cs</a> can
 be changed to use preferred <a href="https://docs.servicestack.net/ormlite/installation">RDBMS supported by OrmLite</a>.</p>
+<h3 id="app-settings">App Settings</h3>
+<p>The <strong>PublicBaseUrl</strong> and <strong>BaseUrl</strong> properties in <code>appsettings.json</code> should be updated with the URL where your
+CreatorKit instance is deployed to and replace <strong>WebsiteBaseUrl</strong> with the website you want to use CreatorKit emails
+to be addressed from:</p>
+<pre><code class="language-json">{
+  &quot;AppData&quot;: {
+    &quot;PublicBaseUrl&quot;:  &quot;https://creatorkit.netcore.io&quot;,
+    &quot;BaseUrl&quot;:        &quot;https://creatorkit.netcore.io&quot;,
+    &quot;WebsiteBaseUrl&quot;: &quot;https://razor-ssg.web-templates.io&quot;
+  }
+}
+</code></pre>
 <h3 id="cors">CORS</h3>
-<p>Unless you've configured to run CreatorKit <code>/api/*</code> behind a reverse proxy your website will be communicating to your
-CreatorKit instance using CORS requests which will require your development and production hosts to be configured with
-the <code>CorsFeature</code> plugin in <a href="https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit/Configure.AppHost.cs">Configure.AppHost.cs</a>:</p>
-<pre><code class="language-csharp">Plugins.Add(new CorsFeature(allowedHeaders: &quot;Content-Type,Authorization&quot;,
-    allowOriginWhitelist: new[]{
-        &quot;https://localhost:5002&quot;,
-        &quot;https://localhost:5001&quot;,
-        &quot;http://localhost:5000&quot;,
-        &quot;http://localhost:8080&quot;,
-        &quot;https://example.org&quot;,
-    }, allowCredentials: true));
+<p>Any additional Website URLs that CreatorKit's components will be used in should be included in the CORS <strong>allowOriginWhitelist</strong>
+to allow CORS requests from that website:</p>
+<pre><code class="language-json">{
+  &quot;CorsFeature&quot;: {
+    &quot;allowOriginWhitelist&quot;: [
+      &quot;http://localhost:5000&quot;,
+      &quot;http://localhost:8080&quot;
+    ]
+  }
+}
 </code></pre>
 <h3 id="customize">Customize</h3>
 <p>After configuring CreatorKit to run with your preferred Environment, you'll want to customize it to your Organization
