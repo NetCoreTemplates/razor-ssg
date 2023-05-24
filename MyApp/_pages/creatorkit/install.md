@@ -156,7 +156,7 @@ to be addressed from:
 
 ### CORS
 
-Any additional Website URLs that CreatorKit's components will be used in should be included in the CORS **allowOriginWhitelist**
+Any additional Website URLs that utilize CreatorKit's components should be included in the CORS **allowOriginWhitelist**
 to allow CORS requests from that website:
 
 ```json
