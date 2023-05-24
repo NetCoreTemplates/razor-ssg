@@ -43,6 +43,7 @@ const fs = require('fs')
 const http = require('http')
 const https = require('https')
 
+let pending = 0
 Object.keys(files).forEach(dir => {
     const dirFiles = files[dir]
     Object.keys(dirFiles).forEach(name => {
@@ -54,6 +55,7 @@ Object.keys(files).forEach(dir => {
         if (!fs.existsSync(toDir)) {
             fs.mkdirSync(toDir, { recursive: true })
         }
+        pending++
         httpDownload(url, toFile, 5)
     })
 })
@@ -67,6 +69,7 @@ hostFiles.forEach(file => {
     if (!fs.existsSync(toDir)) {
         fs.mkdirSync(toDir, { recursive: true })
     }
+    pending++
     httpDownload(url, file, 5)
 })
 
@@ -75,6 +78,7 @@ function httpDownload(url, toFile, retries) {
     const retry = (e) => {
         console.log(`get ${url} failed: ${e}${retries > 0 ? `, ${retries-1} retries remaining...` : ''}`)
         if (retries > 0) httpDownload(url, toFile, retries-1)
+        else --pending
     }
 
     client.get(url, res => {
@@ -90,7 +94,12 @@ function httpDownload(url, toFile, retries) {
             console.log(`writing ${url} to ${toFile}`)
             const file = fs.createWriteStream(toFile)
             res.pipe(file);
-            file.on('finish', () => file.close())
+            file.on('finish', () => {
+                file.close()
+                if (--pending <= 0) {
+                    process.exit()
+                }
+            })
         }
     }).on('error', retry)
 }
