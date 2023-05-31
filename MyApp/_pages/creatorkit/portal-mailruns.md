@@ -10,7 +10,7 @@ it will generate and send individual emails to every contact in the specified **
 
 ![](/img/pages/creatorkit/portal-mailrun-custom.png)
 
-You'll also be able to send personalized emails with the contact's `{Email}`, `{FirstName}` and `{LastName}`
+You'll also be able to send personalized emails with the contact's `{{Email}}`, `{{FirstName}}` and `{{LastName}}`
 template variables.
 
 ### MailRun Implementation
@@ -98,10 +98,17 @@ Click **View Messages** to inspect a sample of the generated messages from the s
 
 Whilst the Mail Run Messages are being sent out you can click Refresh to monitor progress. 
 
+## CreatorKit.Extensions
+
+Any additional services should be maintained in [CreatorKit.Extensions](https://github.com/NetCoreApps/CreatorKit/tree/main/CreatorKit.Extensions)
+project with any custom Mail Run implementations added to
+[CustomEmailRunServices.cs](https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit.Extensions/CustomEmailRunServices.cs).
+
 ## Generating Newsletters
 
-CreatorKit also includes a Mail Run API to generate a Monthly Newsletter - that it automatically generates from new
-content added to Razor SSG Websites that it discovers from its pre-rendered JSON metadata.
+The `NewsletterMailRun` API is an advanced Email Generation example for generating a Monthly Newsletter - that it automatically 
+generates from new content added to [Razor SSG](https://razor-ssg.web-templates.io/posts/razor-ssg) Websites that it 
+discovers from its pre-rendered API JSON metadata.
 
 Even if you're not using Razor SSG website it should still serve as a good example for how to implement a Mail Run for
 a custom mail campaign utilizing custom data sources.

@@ -121,31 +121,3 @@ Or from your Markdown Emails using Markdown Image syntax:
 ```markdown
 ![]({{images.welcome_650x487.jpg}})
 ```
-
-## Mailing Lists
-
-The Mailing Lists contacts can subscribe to are maintained in the `MailingList` enum which you can modify with all
-the different mailing lists you want your users to be able to subscribe to:
-
-```csharp
-[Flags]
-public enum MailingList
-{
-    None = 0,
-    [Description("Test Group")]
-    TestGroup         = 1 << 0,     //1
-    [Description("Monthly Newsletter")]
-    MonthlyNewsletter = 1 << 1,     //2
-    [Description("New Blog Posts")]
-    BlogPostReleases  = 1 << 2,     //4
-    [Description("New Videos")]
-    VideoReleases     = 1 << 3,     //8
-    [Description("New Product Releases")]
-    ProductReleases   = 1 << 4,     //16
-    [Description("Yearly Updates")]
-    YearlyUpdates     = 1 << 5,     //32
-}
-```
-
-As this is a `[Flags]` enum any new entries should increase by a power of 2 so all mailing lists contacts are subscribed
-to can be captured in a single integer value.

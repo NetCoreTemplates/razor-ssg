@@ -4,7 +4,7 @@ order: 7
 group: Portal
 ---
 
-### Sending single Emails
+### Sending Single plain-text Emails
 
 **Messages** lets you craft and send emails to a single contact which can be sent immediately or saved as a draft so
 you can review the HTML rendered email and send later.
@@ -47,6 +47,8 @@ public class SimpleTextEmail : CreateEmailBase, IPost, IReturn<MailMessage>
     public bool? Draft { get; set; }
 }
 ```
+
+### Email UI
 
 Which are rendered using the [Vue AutoForm component](https://docs.servicestack.net/vue/gallery/autoform) from the API
 definition where the `SimpleTextEmail` Request DTO renders the new Email UI:
@@ -104,45 +106,10 @@ public async Task<object> Any(RenderSimpleText request)
 }
 ```
 
-### Sending HTML Emails
+### Sending Custom HTML Emails
 
-The included APIs to send HTML Emails is `MarkdownEmail` which is pre-configured to
-[basic.html](https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit/emails/layouts/basic.html)
-Email Layout and the
-[empty.html](https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit/emails/empty.html)
-email template:
-
-```csharp
-[Renderer(typeof(RenderCustomHtml), Layout = "basic", Template="empty")]
-[Tag(Tag.Mail), ValidateIsAdmin]
-[Icon(Svg = Icons.TextMarkup)]
-[Description("Markdown Email")]
-public class MarkdownEmail : CreateEmailBase, IPost, IReturn<MailMessage>
-{
-    [ValidateNotEmpty]
-    [FieldCss(Field = "col-span-12")]
-    public string Subject { get; set; }
-
-    [ValidateNotEmpty]
-    [Input(Type="MarkdownEmailInput",Label=""), FieldCss(Field="col-span-12",Input="h-56")]
-    public string? Body { get; set; }
-    public bool? Draft { get; set; }
-}
-```
-
-Which renders the form with a custom `MarkdownEmailInput` rich text editor which provides an optimal UX for authoring
-Markdown content with icons to assist with discovery of Markdown's different formatting syntax.
-
-The editor also includes a dropdown to provide convenient access to your [Template Variables](creatorkit/customize#template-variables):
-
-![](/img/pages/creatorkit/portal-messages-markdown.png)
-
-`MarkdownEmail` is effectively just a Custom HTML Email configured to use the **basic** Layout with the **empty** Email Template.
-
-### Custom HTML Emails
-
-`CustomHtmlEmail` is more configurable and lets you choose which Layout and Template you want to use from populated dropdowns
-configured with the available Email and Layout templates:
+`CustomHtmlEmail` is a configurable API for sending HTML emails utilizing custom Email Layout and Templates
+from populated dropdowns configured with available Templates in `/emails`:
 
 ```csharp
 [Renderer(typeof(RenderCustomHtml))]
@@ -212,5 +179,71 @@ public async Task<object> Any(RenderCustomHtml request)
         args:new() {
             ["body"] = evalBody,
         });
+}
+```
+
+## CreatorKit.Extensions
+
+Any additional services should be maintained in [CreatorKit.Extensions](https://github.com/NetCoreApps/CreatorKit/tree/main/CreatorKit.Extensions) 
+project with any custom email implementations added to 
+[CustomEmailServices.cs](https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit.Extensions/CustomEmailServices.cs).
+
+### Sending HTML Markdown Emails
+
+[MarkdownEmail.cs](https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit.Extensions.ServiceModel/MarkdownEmail.cs)
+is an example of a more user-friendly custom HTML Email you may want to send, which is pre-configured to use the
+[basic.html](https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit/emails/layouts/basic.html)
+Layout and the
+[empty.html](https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit/emails/empty.html)
+Email Template to allow sending plain HTML Emails with a custom Markdown Email body:
+
+```csharp
+[Renderer(typeof(RenderCustomHtml), Layout = "basic", Template="empty")]
+[Tag(Tag.Mail), ValidateIsAdmin]
+[Icon(Svg = Icons.TextMarkup)]
+[Description("Markdown Email")]
+public class MarkdownEmail : CreateEmailBase, IPost, IReturn<MailMessage>
+{
+    [ValidateNotEmpty]
+    [FieldCss(Field = "col-span-12")]
+    public string Subject { get; set; }
+
+    [ValidateNotEmpty]
+    [Input(Type="MarkdownEmailInput",Label=""), FieldCss(Field="col-span-12",Input="h-56")]
+    public string? Body { get; set; }
+    public bool? Draft { get; set; }
+}
+```
+
+As defined, this DTO renders the form utilizing a custom `MarkdownEmailInput` rich text editor which provides an optimal UX 
+for authoring Markdown content with icons to assist with discovery of Markdown's different formatting syntax.
+
+The editor also includes a dropdown to provide convenient access to your [Template Variables](creatorkit/customize#template-variables):
+
+![](/img/pages/creatorkit/portal-messages-markdown.png)
+
+The implementation of `MarkdownEmail` just sends a Custom HTML Email configured to use the **basic** Layout with the **empty** Email Template:
+
+```csharp
+public async Task<object> Any(MarkdownEmail request)
+{
+    var contact = await Db.GetOrCreateContact(request);
+    var viewRequest = request.ConvertTo<RenderCustomHtml>().FromContact(contact);
+    viewRequest.Layout = "basic";
+    viewRequest.Template = "empty";
+    var bodyHtml = (string) await Gateway.SendAsync(typeof(string), viewRequest);
+
+    var email = await Renderer.CreateMessageAsync(Db, new MailMessage
+    {
+        Draft = request.Draft ?? false,
+        Message = new EmailMessage
+        {
+            To = contact.ToMailTos(),
+            Subject = request.Subject,
+            Body = request.Body,
+            BodyHtml = bodyHtml,
+        },
+    }.FromRequest(viewRequest));
+    return email;
 }
 ```
