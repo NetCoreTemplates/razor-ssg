@@ -271,29 +271,6 @@ dropdown:</p>
 <p>Or from your Markdown Emails using Markdown Image syntax:</p>
 <pre><code class="language-markdown">![]({{images.welcome_650x487.jpg}})
 </code></pre>
-<h2 id="mailing-lists">Mailing Lists</h2>
-<p>The Mailing Lists contacts can subscribe to are maintained in the <code>MailingList</code> enum which you can modify with all
-the different mailing lists you want your users to be able to subscribe to:</p>
-<pre><code class="language-csharp">[Flags]
-public enum MailingList
-{
-    None = 0,
-    [Description(&quot;Test Group&quot;)]
-    TestGroup         = 1 &lt;&lt; 0,     //1
-    [Description(&quot;Monthly Newsletter&quot;)]
-    MonthlyNewsletter = 1 &lt;&lt; 1,     //2
-    [Description(&quot;New Blog Posts&quot;)]
-    BlogPostReleases  = 1 &lt;&lt; 2,     //4
-    [Description(&quot;New Videos&quot;)]
-    VideoReleases     = 1 &lt;&lt; 3,     //8
-    [Description(&quot;New Product Releases&quot;)]
-    ProductReleases   = 1 &lt;&lt; 4,     //16
-    [Description(&quot;Yearly Updates&quot;)]
-    YearlyUpdates     = 1 &lt;&lt; 5,     //32
-}
-</code></pre>
-<p>As this is a <code>[Flags]</code> enum any new entries should increase by a power of 2 so all mailing lists contacts are subscribed
-to can be captured in a single integer value.</p>
 
                 <div class="not-prose my-20">
 

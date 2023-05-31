@@ -178,25 +178,69 @@ mountAll()
         </section>
         <div class="mx-auto">
             <div class="mx-auto prose lg:prose-xl mb-24">
-                <p>CreatorKit is a simple alternative solution to using Disqus to enhance websites with threading and commenting
-and Mailchimp for accepting and managing website newsletters and mailing lists.</p>
-<p>It's an ideal companion for JAMStack or statically generated branded websites like
+                <p><a href="/creatorkit/"><img src="/img/pages/creatorkit/creatorkit-brand.svg" alt="" /></a></p>
+<p><a href="/creatorkit/">CreatorKit</a> is a simple, customizable alternative solution to using Mailchimp for accepting and managing website
+newsletter subscriptions and other mailing lists, sending rich emails with customizable email layouts and templates to your
+Customers and subscribers using your preferred SMTP provider of choice.</p>
+<p>It also provides a private alternative to using Disqus to enhance websites with threading and commenting on your preferred
+blog posts and website pages you want to be able to collaborate with your community on.</p>
+<h3 id="enhance-static-websites">Enhance static websites</h3>
+<p>We're developing CreatorKit as an ideal companion for JAMStack or statically generated branded websites like
 <a href="https://razor-ssg.web-templates.io/posts/razor-ssg">Razor SSG</a>
-enabling you to seamlessly integrate features such as comments, voting, moderation, newsletter subscriptions,
-and email management into your existing websites.</p>
-<p>It's an ideal solution for Websites who want to keep all Mailing Lists Contacts and Authenticated User Comments in a
-different site, separate from your Customer Accounts and existing Systems.</p>
-<p>No longer do you need to rely on complex content management systems to manage your blog's interactions with your readers.
-With CreatorKit, you can enjoy the convenience of managing your blog's comments, votes, and subscriptions directly
-from your own hosted <a href="/portal/">CreatorKit Portal</a>.</p>
+enabling you to seamlessly integrate features such as newsletter subscriptions, email management, comments, voting,
+and moderation into your existing websites without the complexity of a custom solution, that's ideally suited for Websites
+who want to keep all Mailing Lists Contacts and Authenticated User Comments in a different site, isolated from your
+existing Customer Accounts and internal Systems.</p>
+<p>With CreatorKit, you can enjoy the convenience of managing your blog's comments, votes, and subscriptions directly
+from your own hosted <a href="/portal/">CreatorKit Portal</a> without needing to rely on complex content management systems to
+manage your blog's interactions with your readers.</p>
 <p>Additionally, CreatorKit makes it easy to send emails and templates to different mailing lists, making it the perfect
 tool for managing your email campaigns. Whether you're a blogger, marketer, or entrepreneur, CreatorKit is a great
 solution for maximizing your blog's functionality and engagement.</p>
-<p>CreatorKit is a Free customizable .NET App included with <a href="https://servicestack.net">ServiceStack</a> which is
+<h2 id="features">Features</h2>
+<p>The CreatorKit Portal offers a complete management UI to manage mailing lists, email newsletter and marketing campaigns,
+thread management and moderation workflow.</p>
+<h3 id="email-management">Email Management</h3>
+<p><a href="/creatorkit/portal-messages"><img src="/img/pages/creatorkit/portal-messages.png" alt="" /></a></p>
+<h3 id="optimized-email-uis-with-live-previews">Optimized Email UI's with Live Previews</h3>
+<p><a href="/creatorkit/portal-messages#email-ui"><img src="/img/pages/creatorkit/portal-messages-simple.png" alt="" /></a></p>
+<h3 id="custom-html-templates">Custom HTML Templates</h3>
+<p><a href="/creatorkit/portal-messages#sending-custom-html-emails"><img src="/img/pages/creatorkit/portal-messages-custom.png" alt="" /></a></p>
+<h3 id="html-email-templates">HTML Email Templates</h3>
+<p><a href="/creatorkit/portal-messages#sending-html-markdown-emails"><img src="/img/pages/creatorkit/portal-messages-markdown.png" alt="" /></a></p>
+<h3 id="mailing-list-email-runs">Mailing List Email Runs</h3>
+<p><a href="/creatorkit/portal-mailruns"><img src="/img/pages/creatorkit/portal-mailrun-custom.png" alt="" /></a></p>
+<h3 id="newsletter-generation">Newsletter Generation</h3>
+<p><a href="/creatorkit/portal-mailruns#generating-newsletters"><img src="/img/pages/creatorkit/portal-mailrun-newsletter.png" alt="" /></a></p>
+<h3 id="comment-moderation">Comment Moderation</h3>
+<p><a href="/creatorkit/portal-posts"><img src="/img/pages/creatorkit/portal-report.png" alt="" /></a></p>
+<h3 id="use-for-free">Use for FREE</h3>
+<p>CreatorKit is a FREE customizable .NET App included with <a href="https://servicestack.net">ServiceStack</a> which is
 <a href="https://servicestack.net/free">Free for Individuals and Open Source projects</a> or for organizations that continue to
-host their forked CreatorKit projects on GitHub or GitLab.</p>
-<p>To get started, clone <a href="https://github.com/NetCoreApps/CreatorKit">CreatorKit from GitHub</a> and follow the
-<a href="#install">installation instructions</a> to configure it with your settings.</p>
+host their forked CreatorKit projects on GitHub or GitLab. As a stand-alone hosted product there should be
+minimal need for any customizations with initial <a href="/creatorkit/install#before-you-run">Mailining Lists, Subscribers</a>,
+<a href="/creatorkit/install#whats-included">App Settings</a> and branding information maintained in
+customizable <a href="/creatorkit/install#before-you-run">CSV</a> and <a href="/creatorkit/customize">text files</a>.</p>
+<p>To get started follow the <a href="/creatorkit/install">installation instructions</a> to download and configure it with your
+organization's website settings.</p>
+<h2 id="future">Future</h2>
+<p>As we're using CreatorKit ourselves to power all dynamic Mailing List and Comment System features on
+<a href="servicestack.net">https://servicestack.net</a>, we'll be continuing to develop it with useful features to
+empower static websites with more generic email templates and potential to expand it with commerce features, inc.
+Stripe integration, products &amp; subscriptions, ordering system, invoicing, quotes, PDF generation, etc.</p>
+<p>Follow <a href="https://twitter.com/ServiceStack">@ServiceStack</a>, Watch or Star <a href="https://github.com/NetCoreApps/CreatorKit">NetCoreApps/CreatorKit</a>
+or Join our CreatorKit-powered Monthly Newsletter to follow and keep up to date with new features:</p>
+<div class="not-prose">
+    <div class="mt-8 mx-auto max-w-md" data-mail="JoinMailingList" data-props="{ submitLabel:'Join our newsletter' }"></div>
+</div>
+<p>As a design goal <a href="/creatorkit/components">CreatorKit's components</a> will be easily embeddable into any external website,
+where it will be integrated into the <a href="/posts/razor-ssg">Razor SSG</a> project template to serve as a working demonstration
+and reference implementation. As such it's a great option if you're looking to create a Fast, FREE, CDN hostable,
+<a href="/posts/javascript">simple, modern</a> statically generated website created with Razor &amp; Markdown
+like <a href="https://github.com/ServiceStack/servicestack.net">ServiceStack/servicestack.net</a>.</p>
+<h3 id="feedback-welcome">Feedback welcome</h3>
+<p>If you'd like to prioritize features you'd like to see first or propose new, generically useful features for
+static websites, please let us know in <a href="https://servicestack.net/ideas">servicestack.net/ideas</a>.</p>
 
                 <div class="not-prose my-20">
 

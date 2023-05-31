@@ -182,7 +182,7 @@ mountAll()
 Markdown and Custom HTML Email UIs as <a href="creatorkit/portal-messages">Messages</a> except instead of a single contact,
 it will generate and send individual emails to every contact in the specified <strong>Mailing List</strong>:</p>
 <p><img src="/img/pages/creatorkit/portal-mailrun-custom.png" alt="" /></p>
-<p>You'll also be able to send personalized emails with the contact's <code>{Email}</code>, <code>{FirstName}</code> and <code>{LastName}</code>
+<p>You'll also be able to send personalized emails with the contact's <code>{{Email}}</code>, <code>{{FirstName}}</code> and <code>{{LastName}}</code>
 template variables.</p>
 <h3 id="mailrun-implementation">MailRun Implementation</h3>
 <p>All Mail Run APIs inherit <code>MailRunBase</code> which contains the Mailing List that the Mail Run should send emails to:</p>
@@ -254,9 +254,14 @@ you want to send or delete the messages.</p>
 <p>Click <strong>View Messages</strong> to inspect a sample of the generated messages from the saved Mail Run then either
 <strong>Send Messages</strong> if you want to send them out or <strong>Delete</strong> to delete the Mail Run and start again.</p>
 <p>Whilst the Mail Run Messages are being sent out you can click Refresh to monitor progress.</p>
+<h2 id="creatorkit.extensions">CreatorKit.Extensions</h2>
+<p>Any additional services should be maintained in <a href="https://github.com/NetCoreApps/CreatorKit/tree/main/CreatorKit.Extensions">CreatorKit.Extensions</a>
+project with any custom Mail Run implementations added to
+<a href="https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit.Extensions/CustomEmailRunServices.cs">CustomEmailRunServices.cs</a>.</p>
 <h2 id="generating-newsletters">Generating Newsletters</h2>
-<p>CreatorKit also includes a Mail Run API to generate a Monthly Newsletter - that it automatically generates from new
-content added to Razor SSG Websites that it discovers from its pre-rendered JSON metadata.</p>
+<p>The <code>NewsletterMailRun</code> API is an advanced Email Generation example for generating a Monthly Newsletter - that it automatically
+generates from new content added to <a href="https://razor-ssg.web-templates.io/posts/razor-ssg">Razor SSG</a> Websites that it
+discovers from its pre-rendered API JSON metadata.</p>
 <p>Even if you're not using Razor SSG website it should still serve as a good example for how to implement a Mail Run for
 a custom mail campaign utilizing custom data sources.</p>
 <p>The <code>NewsletterMailRun</code> API has 2 optional properties for the Year and Month you want to generate the Newsletter for:</p>
