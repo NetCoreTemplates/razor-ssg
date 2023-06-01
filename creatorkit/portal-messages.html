@@ -351,6 +351,7 @@ public class MarkdownEmail : CreateEmailBase, IPost, IReturn&lt;MailMessage&gt;
 </code></pre>
 <p>As defined, this DTO renders the form utilizing a custom <code>MarkdownEmailInput</code> rich text editor which provides an optimal UX
 for authoring Markdown content with icons to assist with discovery of Markdown's different formatting syntax.</p>
+<h4 id="template-variables">Template Variables</h4>
 <p>The editor also includes a dropdown to provide convenient access to your <a href="creatorkit/customize#template-variables">Template Variables</a>:</p>
 <p><img src="/img/pages/creatorkit/portal-messages-markdown.png" alt="" /></p>
 <p>The implementation of <code>MarkdownEmail</code> just sends a Custom HTML Email configured to use the <strong>basic</strong> Layout with the <strong>empty</strong> Email Template:</p>
