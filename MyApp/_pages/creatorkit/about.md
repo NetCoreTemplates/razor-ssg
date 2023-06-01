@@ -22,8 +22,8 @@ who want to keep all Mailing Lists Contacts and Authenticated User Comments in a
 existing Customer Accounts and internal Systems.
 
 With CreatorKit, you can enjoy the convenience of managing your blog's comments, votes, and subscriptions directly
-from your own hosted [CreatorKit Portal](/portal/) without needing to rely on complex content management systems to
-manage your blog's interactions with your readers.
+from your own hosted [CreatorKit Portal](https://creatorkit.netcore.io/portal/) without needing to rely on complex content 
+management systems to manage your blog's interactions with your readers.
 
 Additionally, CreatorKit makes it easy to send emails and templates to different mailing lists, making it the perfect
 tool for managing your email campaigns. Whether you're a blogger, marketer, or entrepreneur, CreatorKit is a great
