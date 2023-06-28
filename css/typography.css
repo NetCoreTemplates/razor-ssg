@@ -52,6 +52,10 @@
         font-size: 1.25rem;
         line-height: 1.8;
     }
+    .lg\:prose-xl .not-prose { 
+        font-size: 1rem;
+        line-height: 1.75;
+    }
     .lg\:prose-xl :where(h3):not(:where([class~="not-prose"] *)) {
         font-size: 1.5em;
         margin-top: 1.6em;
@@ -60,7 +64,7 @@
     }
 }
 .youtube {
-    width: 768px;
+    width: 768px; 
     height: 432px;
 }
 @media (max-width: 896px) {
@@ -80,4 +84,36 @@
 
 .html-format {
     max-width: unset;
+}
+
+.svg-external {
+    color: #007bff;
+    background: url("data:image/svg+xml,%3Csvg width='1.25rem' height='1.25rem' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none'%3E%3Cpath d='M10 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4M14 4h6m0 0v6m0-6L10 14' stroke='%23007bff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%3C/svg%3E") no-repeat bottom right;
+    padding-right: 1.35rem;
+}
+.svg-external:hover {
+    text-decoration: underline;
+}
+
+
+.header-anchor {
+    float: left;
+    margin-left: -.87em;
+    padding-right: .23em;
+    font-weight: 500;
+    user-select: none;
+    opacity: 0;
+    transition: color .25s,opacity .25s;
+    color: rgb(14 165 233);
+    text-decoration: none;
+}
+.header-anchor:before {
+    content: "#"
+}
+.header-anchor:hover:before {
+    color: rgb(14 165 233);
+    text-decoration: underline;
+}
+h1:hover .header-anchor, h1 .header-anchor:focus, h2:hover .header-anchor, h2 .header-anchor:focus, h3:hover .header-anchor, h3 .header-anchor:focus, h4:hover .header-anchor, h4 .header-anchor:focus {
+    opacity: 1;
 }
