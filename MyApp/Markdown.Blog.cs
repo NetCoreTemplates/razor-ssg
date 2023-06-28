@@ -13,12 +13,6 @@ public class AuthorInfo
     public string? GitHubUrl { get; set; }
     public string? TwitterUrl { get; set; }
     public string? MastodonUrl { get; set; }
-
-    public AuthorInfo(string name, string profileUrl)
-    {
-        Name = name;
-        ProfileUrl = profileUrl;
-    }
 }
 
 public class MarkdownBlog : MarkdownPagesBase<MarkdownFileInfo>
