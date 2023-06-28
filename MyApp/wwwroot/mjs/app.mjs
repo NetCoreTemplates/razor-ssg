@@ -72,6 +72,13 @@ export function mount(sel, component, props) {
     })
     app.use(ServiceStackVue)
     app.component('RouterLink', ServiceStackVue.component('RouterLink'))
+    app.directive('hash', (el,binding) => {
+        /** @param {Event} e */
+        el.onclick = (e) => {
+            e.preventDefault()
+            location.hash = binding.value
+        }
+    })
     app.mount(el)
     Apps.push(app)
     return app

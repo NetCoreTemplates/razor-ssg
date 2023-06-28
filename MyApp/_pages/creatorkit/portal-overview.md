@@ -7,7 +7,7 @@ group: Portal
 All information captured by CreatorKit's components can be managed from your CreatorKit's instance portal at:
 
 <div class="not-prose">
-    <h3 class="text-4xl text-center text-indigo-800 font-semibold pb-3"><span class="text-gray-300">https://localhost:5001</span>/portal/</h3>
+    <h3 class="text-4xl text-center text-indigo-800 font-semibold pb-3"><span class="text-gray-300">https://localhost:5003</span>/portal/</h3>
 </div>
 
 Signing in with an Admin User will take you to the dashboard showing your Website activity: 

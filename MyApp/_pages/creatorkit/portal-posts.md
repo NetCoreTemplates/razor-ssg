@@ -10,6 +10,8 @@ table which supports adding Thread comments to every unique URL:
 
 ![](/img/pages/creatorkit/portal-threads.png)
 
+## Moderation
+
 Most of the time will be spent either reading through and deleting bad comments and responding to reported comments 
 which includes special behavior to filter reports to only show reports that have yet to be moderated.
 
