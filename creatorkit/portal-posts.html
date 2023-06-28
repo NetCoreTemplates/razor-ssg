@@ -28,7 +28,7 @@
 </script>
 </head>
 <body class="bg-white dark:bg-black dark:text-white">
-<header class="border-b border-gray-200 dark:border-gray-600 pr-3">
+<header class="top-0 fixed z-50 h-14 bg-white dark:bg-black opacity-90 w-full shadow pr-3">
     <div class="flex flex-wrap items-center">
         <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
             <div class="cursor-pointer">
@@ -97,7 +97,7 @@ mountAll()
 
 
 <div class="min-h-screen">
-    <main role="main" class="pb-3" hx-ext="class-tools">
+    <main role="main" class="pt-14 pb-3">
         
 
 
@@ -182,6 +182,7 @@ Creator Kit                                    </span>
 to manage all the RDBMS tables used to implement CreatorKit's comment system like <strong>Threads</strong> which manages the <code>Thread</code>
 table which supports adding Thread comments to every unique URL:</p>
 <p><img src="/img/pages/creatorkit/portal-threads.png" alt="" /></p>
+<h2 id="moderation">Moderation<a class="header-anchor" href="javascript:;" onclick="location.hash='#moderation'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Most of the time will be spent either reading through and deleting bad comments and responding to reported comments
 which includes special behavior to filter reports to only show reports that have yet to be moderated.</p>
 <p>The <strong>Update Comment Report</strong> includes different moderation options you can choose to perform based on the severity of
@@ -210,6 +211,22 @@ banned for any duration up to <strong>Ban Until Date</strong> or permanently ban
                             </nav>
                 </div>
             </div>
+                <div class="docmap hidden 2xl:block flex-none w-64 pl-8 mr-8">
+                    <div class="fixed bg-white flex flex-col overflow-y-auto pt-10 px-8 pb-6">
+                        <div>
+                            <h5 class="text-slate-900 font-semibold mb-4 text-sm leading-6 dark:text-slate-100">
+                                On This Page
+                            </h5>
+                            <ul class="text-slate-700 text-sm leading-6">
+                                    <li class="group text-gray-800 hover:text-gray-900">
+                                        <span v-hash="'#moderation'" data-id="moderation" class="cursor-pointer font-medium block text-sm transform transition-colors duration-200 py-2">
+                                            Moderation
+                                        </span>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>    
 </div>
