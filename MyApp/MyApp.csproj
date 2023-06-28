@@ -29,18 +29,4 @@
     <!-- Required for Razor compilation on change: https://docs.microsoft.com/en-us/aspnet/core/mvc/views/view-compilation?view=aspnetcore-5.0 -->
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.*" />
   </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="wwwroot\img\whatsnew\v6.6\mjs-update-reference-rider.png" />
-    <_ContentIncludedByDefault Remove="wwwroot\img\whatsnew\v6.6\mjs-update-reference-vs.png" />
-    <_ContentIncludedByDefault Remove="wwwroot\img\whatsnew\v6.6\razor-pages-prerendering.png" />
-    <_ContentIncludedByDefault Remove="wwwroot\img\whatsnew\v6.6\vue-components.png" />
-    <_ContentIncludedByDefault Remove="wwwroot\img\whatsnew\v6.6\vue-mjs.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\img\pages\" />
-    <Folder Include="_videos\" />
-  </ItemGroup>
-
 </Project>
