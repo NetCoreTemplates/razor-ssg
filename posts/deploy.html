@@ -144,15 +144,15 @@ mountAll()
                 </div>
             <div class="max-w-3xl mx-auto">
                 <div class="prose lg:prose-xl max-w-none mb-32">
-                    <h1 id="servicestack-github-action-deployments">ServiceStack GitHub Action Deployments</h1>
+                    <h1 id="servicestack-github-action-deployments">ServiceStack GitHub Action Deployments<a class="header-anchor" href="javascript:;" onclick="location.hash='#servicestack-github-action-deployments'" aria-label="Permalink">&ZeroWidthSpace;</a></h1>
 <p>The <a href="https://github.com/NetCoreTemplates/razor-tailwind/blob/main/.github/workflows/release.yml">release.yml</a>
 in this template enables GitHub Actions CI deployment to a dedicated server with SSH access.</p>
-<h2 id="overview">Overview</h2>
+<h2 id="overview">Overview<a class="header-anchor" href="javascript:;" onclick="location.hash='#overview'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p><code>release.yml</code> is designed to work with a ServiceStack app deploying directly to a single server via SSH. A docker image is built and stored on GitHub's <code>ghcr.io</code> docker registry when a GitHub Release is created.</p>
 <p>GitHub Actions specified in <code>release.yml</code> then copy files remotely via scp and use <code>docker-compose</code> to run the app remotely via SSH.</p>
-<h2 id="whats-the-process-of-release.yml">What's the process of <code>release.yml</code>?</h2>
+<h2 id="whats-the-process-of-release.yml">What's the process of <code>release.yml</code>?<a class="header-anchor" href="javascript:;" onclick="location.hash='#whats-the-process-of-release.yml'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p><img src="https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/mix/release-ghr-vanilla-diagram.png" alt="" /></p>
-<h2 id="deployment-server-setup">Deployment server setup</h2>
+<h2 id="deployment-server-setup">Deployment server setup<a class="header-anchor" href="javascript:;" onclick="location.hash='#deployment-server-setup'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>To get this working, a server needs to be setup with the following:</p>
 <ul>
 <li>SSH access</li>
@@ -169,7 +169,7 @@ to deploy all ServiceStack's <a href="https://github.com/NetCoreTemplates/">GitH
 <pre><code>docker-compose -f ~/nginx-proxy-compose.yml up -d
 </code></pre>
 <p>This will run an nginx reverse proxy along with a companion container that will watch for additional containers in the same docker network and attempt to initialize them with valid TLS certificates.</p>
-<h3 id="github-actions-secrets">GitHub Actions secrets</h3>
+<h3 id="github-actions-secrets">GitHub Actions secrets<a class="header-anchor" href="javascript:;" onclick="location.hash='#github-actions-secrets'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The <code>release.yml</code> uses the following secrets.</p>
 <table>
 <thead>
@@ -204,7 +204,7 @@ gh secret set DEPLOY_KEY &lt; key.pem # DEPLOY_KEY
 gh secret set LETSENCRYPT_EMAIL -b&quot;&lt;LETSENCRYPT_EMAIL&gt;&quot;
 </code></pre>
 <p>These secrets are used to populate variables within GitHub Actions and other configuration files.</p>
-<h2 id="deployments">Deployments</h2>
+<h2 id="deployments">Deployments<a class="header-anchor" href="javascript:;" onclick="location.hash='#deployments'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>A published version of your .NET App created with the standard dotnet publish tool:</p>
 <pre><code class="language-yaml">dotnet publish -c Release
 </code></pre>
@@ -222,7 +222,7 @@ gh secret set LETSENCRYPT_EMAIL -b&quot;&lt;LETSENCRYPT_EMAIL&gt;&quot;
     &lt;Message Text=&quot;Prerender...&quot; /&gt;
 &lt;/Target&gt;
 </code></pre>
-<h2 id="pushing-updates-and-rollbacks">Pushing updates and rollbacks</h2>
+<h2 id="pushing-updates-and-rollbacks">Pushing updates and rollbacks<a class="header-anchor" href="javascript:;" onclick="location.hash='#pushing-updates-and-rollbacks'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>By default, deployments occur on commit to your main branch. A new Docker image for your ServiceStack API is produced, pushed to GHCR.io and hosted on your Linux server with Docker Compose.</p>
 <p>The template also will run the release process on the creation of a GitHub Release making it easier to switch to manual production releases.</p>
 <p>Additionally, the <code>release.yml</code> workflow can be run manually specifying a version. This enables production rollbacks based on previously tagged releases.

@@ -191,7 +191,7 @@ tailwind components which are loaded from and communicate back directly to your 
         </div>
     </div>
 </div>
-<h2 id="get-creatorkit">Get CreatorKit</h2>
+<h2 id="get-creatorkit">Get CreatorKit<a class="header-anchor" href="javascript:;" onclick="location.hash='#get-creatorkit'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>To better be able to keep up-to-date with future CreatorKit improvements we recommend
 <a href="https://github.com/NetCoreApps/CreatorKit/fork">forking CreatorKit</a> so you can easily apply future changes
 to your customized forks:</p>
@@ -215,7 +215,7 @@ CreatorKit:</p>
     </div>
 </a>
 </div>
-<h2 id="extending-creatorkit">Extending CreatorKit</h2>
+<h2 id="extending-creatorkit">Extending CreatorKit<a class="header-anchor" href="javascript:;" onclick="location.hash='#extending-creatorkit'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>To minimize disruption when upgrading to future versions of CreatorKit we recommend adding any new Services to
 <a href="https://github.com/NetCoreApps/CreatorKit/tree/main/CreatorKit.Extensions">CreatorKit.Extensions</a> and their DTOs
 in <a href="https://github.com/NetCoreApps/CreatorKit/tree/main/CreatorKit.Extensions.ServiceModel">CreatorKit.Extensions.ServiceModel</a>:</p>
@@ -231,7 +231,7 @@ in <a href="https://github.com/NetCoreApps/CreatorKit/tree/main/CreatorKit.Exten
 the core set of functionality maintained in the other CreatorKit's folders.</p>
 <p>Any custom AppHost or IOC dependencies your Services require can be added to
 <a href="https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit/Configure.Extensions.cs">Configure.Extensions.cs</a>.</p>
-<h3 id="before-you-run">Before you Run</h3>
+<h3 id="before-you-run">Before you Run<a class="header-anchor" href="javascript:;" onclick="location.hash='#before-you-run'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>We need to initialize CreatorKit's database which we can populate with our preferred App Users, Mailing Lists and Subscribers
 by modifying the CSV files in <code>/Migrations/seed</code>:</p>
 <div data-component="FileLayout" data-props="{
@@ -242,9 +242,9 @@ by modifying the CSV files in <code>/Migrations/seed</code>:</p>
         }
     }
 }"></div>
-<h2 id="mailing-lists">Mailing Lists</h2>
+<h2 id="mailing-lists">Mailing Lists<a class="header-anchor" href="javascript:;" onclick="location.hash='#mailing-lists'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>You can define all Mailing Lists you wish to send and contacts can subscribe to in <strong>mailinglists.csv</strong>:</p>
-<h4 id="mailinglists.csv">mailinglists.csv</h4>
+<h4 id="mailinglists.csv">mailinglists.csv<a class="header-anchor" href="javascript:;" onclick="location.hash='#mailinglists.csv'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-csv">Name,Description
 None,None
 TestGroup,Test Group
@@ -276,7 +276,7 @@ public enum MailingList
 </code></pre>
 <p>This is a <code>[Flags]</code> enum with each value increasing by a power of 2 allowing a single integer value to capture
 all the mailing lists contacts are subscribed to.</p>
-<h4 id="subscribers.csv">subscribers.csv</h4>
+<h4 id="subscribers.csv">subscribers.csv<a class="header-anchor" href="javascript:;" onclick="location.hash='#subscribers.csv'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>Add any mailing subscribers you wish to be included by default, it's a good idea to include all Website developer emails
 here so they can test sending emails to themselves:</p>
 <pre><code class="language-csv">Email,FirstName,LastName,MailingLists
@@ -284,7 +284,7 @@ test@subscriber.com,Test,Subscriber,3
 </code></pre>
 <p><a href="creatorkit/customize#mailing-lists">Mailing Lists</a> is a flag enums where the integer values is a sub of all Mailing Lists
 you want them subscribed to, e.g. use <code>3</code> to  subscribe to both the <code>TestGroup (1)</code> and <code>MonthlyNewsletter (2)</code> Mailing Lists.</p>
-<h4 id="users.csv">users.csv</h4>
+<h4 id="users.csv">users.csv<a class="header-anchor" href="javascript:;" onclick="location.hash='#users.csv'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>Add any App Users you want your CreatorKit App to include by default, at a minimum you'll need an <code>Admin</code> user which is
 required to access the Portal to be able to use CreatorKit:</p>
 <pre><code class="language-csv">Id,Email,FirstName,LastName,Roles
@@ -296,10 +296,10 @@ required to access the Portal to be able to use CreatorKit:</p>
 <p>Which will create the CreatorKit SQLite databases with your seed Users and Mailing List subscribers included.</p>
 <p>Should you need to recreate the database, you can delete the <code>App_Data/*.sqlite</code> databases then rerun
 <code>npm run migrate</code> to recreate the databases with your updated <code>*.csv</code> seed data.</p>
-<h3 id="whats-included">What's included</h3>
+<h3 id="whats-included">What's included<a class="header-anchor" href="javascript:;" onclick="location.hash='#whats-included'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The full .NET Source code is included with CreatorKit enabling unlimited customizations. It's a stand-alone download
 which doesn't require any external dependencies to run initially, although some features require configuration:</p>
-<h4 id="smtp-server">SMTP Server</h4>
+<h4 id="smtp-server">SMTP Server<a class="header-anchor" href="javascript:;" onclick="location.hash='#smtp-server'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>You'll need to configure an SMTP Server to enable sending Emails by adding it to your <strong>appsettings.json</strong>, e.g:</p>
 <pre><code class="language-json">{
   &quot;smtp&quot;: {
@@ -315,7 +315,7 @@ which doesn't require any external dependencies to run initially, although some 
 </code></pre>
 <p>If you don't have an existing SMTP Server we recommend using <a href="https://aws.amazon.com/ses/">Amazon SES</a> as a cost effective
 way to avoid managing your own SMTP Servers.</p>
-<h4 id="oauth-providers">OAuth Providers</h4>
+<h4 id="oauth-providers">OAuth Providers<a class="header-anchor" href="javascript:;" onclick="location.hash='#oauth-providers'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>By default CreatorKit is configured to allow Sign In's for authenticated post comments from Facebook, Google, Microsoft
 OAuth Providers during development on its <code>https://localhost:5002</code>.</p>
 <p>You'll need to configure OAuth Apps for your production host in order to support OAuth Sign Ins at deployment:</p>
@@ -325,12 +325,12 @@ OAuth Providers during development on its <code>https://localhost:5002</code>.</
 <li>Create App for Microsoft at <a href="https://apps.dev.microsoft.com">https://apps.dev.microsoft.com</a></li>
 </ul>
 <p>You can Add/Remove to this from the list of <a href="https://docs.servicestack.net/auth#oauth-providers">supported OAuth Providers</a>.</p>
-<h3 id="rdbms">RDBMS</h3>
+<h3 id="rdbms">RDBMS<a class="header-anchor" href="javascript:;" onclick="location.hash='#rdbms'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>CreatorKit by default is configured to use an embedded SQLite database which can be optionally configured to replicate
 backups to AWS S3 or Cloudflare R2 using <a href="https://docs.servicestack.net/ormlite/litestream">Litestream</a>.</p>
 <p>Alternatively <a href="https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit/Configure.Db.cs">Configure.Db.cs</a> can
 be changed to use preferred <a href="https://docs.servicestack.net/ormlite/installation">RDBMS supported by OrmLite</a>.</p>
-<h3 id="app-settings">App Settings</h3>
+<h3 id="app-settings">App Settings<a class="header-anchor" href="javascript:;" onclick="location.hash='#app-settings'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The <strong>PublicBaseUrl</strong> and <strong>BaseUrl</strong> properties in <code>appsettings.json</code> should be updated with the URL where your
 CreatorKit instance is deployed to and replace <strong>WebsiteBaseUrl</strong> with the website you want to use CreatorKit emails
 to be addressed from:</p>
@@ -342,7 +342,7 @@ to be addressed from:</p>
   }
 }
 </code></pre>
-<h3 id="cors">CORS</h3>
+<h3 id="cors">CORS<a class="header-anchor" href="javascript:;" onclick="location.hash='#cors'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Any additional Website URLs that utilize CreatorKit's components should be included in the CORS <strong>allowOriginWhitelist</strong>
 to allow CORS requests from that website:</p>
 <pre><code class="language-json">{
@@ -354,7 +354,7 @@ to allow CORS requests from that website:</p>
   }
 }
 </code></pre>
-<h3 id="customize">Customize</h3>
+<h3 id="customize">Customize<a class="header-anchor" href="javascript:;" onclick="location.hash='#customize'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>After configuring CreatorKit to run with your preferred Environment, you'll want to customize it to your Organization
 or Personal Brand:</p>
 

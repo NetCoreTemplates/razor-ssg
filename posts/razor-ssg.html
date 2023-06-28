@@ -180,7 +180,7 @@ mountAll()
                 <div class="prose lg:prose-xl max-w-none mb-32">
                     <p>Razor SSG is a Razor Pages powered Markdown alternative to <a href="https://jekyllrb.com/">Ruby's Jekyll</a> &amp;
 <a href="https://nextjs.org">Next.js</a> that's ideal for generating static websites &amp; blogs using C#, Razor Pages &amp; Markdown.</p>
-<h3 id="github-codespaces-friendly">GitHub Codespaces Friendly</h3>
+<h3 id="github-codespaces-friendly">GitHub Codespaces Friendly<a class="header-anchor" href="javascript:;" onclick="location.hash='#github-codespaces-friendly'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>In addition to having a pure Razor + .NET solution to create fast, CDN-hostable static websites, it also aims to provide a
 great experience from GitHub Codespaces, where you can create, modify, preview &amp; check-in changes before the included GitHub Actions
 auto deploy changes to its GitHub Pages CDN - all from your iPad!</p>
@@ -189,7 +189,7 @@ auto deploy changes to its GitHub Pages CDN - all from your iPad!</p>
 from just a browser using Codespaces, that auto publishes changes to your GitHub Repo's <strong>gh-pages</strong> branch where it's hosted for
 free on GitHub Pages CDN:</p>
 <iframe class="youtube" src="https://www.youtube.com/embed/MRQMBrXi5Sc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
-<h3 id="enhance-with-simple-modern-javascript">Enhance with simple, modern JavaScript</h3>
+<h3 id="enhance-with-simple-modern-javascript">Enhance with simple, modern JavaScript<a class="header-anchor" href="javascript:;" onclick="location.hash='#enhance-with-simple-modern-javascript'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>For enhanced interactivity, static markdown content can be <a href="/posts/javascript">progressively enhanced</a> with Vue 3 components,
 as done in this example that embed's the
 <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/mjs/components/GettingStarted.mjs">GettingStarted.mjs</a>
@@ -198,16 +198,16 @@ Vue Component to create new Razor SSG App's below with:</p>
 </code></pre>
 <div class="py-8 not-prose text-base flex justify-center" data-component="GettingStarted" data-props="{template:'razor-ssg'}"></div>
 <p>Although with full control over the websites <code>_Layout.cshtml</code>, you're free to use any preferred JS Module or Web Component you prefer.</p>
-<h2 id="razor-pages">Razor Pages</h2>
+<h2 id="razor-pages">Razor Pages<a class="header-anchor" href="javascript:;" onclick="location.hash='#razor-pages'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Your website can be built using either Markdown <code>.md</code> or Razor <code>.cshtml</code> pages, although it's generally recommended to
 use Markdown to capture the static content for your website for improved productivity and ease of maintenance.</p>
-<h3 id="content-in-markdown-functionality-in-razor-pages">Content in Markdown, Functionality in Razor Pages</h3>
+<h3 id="content-in-markdown-functionality-in-razor-pages">Content in Markdown, Functionality in Razor Pages<a class="header-anchor" href="javascript:;" onclick="location.hash='#content-in-markdown-functionality-in-razor-pages'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The basic premise behind most built-in features is to capture static content in markdown using a combination of
 folder structure &amp; file name conventions in addition to each markdown page's frontmatter &amp; content. This information
 is then used to power each feature using Razor pages for precise layout and functionality.</p>
 <p>The template includes the source code for each website feature, enabling full customization that also serves as good examples
 for how to implement your own custom markdown-powered website features.</p>
-<h3 id="markdown-feature-structure">Markdown Feature Structure</h3>
+<h3 id="markdown-feature-structure">Markdown Feature Structure<a class="header-anchor" href="javascript:;" onclick="location.hash='#markdown-feature-structure'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>All markdown features are effectively implemented in the same way, starting with a <strong>_folder</strong> for maintaining its static markdown
 content, a <strong>.cs</strong> class to load the markdown and a <strong>.cshtml</strong> Razor Page to render it:</p>
 <table>
@@ -237,10 +237,10 @@ content, a <strong>.cs</strong> class to load the markdown and a <strong>.cshtml
 </tbody>
 </table>
 <p>Lets see what this looks like in practice by walking through the &quot;Pages&quot; feature:</p>
-<h2 id="pages-feature">Pages Feature</h2>
+<h2 id="pages-feature">Pages Feature<a class="header-anchor" href="javascript:;" onclick="location.hash='#pages-feature'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>The pages feature simply makes all pages in the <strong>_pages</strong> folder, available from <code>/{filename}</code>.</p>
 <p>Where the included pages:</p>
-<h3 id="pages"><a href="https://github.com/NetCoreTemplates/razor-ssg/tree/main/MyApp/_pages">/_pages</a></h3>
+<h3 id="pages"><a href="https://github.com/NetCoreTemplates/razor-ssg/tree/main/MyApp/_pages">/_pages</a><a class="header-anchor" href="javascript:;" onclick="location.hash='#pages'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <ul>
 <li>privacy.md</li>
 <li>speaking.md</li>
@@ -252,7 +252,7 @@ content, a <strong>.cs</strong> class to load the markdown and a <strong>.cshtml
 <li><a href="/speaking">/speaking</a></li>
 <li><a href="/uses">/uses</a></li>
 </ul>
-<h3 id="loading-pages-markdown">Loading Pages Markdown</h3>
+<h3 id="loading-pages-markdown">Loading Pages Markdown<a class="header-anchor" href="javascript:;" onclick="location.hash='#loading-pages-markdown'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The code that loads the Pages feature markdown content is in <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Markdown.Pages.cs">Markdown.Pages.cs</a>:</p>
 <pre><code class="language-csharp">public class MarkdownPages : MarkdownPagesBase&lt;MarkdownFileInfo&gt;
 {
@@ -289,7 +289,7 @@ content, a <strong>.cs</strong> class to load the markdown and a <strong>.cshtml
 <p>Which ultimately just loads Markdown files using the configured <a href="https://github.com/xoofx/markdig">Markdig</a> pipeline in its <code>Pages</code>
 collection which is made available via its <code>VisiblePages</code> property which returns all documents in development whilst hiding
 <strong>Draft</strong> and content published at a <strong>Future Date</strong> from production builds.</p>
-<h3 id="rendering-markdown-pages">Rendering Markdown Pages</h3>
+<h3 id="rendering-markdown-pages">Rendering Markdown Pages<a class="header-anchor" href="javascript:;" onclick="location.hash='#rendering-markdown-pages'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The pages are then rendered in <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Page.cshtml">Page.cshtml</a> Razor Page
 that's available from <code>/{slug}</code></p>
 <pre><code class="language-csharp">@page &quot;/{slug}&quot;
@@ -338,11 +338,11 @@ layout: _LayoutContent
 </code></pre>
 <p>To render the page using <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Shared/_LayoutContent.cshtml">_LayoutContent.cshtml</a>
 visible by the background backdrop in its <a href="/speaking">/speaking</a> page.</p>
-<h2 id="whats-new-feature">What's New Feature</h2>
+<h2 id="whats-new-feature">What's New Feature<a class="header-anchor" href="javascript:;" onclick="location.hash='#whats-new-feature'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>The <a href="/whatsnew">/whatsnew</a> page is an example of creating a custom Markdown feature to implement a portfolio or a product releases page
 where a new folder is created per release, containing both release date and release or project name, with all features in that release
 maintained markdown content sorted in alphabetical order:</p>
-<h3 id="whatsnew"><a href="https://github.com/NetCoreTemplates/razor-ssg/tree/main/MyApp/_whatsnew">/_whatsnew</a></h3>
+<h3 id="whatsnew"><a href="https://github.com/NetCoreTemplates/razor-ssg/tree/main/MyApp/_whatsnew">/_whatsnew</a><a class="header-anchor" href="javascript:;" onclick="location.hash='#whatsnew'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <ul>
 <li><strong>/2023-03-08_Animaginary</strong>
 <ul>
@@ -368,10 +368,10 @@ maintained markdown content sorted in alphabetical order:</p>
 <ul>
 <li><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/WhatsNew.cshtml">WhatsNew.cshtml</a></li>
 </ul>
-<h2 id="blog-feature">Blog Feature</h2>
+<h2 id="blog-feature">Blog Feature<a class="header-anchor" href="javascript:;" onclick="location.hash='#blog-feature'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>The blog maintains its markdown posts in a flat folder which each Markdown post containing its publish date and URL slug it
 should be published under:</p>
-<h3 id="posts"><a href="https://github.com/NetCoreTemplates/razor-ssg/tree/main/MyApp/_posts">/_posts</a></h3>
+<h3 id="posts"><a href="https://github.com/NetCoreTemplates/razor-ssg/tree/main/MyApp/_posts">/_posts</a><a class="header-anchor" href="javascript:;" onclick="location.hash='#posts'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <ul>
 <li>...</li>
 <li>2023-01-21_start.md</li>
@@ -421,7 +421,7 @@ to load its Markdown posts that is rendered in several different Razor Pages for
 </tr>
 </tbody>
 </table>
-<h3 id="general-features">General Features</h3>
+<h3 id="general-features">General Features<a class="header-anchor" href="javascript:;" onclick="location.hash='#general-features'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Most unique markdown features are captured in their Markdown's frontmatter metadata, but in general these features
 are broadly available for all features:</p>
 <ul>
@@ -430,7 +430,7 @@ are broadly available for all features:</p>
 <li><strong>Drafts</strong> - Prevent posts being worked on from being published with <code>draft: true</code></li>
 <li><strong>Future Dates</strong> - Posts with a future date wont be published until that date</li>
 </ul>
-<h3 id="initializing-and-loading-markdown-features">Initializing and Loading Markdown Features</h3>
+<h3 id="initializing-and-loading-markdown-features">Initializing and Loading Markdown Features<a class="header-anchor" href="javascript:;" onclick="location.hash='#initializing-and-loading-markdown-features'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>All markdown features are initialized in the same way in <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Configure.Ssg.cs">Configure.Ssg.cs</a>
 where they're registered in ASP.NET Core's IOC and initialized after the App's plugins are loaded
 by injecting with the App's <a href="https://docs.servicestack.net/virtual-file-system">Virtual Files provider</a>
@@ -466,7 +466,7 @@ before using it to read from the directory where the markdown content for each f
 }
 </code></pre>
 <p>These dependencies are then injected in the feature's Razor Pages to query and render the loaded markdown content.</p>
-<h3 id="custom-frontmatter">Custom Frontmatter</h3>
+<h3 id="custom-frontmatter">Custom Frontmatter<a class="header-anchor" href="javascript:;" onclick="location.hash='#custom-frontmatter'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>You can extend the <code>MarkdownFileInfo</code> type used to maintain the markdown content and metadata of each loaded Markdown file
 by adding any additional metadata you want included as C# properties on:</p>
 <pre><code class="language-csharp">// Add additional frontmatter info to include
@@ -477,7 +477,7 @@ public class MarkdownFileInfo : MarkdownFileBase
 <p>Any additional properties are automatically populated using ServiceStack's
 <a href="https://docs.servicestack.net/auto-mapping">built-in Automapping</a> which includes rich support for converting string frontmatter
 values into native .NET types.</p>
-<h3 id="updating-to-latest-versions">Updating to latest versions</h3>
+<h3 id="updating-to-latest-versions">Updating to latest versions<a class="header-anchor" href="javascript:;" onclick="location.hash='#updating-to-latest-versions'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>You can easily update all the JavaScript dependencies used in
 <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/postinstall.js">postinstall.js</a> by running:</p>
 <div class="not-prose text-base" data-component="ShellCommand" data-props="{ text: 'node postinstall.js' }"></div>
@@ -491,7 +491,7 @@ NuGet package to enable full customization, easier debugging whilst supporting e
     'MarkdownPagesBase.cs',
 ]
 </code></pre>
-<h3 id="markdown-tag-helper">Markdown Tag Helper</h3>
+<h3 id="markdown-tag-helper">Markdown Tag Helper<a class="header-anchor" href="javascript:;" onclick="location.hash='#markdown-tag-helper'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The included <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/MarkdownTagHelper.cs">MarkdownTagHelper.cs</a> can be used
 in hybrid Razor Pages like <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/About.cshtml">About.cshtml</a>
 to render the <a href="/about">/about</a> page which requires the flexibility of Razor Pages with a static content component which you
@@ -503,7 +503,7 @@ styles by including <strong>typography.css</strong> and annotating it with your 
   Markdown content...
 &lt;/markdown&gt;
 </code></pre>
-<h2 id="static-static-generation-ssg">Static Static Generation (SSG)</h2>
+<h2 id="static-static-generation-ssg">Static Static Generation (SSG)<a class="header-anchor" href="javascript:;" onclick="location.hash='#static-static-generation-ssg'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>All features up till now describes how this template implements a Markdown powered Razor Pages .NET application, where this template
 differs in its published output, where instead of a .NET App deployed to a VM or App server it generates static <code>*.html</code> files that's
 bundled together with <code>/wwwroot</code> static assets in the <code>/dist</code> folder that can be previewed by launching a HTTP Server from that
@@ -511,9 +511,9 @@ folder with the built-in npm script:</p>
 <div class="not-prose text-base" data-component="ShellCommand" data-props="{ text: 'npm run serve' }"></div>
 <p>That runs <strong>npx http-server</strong> on <code>http://localhost:8080</code> that you can open in a browser to preview the published version of your
 site as it would be when hosted on a CDN.</p>
-<h3 id="static-razor-pages">Static Razor Pages</h3>
+<h3 id="static-razor-pages">Static Razor Pages<a class="header-anchor" href="javascript:;" onclick="location.hash='#static-razor-pages'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The static generation functionality works by scanning all your Razor Pages and prerendering the pages with prerendering instructions.</p>
-<h3 id="pages-with-static-routes">Pages with Static Routes</h3>
+<h3 id="pages-with-static-routes">Pages with Static Routes<a class="header-anchor" href="javascript:;" onclick="location.hash='#pages-with-static-routes'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Pages with static routes can be marked to be prerendered by annotating it with the <code>[RenderStatic]</code> attribute as done in
 <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/About.cshtml">About.cshtml</a>:</p>
 <pre><code class="language-csharp">@page &quot;/about&quot;
@@ -524,13 +524,13 @@ routes with a trailing <code>/</code> are saved to <code>/{@page route}/index.ht
 <pre><code class="language-csharp">@page &quot;/posts/&quot;
 @attribute [RenderStatic]
 </code></pre>
-<h4 id="explicit-generated-paths">Explicit generated paths</h4>
+<h4 id="explicit-generated-paths">Explicit generated paths<a class="header-anchor" href="javascript:;" onclick="location.hash='#explicit-generated-paths'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>To keep the generated pages in-sync with using the same routes as your Razor Pages in development it's recommended to use the implied
 rendered paths, but if preferred you can specify which path the page should be rendered to instead with:</p>
 <pre><code class="language-csharp">@page &quot;/posts/&quot;
 @attribute [RenderStatic(&quot;/posts/index.html&quot;)]
 </code></pre>
-<h3 id="pages-with-dynamic-routes">Pages with Dynamic Routes</h3>
+<h3 id="pages-with-dynamic-routes">Pages with Dynamic Routes<a class="header-anchor" href="javascript:;" onclick="location.hash='#pages-with-dynamic-routes'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Prerendering dynamic pages follows <a href="https://nextjs.org/docs/basic-features/data-fetching/get-static-props">Next.js getStaticProps</a>
 convention which you can implement using <code>IRenderStatic&lt;PageModel&gt;</code> by returning a Page Model for each page that should be generated
 as done in <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Posts/Post.cshtml">Posts/Post.cshtml</a> and
@@ -555,14 +555,14 @@ as done in <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyAp
 <li><code>/speaking.html</code></li>
 <li><code>/uses.html</code></li>
 </ul>
-<h3 id="limitations">Limitations</h3>
+<h3 id="limitations">Limitations<a class="header-anchor" href="javascript:;" onclick="location.hash='#limitations'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The primary limitations for developing statically generated Apps is that a <strong>snapshot</strong> of entire App is generated at deployment,
 which prohibits being able to render different content <strong>per request</strong>, e.g. for Authenticated users which would require executing
 custom JavaScript after the page loads to dynamically alter the page's initial content.</p>
 <p>Otherwise in practice you'll be able develop your Razor Pages utilizing Razor's full feature-set, the primary concessions stem
 from Pages being executed in a static context which prohibits pages from returning dynamic content per request, instead any
 &quot;different views&quot; should be maintained in separate pages.</p>
-<h4 id="no-querystring-params">No QueryString Params</h4>
+<h4 id="no-querystring-params">No QueryString Params<a class="header-anchor" href="javascript:;" onclick="location.hash='#no-querystring-params'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>As the generated pages should adopt the same routes as your Razor Pages you'll need to avoid relying on <strong>?QueryString</strong> params
 and instead capture all required parameters for a page in its <strong>@page route</strong> as done for:</p>
 <p><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Posts/Author.cshtml">Posts/Author.cshtml</a></p>
@@ -608,7 +608,7 @@ and instead capture all required parameters for a page in its <strong>@page rout
 <p>Which lists all posts published in a specific year, e.g: <a href="/posts/year/2023">/posts/year/2023</a>.</p>
 <p>Conceivably these &quot;different views&quot; could've been implemented by the same page with different <code>?author</code>, <code>?tag</code> and <code>?year</code>
 QueryString params, but are instead extracted into different pages to support its statically generated <code>*.html</code> outputs.</p>
-<h2 id="prerendering-task">Prerendering Task</h2>
+<h2 id="prerendering-task">Prerendering Task<a class="header-anchor" href="javascript:;" onclick="location.hash='#prerendering-task'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>The <strong>prerender</strong> <a href="https://docs.servicestack.net/app-tasks">AppTask</a> that pre-renders the entire website is also registered in
 <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Configure.Ssg.cs">Configure.Ssg.cs</a>:</p>
 <pre><code class="language-csharp">  .ConfigureAppHost(afterAppHostInit: appHost =&gt;
@@ -636,13 +636,13 @@ QueryString params, but are instead extracted into different pages to support it
 </ol>
 <p>Where it processes all pages with <code>[RenderStatic]</code> and <code>IRenderStatic&lt;PageModel&gt;</code> prerendering instructions to the
 specified <code>/dist</code> folder.</p>
-<h3 id="previewing-prerendered-site">Previewing prerendered site</h3>
+<h3 id="previewing-prerendered-site">Previewing prerendered site<a class="header-anchor" href="javascript:;" onclick="location.hash='#previewing-prerendered-site'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>To preview your SSG website, run the prerendered task with:</p>
 <div class="not-prose text-base" data-component="ShellCommand" data-props="{ text: 'npm run prerender' }"></div>
 <p>Which renders your site to <code>/_dist</code> which you can run a HTTP Server from with:</p>
 <div class="not-prose text-base" data-component="ShellCommand" data-props="{ text: 'npm run serve' }"></div>
 <p>That you can preview with your browser at <code>http://localhost:8080</code>.</p>
-<h3 id="publishing">Publishing</h3>
+<h3 id="publishing">Publishing<a class="header-anchor" href="javascript:;" onclick="location.hash='#publishing'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The included <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/.github/workflows/build.yml">build.yml</a> GitHub Action
 takes care of running the prerendered task and deploying it to your Repo's GitHub Pages where it will be available at:</p>
 <pre><code>https://$org_name.github.io/$repo/
@@ -673,7 +673,7 @@ by registering a CNAME DNS entry for your preferred Custom Domain, e.g:</p>
 or if you prefer to maintain it with your code-base, save the domain name to <code>/wwwroot/CNAME</code>, e.g:</p>
 <pre><code>www.mydomain.org
 </code></pre>
-<h3 id="benefits-after-migrating-from-jekyll">Benefits after migrating from Jekyll</h3>
+<h3 id="benefits-after-migrating-from-jekyll">Benefits after migrating from Jekyll<a class="header-anchor" href="javascript:;" onclick="location.hash='#benefits-after-migrating-from-jekyll'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Whilst still only at <strong>v1</strong> release, we found it already had a number of advantages over the existing Jekyll static website:</p>
 <ul>
 <li>Faster live reloads</li>
@@ -686,7 +686,7 @@ or if you prefer to maintain it with your code-base, save the domain name to <co
 <p>The last point ultimately prompted seeking an alternative solution as previously Jekyll was used from Windows/WSL which
 was awkward to manage from a different filesystem with Jekyll upgrades breaking RubyMine support forcing the use of
 text editors to maintain its code-base and content.</p>
-<h3 id="used-by-the-new-servicestack.net">Used by the new <a href="https://servicestack.net">servicestack.net</a></h3>
+<h3 id="used-by-the-new-servicestack.net">Used by the new <a href="https://servicestack.net">servicestack.net</a><a class="header-anchor" href="javascript:;" onclick="location.hash='#used-by-the-new-servicestack.net'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Deterred by the growing complexity of current SSG solutions, we decided to create a new solution using C#/Razor
 (our preferred technology for generating server HTML) with a clean implementation that allowed full control
 with an <strong>npm dependency-free</strong> solution letting us adopt our preferred approach to
@@ -698,7 +698,7 @@ with an <strong>npm dependency-free</strong> solution letting us adopt our prefe
 <li><a href="https://github.com/servicestack/servicestack.net">https://github.com/servicestack/servicestack.net</a></li>
 </ul>
 <p>Which serves as a good example at how well this template scales for larger websites.</p>
-<h4 id="markdown-videos-feature">Markdown Videos Feature</h4>
+<h4 id="markdown-videos-feature">Markdown Videos Feature<a class="header-anchor" href="javascript:;" onclick="location.hash='#markdown-videos-feature'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>It only needed one new Markdown feature to display our growing video library:</p>
 <ul>
 <li><a href="https://github.com/ServiceStack/servicestack.net/tree/main/MyApp/_videos">/_videos</a> - Directory of Markdown Video collections</li>
@@ -706,11 +706,11 @@ with an <strong>npm dependency-free</strong> solution letting us adopt our prefe
 <li><a href="https://github.com/ServiceStack/servicestack.net/blob/main/MyApp/Pages/Shared/VideoGroup.cshtml">Shared/VideoGroup.cshtml</a> - Razor Page for displaying Video Collection</li>
 </ul>
 <p>Which you're free to reuse in your own websites needing a similar feature.</p>
-<h4 id="feedback-feature-requests-welcome">Feedback &amp; Feature Requests Welcome</h4>
+<h4 id="feedback-feature-requests-welcome">Feedback &amp; Feature Requests Welcome<a class="header-anchor" href="javascript:;" onclick="location.hash='#feedback-feature-requests-welcome'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>In future we'll look at expanding this template with generic Markdown features suitable for websites, blogs &amp; portfolios,
 or maintain a shared community collection if there ends up being community contributions of Razor SSG &amp; Markdown features.</p>
 <p>In the meantime, we welcome any feedback or new feature requests at:</p>
-<h3 id="httpsservicestack.netideas"><a href="https://servicestack.net/ideas">https://servicestack.net/ideas</a></h3>
+<h3 id="httpsservicestack.netideas"><a href="https://servicestack.net/ideas">https://servicestack.net/ideas</a><a class="header-anchor" href="javascript:;" onclick="location.hash='#httpsservicestack.netideas'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 
                 </div>
             </div>

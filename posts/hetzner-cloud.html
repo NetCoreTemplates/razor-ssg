@@ -148,7 +148,7 @@ mountAll()
                     <p>At <a href="./">ServiceStack</a>, we have been using AWS for hosting for over 10 years. It has served us well, but it suffers from complex pricing and possibility of bill shock due to its fractured pay-as-you-go design.</p>
 <p>Thankfully, more and more companies are providing simpler offerings for hosting needs, and AWS themselves launched <a href="https://aws.amazon.com/lightsail">Lightsail</a> as their answer to market demands for simple hosting options that package everything you need for basic hosting.</p>
 <p>These simpler hosting options tend to bundle several things together as one fixed monthly price. A VM with a specific compute and memory allocation, as well as data transfer, and storage.</p>
-<h2 id="looking-at-different-us-offerings">Looking at different US offerings</h2>
+<h2 id="looking-at-different-us-offerings">Looking at different US offerings<a class="header-anchor" href="javascript:;" onclick="location.hash='#looking-at-different-us-offerings'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Something we wanted to do was to host our <a href="https://github.com/ServiceStackApps/LiveDemos">live demo applications</a> on a US based host. We were using <a href="https://www.hetzner.com/dedicated-rootserver">Hetzner dedicated servers</a> in the past for non-latency sensitive use cases like our build server and <a href="https://gist.cafe">Gist.Cafe (our interactive playground for multiple platforms)</a> but we also wanted our demo applications to be snappy for US users.</p>
 <p><a href="https://www.digitalocean.com/pricing">DigitalOcean</a> provides <a href="https://www.digitalocean.com/pricing/droplets">&quot;Droplets&quot;</a> with this fixed pricing model with a nice and simple interface. Their pricing was quite good and we realized we could run all 20+ of our demo applications on a single droplet for $40/month.</p>
 <p>For deployment, <a href="https://docs.servicestack.net/do-github-action-mix-deployment">we also like to keep things as simple as we can, whilst keeping portability</a>. Since all our projects are public and on GitHub, we use <a href="https://docs.servicestack.net/do-github-action-mix-deployment#github-repository-setup">GitHub Actions</a> heavily along with a pattern that deploys our applications using Docker Compose via SSH.
@@ -156,13 +156,13 @@ Each application runs in its own container behind an <a href="https://docs.servi
 <iframe class="youtube" src="https://www.youtube.com/embed/fY50dWszpw4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 <p>A nice side effect of this approach is moving servers is relatively painless. We change the DNS entry for the application to point to our new server, update the GitHub Action Secrets if needed and run our Release workflow.</p>
 <p>A minute or so later, the application is back running again. Since their were 20+ of these repositories we took advantage of the <a href="https://cli.github.com/manual/gh_secret_set">GitHub Organization Secrets</a> so we only needed to update values in one place, and <a href="https://cli.github.com/manual/gh_workflow_run">running the workflows again</a> can also be done programmatically through the GitHub CLI.</p>
-<h2 id="digitalocean-price-increase">DigitalOcean Price Increase</h2>
+<h2 id="digitalocean-price-increase">DigitalOcean Price Increase<a class="header-anchor" href="javascript:;" onclick="location.hash='#digitalocean-price-increase'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>In June of 2022, we got a notification that <a href="https://www.digitalocean.com/try/new-pricing">prices for droplets would be increasing</a>, and for our droplet it would be going from <strong>$40 to $48</strong>. While this is a small amount of money, it prompted us to have a wider look into this market.</p>
 <p>Something we try to do at ServiceStack is to not only provide a comprehensive .NET Framework for building API first systems, but also seek out great value hosting options we can recommend in this ever change space which we're happy to share, like this blog post, that might be useful to our users and others.</p>
 <p>Not everyone builds massively distributed systems, and as hardware performance increases, and platforms like <a href="https://devblogs.microsoft.com/dotnet/performance-improvements-in-aspnet-core-6">.NET are becoming even more optimized</a>, a setup with just a server or two can manage larger loads and use cases.</p>
 <p>Our research and evaluations ended up right back at <a href="https://www.hetzner.com/cloud">Hetzner but this time with their Cloud offering</a>. For less than <strong>$15 USD</strong> per month, you can get a <strong>4 vCPU, 8GB RAM, 160GB storage and 20TB</strong> of data transfer <strong>hosted in the US</strong>.</p>
 <p>We found this was by far the cheapest offering for a simple fixed monthly hosting, and looked to compare how well it performed against the more traditional cloud hosting setups.</p>
-<h2 id="litestream-and-sqlite">Litestream and SQLite</h2>
+<h2 id="litestream-and-sqlite">Litestream and SQLite<a class="header-anchor" href="javascript:;" onclick="location.hash='#litestream-and-sqlite'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Our demo applications use <a href="https://www.sqlite.org">SQLite</a> as a simple way to host the database storage and application together, taking advantage of SQLite's embedded nature.
 We were also testing out <a href="https://litestream.io">Litestream</a> as a possible solution to the lack of data backups and safety when using SQLite for more production like workloads.</p>
 <div class="mx-auto mt-4 mb-4">
@@ -181,7 +181,7 @@ The reason we chose to use the suggested defaults from these providers was to il
 <p>One of the main reasons managed database solutions are chosen is the fact that they take care of automated backups and restore if things go wrong. There are other nice features that definitely have a lot of value, but managed disaster recovery is probably the most commonly cited one I've come across for why services like RDS are chosen during early development.</p>
 <p>Litestream provides this kind of data safety and disaster recovery functionality by targeting cost effective and robust storage solutions like AWS S3 and other cloud provided object stores, and making the backup process close to real-time, and accessible via their CLI.
 And the embedded nature of SQLite removes the uncertainty of the process of upgrading your database.</p>
-<h2 id="the-test">The Test</h2>
+<h2 id="the-test">The Test<a class="header-anchor" href="javascript:;" onclick="location.hash='#the-test'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>To get a clearer idea how each of these hosting options perform with a fairly modest workload, we used a <a href="https://gatling.io">Gatling</a> test to simulate a user logging into our sample Bookings application, browsing around and creating a booking.</p>
 <p>These series of steps had 2 write requests and 8 read, separated by 2 seconds per step. We then setup a Gatling simulation that ramped up adding new users to our system from 5 per second to 15 per second, to add a growing number of users over 10 minutes, then sustained over another 10 minutes.</p>
 <div class="mx-auto mt-4 mb-4">
@@ -211,7 +211,7 @@ The requests throughput of that this test illustrated ~100rps can suit many many
 <div class="text-gray-500 text-center">Previous test result price comparison without AWS using Provisioned IOPS.</div>
 </div>
 <p>This level of throughput is enough to service many kinds of businesses with a drastically more simple system to manage, with large cost savings. Also, with the use of an ORM like <a href="https://docs.servicestack.net/ormlite">OrmLite</a>, switching to another database provider can be migrated if and when the traditional offerings like Postgres are needed.</p>
-<h2 id="the-setups">The Setups</h2>
+<h2 id="the-setups">The Setups<a class="header-anchor" href="javascript:;" onclick="location.hash='#the-setups'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <style>
     table {
         width: 100%;
@@ -308,7 +308,7 @@ The requests throughput of that this test illustrated ~100rps can suit many many
 </tbody>
 </table>
 <p>This is without any tuning on any of the databases, so while you like more performance out of the recommended setups, it is still clear SQLite performs well by default, and it is well worth considering not only Hetzner Cloud for value for money, but if your use can only needs a single host with SQLite.</p>
-<h2 id="hetzner-cloud">Hetzner Cloud</h2>
+<h2 id="hetzner-cloud">Hetzner Cloud<a class="header-anchor" href="javascript:;" onclick="location.hash='#hetzner-cloud'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>While we were primarily looking for one of the lowest cost options with simplified pricing, Hetzner Cloud pleasantly surprised us with a few features the larger providers could learn from.</p>
 <div class="mx-auto mt-4 mb-4">
     <div class="inline-flex justify-center w-full">
@@ -316,10 +316,10 @@ The requests throughput of that this test illustrated ~100rps can suit many many
     </div>
 <div class="text-gray-500 text-center">Hetzner Cloud Pricing.</div>
 </div>
-<h3 id="creating-a-new-instance-is-fast">Creating a new instance is fast</h3>
+<h3 id="creating-a-new-instance-is-fast">Creating a new instance is fast<a class="header-anchor" href="javascript:;" onclick="location.hash='#creating-a-new-instance-is-fast'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Most of the time if will be ready to remote to before you can open your terminal. Not sure if this is due to some kind of pre-creation process on Hetzner part during the creation screen, but everything is very responsive.
 In my testing from the time the &quot;Create&quot; button was clicked, my SSH commands would succeed within <strong>20 seconds</strong>.</p>
-<h3 id="live-graphs">Live Graphs</h3>
+<h3 id="live-graphs">Live Graphs<a class="header-anchor" href="javascript:;" onclick="location.hash='#live-graphs'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Another part of the responsiveness is their &quot;Live&quot; graphs for monitoring. It is surprisingly low latency and an extremely stark difference between AWS charging extra for &quot;Detailed&quot; monitoring on EC2 instances. The graphs update every 3-5 seconds in the browser and look to be over a few seconds behind real-time.</p>
 <div class="mx-auto mt-4 mb-4">
     <div class="inline-flex justify-center w-full">
@@ -328,13 +328,13 @@ In my testing from the time the &quot;Create&quot; button was clicked, my SSH co
 <div class="text-gray-500 text-center">Live monitoring updates every 3-5 seconds.</div>
 </div>
 <p>CloudWatch is a major value add for AWS, and Hetzner's offering is very very basic in comparison, but it is nice to see live updating stats right in your web browser, and something hopefully the other providers can also offer in the future.</p>
-<h3 id="price">Price</h3>
+<h3 id="price">Price<a class="header-anchor" href="javascript:;" onclick="location.hash='#price'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>This is the biggest draw card by a long way. The AWS and Azure &quot;recommended&quot; setups are extremely expensive for the hardware and performance they offer. Yes they are mature cloud offerings with a large array of features, but their <strong>pricing scales with hardware resources</strong>.
 Products like <strong>Provisioned IOPs</strong> are extremely expensive, and when other cloud providers are offering far more performant and competitive storage with their instances, it can feel like AWS is using it's market share and their defaults to upsell very expensive products.</p>
-<h3 id="transfer-costs">Transfer costs</h3>
+<h3 id="transfer-costs">Transfer costs<a class="header-anchor" href="javascript:;" onclick="location.hash='#transfer-costs'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>It's been long known that one of the ways large cloud providers keep customers in their network is by charging <a href="https://aws.amazon.com/blogs/architecture/overview-of-data-transfer-costs-for-common-architectures">excessively large and complex data egress costs</a>. Something attractive about simplified pricing from Hetzner Cloud (and DigitalOcean to a lesser degree) is the included data transfer of 20TB a month.</p>
 <p>Not only is AWS data transfer pricing extremely complicated (inter region vs cross region vs CloudFront vs Transit Gateway and so on), but if your application was sending a lot of data to clients, that same <strong>20TB</strong> you get for free with a <strong>$15 server</strong>, would cost <strong>$1,791 just for data</strong> when coming from AWS. Azure pricing also confusing, and in some ways more expensive.</p>
-<h2 id="defaults-are-powerful">Defaults are powerful</h2>
+<h2 id="defaults-are-powerful">Defaults are powerful<a class="header-anchor" href="javascript:;" onclick="location.hash='#defaults-are-powerful'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Both AWS and Azure &quot;recommended&quot; defaults are there not because the software selected (SQL Server and Postgres) need that amount of resources just to operate, but more as an upsell.
 Lots of projects and applications absolutely do not need features like &quot;Provisioned IOPs&quot;, despite GP2 storage of AWS being incredibly slow.</p>
 <p>Performing disk speed check using the Linux utility <code>fio</code> an AWS EC2 instance with 100GB GP2 storage can do ~2250 IOPS and 9MB/s read, and ~750 IOPs at 3MB/s write.
@@ -385,12 +385,12 @@ In contrast, Digital Ocean $48 instance, this is not even paying the extra $8/mo
 <pre><code class="language-shell">fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test \
 --filename=test --bs=4k --iodepth=64 --size=4G --readwrite=randrw --rwmixread=75
 </code></pre>
-<h2 id="sqlite">SQLite</h2>
+<h2 id="sqlite">SQLite<a class="header-anchor" href="javascript:;" onclick="location.hash='#sqlite'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Part of the resurgence in popularity of using SQLite is not only the simplicity of a single server, but also as hardware is getting faster, issues surrounding limitations of a single writer are becoming less of an issue for a wider number of use cases.</p>
 <p>Litestream's elegant solution for streaming backups to cheap replica storage is definitely adding to that popularity as well since it was a sticking point for a lot of use cases that need that simple data redundancy functionality.</p>
 <p>Other solutions for Postgres like <code>pgbackrest</code> are similar, but the ease of use is another big part of what makes SQLite and Litestream a great combination.
 One command to watch and replicate, another to restore, and it runs completely independent of your application using the SQLite file.</p>
-<h2 id="hetzner-cloud-is-hard-to-beat-on-price">Hetzner Cloud is hard to beat on price</h2>
+<h2 id="hetzner-cloud-is-hard-to-beat-on-price">Hetzner Cloud is hard to beat on price<a class="header-anchor" href="javascript:;" onclick="location.hash='#hetzner-cloud-is-hard-to-beat-on-price'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>We're going to keep testing Hetzner Cloud with new applications and use cases going into the future. While they are a very new player in the crowded Cloud Provider market, and their offerings are much more limited, the pricing is a breath of fresh air from the large three providers.</p>
 <p>More competition in this space is a great thing, and for those that can use solutions like SQLite for their projects, checking out some of the smaller players like DigitalOcean and Hetzner Cloud is well worth your time.
 The early signs from Hetzner Cloud is they not only have an amazing value product, but the features they do have improve on the equivalents from likes of AWS and Azure, which is hopefully a sign of things to come from them.</p>

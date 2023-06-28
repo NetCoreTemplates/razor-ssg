@@ -170,7 +170,7 @@ tbody tr:nth-child(odd) {
     <img style="max-height:150px" src="./img/posts/jekyll-to-vitepress/vuepress.png" alt="VitePress logo">
 </div>
 <p>We wanted to share our experience with this process in the hope it might help others that are performing the same migration, document common errors and help other developer to get an idea about what is involved before you might undertake such a task.</p>
-<h2 id="jekyll-vs-vitepress">Jekyll vs VitePress</h2>
+<h2 id="jekyll-vs-vitepress">Jekyll vs VitePress<a class="header-anchor" href="javascript:;" onclick="location.hash='#jekyll-vs-vitepress'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Below is not an exhaustive list of features but more focusing on pros and cons when it comes to comparing these two options for use as the static site generator for a documentation site.</p>
 <table>
 <thead>
@@ -254,7 +254,7 @@ tbody tr:nth-child(odd) {
 </tbody>
 </table>
 <p>This list might look bad for VitePress, but it comes down to a young library that is still in active development. The default theme for VitePress is also centered around technical documentation making it quick to get up and running looking good for this use case.</p>
-<h2 id="killer-feature-performance">Killer feature - Performance</h2>
+<h2 id="killer-feature-performance">Killer feature - Performance<a class="header-anchor" href="javascript:;" onclick="location.hash='#killer-feature-performance'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>The stand out feature and one of the most compelling reason for us to undertake this migration was not the default theme (although that helped) but the user experience when editing documentation locally.</p>
 <p><img src="img/posts/jekyll-to-vitepress/vitepress-update-large.gif" alt="" /></p>
 <p>In contrast, editing this blog post for our main site which is still currently using Jekyll, it takes between 6-8 seconds for a small single page change. Previously our docs page with over 300 pages could take over a minute depending on the type of change.</p>
@@ -263,7 +263,7 @@ tbody tr:nth-child(odd) {
                     ...done in 6.3882767 seconds.
 </code></pre>
 <p>Having a statically generated site that is hard to preview or has a slow iteration cycle can be extremely frustrating to work with so we were looking for something that a pleasure to work with and well suited to documentation.</p>
-<h2 id="common-migration-problems">Common Migration Problems</h2>
+<h2 id="common-migration-problems">Common Migration Problems<a class="header-anchor" href="javascript:;" onclick="location.hash='#common-migration-problems'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>When we started this task to migrate, we want to first have a proof of concept of migrating all the content to the same URLs.
 This required us to achieve a few things before we could get stuck into fixing content/syntax related changes.</p>
 <ul>
@@ -272,7 +272,7 @@ This required us to achieve a few things before we could get stuck into fixing c
 <li>Side menu links must be present.</li>
 </ul>
 <p>These were our minimum requirements before we wanted to commit to making all the changes required to migrate.</p>
-<h2 id="file-name-vs-slug">File name vs <code>slug</code></h2>
+<h2 id="file-name-vs-slug">File name vs <code>slug</code><a class="header-anchor" href="javascript:;" onclick="location.hash='#file-name-vs-slug'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>The first one surfaced a design difference straight away. While Jekyll created HTML output based on frontmatter <code>slug</code> property, VitePress only works off the MarkDown file name.</p>
 <p>We would commonly create a MarkDown file called one thing but change our mind on the URL and change the frontmatter <code>permalink</code> to something else. This broke all our existing paths, so we needed a way to parse the markdown files, and produce copies with the updated name using the <code>slug</code> value in the frontmatter.</p>
 <p>Since we were still evaluating this process, we created a quick C# script that would take in a file, extract the <code>slug</code> value and copy a file with that name back out into a separate directory.</p>
@@ -302,16 +302,16 @@ This required us to achieve a few things before we could get stuck into fixing c
 <p>This was run in each directory as needed, if <code>slug</code> or <code>permalink</code> is controlling your nested pathing, this problem will be more complex to handle.</p>
 </blockquote>
 <p>This was run for our main folder of docs as well as our <code>releases</code> folder and we have successfully renamed files.</p>
-<h2 id="broken-links-are-build-failures">Broken links are build failures</h2>
+<h2 id="broken-links-are-build-failures">Broken links are build failures<a class="header-anchor" href="javascript:;" onclick="location.hash='#broken-links-are-build-failures'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>VitePress is more strict with issues than Jekyll. This is actually a good thing, especially as your site content grows. VitePress will fail building your site if in your markdown to link to a relative link that it can't see is a file.</p>
 <p>This comes from the above design decision of not aliasing files to output paths. Markdown links like <code>[My link](/my-cool-page)</code> needs to be able to see <code>my-cool-page.md</code>. This means if you move or rename a file, it will break if something else links to it. Jekyll got around this by allowing the use of <code>permalink</code> and <code>slug</code> which is great for flexibility, but means at build time it can't be sure (without a lot more work) if the relative path won't be valid.</p>
 <p>There are drawbacks to this though. If you host multiple resources under the same root path as your VitePress site and you want to reference this, I'm not sure you will be able to. You might have to resort to absolute URLs to link out to resources like this. And since VitePress doesn't alias any paths, it means your hosting environment will need to do this.</p>
-<h2 id="syntax-issues">Syntax issues</h2>
+<h2 id="syntax-issues">Syntax issues<a class="header-anchor" href="javascript:;" onclick="location.hash='#syntax-issues'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Jekyll is very forgiving when it comes to content that is passed around as straight html and put in various places using Liquid. For example if you have the following HTML in an <code>include</code> for Jekyll.</p>
 <pre><code class="language-html">&lt;p&gt;This solution is &lt;50 lines of code&lt;/p&gt;
 </code></pre>
 <p>Jekyll will just copy it and not bother you about the invalid HTML issues of having a <code>less-than (&lt;)</code> in the middle of a <code>&lt;p&gt;</code> element. VitePress won't however, and you'll need to correctly use <code>&amp;lt;</code> and <code>&amp;gt;</code> encoded symbols appropriately.</p>
-<h2 id="include-html">Include HTML</h2>
+<h2 id="include-html">Include HTML<a class="header-anchor" href="javascript:;" onclick="location.hash='#include-html'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Another issue is the difference of how to reuse content. In Jekyll, you would use <code>{% include my/path/to/file.html %}</code>. This will likely show up in errors like <code>[vite:vue] Duplicate attribute</code>.</p>
 <p>Instead in VitePress, an include of straight HTML will require migrating that content to a Vue component.</p>
 <p>For example, if we have content file <code>catchphrase.html</code> like the following.</p>
@@ -355,7 +355,7 @@ import catchphrase from './catchphrase.md';
 
 &lt;catchphrase /&gt;
 </code></pre>
-<h2 id="jekyll-markdownify-redundant">Jekyll markdownify redundant</h2>
+<h2 id="jekyll-markdownify-redundant">Jekyll markdownify redundant<a class="header-anchor" href="javascript:;" onclick="location.hash='#jekyll-markdownify-redundant'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Something similar is done in Jekyll, but with the use of Liquid filters.</p>
 <pre><code class="language-markdown">{% capture projects %}
 {% include web-new-netfx.md %}
@@ -370,7 +370,7 @@ import netfxtable from './.vitepress/includes/web-new-netfx.md';
 &lt;netfxtable /&gt;
 </code></pre>
 <p>If the module is declared global, then only the <code>&lt;netfxtable /&gt;</code> is needed anywhere in your site to embed the content.</p>
-<h2 id="templating-syntax-the-same-but-different">Templating syntax the same but different</h2>
+<h2 id="templating-syntax-the-same-but-different">Templating syntax the same but different<a class="header-anchor" href="javascript:;" onclick="location.hash='#templating-syntax-the-same-but-different'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>When moving from Jekyll to VitePress, I came across errors like <code>Cannot read property 'X' of undefined</code>. It was referring to some example code in a page we had that looked something like this.</p>
 <pre><code class="language-markdown">Content text here with templating code example below.
 
@@ -380,11 +380,11 @@ More explanation here.
 </code></pre>
 <p>This error came about because we didn't religiously fence our code examples. Jekyll let us get away with this and actually produced the visuals we wanted without trying to render value in the handlebars <code>{{ }}</code> syntax.</p>
 <p>VitePress only ignores these if they are in a code fence using the triple tilda syntax OR if the content is within a <code>:::v-pre</code> block.</p>
-<h2 id="replacing-raw-and-endraw">Replacing <code>raw</code> and <code>endraw</code></h2>
+<h2 id="replacing-raw-and-endraw">Replacing <code>raw</code> and <code>endraw</code><a class="header-anchor" href="javascript:;" onclick="location.hash='#replacing-raw-and-endraw'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Since some of our documentation used handlebar syntax in example code, we needed a way for Jekyll to ignore these statements and just present our code.
 <code>raw</code> and <code>endraw</code> were used which were usually wrapping code blocks. VitePress doesn't have a problem with this syntax which means the <code>{% raw %}</code> statements were included in our page which we didn't want.</p>
 <p>This was a matter of finding where these were used in all our documents and replace them with <code>::: v-pre</code> blocks as needed.</p>
-<h2 id="sidebar">Sidebar</h2>
+<h2 id="sidebar">Sidebar<a class="header-anchor" href="javascript:;" onclick="location.hash='#sidebar'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>This was a different situation. In Jekyll, we had created a <code>SideBar.md</code> file to help us render a left hand side menu of contents for the docs site.
 In VitePress's default theme, we could provide a JSON representation and the client would then dynamically populate it further using different levels of headings.</p>
 <p>To do this, we used a simple NodeJs script that used the <code>markdown-it</code> library to parse the MarkDown itself and produce the expected JSON.</p>
@@ -426,7 +426,7 @@ for(let i = 0; i &lt; res.length; i++) {
 fs.writeFileSync('SideBar_format.json',JSON.stringify(sidebarObjs),'utf-8')
 </code></pre>
 <p>Once working, we later split this into multiple menus and condensed what we already had to make the menu more manageable.</p>
-<h2 id="problems-we-worked-around">Problems we worked around</h2>
+<h2 id="problems-we-worked-around">Problems we worked around<a class="header-anchor" href="javascript:;" onclick="location.hash='#problems-we-worked-around'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>That covers the bulk of the changes we made that prevented us from running, building and deploying our application, however there were some short comings that we had to work around outside of VitePress itself.
 There were 2 main sticking points for which we had to come up with a creative work around.</p>
 <ul>
@@ -454,7 +454,7 @@ console.log('Completed post install process...')
 <p>NOT RECOMMENDED</p>
 </blockquote>
 <p>If you have standard <code>.html</code> paths on your existing site, you won't need the above. It is just a temporary workaround for getting clean URLs, which is again, <em>not recommended</em>.</p>
-<h2 id="verdict">Verdict</h2>
+<h2 id="verdict">Verdict<a class="header-anchor" href="javascript:;" onclick="location.hash='#verdict'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>While we have made the jump to VitePress, it is still young and under heavy development.
 There is a good chance that some of the behaviour and lacking features will make this not a viable option for migrating off Jekyll.</p>
 <p>And we knew this going in as it is very clearly outlined on the front page of their docs:</p>
@@ -463,7 +463,7 @@ There is a good chance that some of the behaviour and lacking features will make
 aimed at producing documentation is extremely compelling.
 The work Even You and the VitePress community are doing is something to look out for as currently we believe it offers
 one of the best content heavy site development experiences currently possible.</p>
-<h2 id="servicestack-a-sponsor-of-vues-evan-you">ServiceStack a Sponsor of Vue's Evan You</h2>
+<h2 id="servicestack-a-sponsor-of-vues-evan-you">ServiceStack a Sponsor of Vue's Evan You<a class="header-anchor" href="javascript:;" onclick="location.hash='#servicestack-a-sponsor-of-vues-evan-you'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>As maintainers of several <a href="https://docs.servicestack.net/templates-vue">Vue &amp; .NET Project Templates</a>, we're big fans of
 Evan's work creating Vue, Vite and his overall stewardship of their surrounding ecosystems which greatly benefits from his
 master design skills and fine attention to detail in both library and UI design who has a talent in creating inherently
