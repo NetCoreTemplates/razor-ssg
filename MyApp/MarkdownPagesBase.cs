@@ -1,6 +1,10 @@
 ﻿// run node postinstall.js to update to latest version
 using Markdig;
+using Markdig.Parsers;
+using Markdig.Renderers;
+using Markdig.Renderers.Html;
 using Markdig.Syntax;
+using Markdig.Syntax.Inlines;
 using ServiceStack.IO;
 
 namespace Ssg;
@@ -36,6 +40,7 @@ public class MarkdownFileBase
     public int? LineCount { get; set; }
     public string? Group { get; set; }
     public int? Order { get; set; }
+    public DocumentMap? DocumentMap { get; set; }
 
     /// <summary>
     /// Update Markdown File to latest version
@@ -58,6 +63,7 @@ public class MarkdownFileBase
         LineCount = newDoc.LineCount;
         Group = newDoc.Group;
         Order = newDoc.Order;
+        DocumentMap = newDoc.DocumentMap;
 
         if (newDoc.Date != null)
             Date = newDoc.Date;
@@ -89,6 +95,8 @@ public abstract class MarkdownPagesBase<T> : IMarkdownPages where T : MarkdownFi
         var pipeline = new MarkdownPipelineBuilder()
             .UseYamlFrontMatter()
             .UseAdvancedExtensions()
+            .UseAutoLinkHeadings()
+            .UseHeadingsMap()
             .Build();
         return pipeline;
     }
@@ -140,8 +148,11 @@ public abstract class MarkdownPagesBase<T> : IMarkdownPages where T : MarkdownFi
             .ConvertTo<T>();
 
         if (doc != null)
+        {
             doc.Content = content;
-        
+            doc.DocumentMap = document.GetData(nameof(DocumentMap)) as DocumentMap;
+        }
+
         return doc;
     }
 
@@ -220,4 +231,182 @@ public abstract class MarkdownPagesBase<T> : IMarkdownPages where T : MarkdownFi
         fn?.Invoke(to);
         return to;
     }
+}
+
+public struct HeadingInfo
+{
+    public int Level { get; }
+    public string Id { get; }
+    public string Content { get; }
+
+    public HeadingInfo(int level, string id, string content)
+    {
+        Level = level;
+        Id = id;
+        Content = content;
+    }
+}
+
+/// <summary>
+/// An HTML renderer for a <see cref="HeadingBlock"/>.
+/// </summary>
+/// <seealso cref="HtmlObjectRenderer{TObject}" />
+public class AutoLinkHeadingRenderer : HtmlObjectRenderer<HeadingBlock>
+{
+    private static readonly string[] HeadingTexts = {
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+    };
+    public event Action<HeadingBlock>? OnHeading;
+
+    protected override void Write(HtmlRenderer renderer, HeadingBlock obj)
+    {
+        int index = obj.Level - 1;
+        string[] headings = HeadingTexts;
+        string headingText = ((uint)index < (uint)headings.Length)
+            ? headings[index]
+            : $"h{obj.Level}";
+
+        if (renderer.EnableHtmlForBlock)
+        {
+            renderer.Write('<');
+            renderer.Write(headingText);
+            renderer.WriteAttributes(obj);
+            renderer.Write('>');
+        }
+
+        renderer.WriteLeafInline(obj);
+
+        var attrs = obj.TryGetAttributes();
+        if (attrs?.Id != null && obj.Level <= 4)
+        {
+            renderer.Write("<a class=\"header-anchor\" href=\"javascript:;\" onclick=\"location.hash='#");
+            renderer.Write(attrs.Id);
+            renderer.Write("'\" aria-label=\"Permalink\">&ZeroWidthSpace;</a>");
+        }
+
+        if (renderer.EnableHtmlForBlock)
+        {
+            renderer.Write("</");
+            renderer.Write(headingText);
+            renderer.WriteLine('>');
+        }
+
+        renderer.EnsureLine();
+
+        OnHeading?.Invoke(obj);
+    }
+}
+public class AutoLinkHeadingsExtension : IMarkdownExtension
+{
+    public void Setup(MarkdownPipelineBuilder pipeline)
+    {
+    }
+
+    public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
+    {
+        renderer.ObjectRenderers.Replace<HeadingRenderer>(new AutoLinkHeadingRenderer());
+    }
+}
+
+public class HeadingsMapExtension : IMarkdownExtension
+{
+    public void Setup(MarkdownPipelineBuilder pipeline)
+    {
+        var headingBlockParser = pipeline.BlockParsers.Find<HeadingBlockParser>();
+        if (headingBlockParser != null)
+        {
+            // Install a hook on the HeadingBlockParser when a HeadingBlock is actually processed
+            // headingBlockParser.Closed -= HeadingBlockParser_Closed;
+            // headingBlockParser.Closed += HeadingBlockParser_Closed;
+        }
+    }
+
+    public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
+    {
+        if (renderer.ObjectRenderers.TryFind<AutoLinkHeadingRenderer>(out var customHeader))
+        {
+            customHeader.OnHeading += OnHeading;
+        }
+    }
+
+    private void OnHeading(HeadingBlock headingBlock)
+    {
+        if (headingBlock.Parent is not MarkdownDocument document)
+            return;
+        
+        if (document.GetData(nameof(DocumentMap)) is not DocumentMap docMap)
+        {
+            docMap = new();
+            document.SetData(nameof(DocumentMap), docMap);
+        }
+
+        var text = headingBlock.Inline?.FirstChild is LiteralInline literalInline
+            ? literalInline.ToString()
+            : null;
+        var attrs = headingBlock.TryGetAttributes();
+            
+        if (!string.IsNullOrEmpty(text) && attrs?.Id != null)
+        {
+            if (headingBlock.Level == 2)
+            {
+                docMap.Headings.Add(new MarkdownMenu {
+                    Text = text,
+                    Link = $"#{attrs.Id}",
+                });
+            }
+            else if (headingBlock.Level == 3)
+            {
+                var lastHeading = docMap.Headings.LastOrDefault();
+                if (lastHeading != null)
+                {
+                    lastHeading.Children ??= new();
+                    lastHeading.Children.Add(new MarkdownMenuItem {
+                        Text = text,
+                        Link = $"#{attrs.Id}",
+                    });
+                }
+            }
+        }
+    }
+}
+
+public static class MarkdigExtensions
+{
+    /// <summary>
+    /// Uses the auto-identifier extension.
+    /// </summary>
+    public static MarkdownPipelineBuilder UseAutoLinkHeadings(this MarkdownPipelineBuilder pipeline)
+    {
+        pipeline.Extensions.AddIfNotAlready(new AutoLinkHeadingsExtension());
+        return pipeline;
+    }
+    
+    public static MarkdownPipelineBuilder UseHeadingsMap(this MarkdownPipelineBuilder pipeline)
+    {
+        pipeline.Extensions.AddIfNotAlready(new HeadingsMapExtension());
+        return pipeline;
+    }
+}
+
+public class DocumentMap
+{
+    public List<MarkdownMenu> Headings { get; } = new();
+}
+
+public class MarkdownMenu
+{
+    public string? Icon { get; set; }
+    public string? Text { get; set; }
+    public string? Link { get; set; }
+    public List<MarkdownMenuItem>? Children { get; set; }
+}
+public class MarkdownMenuItem
+{
+    public string Text { get; set; } 
+    public string Link { get; set; } 
 }

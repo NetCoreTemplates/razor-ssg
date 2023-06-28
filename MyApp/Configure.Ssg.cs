@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ServiceStack.IO;
 
 [assembly: HostingStartup(typeof(MyApp.ConfigureSsg))]
@@ -25,12 +26,12 @@ public class ConfigureSsg : IHostingStartup
                 var videos = appHost.Resolve<MarkdownVideos>();
                 var blogPosts = appHost.Resolve<MarkdownBlog>();
                 var meta = appHost.Resolve<MarkdownMeta>();
-                
+
                 meta.Features = new() { pages, whatsNew, videos, blogPosts };
                 meta.Features.ForEach(x => x.VirtualFiles = appHost.VirtualFiles);
 
                 blogPosts.Authors = Authors;
-
+                
                 pages.LoadFrom("_pages");
                 whatsNew.LoadFrom("_whatsnew");
                 videos.LoadFrom("_videos");
@@ -41,10 +42,9 @@ public class ConfigureSsg : IHostingStartup
                 // prerender with: `$ npm run prerender` 
                 AppTasks.Register("prerender", args =>
                 {
-                    var baseUrl = RazorSsg.GetBaseUrl() ?? "https://localhost:5002";
                     appHost.Resolve<MarkdownMeta>().RenderToAsync(
                         metaDir: appHost.ContentRootDirectory.RealPath.CombineWith("wwwroot/meta"),
-                        baseUrl: baseUrl).GetAwaiter().GetResult();
+                        baseUrl: HtmlHelpers.ToAbsoluteContentUrl("")).GetAwaiter().GetResult();
 
                     var distDir = appHost.ContentRootDirectory.RealPath.CombineWith("dist");
                     if (Directory.Exists(distDir))
@@ -78,4 +78,18 @@ public class ConfigureSsg : IHostingStartup
 // Add additional frontmatter info to include
 public class MarkdownFileInfo : MarkdownFileBase
 {
+}
+
+public static class HtmlHelpers
+{
+    public static string ToAbsoluteContentUrl(string? relativePath) => HostContext.DebugMode 
+        ? "https://localhost:5002".CombineWith(relativePath)
+        : "https://servicestack.net".CombineWith(relativePath);
+    public static string ToAbsoluteApiUrl(string? relativePath) => HostContext.DebugMode 
+        ? "https://localhost:5001".CombineWith(relativePath)
+        : "https://account.servicestack.net".CombineWith(relativePath);
+
+
+    public static string ContentUrl(this IHtmlHelper html, string? relativePath) => ToAbsoluteContentUrl(relativePath); 
+    public static string ApiUrl(this IHtmlHelper html, string? relativePath) => ToAbsoluteApiUrl(relativePath);
 }
