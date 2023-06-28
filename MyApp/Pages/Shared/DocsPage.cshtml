@@ -1,0 +1,245 @@
+﻿@page
+@model MyApp.Pages.Shared.DocsPage
+@inject MarkdownPages Markdown
+
+@{
+    var info = Model;
+    
+    var doc = Markdown.GetBySlug($"{info.Folder}/{info.Slug}");
+    if (doc == null)
+    {
+        Response.Redirect("/404");
+        return;
+    }
+    if (doc.Layout != null) 
+        Layout = doc.Layout == "none"
+            ? null
+            : doc.Layout;
+    ViewData["Title"] = doc.Title;
+
+    var sidebar = Markdown.GetSidebar(info.Folder, info.DefaultMenu);
+    
+    var docMjs = Markdown.VirtualFiles.GetFile($"/wwwroot/pages/{doc.Slug}.mjs");
+    var docCss = Markdown.VirtualFiles.GetFile($"/wwwroot/pages/{doc.Slug}.css");
+}
+
+<link rel="stylesheet" href="css/highlight.css">
+<link rel="stylesheet" href="css/typography.css">
+<link rel="stylesheet" href="css/lite-yt-embed.css">
+
+@{
+    if (docCss != null)
+    {
+        <link rel="stylesheet" href="pages/@(doc.Slug).css">
+    }
+}
+<div class="w-full max-w-[100rem] mx-auto">
+    <div class="flex flex-wrap">
+        <div class="hidden xl:block z-40 inset-0 flex-none bg-white lg:w-60 xl:w-72">
+            <div class="fixed h-screen overflow-y-auto scrolling-touch overflow-hidden">
+                <div class="fixed h-12 pointer-events-none inset-x-0 z-10 bg-gradient-to-b from-white"></div>
+                <nav class="bg-white lg:w-60 xl:w-72 px-1 pt-6 overflow-y-auto font-medium text-base sm:px-3 xl:px-5 lg:text-sm lg:pt-10" aria-label="Sidebar">
+                    @foreach (var menu in sidebar)
+                    {
+                        if (menu.Text != null)
+                        {
+                            if (menu.Link != null)
+                            {
+                                <a href="@menu.Link" class="block flex items-center whitespace-nowrap">
+                                    @if (menu.Icon != null)
+                                    {
+                                        @Html.Raw(menu.Icon)
+                                    }
+                                    <span class="p-2 pl-3 font-display font-medium text-slate-900 dark:text-white">
+                                        @if (!string.IsNullOrEmpty(menu.Text))
+                                        {
+                                            @menu.Text
+                                        }
+                                        else
+                                        {
+                                            <text>&nbsp;</text>
+                                        }
+                                    </span>
+                                </a>
+                            }
+                            else
+                            {
+                                <h2 class="font-display font-medium text-slate-900 dark:text-white whitespace-nowrap">
+                                    @if (!string.IsNullOrEmpty(menu.Icon))
+                                    {
+                                        @Html.Raw(menu.Icon)
+                                    }
+                                    @menu.Text
+                                </h2>
+                            }
+                        }
+                        <ul role="list" class="mb-6 mt-2 ml-3 space-y-2 border-l-2 border-slate-100 dark:border-slate-800 lg:mt-4 lg:space-y-4 lg:border-slate-200">
+                            @foreach (var menuItem in menu.Children.Safe())
+                            {
+                                <li class="relative">
+                                    <a href="@menuItem.Link" class="@Html.ClassNames("block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full", 
+                                                                    Html.MatchesPath("/".CombineWith(menuItem.Link)) ? "font-semibold text-sky-500 before:bg-sky-500" : "text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300")">
+                                        @menuItem.Text
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </nav>
+            </div>
+        </div>
+        <div id="doc" class="mx-auto flex">
+            <div class="mt-8 mx-auto prose lg:prose-xl mb-24" style="max-width:90ch">
+                <section class="mb-16 md:mb-12">
+                    <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 dark:text-gray-50 sm:text-5xl md:text-6xl">
+                        @doc.Title
+                    </h1>
+                </section>
+                @Html.Raw(Markdown.SanitizeVueTemplate(doc.Preview))
+                <div class="not-prose my-20">
+                    @{
+                        var activeMenu = sidebar.FirstOrDefault(menu => menu.Children?.Any(x => Html.MatchesPath("/".CombineWith(x.Link))) == true);
+                        var allPages = activeMenu?.Children ?? new();
+                        var activeMenuItem = allPages.FirstOrDefault(x => Html.MatchesPath("/".CombineWith(x.Link)));
+                        var currIndex = activeMenuItem != null ? allPages.IndexOf(activeMenuItem) : -1;
+                        var prev = currIndex > 0
+                            ? allPages[currIndex - 1]
+                            : null;
+                        var next = currIndex + 1 < allPages.Count
+                            ? allPages[currIndex + 1]
+                            : null;
+                        if (allPages.Count > 1)
+                        {
+                            <nav class="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 px-4 sm:px-0">
+                                <div class="-mt-px flex w-0 flex-1">
+                                    @if (prev != null)
+                                    {
+                                        <a href="@prev.Link" class="inline-flex items-center border-t-2 border-transparent pt-4 pr-1 text-sm font-medium text-gray-500 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-200">
+                                            <!-- Heroicon name: mini/arrow-long-left -->
+                                            <svg class="mr-3 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                <path fill-rule="evenodd" d="M18 10a.75.75 0 01-.75.75H4.66l2.1 1.95a.75.75 0 11-1.02 1.1l-3.5-3.25a.75.75 0 010-1.1l3.5-3.25a.75.75 0 111.02 1.1l-2.1 1.95h12.59A.75.75 0 0118 10z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            @(prev.Text ?? "Previous")
+                                        </a>
+                                    }
+                                </div>
+                                <div class="hidden md:-mt-px md:flex"></div>
+                                <div class="-mt-px flex w-0 flex-1 justify-end">
+                                    @if (next != null)
+                                    {
+                                        <a href="@next.Link" class="inline-flex items-center border-t-2 border-transparent pt-4 pl-1 text-sm font-medium text-gray-500 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-200">
+                                            @(next.Text ?? "Next")
+                                            <!-- Heroicon name: mini/arrow-long-right -->
+                                            <svg class="ml-3 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                <path fill-rule="evenodd" d="M2 10a.75.75 0 01.75-.75h12.59l-2.1-1.95a.75.75 0 111.02-1.1l3.5 3.25a.75.75 0 010 1.1l-3.5 3.25a.75.75 0 11-1.02-1.1l2.1-1.95H2.75A.75.75 0 012 10z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </a>
+                                    }
+                                </div>
+                            </nav>
+                        }
+                    }
+                </div>
+            </div>
+            @if (doc.DocumentMap?.Headings.Count > 0)
+            {
+                <div class="docmap hidden 2xl:block flex-none w-64 pl-8 mr-8">
+                    <div class="fixed bg-white flex flex-col overflow-y-auto pt-10 px-8 pb-6">
+                        <div>
+                            <h5 class="text-slate-900 font-semibold mb-4 text-sm leading-6 dark:text-slate-100">
+                                On This Page
+                            </h5>
+                            <ul class="text-slate-700 text-sm leading-6">
+                                @foreach (var h2 in doc.DocumentMap.Headings)
+                                {
+                                    <li class="group text-gray-800 hover:text-gray-900">
+                                        <span v-hash="'@h2.Link'" data-id="@h2.Link.Substring(1)" class="cursor-pointer font-medium block text-sm transform transition-colors duration-200 py-2">
+                                            @h2.Text
+                                        </span>
+                                        @if (h2.Children?.Count > 0)
+                                        {
+                                            <ul class="ml-4">
+                                                @foreach (var h3 in h2.Children.Safe())
+                                                {
+                                                    <li data-id="@h3.Link.Substring(1)" class="text-gray-500 hover:text-gray-900">
+                                                        <span v-hash="'@h3.Link'" class="cursor-pointer flex text-sm transform transition-colors duration-200 py-2">
+                                                            <svg width="3" height="24" viewBox="0 -9 3 24" class="mr-2 overflow-visible"><path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
+                                                            @h3.Text
+                                                        </span>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>    
+</div>
+    
+
+<script type="module">
+import { mount } from "app.mjs"
+
+@if (docMjs != null)
+{
+    <text>
+        import App from "./pages/@(doc.Slug).mjs" 
+    </text>
+}
+else
+{
+    <text>
+    const App = {
+        setup() {
+            return { }
+        }
+    }
+    </text>
+}
+
+mount('#doc', App)
+</script>
+
+<script src="js/highlight.js"></script>
+<script>hljs.highlightAll()</script>
+<script src="js/lite-yt-embed.js"></script>
+
+<style>
+.active {
+    color: #0ea5e9 !important;
+}
+</style>
+<script type="module">
+import { $$, $1, on, leftPart, map } from "@@servicestack/client"
+//change #hash on scroll
+const headings = $$('h2[id],h3[id]')
+
+function select(id) {
+    $$(`.docmap .active`).forEach(el => el.classList.remove('active'))
+    map($1(`.docmap [data-id='${id}']`), el => {
+        el.classList.add('active')
+        map(el.closest('.group'), el => el.classList.add('active'))
+    })
+}
+
+on(document, {
+    scroll(e) {
+        headings.forEach(ha => {
+            const rect = ha.getBoundingClientRect()
+            if (rect.top > 0 && rect.top < 150) {
+                const location = leftPart(window.location.toString(), '#')
+                history.replaceState(null, null, location + '#' + ha.id)
+                select(ha.id)
+            }
+        })
+    }
+})
+if (location.hash) {
+    select(location.hash.substring(1))
+}
+</script>
