@@ -51,6 +51,8 @@ SocialUrls        Website,Twitter,YouTube
 SocialImages      website_24x24,twitter_24x24,youtube_24x24
 ```
 
+Variables inside your email templates can be referenced using handlebars syntax, e.g: 
+
 `{{info.Company}}`
 
 The **urls.txt** contains all URLs embedded in emails that you'll want to replace with URLs on your website, with 
@@ -110,7 +112,7 @@ In addition, a `{{images.*}}` variable collection is also populated from all ima
     } } 
 }"></div>
 
-That's prefixed with the `{{PublicAppBaseUrl}}` allowing them to be referenced directly in your `*.html` Email templates:  
+That's prefixed with the `{{PublicAppBaseUrl}}` allowing them to be referenced directly in your `*.html` Email templates. e.g:  
 
 ```html
 <img src="{{images.welcome_650x487.jpg}}">

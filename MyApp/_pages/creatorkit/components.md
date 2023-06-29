@@ -4,8 +4,8 @@ order: 4
 ---
 
 After launching your customized CreatorKit instance, you can start integrating its features into your existing websites, 
-or if you're also in need of a fast, beautiful website we highly recommend this [Razor SSG](https://razor-ssg.web-templates.io/posts/razor-ssg)
-template which already includes CreatorKit's components inside its template.
+or if you're also in need of a fast, beautiful website we highly recommend the [Razor SSG](https://razor-ssg.web-templates.io/posts/razor-ssg)
+template which is already configured to include CreatorKit's components.
 
 The components are included using a declarative progressive markup so that it doesn't affect the behavior of the website
 if the CreatorKit is down or unresponsive.
@@ -18,7 +18,7 @@ this script at the bottom of your page, e.g. in [Footer.cshtml](https://github.c
 ```html
 <script type="module">
 @{ var components = HostContext.DebugMode 
-     ? "https://localhost:5001/mjs/components" 
+     ? "https://localhost:5003/mjs/components" 
      : "https://creatorkit.netcore.io/mjs/components"; }
 
 import { mail } from '@components/mail.mjs'

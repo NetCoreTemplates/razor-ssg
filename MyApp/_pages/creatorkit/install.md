@@ -203,6 +203,25 @@ You can Add/Remove to this from the list of [supported OAuth Providers](https://
 CreatorKit by default is configured to use an embedded SQLite database which can be optionally configured to replicate
 backups to AWS S3 or Cloudflare R2 using [Litestream](https://docs.servicestack.net/ormlite/litestream).
 
+This is setup to be used with Cloudflare R2 by default which can be configured from the [.deploy/litestream-template.yml](https://github.com/NetCoreApps/CreatorKit/blob/main/.deploy/litestream-template.yml) file:
+
+```yml
+access-key-id: ${R2_ACCESS_KEY_ID}
+secret-access-key: ${R2_SECRET_ACCESS_KEY}
+
+dbs:
+  - path: /data/db.sqlite
+    replicas:
+      - type: s3
+        bucket: ${R2_BUCKET}
+        path: db.sqlite
+        region: auto
+        endpoint: ${R2_ENDPOINT}
+```
+
+By adding the matching GitHub Action Secrets to your repository, this file will be populated and deployed to your own Linux server via SSH.
+This provides a realtime backup to your R2 bucket for minimal cost, enabling point in time recovery of data if you run into issues.
+
 Alternatively [Configure.Db.cs](https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit/Configure.Db.cs) can
 be changed to use preferred [RDBMS supported by OrmLite](https://docs.servicestack.net/ormlite/installation).
 
