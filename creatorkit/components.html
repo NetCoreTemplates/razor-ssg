@@ -179,8 +179,8 @@ Creator Kit                                    </span>
                     </h1>
                 </section>
                 <p>After launching your customized CreatorKit instance, you can start integrating its features into your existing websites,
-or if you're also in need of a fast, beautiful website we highly recommend this <a href="https://razor-ssg.web-templates.io/posts/razor-ssg">Razor SSG</a>
-template which already includes CreatorKit's components inside its template.</p>
+or if you're also in need of a fast, beautiful website we highly recommend the <a href="https://razor-ssg.web-templates.io/posts/razor-ssg">Razor SSG</a>
+template which is already configured to include CreatorKit's components.</p>
 <p>The components are included using a declarative progressive markup so that it doesn't affect the behavior of the website
 if the CreatorKit is down or unresponsive.</p>
 <h2 id="enabling-creatorkit-components">Enabling CreatorKit Components<a class="header-anchor" href="javascript:;" onclick="location.hash='#enabling-creatorkit-components'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
@@ -188,7 +188,7 @@ if the CreatorKit is down or unresponsive.</p>
 this script at the bottom of your page, e.g. in <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Shared/Footer.cshtml">Footer.cshtml</a>:</p>
 <pre><code class="language-html">&lt;script type=&quot;module&quot;&gt;
 @{ var components = HostContext.DebugMode 
-     ? &quot;https://localhost:5001/mjs/components&quot; 
+     ? &quot;https://localhost:5003/mjs/components&quot; 
      : &quot;https://creatorkit.netcore.io/mjs/components&quot;; }
 
 import { mail } from '@components/mail.mjs'

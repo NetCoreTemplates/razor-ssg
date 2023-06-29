@@ -328,6 +328,21 @@ OAuth Providers during development on its <code>https://localhost:5002</code>.</
 <h3 id="rdbms">RDBMS<a class="header-anchor" href="javascript:;" onclick="location.hash='#rdbms'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>CreatorKit by default is configured to use an embedded SQLite database which can be optionally configured to replicate
 backups to AWS S3 or Cloudflare R2 using <a href="https://docs.servicestack.net/ormlite/litestream">Litestream</a>.</p>
+<p>This is setup to be used with Cloudflare R2 by default which can be configured from the <a href="https://github.com/NetCoreApps/CreatorKit/blob/main/.deploy/litestream-template.yml">.deploy/litestream-template.yml</a> file:</p>
+<pre><code class="language-yml">access-key-id: ${R2_ACCESS_KEY_ID}
+secret-access-key: ${R2_SECRET_ACCESS_KEY}
+
+dbs:
+  - path: /data/db.sqlite
+    replicas:
+      - type: s3
+        bucket: ${R2_BUCKET}
+        path: db.sqlite
+        region: auto
+        endpoint: ${R2_ENDPOINT}
+</code></pre>
+<p>By adding the matching GitHub Action Secrets to your repository, this file will be populated and deployed to your own Linux server via SSH.
+This provides a realtime backup to your R2 bucket for minimal cost, enabling point in time recovery of data if you run into issues.</p>
 <p>Alternatively <a href="https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit/Configure.Db.cs">Configure.Db.cs</a> can
 be changed to use preferred <a href="https://docs.servicestack.net/ormlite/installation">RDBMS supported by OrmLite</a>.</p>
 <h3 id="app-settings">App Settings<a class="header-anchor" href="javascript:;" onclick="location.hash='#app-settings'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>

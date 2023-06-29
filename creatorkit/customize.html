@@ -216,6 +216,7 @@ NewsletterFmt     ServiceStack Newsletter, {0}
 SocialUrls        Website,Twitter,YouTube
 SocialImages      website_24x24,twitter_24x24,youtube_24x24
 </code></pre>
+<p>Variables inside your email templates can be referenced using handlebars syntax, e.g:</p>
 <p><code>{‎{info.Company}‎}</code></p>
 <p>The <strong>urls.txt</strong> contains all URLs embedded in emails that you'll want to replace with URLs on your website, with
 <code>/mail-preferences</code> and <code>/signup-confirmed</code> being integration pages covered in <a href="./integrations">Integrations</a>.</p>
@@ -265,7 +266,7 @@ dropdown:</p>
         }
     } } 
 }"></div>
-<p>That's prefixed with the <code>{‎{PublicAppBaseUrl}‎}</code> allowing them to be referenced directly in your <code>*.html</code> Email templates:</p>
+<p>That's prefixed with the <code>{‎{PublicAppBaseUrl}‎}</code> allowing them to be referenced directly in your <code>*.html</code> Email templates. e.g:</p>
 <pre><code class="language-html">&lt;img src=&quot;{‎{images.welcome_650x487.jpg}‎}&quot;&gt;
 </code></pre>
 <p>Or from your Markdown Emails using Markdown Image syntax:</p>
