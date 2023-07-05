@@ -37,6 +37,7 @@ public class ConfigureSsg : IHostingStartup
                 whatsNew.LoadFrom("_whatsnew");
                 videos.LoadFrom("_videos");
                 blogPosts.LoadFrom("_posts");
+                AppConfig.Instance.GitPagesBaseUrl ??= ResolveGitBlobBaseUrl(appHost.ContentRootDirectory);
             },
             afterAppHostInit: appHost =>
             {
@@ -53,10 +54,33 @@ public class ConfigureSsg : IHostingStartup
                     FileSystemVirtualFiles.CopyAll(
                         new DirectoryInfo(appHost.ContentRootDirectory.RealPath.CombineWith("wwwroot")),
                         new DirectoryInfo(distDir));
+                    
+                    // Render .html redirect files
+                    RazorSsg.PrerenderRedirectsAsync(appHost.ContentRootDirectory.GetFile("redirects.json"), distDir)
+                        .GetAwaiter().GetResult();
+
                     var razorFiles = appHost.VirtualFiles.GetAllMatchingFiles("*.cshtml");
                     RazorSsg.PrerenderAsync(appHost, razorFiles, distDir).GetAwaiter().GetResult();
                 });
             });
+    
+    private string? ResolveGitBlobBaseUrl(IVirtualDirectory contentDir)
+    {
+        var srcDir = new DirectoryInfo(contentDir.RealPath);
+        var gitConfig = new FileInfo(Path.Combine(srcDir.Parent!.FullName, ".git", "config"));
+        if (gitConfig.Exists)
+        {
+            var txt = gitConfig.ReadAllText();
+            var pos = txt.IndexOf("url = ", StringComparison.Ordinal);
+            if (pos >= 0)
+            {
+                var url = txt[(pos + "url = ".Length)..].LeftPart(".git").LeftPart('\n').Trim();
+                var gitBaseUrl = url.CombineWith($"blob/main/{srcDir.Name}");
+                return gitBaseUrl;
+            }
+        }
+        return null;
+    }
 }
 
 public class AppConfig
@@ -64,6 +88,7 @@ public class AppConfig
     public static AppConfig Instance { get; } = new();
     public string LocalBaseUrl { get; set; }
     public string PublicBaseUrl { get; set; }
+    public string? GitPagesBaseUrl { get; set; }
     public List<AuthorInfo> Authors { get; set; } = new();
 }
 

@@ -13,7 +13,7 @@ public class MarkdownVideos : MarkdownPagesBase<MarkdownFileInfo>
     public List<MarkdownFileInfo> GetVideos(string group)
     {
         return Groups.TryGetValue(group, out var docs)
-            ? Fresh(docs.Where(IsVisible).ToList())
+            ? Fresh(docs.Where(IsVisible).OrderBy(x => x.Order).ThenBy(x => x.FileName).ToList())
             : new List<MarkdownFileInfo>();
     }
     

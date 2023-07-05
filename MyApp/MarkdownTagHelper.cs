@@ -31,8 +31,30 @@ public class MarkdownTagHelper : TagHelper
         var renderer = new Markdig.Renderers.HtmlRenderer(writer);
         pipeline.Setup(renderer);
 
-        var document = Markdown.Parse(content ?? "", pipeline);
-        renderer.Render(document);
+        var include = output.Attributes["include"]?.Value as string ?? "";
+        if (!string.IsNullOrEmpty(include))
+        {
+            if (include.EndsWith(".md"))
+            {
+                var markdown = HostContext.Resolve<MarkdownPages>();
+                var slug = include.TrimStart('/').LeftPart('.');
+                var doc = markdown.GetVisiblePages("includes", allDirectories: true)
+                    .FirstOrDefault(x => x.Slug == slug);
+                if (doc != null)
+                {
+                    renderer.WriteLine(doc.Preview!);
+                }
+            }
+            else
+            {
+                renderer.WriteLine($"Could not find: {include}");
+            }
+        }
+        else
+        {
+            var document = Markdown.Parse(content ?? "", pipeline);
+            renderer.Render(document);
+        }
 
         await writer.WriteAsync("</div>");
         await writer.FlushAsync();

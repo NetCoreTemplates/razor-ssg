@@ -17,6 +17,8 @@ You're also free to change the URLs in `info.txt` to reference existing pages on
 
 The `info.SignupConfirmed` URL is redirected to after a contact verifies their email address.
 
+## Example
+
 For reference here are example pages Razor SSG uses for this URLs:
 
 | Page                                  | Source Code                                                                                                             |

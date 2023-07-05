@@ -14,13 +14,16 @@ public class MarkdownPages : MarkdownPagesBase<MarkdownFileInfo>
     public MarkdownPages(ILogger<MarkdownPages> log, IWebHostEnvironment env) : base(log,env) {}
     List<MarkdownFileInfo> Pages { get; set; } = new();
     public List<MarkdownFileInfo> GetVisiblePages(string? prefix=null, bool allDirectories=false) => prefix == null 
-        ? Pages.Where(x => IsVisible(x) && !x.Slug!.Contains('/')).OrderBy(x => x.Order).ToList()
+        ? Pages.Where(x => IsVisible(x) && !x.Slug!.Contains('/')).OrderBy(x => x.Order).ThenBy(x => x.Path).ToList()
         : Pages.Where(x => IsVisible(x) && x.Slug!.StartsWith(prefix.WithTrailingSlash()))
             .Where(x => allDirectories || (x.Slug.CountOccurrencesOf('/') == prefix.CountOccurrencesOf('/') + 1))
-            .OrderBy(x => x.Order).ToList();
+            .OrderBy(x => x.Order).ThenBy(x => x.Path).ToList();
 
-    public MarkdownFileInfo? GetBySlug(string slug) => 
-        Fresh(Pages.Where(IsVisible).FirstOrDefault(x => x.Slug == slug));
+    public MarkdownFileInfo? GetBySlug(string slug)
+    {
+        slug = slug.Trim('/');
+        return Fresh(Pages.Where(IsVisible).FirstOrDefault(x => x.Slug == slug));
+    }
 
     public Dictionary<string, List<MarkdownMenu>> Sidebars { get; set; } = new();
 
@@ -29,7 +32,9 @@ public class MarkdownPages : MarkdownPagesBase<MarkdownFileInfo>
         Sidebars.Clear();
         Pages.Clear();
         var fs = AssertVirtualFiles();
-        var files = fs.GetDirectory(fromDirectory).GetAllFiles().ToList();
+        var files = fs.GetDirectory(fromDirectory).GetAllFiles()
+            .OrderBy(x => x.VirtualPath)
+            .ToList();
         var log = LogManager.GetLogger(GetType());
         log.InfoFormat("Found {0} pages", files.Count);
 
@@ -57,7 +62,6 @@ public class MarkdownPages : MarkdownPagesBase<MarkdownFileInfo>
                 {
                     var virtualPath = file.VirtualPath.Substring(fromDirectory.Length);
                     var folder = virtualPath.Substring(0, virtualPath.Length - "sidebar.json".Length).Trim('/');
-                    Console.WriteLine($"sidebar :: {folder}");
                     var sidebarJson = file.ReadAllText();
                     var sidebar = sidebarJson.FromJson<List<MarkdownMenu>>();
 
@@ -74,6 +78,10 @@ public class MarkdownPages : MarkdownPagesBase<MarkdownFileInfo>
             {
                 log.Error(e, "Couldn't load {0}: {1}", file.VirtualPath, e.Message);
             }
+        }
+        if (Sidebars.Count > 0)
+        {
+            log.Info($"Loaded {Sidebars.Count} sidebars: {Sidebars.Keys.Join(", ")}");
         }
     }
 

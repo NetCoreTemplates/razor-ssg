@@ -52,6 +52,9 @@ const Components = {
     PagingNav,
     FileLayout,
 }
+const CustomElements = [
+    'lite-youtube'
+]
 
 const alreadyMounted = el => el.__vue_app__ 
 
@@ -79,6 +82,13 @@ export function mount(sel, component, props) {
             location.hash = binding.value
         }
     })
+    if (component.install) {
+        component.install(app)
+    }
+    if (client && !app._context.provides.client) {
+        app.provide('client', client)
+    }
+    app.config.compilerOptions.isCustomElement = tag => CustomElements.includes(tag)
     app.mount(el)
     Apps.push(app)
     return app

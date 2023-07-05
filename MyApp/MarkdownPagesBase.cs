@@ -1,11 +1,14 @@
 ﻿// run node postinstall.js to update to latest version
 using Markdig;
 using Markdig.Parsers;
+using Markdig.Parsers.Inlines;
 using Markdig.Renderers;
 using Markdig.Renderers.Html;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
+using Markdig.Extensions.CustomContainers;
 using ServiceStack.IO;
+using ServiceStack.Text;
 
 namespace Ssg;
 
@@ -97,6 +100,7 @@ public abstract class MarkdownPagesBase<T> : IMarkdownPages where T : MarkdownFi
             .UseAdvancedExtensions()
             .UseAutoLinkHeadings()
             .UseHeadingsMap()
+            .UseCustomContainers()
             .Build();
         return pipeline;
     }
@@ -122,7 +126,7 @@ public abstract class MarkdownPagesBase<T> : IMarkdownPages where T : MarkdownFi
         return doc;
     }
 
-    public virtual T? CreateMarkdownFile(string content, TextWriter writer, MarkdownPipeline? pipeline = null)
+    public virtual T CreateMarkdownFile(string content, TextWriter writer, MarkdownPipeline? pipeline = null)
     {
         pipeline ??= CreatePipeline();
         
@@ -145,13 +149,11 @@ public abstract class MarkdownPagesBase<T> : IMarkdownPages where T : MarkdownFi
             .Where(x => !string.IsNullOrWhiteSpace(x))
             .Select(x => KeyValuePairs.Create(x.LeftPart(':').Trim(), x.RightPart(':').Trim()))
             .ToObjectDictionary()
-            .ConvertTo<T>();
+            .ConvertTo<T>()
+            ?? typeof(T).CreateInstance<T>();
 
-        if (doc != null)
-        {
-            doc.Content = content;
-            doc.DocumentMap = document.GetData(nameof(DocumentMap)) as DocumentMap;
-        }
+        doc.Content = content;
+        doc.DocumentMap = document.GetData(nameof(DocumentMap)) as DocumentMap;
 
         return doc;
     }
@@ -165,11 +167,7 @@ public abstract class MarkdownPagesBase<T> : IMarkdownPages where T : MarkdownFi
         var writer = new StringWriter();
 
         var doc = CreateMarkdownFile(content, writer, pipeline);
-        if (doc?.Title == null)
-        {
-            Log.LogWarning("No frontmatter found for {0}, ignoring...", file.VirtualPath);
-            return null;
-        }
+        doc.Title ??= file.Name;
 
         doc.Path = file.VirtualPath;
         doc.FileName = file.Name;
@@ -313,6 +311,213 @@ public class AutoLinkHeadingsExtension : IMarkdownExtension
     }
 }
 
+public class CopyContainerRenderer : HtmlObjectRenderer<CustomContainer>
+{
+    public string Class { get; set; } = "";
+    public string BoxClass { get; set; } = "bg-gray-700";
+    public string IconClass { get; set; } = "";
+    public string TextClass { get; set; } = "text-lg text-white";
+    protected override void Write(HtmlRenderer renderer, CustomContainer obj)
+    {
+        renderer.EnsureLine();
+        if (renderer.EnableHtmlForBlock)
+        {
+            renderer.Write(@$"<div class=""{Class} flex cursor-pointer mb-3"" onclick=""copy(this)"">
+                <div class=""flex-grow {BoxClass}"">
+                    <div class=""pl-4 py-1 pb-1.5 align-middle {TextClass}"">");
+        }
+        // We don't escape a CustomContainer
+        renderer.WriteChildren(obj);
+        if (renderer.EnableHtmlForBlock)
+        {
+            renderer.WriteLine(@$"</div>
+                    </div>
+                <div class=""flex"">
+                    <div class=""{IconClass} text-white p-1.5 pb-0"">
+                        <svg class=""copied w-6 h-6"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg""><path stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2"" d=""M5 13l4 4L19 7""></path></svg>
+                        <svg class=""nocopy w-6 h-6"" title=""copy"" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>");
+        }
+    }    
+}
+
+public class CustomInfoRenderer : HtmlObjectRenderer<CustomContainer>
+{
+    public string Title { get; set; } = "TIP";
+    public string Class { get; set; } = "tip";
+    protected override void Write(HtmlRenderer renderer, CustomContainer obj)
+    {
+        renderer.EnsureLine();
+        if (renderer.EnableHtmlForBlock)
+        {
+            var title = obj.Arguments ?? obj.Info;
+            if (string.IsNullOrEmpty(title))
+                title = Title;
+            renderer.Write(@$"<div class=""{Class} custom-block"">
+                <p class=""custom-block-title"">{title}</p>");
+        }
+        // We don't escape a CustomContainer
+        renderer.WriteChildren(obj);
+        if (renderer.EnableHtmlForBlock)
+        {
+            renderer.WriteLine("</div>");
+        }
+    }
+}
+
+public class IncludeContainerInlineRenderer : HtmlObjectRenderer<CustomContainerInline>
+{
+    protected override void Write(HtmlRenderer renderer, CustomContainerInline obj)
+    {
+        var include = obj.FirstChild is LiteralInline literalInline
+            ? literalInline.Content.AsSpan().RightPart(' ').ToString()
+            : null;
+        if (string.IsNullOrEmpty(include))
+            return;
+        
+        renderer.Write("<div").WriteAttributes(obj).Write('>');
+        MarkdownFileBase? doc = null;
+        if (include.EndsWith(".md"))
+        {
+            var markdown = HostContext.Resolve<MarkdownPages>();
+            // default relative path to _includes/
+            include = include[0] != '/'
+                ? "_includes/" + include
+                : include.TrimStart('/');
+            var prefix = include.LeftPart('/');
+            var slug = include.LeftPart('.');
+            var allIncludes = markdown.GetVisiblePages(prefix, allDirectories: true);
+            doc = allIncludes.FirstOrDefault(x => x.Slug == slug);
+        }
+
+        if (doc?.Preview != null)
+        {
+            renderer.WriteLine(doc.Preview!);            
+        }
+        else
+        {
+            var log = HostContext.Resolve<ILogger<IncludeContainerInlineRenderer>>();
+            log.LogError("Could not find: {Include}", include);
+            renderer.WriteLine($"Could not find: {include}");
+        }
+        
+        renderer.Write("</div>");
+    }
+}
+
+public class CustomContainerRenderers : HtmlObjectRenderer<CustomContainer>
+{
+    public Dictionary<string, HtmlObjectRenderer<CustomContainer>> Renderers { get; set; } = new();
+    protected override void Write(HtmlRenderer renderer, CustomContainer obj)
+    {
+        var useRenderer = obj.Info != null && Renderers.TryGetValue(obj.Info, out var customRenderer)
+            ? customRenderer
+            : new HtmlCustomContainerRenderer();
+        useRenderer.Write(renderer, obj);
+    }
+}
+
+public class CustomContainerInlineRenderers : HtmlObjectRenderer<CustomContainerInline>
+{
+    public Dictionary<string, HtmlObjectRenderer<CustomContainerInline>> Renderers { get; set; } = new();
+    protected override void Write(HtmlRenderer renderer, CustomContainerInline obj)
+    {
+        var firstWord = obj.FirstChild is LiteralInline literalInline
+            ? literalInline.Content.AsSpan().LeftPart(' ').ToString()
+            : null;
+        var useRenderer = firstWord != null && Renderers.TryGetValue(firstWord, out var customRenderer)
+            ? customRenderer
+            : new HtmlCustomContainerInlineRenderer();
+        useRenderer.Write(renderer, obj);
+    }
+}
+
+public class ContainerExtensions : IMarkdownExtension
+{
+    public void Setup(MarkdownPipelineBuilder pipeline)
+    {
+        if (!pipeline.BlockParsers.Contains<CustomContainerParser>())
+        {
+            // Insert the parser before any other parsers
+            pipeline.BlockParsers.Insert(0, new CustomContainerParser());
+        }
+
+        // Plug the inline parser for CustomContainerInline
+        var inlineParser = pipeline.InlineParsers.Find<EmphasisInlineParser>();
+        if (inlineParser != null && !inlineParser.HasEmphasisChar(':'))
+        {
+            inlineParser.EmphasisDescriptors.Add(new EmphasisDescriptor(':', 2, 2, true));
+            inlineParser.TryCreateEmphasisInlineList.Add((emphasisChar, delimiterCount) =>
+            {
+                if (delimiterCount >= 2 && emphasisChar == ':')
+                {
+                    return new CustomContainerInline();
+                }
+                return null;
+            });
+        }        
+    }
+
+    public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
+    {
+        if (renderer is HtmlRenderer htmlRenderer)
+        {
+            if (!htmlRenderer.ObjectRenderers.Contains<CustomContainerRenderers>())
+            {
+                // Must be inserted before CodeBlockRenderer
+                htmlRenderer.ObjectRenderers.Insert(0, new CustomContainerRenderers
+                {
+                    Renderers =
+                    {
+                        ["sh"] = new CopyContainerRenderer
+                        {
+                            Class = "not-prose sh-copy cp",
+                            BoxClass = "bg-gray-800",
+                            IconClass = "bg-green-600",
+                            TextClass = "whitespace-pre text-base text-gray-100",
+                        },
+                        ["nuget"] = new CopyContainerRenderer
+                        {
+                            Class = "not-prose nuget-copy cp",
+                            IconClass = "bg-sky-500",
+                        },
+                        ["tip"] = new CustomInfoRenderer(),
+                        ["info"] = new CustomInfoRenderer
+                        {
+                            Class = "info",
+                            Title = "INFO",
+                        },
+                        ["warning"] = new CustomInfoRenderer
+                        {
+                            Class = "warning",
+                            Title = "WARNING",
+                        },
+                        ["danger"] = new CustomInfoRenderer
+                        {
+                            Class = "danger",
+                            Title = "DANGER",
+                        },
+                    }
+                });
+            }
+            
+            htmlRenderer.ObjectRenderers.TryRemove<HtmlCustomContainerInlineRenderer>();
+            // Must be inserted before EmphasisRenderer
+            htmlRenderer.ObjectRenderers.Insert(0, new CustomContainerInlineRenderers
+            {
+                Renderers =
+                {
+                    ["include"] = new IncludeContainerInlineRenderer(),
+                }
+            });
+        }
+    }
+}
+
 public class HeadingsMapExtension : IMarkdownExtension
 {
     public void Setup(MarkdownPipelineBuilder pipeline)
@@ -389,6 +594,12 @@ public static class MarkdigExtensions
     public static MarkdownPipelineBuilder UseHeadingsMap(this MarkdownPipelineBuilder pipeline)
     {
         pipeline.Extensions.AddIfNotAlready(new HeadingsMapExtension());
+        return pipeline;
+    }
+    
+    public static MarkdownPipelineBuilder UseCustomContainers(this MarkdownPipelineBuilder pipeline)
+    {
+        pipeline.Extensions.AddIfNotAlready(new ContainerExtensions());
         return pipeline;
     }
 }
