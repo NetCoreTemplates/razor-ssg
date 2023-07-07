@@ -1,0 +1,23 @@
+﻿@page "/includes/{**slug}"
+@model MyApp.Page
+@inject MarkdownPages Markdown
+
+@implements IRenderStatic<MyApp.Page>
+@functions {
+    public List<Page> GetStaticProps(RenderContext ctx)
+    {
+        var markdown = ctx.Resolve<MarkdownPages>();
+        return markdown.GetVisiblePages("_includes", allDirectories:true).Map(page => new Page { Slug = page.Slug!.Replace("_includes/","") });
+    }
+}
+
+@{
+    Layout = "_LayoutEmpty";
+    var slug = $"_includes/{Model.Slug.LeftPart('.')}";
+    var pages = Markdown.GetVisiblePages("_includes", allDirectories:true);
+    var doc = pages.FirstOrDefault(x => x.Slug == slug);
+    if (doc?.Preview != null)
+    {
+        @Html.Raw(doc.Preview)
+    }
+}
