@@ -12,6 +12,18 @@ using ServiceStack.Text;
 
 namespace Ssg;
 
+public class MarkdigConfig
+{
+    public static MarkdigConfig Instance { get; private set; } = new();
+    public Action<MarkdownPipelineBuilder>? ConfigurePipeline { get; set; }
+    public Action<ContainerExtensions> ConfigureContainers { get; set; } = x => x.AddBuiltInContainers();
+
+    public static void Set(MarkdigConfig config)
+    {
+        Instance = config;
+    }
+}
+
 public class MarkdownFileBase
 {
     public string Path { get; set; } = default!;
@@ -92,16 +104,18 @@ public abstract class MarkdownPagesBase<T> : IMarkdownPages where T : MarkdownFi
     }
     
     public IVirtualFiles VirtualFiles { get; set; } = default!;
-    
+
     public virtual MarkdownPipeline CreatePipeline()
     {
-        var pipeline = new MarkdownPipelineBuilder()
+        var builder = new MarkdownPipelineBuilder()
             .UseYamlFrontMatter()
             .UseAdvancedExtensions()
             .UseAutoLinkHeadings()
             .UseHeadingsMap()
-            .UseCustomContainers()
-            .Build();
+            .UseCustomContainers(MarkdigConfig.Instance.ConfigureContainers);
+        MarkdigConfig.Instance.ConfigurePipeline?.Invoke(builder);
+        
+        var pipeline = builder.Build();
         return pipeline;
     }
 
@@ -369,6 +383,65 @@ public class CustomInfoRenderer : HtmlObjectRenderer<CustomContainer>
     }
 }
 
+/// <summary>
+/// Render HTML-encoded inline contents inside a &gt;pre class="pre"/&lt;
+/// </summary>
+public class PreContainerRenderer : HtmlObjectRenderer<CustomContainer>
+{
+    public string Class { get; set; } = "pre";
+    protected override void Write(HtmlRenderer renderer, CustomContainer obj)
+    {
+        renderer.EnsureLine();
+        if (renderer.EnableHtmlForBlock)
+        {
+            var attrs = obj.TryGetAttributes();
+            if (attrs != null && attrs.Classes.IsEmpty())
+            {
+                attrs.Classes ??= new();
+                attrs.Classes.Add(Class);
+            }
+            renderer.Write("<pre").WriteAttributes(obj).Write('>');
+            renderer.WriteLine();
+        }
+
+        if (obj.FirstOrDefault() is LeafBlock leafBlock)
+        {
+            // There has to be an official API to resolve the original text from a renderer?
+            string? FindOriginalText(ContainerBlock? block)
+            {
+                if (block != null)
+                {
+                    if (block.FirstOrDefault(x => x is LeafBlock { Lines.Count: > 0 }) is LeafBlock first)
+                        return first.Lines.Lines[0].Slice.Text;
+                    return FindOriginalText(block.Parent);
+                }
+                return null;
+            }
+            var originalSource = leafBlock.Lines.Count > 0
+                ? leafBlock.Lines.Lines[0].Slice.Text
+                : FindOriginalText(obj.Parent);
+            if (originalSource == null)
+            {
+                HostContext.Resolve<ILogger<PreContainerRenderer>>().LogError("Could not find original Text");
+                renderer.WriteLine($"Could not find original Text");
+            }
+            else
+            {
+                renderer.WriteEscape(originalSource.AsSpan().Slice(leafBlock.Span.Start, leafBlock.Span.Length));
+            }
+        }
+        else
+        {
+            renderer.WriteChildren(obj);
+        }
+        
+        if (renderer.EnableHtmlForBlock)
+        {
+            renderer.WriteLine("</pre>");
+        }
+    }
+}
+
 public class IncludeContainerInlineRenderer : HtmlObjectRenderer<CustomContainerInline>
 {
     protected override void Write(HtmlRenderer renderer, CustomContainerInline obj)
@@ -411,10 +484,12 @@ public class IncludeContainerInlineRenderer : HtmlObjectRenderer<CustomContainer
 
 public class CustomContainerRenderers : HtmlObjectRenderer<CustomContainer>
 {
-    public Dictionary<string, HtmlObjectRenderer<CustomContainer>> Renderers { get; set; } = new();
+    public CustomContainerRenderers(ContainerExtensions extensions) => Extensions = extensions;
+    public ContainerExtensions Extensions { get; }
+    
     protected override void Write(HtmlRenderer renderer, CustomContainer obj)
     {
-        var useRenderer = obj.Info != null && Renderers.TryGetValue(obj.Info, out var customRenderer)
+        var useRenderer = obj.Info != null && Extensions.BlockContainers.TryGetValue(obj.Info, out var customRenderer)
             ? customRenderer
             : new HtmlCustomContainerRenderer();
         useRenderer.Write(renderer, obj);
@@ -423,13 +498,15 @@ public class CustomContainerRenderers : HtmlObjectRenderer<CustomContainer>
 
 public class CustomContainerInlineRenderers : HtmlObjectRenderer<CustomContainerInline>
 {
-    public Dictionary<string, HtmlObjectRenderer<CustomContainerInline>> Renderers { get; set; } = new();
+    public CustomContainerInlineRenderers(ContainerExtensions extensions) => Extensions = extensions;
+    public ContainerExtensions Extensions { get; }
+    
     protected override void Write(HtmlRenderer renderer, CustomContainerInline obj)
     {
         var firstWord = obj.FirstChild is LiteralInline literalInline
             ? literalInline.Content.AsSpan().LeftPart(' ').ToString()
             : null;
-        var useRenderer = firstWord != null && Renderers.TryGetValue(firstWord, out var customRenderer)
+        var useRenderer = firstWord != null && Extensions.InlineContainers.TryGetValue(firstWord, out var customRenderer)
             ? customRenderer
             : new HtmlCustomContainerInlineRenderer();
         useRenderer.Write(renderer, obj);
@@ -438,6 +515,63 @@ public class CustomContainerInlineRenderers : HtmlObjectRenderer<CustomContainer
 
 public class ContainerExtensions : IMarkdownExtension
 {
+    public Dictionary<string, HtmlObjectRenderer<CustomContainer>> BlockContainers { get; set; } = new();
+    public Dictionary<string, HtmlObjectRenderer<CustomContainerInline>> InlineContainers { get; set; } = new();
+
+    public void AddBlockContainer(string name, HtmlObjectRenderer<CustomContainer> container) =>
+        BlockContainers[name] = container;
+    public void AddInlineContainer(string name, HtmlObjectRenderer<CustomContainerInline> container) =>
+        InlineContainers[name] = container;
+
+    public void AddBuiltInContainers(string[]? exclude = null)
+    {
+        BlockContainers = new()
+        {
+            ["copy"] = new CopyContainerRenderer
+            {
+                Class = "not-prose copy cp",
+                IconClass = "bg-sky-500",
+            },
+            ["sh"] = new CopyContainerRenderer
+            {
+                Class = "not-prose sh-copy cp",
+                BoxClass = "bg-gray-800",
+                IconClass = "bg-green-600",
+                TextClass = "whitespace-pre text-base text-gray-100",
+            },
+            ["tip"] = new CustomInfoRenderer(),
+            ["info"] = new CustomInfoRenderer
+            {
+                Class = "info",
+                Title = "INFO",
+            },
+            ["warning"] = new CustomInfoRenderer
+            {
+                Class = "warning",
+                Title = "WARNING",
+            },
+            ["danger"] = new CustomInfoRenderer
+            {
+                Class = "danger",
+                Title = "DANGER",
+            },
+            ["pre"] = new PreContainerRenderer(),
+        };
+        InlineContainers = new()
+        {
+            ["include"] = new IncludeContainerInlineRenderer(),
+        };
+        
+        if (exclude != null)
+        {
+            foreach (var name in exclude)
+            {
+                BlockContainers.TryRemove(name, out _);
+                InlineContainers.TryRemove(name, out _);
+            }
+        }
+    }
+    
     public void Setup(MarkdownPipelineBuilder pipeline)
     {
         if (!pipeline.BlockParsers.Contains<CustomContainerParser>())
@@ -469,51 +603,11 @@ public class ContainerExtensions : IMarkdownExtension
             if (!htmlRenderer.ObjectRenderers.Contains<CustomContainerRenderers>())
             {
                 // Must be inserted before CodeBlockRenderer
-                htmlRenderer.ObjectRenderers.Insert(0, new CustomContainerRenderers
-                {
-                    Renderers =
-                    {
-                        ["sh"] = new CopyContainerRenderer
-                        {
-                            Class = "not-prose sh-copy cp",
-                            BoxClass = "bg-gray-800",
-                            IconClass = "bg-green-600",
-                            TextClass = "whitespace-pre text-base text-gray-100",
-                        },
-                        ["nuget"] = new CopyContainerRenderer
-                        {
-                            Class = "not-prose nuget-copy cp",
-                            IconClass = "bg-sky-500",
-                        },
-                        ["tip"] = new CustomInfoRenderer(),
-                        ["info"] = new CustomInfoRenderer
-                        {
-                            Class = "info",
-                            Title = "INFO",
-                        },
-                        ["warning"] = new CustomInfoRenderer
-                        {
-                            Class = "warning",
-                            Title = "WARNING",
-                        },
-                        ["danger"] = new CustomInfoRenderer
-                        {
-                            Class = "danger",
-                            Title = "DANGER",
-                        },
-                    }
-                });
+                htmlRenderer.ObjectRenderers.Insert(0, new CustomContainerRenderers(this));
             }
-            
             htmlRenderer.ObjectRenderers.TryRemove<HtmlCustomContainerInlineRenderer>();
             // Must be inserted before EmphasisRenderer
-            htmlRenderer.ObjectRenderers.Insert(0, new CustomContainerInlineRenderers
-            {
-                Renderers =
-                {
-                    ["include"] = new IncludeContainerInlineRenderer(),
-                }
-            });
+            htmlRenderer.ObjectRenderers.Insert(0, new CustomContainerInlineRenderers(this));
         }
     }
 }
@@ -597,9 +691,11 @@ public static class MarkdigExtensions
         return pipeline;
     }
     
-    public static MarkdownPipelineBuilder UseCustomContainers(this MarkdownPipelineBuilder pipeline)
+    public static MarkdownPipelineBuilder UseCustomContainers(this MarkdownPipelineBuilder pipeline, Action<ContainerExtensions>? configure = null)
     {
-        pipeline.Extensions.AddIfNotAlready(new ContainerExtensions());
+        var ext = new ContainerExtensions();
+        configure?.Invoke(ext);
+        pipeline.Extensions.AddIfNotAlready(ext);
         return pipeline;
     }
 }

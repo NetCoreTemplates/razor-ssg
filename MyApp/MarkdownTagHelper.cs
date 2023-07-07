@@ -26,20 +26,25 @@ public class MarkdownTagHelper : TagHelper
             .Build();
 
         var writer = new StringWriter();
-        var cls = output.Attributes["class"]?.Value ?? "";
+        var cls = output.Attributes["class"]?.Value ?? "prose";
         await writer.WriteAsync($"<div class=\"{cls}\">");
         var renderer = new Markdig.Renderers.HtmlRenderer(writer);
         pipeline.Setup(renderer);
 
-        var include = output.Attributes["include"]?.Value as string ?? "";
+        var include = output.Attributes["include"]?.Value?.ToString() ?? "";
         if (!string.IsNullOrEmpty(include))
         {
             if (include.EndsWith(".md"))
             {
                 var markdown = HostContext.Resolve<MarkdownPages>();
-                var slug = include.TrimStart('/').LeftPart('.');
-                var doc = markdown.GetVisiblePages("includes", allDirectories: true)
-                    .FirstOrDefault(x => x.Slug == slug);
+                // default relative path to _includes/
+                include = include[0] != '/'
+                    ? "_includes/" + include
+                    : include.TrimStart('/');
+                var prefix = include.LeftPart('/');
+                var slug = include.LeftPart('.');
+                var allIncludes = markdown.GetVisiblePages(prefix, allDirectories: true);
+                var doc = allIncludes.FirstOrDefault(x => x.Slug == slug);
                 if (doc != null)
                 {
                     renderer.WriteLine(doc.Preview!);
