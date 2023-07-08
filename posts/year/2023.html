@@ -7,6 +7,8 @@
     <title>2023 posts</title>
     <base href="/" />
     <script>
+    if (location.search === "?dark") localStorage.setItem('color-scheme','dark') 
+    if (location.search === "?light") localStorage.removeItem('color-scheme') 
     const cls = document.querySelector('html').classList
     if (localStorage.getItem('color-scheme') === 'dark')
         cls.add('dark')
