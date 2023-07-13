@@ -119,10 +119,18 @@ public class MarkdownPages : MarkdownPagesBase<MarkdownFileInfo>
             foreach (var page in allPages.Where(x => x.Group == group).OrderBy(x => x.Order))
             {
                 menuItem.Children ??= new();
+                var link = page.Slug!;
+                if (link.EndsWith("/index"))
+                {
+                    link = link.Substring(0, link.Length - "index".Length);
+                    // Hide /index from auto Sidebar as it's included in Docs Page Sidebar Header by default
+                    if (link.Trim('/') == folder)
+                        continue;
+                }
                 menuItem.Children.Add(new()
                 {
                     Text = page.Title!,
-                    Link = page.Slug!,
+                    Link = link,
                 });
             }
         }
