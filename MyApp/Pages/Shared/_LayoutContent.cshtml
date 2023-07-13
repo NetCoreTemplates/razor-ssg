@@ -23,6 +23,7 @@
         ["@servicestack/client"] = ("./lib/mjs/servicestack-client.mjs", "./lib/mjs/servicestack-client.min.mjs"),
         ["@servicestack/vue"]    = ("./lib/mjs/servicestack-vue.mjs",    "./lib/mjs/servicestack-vue.min.mjs"),
     })
+    @await RenderSectionAsync("head", required: false)
 </head>
 <body class="bg-white dark:bg-black dark:text-white">
 

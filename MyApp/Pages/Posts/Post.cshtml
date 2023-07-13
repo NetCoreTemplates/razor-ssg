@@ -1,6 +1,7 @@
 @page "/posts/{slug}"
 @model PostModel
 @inject MarkdownBlog Blog
+@inject AppConfig AppConfig
 
 @implements IRenderStatic<PostModel>
 @functions {
@@ -21,7 +22,25 @@
     var author = Blog.Authors.FirstOrDefault(x => x.Name == Model.Author);
 }
 
+@section head {
+    <meta name="twitter:card" content="@Model.Summary" />
+    @if (AppConfig.SiteTwitter != null)
+    {
+    <meta name="twitter:site" content="@AppConfig.SiteTwitter" />
+    }
+    @if (author?.TwitterUrl != null)
+    {
+        var twitterUser = "@" + author.TwitterUrl.LastRightPart('/');
+    <meta name="twitter:creator" content="@twitterUser" />
+    }
+    <meta property="og:url" content="@AppConfig.PublicBaseUrl.CombineWith("posts",Model.Slug)" />
+    <meta property="og:title" content="@Model.Title" />
+    <meta property="og:description" content="@Model.Summary" />
+    <meta property="og:image" content="@Model.Splash" />
+}
+
 <link rel="stylesheet" href="css/typography.css">
+<link rel="stylesheet" href="css/lite-yt-embed.css">
 
 <div class="container px-5 mb-32 mx-auto">
     @if (!string.IsNullOrEmpty(Model.Title))
@@ -125,3 +144,4 @@ init()
 <link rel="stylesheet" href="//unpkg.com/@@highlightjs/cdn-assets/styles/atom-one-dark.min.css">
 <script src="//unpkg.com/@@highlightjs/cdn-assets/highlight.min.js"></script>
 <script>hljs.highlightAll()</script>
+<script src="lib/js/lite-yt-embed.js"></script>

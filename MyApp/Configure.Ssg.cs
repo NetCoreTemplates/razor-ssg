@@ -89,6 +89,7 @@ public class AppConfig
     public string LocalBaseUrl { get; set; }
     public string PublicBaseUrl { get; set; }
     public string? GitPagesBaseUrl { get; set; }
+    public string? SiteTwitter { get; set; }
     public List<AuthorInfo> Authors { get; set; } = new();
 }
 
