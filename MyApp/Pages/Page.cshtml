@@ -1,6 +1,7 @@
 ﻿@page "/{slug}"
 @model MyApp.Page
 @inject MarkdownPages Markdown
+@inject AppConfig AppConfig
 
 @implements IRenderStatic<MyApp.Page>
 @functions {
@@ -23,6 +24,12 @@
             ? null
             : doc.Layout;
     ViewData["Title"] = doc.Title;
+}
+
+@section head {
+    @await Html.PartialAsync("MetaHeaders", new Shared.MetaHeaders(doc) {
+        CanonicalUrl = AppConfig.PublicBaseUrl.CombineWith(doc.Slug),
+    })
 }
 
 <link rel="stylesheet" href="css/typography.css">

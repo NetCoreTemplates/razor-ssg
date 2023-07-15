@@ -1,0 +1,27 @@
+﻿@page
+@model MyApp.Pages.Shared.MetaHeaders
+@inject AppConfig AppConfig
+@{
+    var doc = Model.Doc;
+    var image = Model.Image ?? doc.Image;
+}
+@if (AppConfig.SiteTwitter != null)
+{
+<meta name="twitter:site" content="@AppConfig.SiteTwitter" />
+}
+@if (Model.Author?.TwitterUrl != null)
+{
+    var twitterUser = "@" + Model.Author.TwitterUrl.LastRightPart('/');
+    <meta name="twitter:creator" content="@twitterUser" />
+}
+@if (doc.Summary != null)
+{
+    <meta name="twitter:card" content="@doc.Summary" />
+    <meta property="og:description" content="@doc.Summary" />
+}
+    <meta property="og:url" content="@Model.CanonicalUrl" />
+    <meta property="og:title" content="@doc.Title" />
+@if (image != null)
+{
+    <meta property="og:image" content="@image" />
+}

@@ -8,66 +8,65 @@
     public List<PostModel> GetStaticProps(RenderContext ctx)
     {
         var blog = ctx.Resolve<MarkdownBlog>();
-        return blog.VisiblePosts.Map(doc => new PostModel(blog).Populate(doc));
+        return blog.VisiblePosts.Map(doc => new PostModel { Slug = doc.Slug });
     }
 }
 
 @{
-    if (Model.Layout != null) 
-        Layout = Model.Layout == "none"
+    var doc = Blog.FindPostBySlug(Model.Slug!);
+    if (doc == null)
+    {
+        Response.Redirect("/404");
+        return;
+    }
+    if (doc.Layout != null) 
+        Layout = doc.Layout == "none"
             ? null
-            : Model.Layout;
-    
-    ViewData["Title"] = Model.Title;
-    var author = Blog.Authors.FirstOrDefault(x => x.Name == Model.Author);
+            : doc.Layout;
+    ViewData["Title"] = doc.Title;
+
+    var author = Blog.Authors.FirstOrDefault(x => x.Name == doc.Author);
+    var image = doc.Image ?? Blog.FallbackSplashUrl;
 }
 
 @section head {
-    <meta name="twitter:card" content="@Model.Summary" />
-    @if (AppConfig.SiteTwitter != null)
-    {
-    <meta name="twitter:site" content="@AppConfig.SiteTwitter" />
-    }
-    @if (author?.TwitterUrl != null)
-    {
-        var twitterUser = "@" + author.TwitterUrl.LastRightPart('/');
-    <meta name="twitter:creator" content="@twitterUser" />
-    }
-    <meta property="og:url" content="@AppConfig.PublicBaseUrl.CombineWith("posts",Model.Slug)" />
-    <meta property="og:title" content="@Model.Title" />
-    <meta property="og:description" content="@Model.Summary" />
-    <meta property="og:image" content="@Model.Splash" />
+    @await Html.PartialAsync("MetaHeaders", new Shared.MetaHeaders(doc) {
+        CanonicalUrl = AppConfig.PublicBaseUrl.CombineWith("posts", doc.Slug),
+        Author = author,
+        Image = image, 
+    })
 }
 
 <link rel="stylesheet" href="css/typography.css">
 <link rel="stylesheet" href="css/lite-yt-embed.css">
 
 <div class="container px-5 mb-32 mx-auto">
-    @if (!string.IsNullOrEmpty(Model.Title))
+    @if (!string.IsNullOrEmpty(doc.Title))
     {
-        var authorHref = Blog.GetAuthorLink(Model.Author);
+        var authorHref = Blog.GetAuthorLink(author?.Name);
+        var authorProfileUrl = Blog.GetAuthorProfileUrl(doc.Author);
         <article class="mt-20">
             <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
-                @Model.Title
+                @doc.Title
             </h1>
             <div class="flex justify-between">
                 <div class="md:mb-12 flex items-center">
                     @if (authorHref != null)
                     {
-                        <a href="@authorHref"><img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="@Model.AuthorProfileUrl"></a>
+                        <a href="@authorHref"><img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="@authorProfileUrl"></a>
                     }
                     else
                     {
-                        <img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="@Model.AuthorProfileUrl">
+                        <img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="@authorProfileUrl">
                     }
                     <div class="flex flex-col">
                         @if (authorHref != null)
                         {
-                            <a class="text-xl font-semibold hover:underline" href="@Blog.GetAuthorLink(Model.Author)">@Model.Author</a>
+                            <a class="text-xl font-semibold hover:underline" href="@authorHref">@author!.Name</a>
                         }
                         else
                         {
-                            <span class="text-xl font-semibold">@Model.Author</span>
+                            <span class="text-xl font-semibold">@author!.Name</span>
                         }
                         @if (author?.GitHubUrl != null || author?.TwitterUrl != null)
                         {
@@ -100,28 +99,28 @@
             </div>
             <div class="mb-8 md:mb-16 sm:mx-0">
                 <div class="sm:mx-0">
-                    <img src="@Model.Splash" alt="@Model.Title Background" class="shadow-small">
+                    <img src="@image" alt="@doc.Title Background" class="shadow-small">
                 </div>
             </div>
             <div class="mb-4 max-w-3xl mx-auto flex flex-wrap">
-                @foreach (var tag in Model.Tags)
+                @foreach (var tag in doc.Tags)
                 {
                     <a href="@Blog.GetTagLink(tag)" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">@tag</a>
                 }
             </div>
-            @if (Model.Date != null)
+            @if (doc.Date != null)
             {
                 <div class="max-w-3xl mx-auto">
                     <div class="mb-6 text-lg text-gray-500">
-                        <time datetime="@Blog.GetDateTimestamp(Model.Date)">@Blog.GetDateLabel(Model.Date)</time>
+                        <time datetime="@Blog.GetDateTimestamp(doc.Date)">@Blog.GetDateLabel(doc.Date)</time>
                         <span aria-hidden="true">&middot;</span>
-                        <span>@Blog.MinutesToRead(Model.WordCount) min read</span>
+                        <span>@Blog.MinutesToRead(doc.WordCount) min read</span>
                     </div>
                 </div>
             }
             <div class="max-w-3xl mx-auto">
                 <div class="prose lg:prose-xl max-w-none mb-32">
-                    @Html.Raw(Model.HtmlContent)
+                    @Html.Raw(doc.Preview)
                 </div>
             </div>
         </article>
@@ -144,4 +143,4 @@ init()
 <link rel="stylesheet" href="//unpkg.com/@@highlightjs/cdn-assets/styles/atom-one-dark.min.css">
 <script src="//unpkg.com/@@highlightjs/cdn-assets/highlight.min.js"></script>
 <script>hljs.highlightAll()</script>
-<script src="lib/js/lite-yt-embed.js"></script>
+<script src="js/lite-yt-embed.js"></script>
