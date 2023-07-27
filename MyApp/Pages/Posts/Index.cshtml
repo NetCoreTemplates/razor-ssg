@@ -1,9 +1,9 @@
 @page "/posts/"
 @attribute [RenderStatic]
 @inject MarkdownBlog Blog
+@inject AppConfig AppConfig
 @{
     ViewData["Title"] = "Blog";
-    var subTitle = "Writing on software design, company building, and the aerospace industry.";
 
     var allPosts = Blog.GetPosts();
     var allTags = allPosts.SelectMany(x => x.Tags).Distinct();
@@ -18,7 +18,7 @@
         <div class="h-1/3 bg-white dark:bg-black sm:h-2/3"></div>
     </div>
     <div class="relative mx-auto max-w-7xl">
-        @await Html.PartialAsync("BlogTitle", subTitle)
+        @await Html.PartialAsync("BlogTitle", AppConfig.BlogDescription)
     </div>
     <div class="relative my-4 mx-auto max-w-7xl">
         <div class="flex flex-wrap justify-center">
