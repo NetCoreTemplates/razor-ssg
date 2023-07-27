@@ -1,0 +1,131 @@
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+<channel>
+    <title>From the blog</title>
+    <link>https://razor-ssg.web-templates.io/blog</link>
+    <description>Writing on software design, company building, and the aerospace industry.</description>
+    <image>
+        <url>https://razor-ssg.web-templates.io/img/logo.svg</url>
+        <title>From the blog</title>
+        <link>https://razor-ssg.web-templates.io/blog</link>
+    </image>
+    <generator>razor-ssg</generator>
+    <copyright></copyright>
+    <lastBuildDate>Thu, 27 Jul 2023 10:51:15 GMT</lastBuildDate>
+    <managingEditor>email@example.org</managingEditor>
+    <webMaster>email@example.org</webMaster>
+</channel>
+    <item>
+    <title>Introducing Razor SSG</title>
+    <link>https://razor-ssg.web-templates.io/posts/razor-ssg</link>
+    <author>Lucy Bates</author>
+    <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/razor-ssg</guid>
+    <pubDate>Tue, 28 Mar 2023 00:00:00 GMT</pubDate>
+    <atom:updated>2023-03-28T00:00:00</atom:updated>
+    <category>razor</category>
+    <category>markdown</category>
+    <category>blog</category>
+    <category>dev</category>
+    <description>Create fast, beautiful statically rendered Razor Websites &amp; Blogs</description>
+</item>
+    <item>
+    <title>Simple, Modern JavaScript</title>
+    <link>https://razor-ssg.web-templates.io/posts/javascript</link>
+    <author>Brandon Foley</author>
+    <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/javascript</guid>
+    <pubDate>Tue, 21 Mar 2023 00:00:00 GMT</pubDate>
+    <atom:updated>2023-03-21T00:00:00</atom:updated>
+    <category>js</category>
+    <category>dev</category>
+    <description>Learn about JS Modules, Vue 3 and available rich UI Components</description>
+</item>
+    <item>
+    <title>Getting Started</title>
+    <link>https://razor-ssg.web-templates.io/posts/start</link>
+    <author>Gayle Smith</author>
+    <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/start</guid>
+    <pubDate>Sat, 21 Jan 2023 00:00:00 GMT</pubDate>
+    <atom:updated>2023-01-21T00:00:00</atom:updated>
+    <category>js</category>
+    <category>dev</category>
+    <category>tailwind</category>
+    <description>Found out how to use these template features</description>
+</item>
+    <item>
+    <title>Develop using JetBrains Rider</title>
+    <link>https://razor-ssg.web-templates.io/posts/rider</link>
+    <author>Gayle Smith</author>
+    <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/rider</guid>
+    <pubDate>Wed, 11 Jan 2023 00:00:00 GMT</pubDate>
+    <atom:updated>2023-01-11T00:00:00</atom:updated>
+    <category>c#</category>
+    <category>dev</category>
+    <description>Setting up &amp; exploring development workflow in Rider</description>
+</item>
+    <item>
+    <title>Develop using Visual Studio</title>
+    <link>https://razor-ssg.web-templates.io/posts/vs</link>
+    <author>Lucy Bates</author>
+    <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/vs</guid>
+    <pubDate>Tue, 10 Jan 2023 00:00:00 GMT</pubDate>
+    <atom:updated>2023-01-10T00:00:00</atom:updated>
+    <category>c#</category>
+    <category>dev</category>
+    <description>Exploring development workflow in VS Code and Visual Studio .NET</description>
+</item>
+    <item>
+    <title>Deployment with GitHub Actions</title>
+    <link>https://razor-ssg.web-templates.io/posts/deploy</link>
+    <author>Gayle Smith</author>
+    <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/deploy</guid>
+    <pubDate>Sun, 01 Jan 2023 00:00:00 GMT</pubDate>
+    <atom:updated>2023-01-01T00:00:00</atom:updated>
+    <category>github-actions</category>
+    <category>devops</category>
+    <description>Configuring your GitHub repo for SSH and CDN deployments</description>
+</item>
+    <item>
+    <title>Tailwind Typography</title>
+    <link>https://razor-ssg.web-templates.io/posts/typography</link>
+    <author></author>
+    <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/typography</guid>
+    <pubDate>Sat, 31 Dec 2022 00:00:00 GMT</pubDate>
+    <atom:updated>2022-12-31T00:00:00</atom:updated>
+    <category>tailwind</category>
+    <category>markdown</category>
+    <description>tailwindcss/typography enabled for Markdown pages</description>
+</item>
+    <item>
+    <title>In pursuit of the best value US cloud provider</title>
+    <link>https://razor-ssg.web-templates.io/posts/hetzner-cloud</link>
+    <author>Brandon Foley</author>
+    <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/hetzner-cloud</guid>
+    <pubDate>Tue, 06 Sep 2022 00:00:00 GMT</pubDate>
+    <atom:updated>2022-09-06T00:00:00</atom:updated>
+    <category>dev</category>
+    <category>hosting</category>
+    <category>devops</category>
+    <description>We&#x27;ve been using AWS at ServiceStack for 10&#x2B; years, it&#x27;s served us well but suffers from complex &amp; expensive pricing</description>
+</item>
+    <item>
+    <title>Real-time search with Typesense</title>
+    <link>https://razor-ssg.web-templates.io/posts/typesense</link>
+    <author>Lucy Bates</author>
+    <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/typesense</guid>
+    <pubDate>Mon, 08 Nov 2021 00:00:00 GMT</pubDate>
+    <atom:updated>2021-11-08T00:00:00</atom:updated>
+    <category>dev</category>
+    <category>docs</category>
+    <description>As part of migrating docs to VitePress we&#x27;ve added UX improvements like instant search powered by Typesense!</description>
+</item>
+    <item>
+    <title>Migrating from Jekyll to VitePress</title>
+    <link>https://razor-ssg.web-templates.io/posts/jekyll-to-vitepress</link>
+    <author>Lucy Bates</author>
+    <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/jekyll-to-vitepress</guid>
+    <pubDate>Mon, 01 Nov 2021 00:00:00 GMT</pubDate>
+    <atom:updated>2021-11-01T00:00:00</atom:updated>
+    <category>docs</category>
+    <category>markdown</category>
+    <description>Since Jekyll support has been officially sunset, we decided to migrate our docs site to VitePress</description>
+</item>
+</rss>
