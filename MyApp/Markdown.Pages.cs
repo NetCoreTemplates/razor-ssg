@@ -137,17 +137,4 @@ public class MarkdownPages : MarkdownPagesBase<MarkdownFileInfo>
 
         return sidebar;
     }
-
-    /// <summary>
-    /// Need to escape '{{' and '}}' template literals when using content inside a Vue template 
-    /// </summary>
-    public virtual string? SanitizeVueTemplate(string? content)
-    {
-        if (content == null)
-            return null;
-
-        return content
-            .Replace("{{", "{‎{")
-            .Replace("}}", "}‎}");
-    }
 }
