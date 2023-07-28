@@ -139,8 +139,8 @@
                 </div>
             }
             <div class="max-w-3xl mx-auto">
-                <div class="prose lg:prose-xl max-w-none mb-32">
-                    @Html.Raw(doc.Preview)
+                <div id="post" class="prose lg:prose-xl max-w-none mb-32">
+                    @Html.Raw(Blog.SanitizeVueTemplate(doc.Preview))
                 </div>
             </div>
         </article>
@@ -165,3 +165,9 @@ init()
 <script>hljs.highlightAll()</script>
 <script src="js/lite-yt-embed.js"></script>
 <script src="mjs/docs.mjs" type="module"></script>
+
+<script type="module">
+import { mount } from "app.mjs"
+import App from "./mjs/post.mjs"
+mount('#post', App)
+</script>
