@@ -187,7 +187,7 @@ mountAll()
                     </div>
                 </div>
             <div class="max-w-3xl mx-auto">
-                <div class="prose lg:prose-xl max-w-none mb-32">
+                <div id="post" class="prose lg:prose-xl max-w-none mb-32">
                     <a href="https://www.jetbrains.com/rider/">
 <img src="https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/svg/rider.svg" 
      class="sm:float-left mr-8 w-24 h-24" style="margin-top:0"></a>
@@ -249,6 +249,12 @@ init()
 <script>hljs.highlightAll()</script>
 <script src="js/lite-yt-embed.js"></script>
 <script src="mjs/docs.mjs" type="module"></script>
+
+<script type="module">
+import { mount } from "app.mjs"
+import App from "./mjs/post.mjs"
+mount('#post', App)
+</script>
 
   </main>
 </div>

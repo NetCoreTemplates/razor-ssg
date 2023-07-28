@@ -146,7 +146,7 @@ mountAll()
                     </div>
                 </div>
             <div class="max-w-3xl mx-auto">
-                <div class="prose lg:prose-xl max-w-none mb-32">
+                <div id="post" class="prose lg:prose-xl max-w-none mb-32">
                     <p class="lead">
   Until now, trying to style an article, document, or blog post with Tailwind has been a tedious
   task that required a keen eye for typography and a lot of complex custom CSS.
@@ -226,6 +226,12 @@ init()
 <script>hljs.highlightAll()</script>
 <script src="js/lite-yt-embed.js"></script>
 <script src="mjs/docs.mjs" type="module"></script>
+
+<script type="module">
+import { mount } from "app.mjs"
+import App from "./mjs/post.mjs"
+mount('#post', App)
+</script>
 
     </main>
 </div>

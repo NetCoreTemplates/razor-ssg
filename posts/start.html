@@ -165,7 +165,7 @@ mountAll()
                     </div>
                 </div>
             <div class="max-w-3xl mx-auto">
-                <div class="prose lg:prose-xl max-w-none mb-32">
+                <div id="post" class="prose lg:prose-xl max-w-none mb-32">
                     <h3 id="setup">Setup<a class="header-anchor" href="javascript:;" onclick="location.hash='#setup'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>If project wasn't created with <a href="https://docs.servicestack.net/dotnet-new">x new</a>, ensure postinstall tasks are run with:</p>
 <pre><code class="language-bash">$ npm install
@@ -228,6 +228,12 @@ init()
 <script>hljs.highlightAll()</script>
 <script src="js/lite-yt-embed.js"></script>
 <script src="mjs/docs.mjs" type="module"></script>
+
+<script type="module">
+import { mount } from "app.mjs"
+import App from "./mjs/post.mjs"
+mount('#post', App)
+</script>
 
     </main>
 </div>

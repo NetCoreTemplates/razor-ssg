@@ -171,7 +171,7 @@ mountAll()
                     </div>
                 </div>
             <div class="max-w-3xl mx-auto">
-                <div class="prose lg:prose-xl max-w-none mb-32">
+                <div id="post" class="prose lg:prose-xl max-w-none mb-32">
                     <p>We have <a href="/blog/jekyll-to-vitepress">recently migrated</a> the <a href="https://docs.servicestack.net">ServiceStack Docs</a> website from using Jekyll for static site generation (SSG) to using
 <a href="https://vitepress.vuejs.org">VitePress</a> which enables us to use Vite with Vue 3 components and have an insanely fast hot reload while we update our documentation.</p>
 <p>VitePress is very well suited to documentation sites, and it is one of the primary use cases for VitePress at the time of writing.
@@ -470,6 +470,12 @@ init()
 <script>hljs.highlightAll()</script>
 <script src="js/lite-yt-embed.js"></script>
 <script src="mjs/docs.mjs" type="module"></script>
+
+<script type="module">
+import { mount } from "app.mjs"
+import App from "./mjs/post.mjs"
+mount('#post', App)
+</script>
 
     </main>
 </div>

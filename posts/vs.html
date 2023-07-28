@@ -171,7 +171,7 @@ mountAll()
                     </div>
                 </div>
             <div class="max-w-3xl mx-auto">
-                <div class="prose lg:prose-xl max-w-none mb-32">
+                <div id="post" class="prose lg:prose-xl max-w-none mb-32">
                     <p>A popular alternative development environment to our preferred <a href="rider">JetBrains Rider</a> IDE is to use
 Visual Studio, the primary issue with this is that VS Code is a better IDE with richer support for JavaScript and npm
 projects whilst Visual Studio is a better IDE for C# Projects.</p>
@@ -235,6 +235,12 @@ init()
 <script>hljs.highlightAll()</script>
 <script src="js/lite-yt-embed.js"></script>
 <script src="mjs/docs.mjs" type="module"></script>
+
+<script type="module">
+import { mount } from "app.mjs"
+import App from "./mjs/post.mjs"
+mount('#post', App)
+</script>
 
     </main>
 </div>

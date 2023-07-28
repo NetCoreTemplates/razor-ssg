@@ -196,7 +196,7 @@ mountAll()
                     </div>
                 </div>
             <div class="max-w-3xl mx-auto">
-                <div class="prose lg:prose-xl max-w-none mb-32">
+                <div id="post" class="prose lg:prose-xl max-w-none mb-32">
                     <p>Razor SSG is a Razor Pages powered Markdown alternative to <a href="https://jekyllrb.com/">Ruby's Jekyll</a> &amp;
 <a href="https://nextjs.org">Next.js</a> that's ideal for generating static websites &amp; blogs using C#, Razor Pages &amp; Markdown.</p>
 <h3 id="github-codespaces-friendly">GitHub Codespaces Friendly<a class="header-anchor" href="javascript:;" onclick="location.hash='#github-codespaces-friendly'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
@@ -748,6 +748,12 @@ init()
 <script>hljs.highlightAll()</script>
 <script src="js/lite-yt-embed.js"></script>
 <script src="mjs/docs.mjs" type="module"></script>
+
+<script type="module">
+import { mount } from "app.mjs"
+import App from "./mjs/post.mjs"
+mount('#post', App)
+</script>
 
   </main>
 </div>

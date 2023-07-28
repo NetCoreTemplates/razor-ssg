@@ -164,7 +164,7 @@ mountAll()
                     </div>
                 </div>
             <div class="max-w-3xl mx-auto">
-                <div class="prose lg:prose-xl max-w-none mb-32">
+                <div id="post" class="prose lg:prose-xl max-w-none mb-32">
                     <h1 id="servicestack-github-action-deployments">ServiceStack GitHub Action Deployments<a class="header-anchor" href="javascript:;" onclick="location.hash='#servicestack-github-action-deployments'" aria-label="Permalink">&ZeroWidthSpace;</a></h1>
 <p>The <a href="https://github.com/NetCoreTemplates/razor-tailwind/blob/main/.github/workflows/release.yml">release.yml</a>
 in this template enables GitHub Actions CI deployment to a dedicated server with SSH access.</p>
@@ -266,6 +266,12 @@ init()
 <script>hljs.highlightAll()</script>
 <script src="js/lite-yt-embed.js"></script>
 <script src="mjs/docs.mjs" type="module"></script>
+
+<script type="module">
+import { mount } from "app.mjs"
+import App from "./mjs/post.mjs"
+mount('#post', App)
+</script>
 
     </main>
 </div>
