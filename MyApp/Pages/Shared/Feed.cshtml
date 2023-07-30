@@ -1,5 +1,5 @@
-﻿@page "/feed"
-@attribute [RenderStatic("feed.xml")]
+﻿@page "/feed.xml"
+@attribute [RenderStatic]
 @inject MarkdownBlog Blog
 @inject AppConfig AppConfig
 @{
@@ -24,7 +24,7 @@
     <lastBuildDate>@DateTime.UtcNow.ToString("R")</lastBuildDate>
     <managingEditor>@AppConfig.BlogEmail</managingEditor>
     <webMaster>@AppConfig.BlogEmail</webMaster>
-    <atom:link href="@AppConfig.PublicBaseUrl.CombineWith("feed")" rel="self" type="application/rss+xml" />
+    <atom:link href="@AppConfig.PublicBaseUrl.CombineWith("feed.xml")" rel="self" type="application/rss+xml" />
 @foreach (var post in Blog.GetPosts().Take(10))
 {
     var author = Blog.Authors.FirstOrDefault(x => x.Name == post.Author);
