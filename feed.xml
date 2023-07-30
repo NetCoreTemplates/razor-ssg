@@ -10,10 +10,10 @@
     </image>
     <generator>razor-ssg</generator>
     <copyright></copyright>
-    <lastBuildDate>Sun, 30 Jul 2023 10:54:24 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 30 Jul 2023 11:05:54 GMT</lastBuildDate>
     <managingEditor>email@example.org (Razor SSG)</managingEditor>
     <webMaster>email@example.org (Razor SSG)</webMaster>
-    <atom:link href="https://razor-ssg.web-templates.io/feed" rel="self" type="application/rss+xml" />
+    <atom:link href="https://razor-ssg.web-templates.io/feed.xml" rel="self" type="application/rss+xml" />
     <item>
         <title>Introducing Razor SSG</title>
         <link>https://razor-ssg.web-templates.io/posts/razor-ssg</link>
