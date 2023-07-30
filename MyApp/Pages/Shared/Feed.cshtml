@@ -22,7 +22,7 @@
     <generator>razor-ssg</generator>
     <copyright>@AppConfig.CopyrightOwner</copyright>
     <lastBuildDate>@DateTime.UtcNow.ToString("R")</lastBuildDate>
-    <managingEditor>@AppConfig.BlogEmail&lt;&gt;</managingEditor>
+    <managingEditor>@AppConfig.BlogEmail</managingEditor>
     <webMaster>@AppConfig.BlogEmail</webMaster>
     <atom:link href="@AppConfig.PublicBaseUrl.CombineWith("feed")" rel="self" type="application/rss+xml" />
 @foreach (var post in Blog.GetPosts().Take(10))
@@ -34,7 +34,7 @@
         <author>@(author?.Email ?? author?.Name)</author>
         <guid isPermaLink="false">@AppConfig.PublicBaseUrl.CombineWith("posts", post.Slug)</guid>
         <pubDate>@post.Date!.Value.ToString("R")</pubDate>
-        <atom:updated>@post.Date!.Value.ToString("s")</atom:updated>
+        <atom:updated>@post.Date!.Value.ToString("yyyy-MM-dd'T'HH:mm:ss.fffK")</atom:updated>
         @foreach (var tag in post.Tags.Safe())
         {
         <category>@tag</category>
