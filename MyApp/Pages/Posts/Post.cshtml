@@ -27,6 +27,9 @@
 
     var author = Blog.Authors.FirstOrDefault(x => x.Name == doc.Author);
     var image = doc.Image ?? Blog.FallbackSplashUrl;
+
+    var docMjs = Blog.VirtualFiles.GetFile($"/wwwroot/posts/{doc.Slug}.mjs");
+    var docCss = Blog.VirtualFiles.GetFile($"/wwwroot/posts/{doc.Slug}.css");
 }
 
 @section head {
@@ -40,6 +43,12 @@
 <link rel="stylesheet" href="css/typography.css">
 <link rel="stylesheet" href="css/lite-yt-embed.css">
 
+@{
+    if (docCss != null)
+    {
+        <link rel="stylesheet" href="posts/@(doc.Slug).css">
+    }
+}
 <div class="container px-5 mb-32 mx-auto">
     @if (!string.IsNullOrEmpty(doc.Title))
     {
@@ -168,6 +177,24 @@ init()
 
 <script type="module">
 import { mount } from "app.mjs"
-import App from "./mjs/post.mjs"
+@if (docMjs != null)
+{
+    <text>
+        import App from "./posts/@(doc.Slug).mjs" 
+    </text>
+}
+else
+{
+    <text>
+    const App = {
+        setup() {
+            function nav(url) {
+                window.open(url)
+            }
+            return { nav }
+        }
+    }
+    </text>
+}
 mount('#post', App)
 </script>
