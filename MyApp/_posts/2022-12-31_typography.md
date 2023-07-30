@@ -3,7 +3,7 @@ title: Tailwind Typography
 summary: tailwindcss/typography enabled for Markdown pages
 tags: tailwind,markdown
 image: https://images.unsplash.com/photo-1497250681960-ef046c08a56e?crop=entropy&fit=crop&h=1000&w=2000
-author: Jesse O'Reilly
+author: Lucy Bates
 ---
 
 <p class="lead">
