@@ -22,31 +22,32 @@
     <generator>razor-ssg</generator>
     <copyright>@AppConfig.CopyrightOwner</copyright>
     <lastBuildDate>@DateTime.UtcNow.ToString("R")</lastBuildDate>
-    <managingEditor>@AppConfig.BlogEmail</managingEditor>
+    <managingEditor>@AppConfig.BlogEmail&lt;&gt;</managingEditor>
     <webMaster>@AppConfig.BlogEmail</webMaster>
-</channel>
+    <atom:link href="@AppConfig.PublicBaseUrl.CombineWith("feed")" rel="self" type="application/rss+xml" />
 @foreach (var post in Blog.GetPosts().Take(10))
 {
     var author = Blog.Authors.FirstOrDefault(x => x.Name == post.Author);
     <item>
-    <title>@post.Title</title>
-    @Html.Raw($"<link>{AppConfig.PublicBaseUrl.CombineWith("posts", post.Slug)}</link>")
-    <author>@(author?.Email ?? author?.Name)</author>
-    <guid isPermaLink="false">@AppConfig.PublicBaseUrl.CombineWith("posts", post.Slug)</guid>
-    <pubDate>@post.Date!.Value.ToString("R")</pubDate>
-    <atom:updated>@post.Date!.Value.ToString("s")</atom:updated>
-    @foreach (var tag in post.Tags.Safe())
-    {
-    <category>@tag</category>
-    }
-    @if (post.Summary != null)
-    {
-    <description>@post.Summary</description>
-    }
-    else
-    {
-    <description>@Html.Raw($"<![CDATA[ {post.Preview} ]]>")</description>
-    }
-</item>
+        <title>@post.Title</title>
+        @Html.Raw($"<link>{AppConfig.PublicBaseUrl.CombineWith("posts", post.Slug)}</link>")
+        <author>@(author?.Email ?? author?.Name)</author>
+        <guid isPermaLink="false">@AppConfig.PublicBaseUrl.CombineWith("posts", post.Slug)</guid>
+        <pubDate>@post.Date!.Value.ToString("R")</pubDate>
+        <atom:updated>@post.Date!.Value.ToString("s")</atom:updated>
+        @foreach (var tag in post.Tags.Safe())
+        {
+        <category>@tag</category>
+        }
+        @if (post.Summary != null)
+        {
+        <description>@post.Summary</description>
+        }
+        else
+        {
+        <description>@Html.Raw($"<![CDATA[ {post.Preview} ]]>")</description>
+        }
+    </item>
 }
+</channel>
 </rss>
