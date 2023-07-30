@@ -2851,7 +2851,7 @@ const Ii = { key: 0 }, Di = { class: "md:p-4" }, Es = /* @__PURE__ */ ue({
       }, I = gt(fe.value.selectedColumns || n.selectedColumns);
       if (I.length > 0) {
         let ae = ve.value;
-        ae && I.includes(ae.name) && (I = [ae.name, ...I]);
+        ae && !I.includes(ae.name) && (I = [ae.name, ...I]);
         const pe = Ce.value, Ae = [];
         I.forEach((He) => {
           var il;
