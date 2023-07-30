@@ -10,17 +10,17 @@
     </image>
     <generator>razor-ssg</generator>
     <copyright></copyright>
-    <lastBuildDate>Sun, 30 Jul 2023 10:47:01 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 30 Jul 2023 10:54:24 GMT</lastBuildDate>
     <managingEditor>email@example.org (Razor SSG)</managingEditor>
     <webMaster>email@example.org (Razor SSG)</webMaster>
     <atom:link href="https://razor-ssg.web-templates.io/feed" rel="self" type="application/rss+xml" />
     <item>
         <title>Introducing Razor SSG</title>
         <link>https://razor-ssg.web-templates.io/posts/razor-ssg</link>
-        <author>lucy@email.org</author>
+        <author>lucy@email.org (Lucy Bates)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/razor-ssg</guid>
         <pubDate>Tue, 28 Mar 2023 00:00:00 GMT</pubDate>
-        <atom:updated>2023-03-28T00:00:00.000</atom:updated>
+        <atom:updated>2023-03-28T00:00:00Z</atom:updated>
         <category>razor</category>
         <category>markdown</category>
         <category>blog</category>
@@ -30,10 +30,10 @@
     <item>
         <title>Simple, Modern JavaScript</title>
         <link>https://razor-ssg.web-templates.io/posts/javascript</link>
-        <author>brandon@email.org</author>
+        <author>brandon@email.org (Brandon Foley)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/javascript</guid>
         <pubDate>Tue, 21 Mar 2023 00:00:00 GMT</pubDate>
-        <atom:updated>2023-03-21T00:00:00.000</atom:updated>
+        <atom:updated>2023-03-21T00:00:00Z</atom:updated>
         <category>js</category>
         <category>dev</category>
         <description>Learn about JS Modules, Vue 3 and available rich UI Components</description>
@@ -41,10 +41,10 @@
     <item>
         <title>Getting Started</title>
         <link>https://razor-ssg.web-templates.io/posts/start</link>
-        <author>gayle@email.org</author>
+        <author>gayle@email.org (Gayle Smith)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/start</guid>
         <pubDate>Sat, 21 Jan 2023 00:00:00 GMT</pubDate>
-        <atom:updated>2023-01-21T00:00:00.000</atom:updated>
+        <atom:updated>2023-01-21T00:00:00Z</atom:updated>
         <category>js</category>
         <category>dev</category>
         <category>tailwind</category>
@@ -53,10 +53,10 @@
     <item>
         <title>Develop using JetBrains Rider</title>
         <link>https://razor-ssg.web-templates.io/posts/rider</link>
-        <author>gayle@email.org</author>
+        <author>gayle@email.org (Gayle Smith)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/rider</guid>
         <pubDate>Wed, 11 Jan 2023 00:00:00 GMT</pubDate>
-        <atom:updated>2023-01-11T00:00:00.000</atom:updated>
+        <atom:updated>2023-01-11T00:00:00Z</atom:updated>
         <category>c#</category>
         <category>dev</category>
         <description>Setting up &amp; exploring development workflow in Rider</description>
@@ -64,10 +64,10 @@
     <item>
         <title>Develop using Visual Studio</title>
         <link>https://razor-ssg.web-templates.io/posts/vs</link>
-        <author>lucy@email.org</author>
+        <author>lucy@email.org (Lucy Bates)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/vs</guid>
         <pubDate>Tue, 10 Jan 2023 00:00:00 GMT</pubDate>
-        <atom:updated>2023-01-10T00:00:00.000</atom:updated>
+        <atom:updated>2023-01-10T00:00:00Z</atom:updated>
         <category>c#</category>
         <category>dev</category>
         <description>Exploring development workflow in VS Code and Visual Studio .NET</description>
@@ -75,10 +75,10 @@
     <item>
         <title>Deployment with GitHub Actions</title>
         <link>https://razor-ssg.web-templates.io/posts/deploy</link>
-        <author>gayle@email.org</author>
+        <author>gayle@email.org (Gayle Smith)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/deploy</guid>
         <pubDate>Sun, 01 Jan 2023 00:00:00 GMT</pubDate>
-        <atom:updated>2023-01-01T00:00:00.000</atom:updated>
+        <atom:updated>2023-01-01T00:00:00Z</atom:updated>
         <category>github-actions</category>
         <category>devops</category>
         <description>Configuring your GitHub repo for SSH and CDN deployments</description>
@@ -86,10 +86,10 @@
     <item>
         <title>Tailwind Typography</title>
         <link>https://razor-ssg.web-templates.io/posts/typography</link>
-        <author></author>
+        <author>lucy@email.org (Lucy Bates)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/typography</guid>
         <pubDate>Sat, 31 Dec 2022 00:00:00 GMT</pubDate>
-        <atom:updated>2022-12-31T00:00:00.000</atom:updated>
+        <atom:updated>2022-12-31T00:00:00Z</atom:updated>
         <category>tailwind</category>
         <category>markdown</category>
         <description>tailwindcss/typography enabled for Markdown pages</description>
@@ -97,10 +97,10 @@
     <item>
         <title>In pursuit of the best value US cloud provider</title>
         <link>https://razor-ssg.web-templates.io/posts/hetzner-cloud</link>
-        <author>brandon@email.org</author>
+        <author>brandon@email.org (Brandon Foley)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/hetzner-cloud</guid>
         <pubDate>Tue, 06 Sep 2022 00:00:00 GMT</pubDate>
-        <atom:updated>2022-09-06T00:00:00.000</atom:updated>
+        <atom:updated>2022-09-06T00:00:00Z</atom:updated>
         <category>dev</category>
         <category>hosting</category>
         <category>devops</category>
@@ -109,10 +109,10 @@
     <item>
         <title>Real-time search with Typesense</title>
         <link>https://razor-ssg.web-templates.io/posts/typesense</link>
-        <author>lucy@email.org</author>
+        <author>lucy@email.org (Lucy Bates)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/typesense</guid>
         <pubDate>Mon, 08 Nov 2021 00:00:00 GMT</pubDate>
-        <atom:updated>2021-11-08T00:00:00.000</atom:updated>
+        <atom:updated>2021-11-08T00:00:00Z</atom:updated>
         <category>dev</category>
         <category>docs</category>
         <description>As part of migrating docs to VitePress we&#x27;ve added UX improvements like instant search powered by Typesense!</description>
@@ -120,10 +120,10 @@
     <item>
         <title>Migrating from Jekyll to VitePress</title>
         <link>https://razor-ssg.web-templates.io/posts/jekyll-to-vitepress</link>
-        <author>lucy@email.org</author>
+        <author>lucy@email.org (Lucy Bates)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/jekyll-to-vitepress</guid>
         <pubDate>Mon, 01 Nov 2021 00:00:00 GMT</pubDate>
-        <atom:updated>2021-11-01T00:00:00.000</atom:updated>
+        <atom:updated>2021-11-01T00:00:00Z</atom:updated>
         <category>docs</category>
         <category>markdown</category>
         <description>Since Jekyll support has been officially sunset, we decided to migrate our docs site to VitePress</description>
