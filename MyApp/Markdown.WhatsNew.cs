@@ -50,7 +50,7 @@ public class MarkdownWhatsNew : MarkdownPagesBase<MarkdownFileInfo>
                     doc.Date = releaseDate;
                     doc.Group = releaseVersion;
 
-                    var releaseFeatures = Features.GetOrAdd(releaseVersion, v => new List<MarkdownFileInfo>());
+                    var releaseFeatures = Features.GetOrAdd(dir.Name, v => new List<MarkdownFileInfo>());
                     releaseFeatures.Add(doc);
                 }
                 catch (Exception e)
