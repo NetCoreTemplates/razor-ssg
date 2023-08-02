@@ -67,9 +67,7 @@ hostFiles.forEach(toFile => {
 
 async function fetchDownload(url, toFile, retries) {
     const toDir = path.dirname(toFile)
-    if (!(await fs.stat(toDir)).isDirectory()) {
-        await fs.mkdir(toDir, { recursive: true })
-    }
+    await fs.mkdir(toDir, { recursive: true })
     for (let i=retries; i>=0; --i) {
         try {
             let r = await fetch(url)
