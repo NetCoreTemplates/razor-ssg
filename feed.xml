@@ -10,10 +10,23 @@
     </image>
     <generator>razor-ssg</generator>
     <copyright></copyright>
-    <lastBuildDate>Sat, 19 Aug 2023 12:33:48 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 19 Aug 2023 12:41:21 GMT</lastBuildDate>
     <managingEditor>email@example.org (Razor SSG)</managingEditor>
     <webMaster>email@example.org (Razor SSG)</webMaster>
     <atom:link href="https://razor-ssg.web-templates.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+        <title>New Blogging Features</title>
+        <link>https://razor-ssg.web-templates.io/posts/new-blog-features</link>
+        <author>brandon@email.org (Brandon Foley)</author>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/new-blog-features</guid>
+        <pubDate>Tue, 01 Aug 2023 00:00:00 GMT</pubDate>
+        <atom:updated>2023-08-01T00:00:00Z</atom:updated>
+        <category>razor</category>
+        <category>markdown</category>
+        <category>blog</category>
+        <category>dev</category>
+        <description>Look at the new Blogging features in the latest version of Razor SSG</description>
+    </item>
     <item>
         <title>Introducing Razor SSG</title>
         <link>https://razor-ssg.web-templates.io/posts/razor-ssg</link>
@@ -116,17 +129,6 @@
         <category>dev</category>
         <category>docs</category>
         <description>As part of migrating docs to VitePress we&#x27;ve added UX improvements like instant search powered by Typesense!</description>
-    </item>
-    <item>
-        <title>Migrating from Jekyll to VitePress</title>
-        <link>https://razor-ssg.web-templates.io/posts/jekyll-to-vitepress</link>
-        <author>lucy@email.org (Lucy Bates)</author>
-        <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/jekyll-to-vitepress</guid>
-        <pubDate>Mon, 01 Nov 2021 00:00:00 GMT</pubDate>
-        <atom:updated>2021-11-01T00:00:00Z</atom:updated>
-        <category>docs</category>
-        <category>markdown</category>
-        <description>Since Jekyll support has been officially sunset, we decided to migrate our docs site to VitePress</description>
     </item>
 </channel>
 </rss>

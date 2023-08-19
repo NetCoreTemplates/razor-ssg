@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg" href="img/logo.svg">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://razor-ssg.web-templates.io/feed.xml" />
+    <title>New Blogging Features</title>
+    <base href="/" />
+    <script>
+    const cls = document.querySelector('html').classList
+    if (localStorage.getItem('color-scheme') === 'dark')
+        cls.add('dark')
+    else
+        cls.remove('dark')
+    </script>
+    <link rel="stylesheet" href="css/app.css">
+    
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+{
+    "imports": {
+        "app.mjs": "./mjs/app.mjs",
+        "vue": "./lib/mjs/vue.min.mjs",
+        "@servicestack/client": "./lib/mjs/servicestack-client.min.mjs",
+        "@servicestack/vue": "./lib/mjs/servicestack-vue.min.mjs"
+    }
+}
+</script>
+    
+    <meta name="twitter:site" content="@RazorSsg" />
+    <meta name="twitter:card" content="summary" />
+    <meta property="og:description" content="Look at the new Blogging features in the latest version of Razor SSG" />
+    <meta property="og:url" content="https://razor-ssg.web-templates.io/posts/new-blog-features" />
+    <meta property="og:title" content="New Blogging Features" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" />
+
+
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+
+<!-- Background backdrop, visually different from main _Layout -->
+<svg class="absolute inset-x-0 top-0 -z-10 h-[64rem] w-full stroke-gray-200 [mask-image:radial-gradient(32rem_32rem_at_center,white,transparent)]" aria-hidden="true">
+  <defs>
+    <pattern id="1f932ae7-37de-4c0a-a8b0-a6e3b4d44b84" width="200" height="200" x="50%" y="-1" patternUnits="userSpaceOnUse">
+      <path d="M.5 200V.5H200" fill="none"/>
+    </pattern>
+  </defs>
+  <svg x="50%" y="-1" class="overflow-visible fill-gray-50">
+    <path d="M-200 0h201v201h-201Z M600 0h201v201h-201Z M-400 600h201v201h-201Z M200 800h201v201h-201Z" stroke-width="0"/>
+  </svg>
+  <rect width="100%" height="100%" stroke-width="0" fill="url(#1f932ae7-37de-4c0a-a8b0-a6e3b4d44b84)"/>
+</svg>
+<div class="absolute top-0 left-1/2 right-0 -z-10 -ml-24 transform-gpu overflow-hidden blur-3xl lg:ml-24 xl:ml-48">
+  <svg viewBox="0 0 801 1036" aria-hidden="true" class="w-[50.0625rem]">
+    <path fill="url(#70656b7e-db44-4b9b-b7d2-1f06791bed52)" fill-opacity=".3" d="m282.279 843.371 32.285 192.609-313.61-25.32 281.325-167.289-58.145-346.888c94.5 92.652 277.002 213.246 251.009-45.597C442.651 127.331 248.072 10.369 449.268.891c160.956-7.583 301.235 116.434 351.256 179.39L507.001 307.557l270.983 241.04-495.705 294.774Z"/>
+    <defs>
+      <linearGradient id="70656b7e-db44-4b9b-b7d2-1f06791bed52" x1="508.179" x2="-28.677" y1="-116.221" y2="1091.63" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#9089FC"/>
+        <stop offset="1" stop-color="#FF80B5"/>
+      </linearGradient>
+    </defs>
+  </svg>
+</div>
+
+<header class="top-0 fixed z-50 h-14 bg-white dark:bg-black opacity-90 w-full shadow pr-3">
+    <div class="flex flex-wrap items-center">
+        <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
+            <div class="cursor-pointer">
+                <a class="navbar-brand flex items-center" href="./">
+                    <svg class="w-8 h-8 sm:ml-2 sm:w-12 sm:h-12" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="currentColor" d="M10 6c1.544 1.76 2.276 4.15 2.217 6.61c3.968 1.67 9.924 6.12 11.181 12.39H28C26.051 14.31 14.918 6.77 10 6zm-2 7c4.67 4.913.81 11.582-4 12h18.97C21.5 18.289 11.95 13.533 8 13z"/></svg>
+                    <span class="hidden sm:block text-2xl font-semibold">MyApp</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-grow flex-shrink flex-nowrap justify-end items-center">
+            <nav class="relative flex flex-grow leading-6 font-semibold text-slate-700 dark:text-slate-200">
+                <ul class="flex flex-wrap items-center justify-end w-full m-0 pb-2 sm:pb-0">
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="whatsnew" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    What's New
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="videos" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Videos
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="creatorkit/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Creator Kit
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="blog" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Blog
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="posts/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Archive
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="speaking" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Speaking
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="uses" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Uses
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="about" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    About
+                                </a>
+                            </li>
+                    <li class="relative flex flex-wrap just-fu-start m-0">
+                        <div data-component="DarkModeToggle" class="ml-2 w-10"></div>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</header>
+<script type="module">
+import { mountAll } from "app.mjs"
+mountAll()
+</script>
+
+
+<div class="min-h-screen">
+  <main role="main" class="pt-14 pb-3">
+    
+
+
+
+<link rel="stylesheet" href="css/typography.css">
+<link rel="stylesheet" href="css/lite-yt-embed.css">
+
+<div class="container px-5 mb-32 mx-auto">
+        <article class="mt-20">
+            <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
+                New Blogging Features
+            </h1>
+            <div class="flex justify-between">
+                <div class="md:mb-12 flex items-center">
+                        <a href="posts/author/brandon-foley"><img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="img/authors/author3.svg"></a>
+                    <div class="flex flex-col">
+                            <a class="text-xl font-semibold hover:underline" href="posts/author/brandon-foley">Brandon Foley</a>
+            <ul role="list" class="flex">
+                    <li>
+                        <a title="Follow on GitHub" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://github.com/brandon">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.475 2 2 6.588 2 12.253c0 4.537 2.862 8.369 6.838 9.727.5.09.687-.218.687-.487 0-.243-.013-1.05-.013-1.91C7 20.059 6.35 18.957 6.15 18.38c-.113-.295-.6-1.205-1.025-1.448-.35-.192-.85-.667-.013-.68.788-.012 1.35.744 1.538 1.051.9 1.551 2.338 1.116 2.912.846.088-.666.35-1.115.638-1.371-2.225-.256-4.55-1.14-4.55-5.062 0-1.115.387-2.038 1.025-2.756-.1-.256-.45-1.307.1-2.717 0 0 .837-.269 2.75 1.051.8-.23 1.65-.346 2.5-.346.85 0 1.7.115 2.5.346 1.912-1.333 2.75-1.05 2.75-1.05.55 1.409.2 2.46.1 2.716.637.718 1.025 1.628 1.025 2.756 0 3.934-2.337 4.806-4.562 5.062.362.32.675.936.675 1.897 0 1.371-.013 2.473-.013 2.82 0 .268.188.589.688.486a10.039 10.039 0 0 0 4.932-3.74A10.447 10.447 0 0 0 22 12.253C22 6.588 17.525 2 12 2Z"></path>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a title="Email Brandon Foley" href="mailto:brandon@email.org" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500">
+                            <svg class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M4 20q-.825 0-1.413-.588T2 18V6q0-.825.588-1.413T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.588 1.413T20 20H4Zm8-7L4 8v10h16V8l-8 5Zm0-2l8-5H4l8 5ZM4 8V6v12V8Z"/></svg>
+                        </a>
+                    </li>
+            </ul>
+                    </div>
+                </div>
+                <div class="mb-4 max-w-sm" data-mail="JoinMailingList" data-props="{ submitLabel:'Join our newsletter' }"></div>
+            </div>
+            <div class="mb-8 md:mb-16 sm:mx-0">
+                <div class="sm:mx-0">
+                    <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" alt="New Blogging Features Background" class="shadow-small">
+                </div>
+            </div>
+            <div class="flex max-w-3xl mx-auto justify-between">
+                <div>
+                    <div class="mb-4 flex flex-wrap">
+                            <a href="posts/tagged/razor" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">razor</a>
+                            <a href="posts/tagged/markdown" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">markdown</a>
+                            <a href="posts/tagged/blog" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">blog</a>
+                            <a href="posts/tagged/dev" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">dev</a>
+                    </div>
+                        <div class="max-w-3xl mx-auto">
+                            <div class="mb-6 text-lg text-gray-500">
+                                <time datetime="2023-08-01T00:00:00.0000000">August 1, 2023</time>
+                                <span aria-hidden="true">&middot;</span>
+                                <span>5 min read</span>
+                            </div>
+                        </div>
+                </div>
+                <div class="flex flex-grow-0">
+                    <div data-post="PostVotes"></div>
+                    <a href="javascript:;" onclick="document.location.hash='comments'" class="cursor-pointer" title="Jump to comments">
+                        <svg class="ml-4 text-gray-700 mt-1 w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M3 11.2c0 .1 0 .1 0 0c0 .1 0 .1 0 0zM8.3 1C3.9 1 0 3.6 0 6.6c0 2 1.1 3.7 3 4.7s0 .1 0 .1c-.1 1.3-.9 1.7-.9 1.7L.3 14h2c2.5 0 4.3-1.1 5.1-1.9h.8c4.3 0 7.8-2.5 7.8-5.6S12.6 1 8.3 1zm-.1 10.1H7l-.2.2c-.5.5-1.6 1.4-3.3 1.7c.3-.5.5-1.1.5-2v-.3l-.3-.1C1.9 9.7 1 8.3 1 6.6C1 4.2 4.5 2 8.3 2C12 2 15 4 15 6.6c0 2.4-3.1 4.5-6.8 4.5z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="max-w-3xl mx-auto">
+                <div id="post" class="prose lg:prose-xl max-w-none mb-32">
+                    <p>The Razor SSG template continues to improve support for static generated websites and Blogs with new features for
+creating richer and more discoverable blogs:</p>
+<h3 id="rss-feed">RSS Feed<a class="header-anchor" href="javascript:;" onclick="location.hash='#rss-feed'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Razor SSG websites now generates a valid RSS Feed for its blog to support their readers who'd prefer to read blog posts
+with their favorite RSS reader:</p>
+<div class="not-prose my-8">
+   <a href="https://razor-ssg.web-templates.io/feed.xml">
+      <div class="block flex justify-center shadow hover:shadow-lg rounded overflow-hidden">
+         <img class="max-w-3xl py-8" src="https://docs.servicestack.net/img/pages/release-notes/v6.10/valid-rss.png">
+      </div>
+   </a>
+   <div class="mt-4 flex justify-center">
+      <a class="text-indigo-600 hover:text-indigo-800" href="https://razor-ssg.web-templates.io/feed.xml">https://razor-ssg.web-templates.io/feed.xml</a>
+   </div>
+</div>
+<h3 id="new-markdown-containers">New Markdown Containers<a class="header-anchor" href="javascript:;" onclick="location.hash='#new-markdown-containers'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>All Razor Press's <a href="https://razor-press.web-templates.io/containers">Markdown Containers</a> are also available in Razor SSG
+websites for enabling rich, wrist-friendly consistent markup in your Markdown pages, e.g:</p>
+<pre><code class="language-md">::: info
+This is an info box.
+:::
+
+::: tip
+This is a tip.
+:::
+
+::: warning
+This is a warning.
+:::
+
+::: danger
+This is a dangerous warning.
+:::
+
+:::copy
+Copy Me!
+:::
+</code></pre>
+<div class="info custom-block">
+                <p class="custom-block-title">INFO</p><p>This is an info box.</p>
+</div>
+<div class="tip custom-block">
+                <p class="custom-block-title">TIP</p><p>This is a tip.</p>
+</div>
+<div class="warning custom-block">
+                <p class="custom-block-title">WARNING</p><p>This is a warning.</p>
+</div>
+<div class="danger custom-block">
+                <p class="custom-block-title">DANGER</p><p>This is a dangerous warning.</p>
+</div>
+<div class="not-prose copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-700">
+                    <div class="pl-4 py-1 pb-1.5 align-middle text-lg text-white"><p>Copy Me!</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-sky-500 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<p>See <a href="https://razor-press.web-templates.io/containers">Markdown Containers docs</a> for more examples and how to
+implement your own <a href="https://razor-press.web-templates.io/containers#implementing-block-containers">Custom Markdown containers</a>.</p>
+<h3 id="support-for-includes">Support for Includes<a class="header-anchor" href="javascript:;" onclick="location.hash='#support-for-includes'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Markdown fragments can be added to <code>_pages/_include</code> - a special folder rendered with
+<a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Includes.cshtml">Pages/Includes.cshtml</a> using
+an <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Shared/_LayoutEmpty.cshtml">Empty Layout</a>
+which can be included in other Markdown and Razor Pages or fetched on demand with Ajax.</p>
+<p>Markdown Fragments can be then included inside other markdown documents with the <code>::include</code> inline container, e.g:</p>
+<pre class="pre">
+::include vue/formatters.md::</pre>
+<p>Where it will be replaced with the HTML rendered markdown contents of fragments maintained in <code>_pages/_include</code>.</p>
+<h3 id="include-markdown-in-razor-pages">Include Markdown in Razor Pages<a class="header-anchor" href="javascript:;" onclick="location.hash='#include-markdown-in-razor-pages'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Markdown Fragments can also be included in Razor Pages using the custom <code>MarkdownTagHelper.cs</code> <code>&lt;markdown/&gt;</code> tag:</p>
+<pre><code class="language-html">&lt;markdown include=&quot;vue/formatters.md&quot;&gt;&lt;/markdown&gt;
+</code></pre>
+<h3 id="inline-markdown-in-razor-pages">Inline Markdown in Razor Pages<a class="header-anchor" href="javascript:;" onclick="location.hash='#inline-markdown-in-razor-pages'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Alternatively markdown can be rendered inline with:</p>
+<pre><code class="language-html">&lt;markdown&gt;
+## Using Formatters
+
+Your App and custom templates can also utilize @servicestack/vue's
+[built-in formatting functions](href=&quot;/vue/use-formatters).
+&lt;/markdown&gt;
+</code></pre>
+<h3 id="meta-headers-support-for-twitter-cards-and-improved-seo">Meta Headers support for Twitter cards and Improved SEO<a class="header-anchor" href="javascript:;" onclick="location.hash='#meta-headers-support-for-twitter-cards-and-improved-seo'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Blog Posts and Pages now include additional <code>&lt;meta&gt;</code> HTML Headers to enable support for
+<a href="https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/abouts-cards">Twitter Cards</a> in both
+Twitter and Meta's new <a href="https://threads.net">threads.net</a>, e.g:</p>
+<div class="not-prose my-8 flex justify-center">
+   <a class="block max-w-2xl" href="https://www.threads.net/@servicestack/post/CvIFobPBs5h">
+      <div class="block flex justify-center shadow hover:shadow-lg rounded overflow-hidden">
+         <img class="py-8" src="https://docs.servicestack.net/img/pages/release-notes/v6.10/twitter-cards.png">
+      </div>
+   </a>
+</div>
+<h3 id="posts-can-include-vue-components">Posts can include Vue Components<a class="header-anchor" href="javascript:;" onclick="location.hash='#posts-can-include-vue-components'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Blog Posts can now embed any global Vue Components directly in their Markdown, e.g:</p>
+<pre><code class="language-html">&lt;getting-started template=&quot;razor-ssg&quot;&gt;&lt;/getting-started&gt;
+</code></pre>
+<div class="not-prose my-20 flex justify-center">
+    <getting-started template="razor-ssg"></getting-started>
+</div>
+<p>Just like Pages and Docs they can also include specific JavaScript <strong>.mjs</strong> or <strong>.css</strong> in the <code>/wwwroot/posts</code> folder
+which will only be loaded for that post:</p>
+<p><file-layout :files="{
+wwwroot: { 
+posts: { _: ['<slug>.mjs','<slug>.css'] },
+}
+}"></file-layout></p>
+<p>Now posts that need it can dynamically load large libraries like <a href="https://www.chartjs.org">Chart.js</a> and use it
+inside a custom Vue component by creating a custom <code>/posts/&lt;slug&gt;.mjs</code> that exports what components and features
+your blog post needs, e.g:</p>
+<h4 id="postsrazor-ssg-blog-features.mjs"><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/posts/razor-ssg-blog-features.mjs">/posts/razor-ssg-blog-features.mjs</a><a class="header-anchor" href="javascript:;" onclick="location.hash='#postsrazor-ssg-blog-features.mjs'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<pre><code class="language-js">import { ChartJs } from './chart.mjs'
+
+export default {
+    components: { ChartJs }
+}
+</code></pre>
+<p>In this case it enables support for <a href="https://www.chartjs.org">Chart.js</a> by including a custom Vue component that makes it
+easy to create charts from Vue Components embedded in markdown:</p>
+<h4 id="postschart.mjs"><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/posts/chart.mjs">/posts/Chart.mjs</a><a class="header-anchor" href="javascript:;" onclick="location.hash='#postschart.mjs'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<pre><code class="language-js">import { ref, onMounted } from &quot;vue&quot;
+import { addScript } from &quot;@servicestack/client&quot;
+
+const loadJs = await addScript('https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js')
+
+export const ChartJs = {
+    template:`
+        &lt;div&gt;
+            &lt;canvas ref=&quot;chart&quot;&gt;&lt;/canvas&gt;
+        &lt;/div&gt;
+    `,
+    props:['type','data','options'],
+    setup(props) {
+        const chart = ref()
+        onMounted(async () =&gt; {
+            await loadJs
+
+            const options = props.options || {
+                responsive: true,
+                legend: {
+                    position: &quot;top&quot;
+                }
+            }
+            new Chart(chart.value, {
+                type: props.type || &quot;bar&quot;,
+                data: props.data,
+                options,
+            })
+
+        })
+        return { chart }
+    }
+}
+</code></pre>
+<p>Which allows this post to embed Chart.js charts using the above custom <code>&lt;chart-js&gt;</code> Vue component and a JS Object literal, e.g:</p>
+<pre><code class="language-html">&lt;chart-js :data=&quot;{
+    labels: [
+        //...
+    ],
+    datasets: [
+        //...
+    ]
+}&quot;&gt;&lt;/chart-js&gt;
+</code></pre>
+<p>Which the <a href="https://servicestack.net/posts/bulk-insert-performance">Bulk Insert Performance</a> Blog Post uses extensively to embeds its
+Chart.js Bar charts:</p>
+<p><chart-js :data="{
+labels: [
+'10,000 Rows',
+'100,000 Rows'
+],
+datasets: [
+{
+label: 'SQLite Memory',
+backgroundColor: 'rgba(201, 203, 207, 0.2)',
+borderColor: 'rgb(201, 203, 207)',
+borderWidth: 1,
+data: [17.066, 166.747]
+},
+{
+label: 'SQLite Disk',
+backgroundColor: 'rgba(255, 99, 132, 0.2)',
+borderColor: 'rgb(255, 99, 132)',
+borderWidth: 1,
+data: [20.224, 199.697]
+},
+{
+label: 'PostgreSQL',
+backgroundColor: 'rgba(153, 102, 255, 0.2)',
+borderColor: 'rgb(153, 102, 255)',
+borderWidth: 1,
+data: [14.389, 115.645]
+},
+{
+label: 'MySQL',
+backgroundColor: 'rgba(54, 162, 235, 0.2)',
+borderColor: 'rgb(54, 162, 235)',
+borderWidth: 1,
+data: [64.389, 310.966]
+},
+{
+label: 'MySqlConnector',
+backgroundColor: 'rgba(255, 159, 64, 0.2)',
+borderColor: 'rgb(255, 159, 64)',
+borderWidth: 1,
+data: [64.427, 308.574]
+},
+{
+label: 'SQL Server',
+backgroundColor: 'rgba(255, 99, 132, 0.2)',
+borderColor: 'rgb(255, 99, 132)',
+borderWidth: 1,
+data: [89.821, 835.181]
+}
+]
+}"></chart-js></p>
+<h3 id="improved-discoverability">Improved Discoverability<a class="header-anchor" href="javascript:;" onclick="location.hash='#improved-discoverability'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>To improve discoverability and increase site engagement, bottom of blog posts now include links to other posts by
+the same Blog Author, including links to connect to their preferred social networks and contact preferences:</p>
+<p><img src="https://servicestack.net/img/posts/razor-ssg/other-author-posts.png" alt="" /></p>
+<h3 id="light-and-dark-mode-query-params">Light and Dark Mode Query Params<a class="header-anchor" href="javascript:;" onclick="location.hash='#light-and-dark-mode-query-params'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>You can link to Dark and Light modes of your Razor SSG website with the <code>?light</code> and <code>?dark</code> query string params:</p>
+<ul>
+<li><a href="https://razor-ssg.web-templates.io/?dark">https://razor-ssg.web-templates.io/?dark</a></li>
+<li><a href="https://razor-ssg.web-templates.io/?light">https://razor-ssg.web-templates.io/?light</a></li>
+</ul>
+<h3 id="blog-post-authors-new-threads.net-and-mastodon-links">Blog Post Authors new threads.net and Mastodon links<a class="header-anchor" href="javascript:;" onclick="location.hash='#blog-post-authors-new-threads.net-and-mastodon-links'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>The social links for Blog Post Authors can now include <a href="https://threads.net">threads.net</a> and
+<a href="https://mastodon.social">mastodon.social</a> links in their App configurations:</p>
+<pre><code class="language-json">{
+  &quot;AppConfig&quot;: {
+    &quot;BlogImageUrl&quot;: &quot;https://servicestack.net/img/logo.png&quot;,
+    &quot;Authors&quot;: [
+      {
+        &quot;Name&quot;: &quot;Lucy Bates&quot;,
+        &quot;Email&quot;: &quot;lucy@email.org&quot;,
+        &quot;ProfileUrl&quot;: &quot;img/authors/author1.svg&quot;,
+        &quot;TwitterUrl&quot;: &quot;https://twitter.com/lucy&quot;,
+        &quot;ThreadsUrl&quot;: &quot;https://threads.net/@lucy&quot;,
+        &quot;GitHubUrl&quot;: &quot;https://github.com/lucy&quot;
+        &quot;MastodonUrl&quot;: &quot;https://mastodon.social/@luch&quot;
+      }
+    ]
+  }
+}
+</code></pre>
+
+                </div>
+            </div>
+        </article>
+</div>
+
+<div id="comments" data-post="PostComments" class="my-48"></div>
+
+        <div class="bg-gray-50 py-20">
+            <div class="max-w-3xl mx-auto">
+                <div class="flex justify-between">
+                    <div>
+                            <a href="posts/author/brandon-foley"><img class="w-20 h-20 rounded-full text-cyan-600" src="img/authors/author3.svg"></a>
+
+                        <div class="mt-2 font-medium text-2xl">
+                            Written by Brandon Foley
+                        </div>
+                        <div class="text-gray-600">
+                            I am a programmer at heart. I like to tinker with code and build generic coding structures.
+                        </div>
+                    </div>
+                    <div class="flex items-end">
+            <ul role="list" class="flex">
+                    <li>
+                        <a title="Follow on GitHub" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://github.com/brandon">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.475 2 2 6.588 2 12.253c0 4.537 2.862 8.369 6.838 9.727.5.09.687-.218.687-.487 0-.243-.013-1.05-.013-1.91C7 20.059 6.35 18.957 6.15 18.38c-.113-.295-.6-1.205-1.025-1.448-.35-.192-.85-.667-.013-.68.788-.012 1.35.744 1.538 1.051.9 1.551 2.338 1.116 2.912.846.088-.666.35-1.115.638-1.371-2.225-.256-4.55-1.14-4.55-5.062 0-1.115.387-2.038 1.025-2.756-.1-.256-.45-1.307.1-2.717 0 0 .837-.269 2.75 1.051.8-.23 1.65-.346 2.5-.346.85 0 1.7.115 2.5.346 1.912-1.333 2.75-1.05 2.75-1.05.55 1.409.2 2.46.1 2.716.637.718 1.025 1.628 1.025 2.756 0 3.934-2.337 4.806-4.562 5.062.362.32.675.936.675 1.897 0 1.371-.013 2.473-.013 2.82 0 .268.188.589.688.486a10.039 10.039 0 0 0 4.932-3.74A10.447 10.447 0 0 0 22 12.253C22 6.588 17.525 2 12 2Z"></path>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a title="Email Brandon Foley" href="mailto:brandon@email.org" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500">
+                            <svg class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M4 20q-.825 0-1.413-.588T2 18V6q0-.825.588-1.413T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.588 1.413T20 20H4Zm8-7L4 8v10h16V8l-8 5Zm0-2l8-5H4l8 5ZM4 8V6v12V8Z"/></svg>
+                        </a>
+                    </li>
+            </ul>
+                    </div>
+                </div>
+
+                <div class="mt-4 border-t">
+                    <div class="py-8 text-lg text-gray-700 font-medium">
+                        More from Brandon Foley
+                    </div>
+                    <div class="grid grid-cols-2 gap-8">
+                            <div>
+                                <div class="flex flex-col overflow-hidden">
+                                    <div class="flex-shrink-0">
+                                        <a href="posts/javascript">
+                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1497515114629-f71d768fd07c?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
+                                                Article
+                                            </p>
+                                            <a href="posts/javascript" class="mt-2 block">
+                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="Simple, Modern JavaScript">
+                                                    Simple, Modern JavaScript
+                                                </p>
+                                                <p class="mt-3 text-base text-gray-500">Learn about JS Modules, Vue 3 and available rich UI Components</p>
+                                            </a>
+                                        </div>
+                                        <div class="mt-6 flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <a href="">
+                                                    <span class="sr-only">Brandon Foley</span>
+                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author3.svg" alt="Simple, Modern JavaScript background">
+                                                </a>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-medium text-gray-900">
+                                                        <a href="posts/author/brandon-foley" class="hover:underline">Brandon Foley</a>
+                                                </p>
+                                                <div class="flex space-x-1 text-sm text-gray-500">
+                                                    <time datetime="2023-03-21T00:00:00.0000000">March 21, 2023</time>
+                                                    <span aria-hidden="true">&middot;</span>
+                                                    <span>14 min read</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div>
+                                <div class="flex flex-col overflow-hidden">
+                                    <div class="flex-shrink-0">
+                                        <a href="posts/hetzner-cloud">
+                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
+                                                Article
+                                            </p>
+                                            <a href="posts/hetzner-cloud" class="mt-2 block">
+                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="In pursuit of the best value US cloud provider">
+                                                    In pursuit of the best value US cloud provider
+                                                </p>
+                                                <p class="mt-3 text-base text-gray-500">We&#x27;ve been using AWS at ServiceStack for 10&#x2B; years, it&#x27;s served us well but suffers from complex &amp; expensive pricing</p>
+                                            </a>
+                                        </div>
+                                        <div class="mt-6 flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <a href="">
+                                                    <span class="sr-only">Brandon Foley</span>
+                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author3.svg" alt="In pursuit of the best value US cloud provider background">
+                                                </a>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-medium text-gray-900">
+                                                        <a href="posts/author/brandon-foley" class="hover:underline">Brandon Foley</a>
+                                                </p>
+                                                <div class="flex space-x-1 text-sm text-gray-500">
+                                                    <time datetime="2022-09-06T00:00:00.0000000">September 6, 2022</time>
+                                                    <span aria-hidden="true">&middot;</span>
+                                                    <span>13 min read</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<script type="module">
+import { init } from "app.mjs"
+init()
+</script>
+
+<link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets/styles/atom-one-dark.min.css">
+<script src="//unpkg.com/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script>hljs.highlightAll()</script>
+<script src="js/lite-yt-embed.js"></script>
+<script src="mjs/docs.mjs" type="module"></script>
+
+<script type="module">
+import { mount } from "app.mjs"
+
+    const App = {
+        setup() {
+            function nav(url) {
+                window.open(url)
+            }
+            return { nav }
+        }
+    }
+    mount('#post', App)
+</script>
+
+  </main>
+</div>
+
+<footer class="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+  <div class="mx-auto max-w-7xl overflow-hidden py-20 px-6 sm:py-24 lg:px-8">
+    <nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
+      <div class="pb-6">
+        <a href="whatsnew" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">What's New</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="blog" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Blog</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="posts" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Archive</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="speaking" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Speaking</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="uses" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Uses</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="about" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">About</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="privacy" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Privacy</a>
+      </div>
+    </nav>
+    <div class="mt-10 flex justify-center space-x-10">
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Facebook</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Instagram</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Twitter</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">GitHub</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">YouTube</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+    </div>
+    <p class="mt-10 text-center text-xs leading-5 text-gray-500">
+      <a href="https://github.com/NetCoreTemplates/razor-ssg">powered by razor</a>
+    </p>
+  </div>
+</footer>
+
+<script type="module">
+//TODO: Replace with local and production URLs of CreatorKit .NET App or Remove if not using CreatorKit
+import { mail } from 'https://creatorkit.netcore.io/mjs/components/mail.mjs'
+import { post } from 'https://creatorkit.netcore.io/mjs/components/post.mjs'
+
+mail('[data-mail]', { 
+    mailingLists: ['MonthlyNewsletter'] 
+})
+
+post('[data-post]', {
+    commentLink: { 
+        href: '/community-rules',
+        label: 'read the community rules'
+    } 
+})
+</script>
+
+</body>
+</html>
