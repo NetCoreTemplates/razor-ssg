@@ -314,7 +314,7 @@ posts: { _: ['<slug>.mjs','<slug>.css'] },
 <p>Now posts that need it can dynamically load large libraries like <a href="https://www.chartjs.org">Chart.js</a> and use it
 inside a custom Vue component by creating a custom <code>/posts/&lt;slug&gt;.mjs</code> that exports what components and features
 your blog post needs, e.g:</p>
-<h4 id="postsrazor-ssg-blog-features.mjs"><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/posts/razor-ssg-blog-features.mjs">/posts/razor-ssg-blog-features.mjs</a><a class="header-anchor" href="javascript:;" onclick="location.hash='#postsrazor-ssg-blog-features.mjs'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="postsnew-blog-features.mjs"><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/posts/new-blog-features.mjs">/posts/new-blog-features.mjs</a><a class="header-anchor" href="javascript:;" onclick="location.hash='#postsnew-blog-features.mjs'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-js">import { ChartJs } from './chart.mjs'
 
 export default {
@@ -327,14 +327,10 @@ easy to create charts from Vue Components embedded in markdown:</p>
 <pre><code class="language-js">import { ref, onMounted } from &quot;vue&quot;
 import { addScript } from &quot;@servicestack/client&quot;
 
-const loadJs = await addScript('https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js')
+const loadJs = addScript('https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js')
 
 export const ChartJs = {
-    template:`
-        &lt;div&gt;
-            &lt;canvas ref=&quot;chart&quot;&gt;&lt;/canvas&gt;
-        &lt;/div&gt;
-    `,
+    template:`&lt;div&gt;&lt;canvas ref=&quot;chart&quot;&gt;&lt;/canvas&gt;&lt;/div&gt;`,
     props:['type','data','options'],
     setup(props) {
         const chart = ref()
@@ -595,14 +591,7 @@ init()
 <script type="module">
 import { mount } from "app.mjs"
 
-    const App = {
-        setup() {
-            function nav(url) {
-                window.open(url)
-            }
-            return { nav }
-        }
-    }
+        import App from "./posts/new-blog-features.mjs" 
     mount('#post', App)
 </script>
 
