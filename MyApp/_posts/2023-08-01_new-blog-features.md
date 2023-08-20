@@ -151,7 +151,7 @@ Now posts that need it can dynamically load large libraries like [Chart.js](http
 inside a custom Vue component by creating a custom `/posts/<slug>.mjs` that exports what components and features
 your blog post needs, e.g:
 
-#### [/posts/razor-ssg-blog-features.mjs](https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/posts/razor-ssg-blog-features.mjs)
+#### [/posts/new-blog-features.mjs](https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/posts/new-blog-features.mjs)
 
 ```js
 import { ChartJs } from './chart.mjs'
@@ -170,14 +170,10 @@ easy to create charts from Vue Components embedded in markdown:
 import { ref, onMounted } from "vue"
 import { addScript } from "@servicestack/client"
 
-const loadJs = await addScript('https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js')
+const loadJs = addScript('https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js')
 
 export const ChartJs = {
-    template:`
-        <div>
-            <canvas ref="chart"></canvas>
-        </div>
-    `,
+    template:`<div><canvas ref="chart"></canvas></div>`,
     props:['type','data','options'],
     setup(props) {
         const chart = ref()
