@@ -154,7 +154,7 @@ your blog post needs, e.g:
 #### [/posts/new-blog-features.mjs](https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/posts/new-blog-features.mjs)
 
 ```js
-import { ChartJs } from './chart.mjs'
+import ChartJs from './components/ChartJs.mjs'
 
 export default {
     components: { ChartJs }
@@ -164,15 +164,15 @@ export default {
 In this case it enables support for [Chart.js](https://www.chartjs.org) by including a custom Vue component that makes it
 easy to create charts from Vue Components embedded in markdown:
 
-#### [/posts/Chart.mjs](https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/posts/chart.mjs)
+#### [/posts/components/ChartJs.mjs](https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/posts/components/ChartJs.mjs)
 
 ```js
 import { ref, onMounted } from "vue"
 import { addScript } from "@servicestack/client"
 
-const loadJs = addScript('https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js')
+let loadJs = addScript('https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js')
 
-export const ChartJs = {
+export default {
     template:`<div><canvas ref="chart"></canvas></div>`,
     props:['type','data','options'],
     setup(props) {
