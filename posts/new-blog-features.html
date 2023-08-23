@@ -315,7 +315,7 @@ posts: { _: ['<slug>.mjs','<slug>.css'] },
 inside a custom Vue component by creating a custom <code>/posts/&lt;slug&gt;.mjs</code> that exports what components and features
 your blog post needs, e.g:</p>
 <h4 id="postsnew-blog-features.mjs"><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/posts/new-blog-features.mjs">/posts/new-blog-features.mjs</a><a class="header-anchor" href="javascript:;" onclick="location.hash='#postsnew-blog-features.mjs'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
-<pre><code class="language-js">import { ChartJs } from './chart.mjs'
+<pre><code class="language-js">import ChartJs from './components/ChartJs.mjs'
 
 export default {
     components: { ChartJs }
@@ -323,13 +323,13 @@ export default {
 </code></pre>
 <p>In this case it enables support for <a href="https://www.chartjs.org">Chart.js</a> by including a custom Vue component that makes it
 easy to create charts from Vue Components embedded in markdown:</p>
-<h4 id="postschart.mjs"><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/posts/chart.mjs">/posts/Chart.mjs</a><a class="header-anchor" href="javascript:;" onclick="location.hash='#postschart.mjs'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="postscomponentschartjs.mjs"><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/posts/components/ChartJs.mjs">/posts/components/ChartJs.mjs</a><a class="header-anchor" href="javascript:;" onclick="location.hash='#postscomponentschartjs.mjs'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-js">import { ref, onMounted } from &quot;vue&quot;
 import { addScript } from &quot;@servicestack/client&quot;
 
-const loadJs = addScript('https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js')
+let loadJs = addScript('https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js')
 
-export const ChartJs = {
+export default {
     template:`&lt;div&gt;&lt;canvas ref=&quot;chart&quot;&gt;&lt;/canvas&gt;&lt;/div&gt;`,
     props:['type','data','options'],
     setup(props) {
