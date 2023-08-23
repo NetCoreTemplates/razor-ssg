@@ -134,6 +134,8 @@ Blog Posts can now embed any global Vue Components directly in their Markdown, e
 <getting-started template="razor-ssg"></getting-started>
 ```
 
+#### [/mjs/components/GettingStarted.mjs](https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/mjs/components/GettingStarted.mjs)
+
 <div class="not-prose my-20 flex justify-center">
     <getting-started template="razor-ssg"></getting-started>
 </div>
