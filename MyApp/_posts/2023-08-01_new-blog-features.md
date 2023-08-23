@@ -297,7 +297,7 @@ The social links for Blog Post Authors can now include [threads.net](https://thr
         "ProfileUrl": "img/authors/author1.svg",
         "TwitterUrl": "https://twitter.com/lucy",
         "ThreadsUrl": "https://threads.net/@lucy",
-        "GitHubUrl": "https://github.com/lucy"
+        "GitHubUrl": "https://github.com/lucy",
         "MastodonUrl": "https://mastodon.social/@luch"
       }
     ]
