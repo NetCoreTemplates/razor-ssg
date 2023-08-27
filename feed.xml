@@ -10,12 +10,12 @@
     </image>
     <generator>razor-ssg</generator>
     <copyright></copyright>
-    <lastBuildDate>Wed, 23 Aug 2023 06:31:09 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 27 Aug 2023 09:21:40 GMT</lastBuildDate>
     <managingEditor>email@example.org (Razor SSG)</managingEditor>
     <webMaster>email@example.org (Razor SSG)</webMaster>
     <atom:link href="https://razor-ssg.web-templates.io/feed.xml" rel="self" type="application/rss+xml" />
     <item>
-        <title>New Blogging Features</title>
+        <title>New Blogging Features in Razor SSG</title>
         <link>https://razor-ssg.web-templates.io/posts/new-blog-features</link>
         <author>brandon@email.org (Brandon Foley)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/new-blog-features</guid>
