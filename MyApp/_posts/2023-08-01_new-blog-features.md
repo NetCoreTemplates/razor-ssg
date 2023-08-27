@@ -1,6 +1,6 @@
 ---
 layout: _LayoutContent
-title: New Blogging Features
+title: New Blogging Features in Razor SSG
 summary: Look at the new Blogging features in the latest version of Razor SSG
 tags: razor,markdown,blog,dev
 image: https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?crop=entropy&fit=crop&h=1000&w=2000
@@ -298,7 +298,7 @@ The social links for Blog Post Authors can now include [threads.net](https://thr
         "TwitterUrl": "https://twitter.com/lucy",
         "ThreadsUrl": "https://threads.net/@lucy",
         "GitHubUrl": "https://github.com/lucy",
-        "MastodonUrl": "https://mastodon.social/@luch"
+        "MastodonUrl": "https://mastodon.social/@lucy"
       }
     ]
   }
