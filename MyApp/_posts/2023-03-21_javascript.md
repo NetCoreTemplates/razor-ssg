@@ -1,9 +1,9 @@
 ---
 title: Simple, Modern JavaScript
 summary: Learn about JS Modules, Vue 3 and available rich UI Components
-tags: js,dev
-image: https://images.unsplash.com/photo-1497515114629-f71d768fd07c?crop=entropy&fit=crop&h=1000&w=2000
 author: Brandon Foley
+tags: [js, dev]
+image: https://images.unsplash.com/photo-1497515114629-f71d768fd07c?crop=entropy&fit=crop&h=1000&w=2000
 ---
 
 <svg class="sm:float-left mr-8 w-24 h-24" style="margin-top:0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 630 630">

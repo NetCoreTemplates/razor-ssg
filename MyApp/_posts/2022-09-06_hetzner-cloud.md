@@ -1,8 +1,8 @@
 ---
 title: In pursuit of the best value US cloud provider
-tags: dev,hosting,devops
 summary: We've been using AWS at ServiceStack for 10+ years, it's served us well but suffers from complex & expensive pricing
 author: Brandon Foley
+tags: [dev, hosting, devops]
 image: https://images.unsplash.com/photo-1451187580459-43490279c0fa?crop=entropy&fit=crop&h=1000&w=2000
 ---
 

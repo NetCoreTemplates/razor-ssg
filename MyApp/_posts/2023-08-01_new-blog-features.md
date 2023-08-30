@@ -2,9 +2,9 @@
 layout: _LayoutContent
 title: New Blogging Features in Razor SSG
 summary: Look at the new Blogging features in the latest version of Razor SSG
-tags: razor,markdown,blog,dev
-image: https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?crop=entropy&fit=crop&h=1000&w=2000
 author: Brandon Foley
+tags: [razor, markdown, blog, dev]
+image: https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?crop=entropy&fit=crop&h=1000&w=2000
 ---
 
 The Razor SSG template continues to improve support for static generated websites and Blogs with new features for
