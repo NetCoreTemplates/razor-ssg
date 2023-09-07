@@ -198,7 +198,7 @@ mountAll()
                     </div>
                         <div class="max-w-3xl mx-auto">
                             <div class="mb-6 text-lg text-gray-500">
-                                <time datetime="2023-03-28T00:00:00.0000000">March 28, 2023</time>
+                                <time datetime="2023-03-30T00:00:00.0000000">March 30, 2023</time>
                                 <span aria-hidden="true">&middot;</span>
                                 <span>14 min read</span>
                             </div>
@@ -219,19 +219,20 @@ mountAll()
 <p>In addition to having a pure Razor + .NET solution to create fast, CDN-hostable static websites, it also aims to provide a
 great experience from GitHub Codespaces, where you can create, modify, preview &amp; check-in changes before the included GitHub Actions
 auto deploy changes to its GitHub Pages CDN - all from your iPad!</p>
-<p><a href="https://github.com/features/codespaces"><img src="/img/posts/razor-ssg/codespaces.png" alt="" /></a></p>
+<p><a href="https://github.com/features/codespaces"><img src="https://servicestack.net/img/posts/razor-ssg/codespaces.png" alt="" /></a></p>
 <p>To see this in action, we walk through the entire workflow of creating, updating and adding features to a custom Razor SSG website
 from just a browser using Codespaces, that auto publishes changes to your GitHub Repo's <strong>gh-pages</strong> branch where it's hosted for
 free on GitHub Pages CDN:</p>
 <iframe class="youtube" src="https://www.youtube.com/embed/MRQMBrXi5Sc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 <h3 id="enhance-with-simple-modern-javascript">Enhance with simple, modern JavaScript<a class="header-anchor" href="javascript:;" onclick="location.hash='#enhance-with-simple-modern-javascript'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
-<p>For enhanced interactivity, static markdown content can be <a href="/posts/javascript">progressively enhanced</a> with Vue 3 components,
+<p>For enhanced interactivity, static markdown content can be <a href="https://servicestack.net/posts/javascript">progressively enhanced</a> with Vue 3 components,
 as done in this example that embed's the
-<a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/mjs/components/GettingStarted.mjs">GettingStarted.mjs</a>
-Vue Component to create new Razor SSG App's below with:</p>
-<pre><code class="language-html">&lt;div data-component=&quot;GettingStarted&quot; data-props=&quot;{template:'razor-ssg'}&quot;&gt;&lt;/div&gt;
+<a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/mjs/components/GettingStarted.mjs">GettingStarted.mjs</a> Vue Component to create new Razor SSG App's below with:</p>
+<pre><code class="language-html">&lt;getting-started template=&quot;razor-ssg&quot;&gt;&lt;/getting-started&gt;
 </code></pre>
-<div class="py-8 not-prose text-base flex justify-center" data-component="GettingStarted" data-props="{template:'razor-ssg'}"></div>
+<div class="py-8 not-prose text-base flex justify-center">
+  <getting-started template="razor-ssg"></getting-started>
+</div>
 <p>Although with full control over the websites <code>_Layout.cshtml</code>, you're free to use any preferred JS Module or Web Component you prefer.</p>
 <h2 id="razor-pages">Razor Pages<a class="header-anchor" href="javascript:;" onclick="location.hash='#razor-pages'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Your website can be built using either Markdown <code>.md</code> or Razor <code>.cshtml</code> pages, although it's generally recommended to
@@ -283,9 +284,9 @@ content, a <strong>.cs</strong> class to load the markdown and a <strong>.cshtml
 </ul>
 <p>Are made available from:</p>
 <ul>
-<li><a href="/privacy">/privacy</a></li>
-<li><a href="/speaking">/speaking</a></li>
-<li><a href="/uses">/uses</a></li>
+<li><a href="https://razor-ssg.web-templates.io/privacy">/privacy</a></li>
+<li><a href="https://razor-ssg.web-templates.io/speaking">/speaking</a></li>
+<li><a href="https://razor-ssg.web-templates.io/uses">/uses</a></li>
 </ul>
 <h3 id="loading-pages-markdown">Loading Pages Markdown<a class="header-anchor" href="javascript:;" onclick="location.hash='#loading-pages-markdown'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The code that loads the Pages feature markdown content is in <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Markdown.Pages.cs">Markdown.Pages.cs</a>:</p>
@@ -372,9 +373,9 @@ layout: _LayoutContent
 ---
 </code></pre>
 <p>To render the page using <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Shared/_LayoutContent.cshtml">_LayoutContent.cshtml</a>
-visible by the background backdrop in its <a href="/speaking">/speaking</a> page.</p>
+visible by the background backdrop in its <a href="https://razor-ssg.web-templates.io/speaking">/speaking</a> page.</p>
 <h2 id="whats-new-feature">What's New Feature<a class="header-anchor" href="javascript:;" onclick="location.hash='#whats-new-feature'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
-<p>The <a href="/whatsnew">/whatsnew</a> page is an example of creating a custom Markdown feature to implement a portfolio or a product releases page
+<p>The <a href="https://razor-ssg.web-templates.io/whatsnew">/whatsnew</a> page is an example of creating a custom Markdown feature to implement a portfolio or a product releases page
 where a new folder is created per release, containing both release date and release or project name, with all features in that release
 maintained markdown content sorted in alphabetical order:</p>
 <h3 id="whatsnew"><a href="https://github.com/NetCoreTemplates/razor-ssg/tree/main/MyApp/_whatsnew">/_whatsnew</a><a class="header-anchor" href="javascript:;" onclick="location.hash='#whatsnew'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
@@ -427,32 +428,32 @@ to load its Markdown posts that is rendered in several different Razor Pages for
 <tr>
 <td><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Blog.cshtml">Blog.cshtml</a></td>
 <td>Main Blog layout</td>
-<td><a href="/blog">/blog</a></td>
+<td><a href="https://razor-ssg.web-templates.io/blog">/blog</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Posts/Index.cshtml">Posts/Index.cshtml</a></td>
 <td>Navigable Archive grid of Posts</td>
-<td><a href="/posts">/posts</a></td>
+<td><a href="https://razor-ssg.web-templates.io/posts">/posts</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Posts/Post.cshtml">Posts/Post.cshtml</a></td>
 <td>Individual Blog Post (like this!)</td>
-<td><a href="/posts/razor-ssg">/posts/razor-ssg</a></td>
+<td><a href="https://razor-ssg.web-templates.io/posts/razor-ssg">/posts/razor-ssg</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Posts/Author.cshtml">Author.cshtml</a></td>
 <td>Display Posts by Author</td>
-<td><a href="/posts/author/lucy-bates">/posts/author/lucy-bates</a></td>
+<td><a href="https://razor-ssg.web-templates.io/posts/author/lucy-bates">/posts/author/lucy-bates</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Posts/Tagged.cshtml">Tagged.cshtml</a></td>
 <td>Display Posts by Tag</td>
-<td><a href="/posts/tagged/markdown">/posts/tagged/markdown</a></td>
+<td><a href="https://razor-ssg.web-templates.io/posts/tagged/markdown">/posts/tagged/markdown</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Posts/Year.cshtml">Year.cshtml</a></td>
 <td>Display Posts by Year</td>
-<td><a href="/posts/year/2023">/posts/year/2023</a></td>
+<td><a href="https://razor-ssg.web-templates.io/posts/year/2023">/posts/year/2023</a></td>
 </tr>
 </tbody>
 </table>
@@ -515,7 +516,20 @@ values into native .NET types.</p>
 <h3 id="updating-to-latest-versions">Updating to latest versions<a class="header-anchor" href="javascript:;" onclick="location.hash='#updating-to-latest-versions'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>You can easily update all the JavaScript dependencies used in
 <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/postinstall.js">postinstall.js</a> by running:</p>
-<div class="not-prose text-base" data-component="ShellCommand" data-props="{ text: 'node postinstall.js' }"></div>
+<div class="not-prose sh-copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-800">
+                    <div class="pl-4 py-1 pb-1.5 align-middle whitespace-pre text-base text-gray-100"><p>node postinstall.js</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-green-600 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
 <p>This will also update the Markdown features <code>*.cs</code> implementations which is delivered as source files instead of an external
 NuGet package to enable full customization, easier debugging whilst supporting easy upgrades.</p>
 <p>If you do customize any of the <code>.cs</code> files, you'll want to exclude them from being updated by removing them from:</p>
@@ -529,7 +543,7 @@ NuGet package to enable full customization, easier debugging whilst supporting e
 <h3 id="markdown-tag-helper">Markdown Tag Helper<a class="header-anchor" href="javascript:;" onclick="location.hash='#markdown-tag-helper'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The included <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/MarkdownTagHelper.cs">MarkdownTagHelper.cs</a> can be used
 in hybrid Razor Pages like <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/About.cshtml">About.cshtml</a>
-to render the <a href="/about">/about</a> page which requires the flexibility of Razor Pages with a static content component which you
+to render the <a href="https://razor-ssg.web-templates.io/about">/about</a> page which requires the flexibility of Razor Pages with a static content component which you
 prefer to maintain inline with Markdown.</p>
 <p>The <code>&lt;markdown /&gt;</code> tag helper renders plain HTML, which you can apply <a href="https://tailwindcss.com/docs/typography-plugin">Tailwind's @typography</a>
 styles by including <strong>typography.css</strong> and annotating it with your preferred <code>prose</code> variant, e.g:</p>
@@ -543,8 +557,21 @@ styles by including <strong>typography.css</strong> and annotating it with your 
 differs in its published output, where instead of a .NET App deployed to a VM or App server it generates static <code>*.html</code> files that's
 bundled together with <code>/wwwroot</code> static assets in the <code>/dist</code> folder that can be previewed by launching a HTTP Server from that
 folder with the built-in npm script:</p>
-<div class="not-prose text-base" data-component="ShellCommand" data-props="{ text: 'npm run serve' }"></div>
-<p>That runs <strong>npx http-server</strong> on <code>http://localhost:8080</code> that you can open in a browser to preview the published version of your
+<div class="not-prose sh-copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-800">
+                    <div class="pl-4 py-1 pb-1.5 align-middle whitespace-pre text-base text-gray-100"><p>npm run serve</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-green-600 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<p>To run <strong>npx http-server</strong> on <code>http://localhost:8080</code> that you can open in a browser to preview the published version of your
 site as it would be when hosted on a CDN.</p>
 <h3 id="static-razor-pages">Static Razor Pages<a class="header-anchor" href="javascript:;" onclick="location.hash='#static-razor-pages'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The static generation functionality works by scanning all your Razor Pages and prerendering the pages with prerendering instructions.</p>
@@ -555,7 +582,8 @@ site as it would be when hosted on a CDN.</p>
 @attribute [RenderStatic]
 </code></pre>
 <p>Which saves the pre-rendered page using the pages route with a .html suffix, e.g: <code>/{@page route}.html</code> whilst pages with static
-routes with a trailing <code>/</code> are saved to <code>/{@page route}/index.html</code>:</p>
+routes with a trailing <code>/</code> are saved to <code>/{@page route}/index.html</code> as done for
+<a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Posts/Index.cshtml">Posts/Index.cshtml</a>:</p>
 <pre><code class="language-csharp">@page &quot;/posts/&quot;
 @attribute [RenderStatic]
 </code></pre>
@@ -612,7 +640,7 @@ and instead capture all required parameters for a page in its <strong>@page rout
 }
 ...
 </code></pre>
-<p>Which lists all posts by an Author, e.g: <a href="/posts/author/lucy-bates">/posts/author/lucy-bates</a>, likewise required for:</p>
+<p>Which lists all posts by an Author, e.g: <a href="https://razor-ssg.web-templates.io/posts/author/lucy-bates">/posts/author/lucy-bates</a>, likewise required for:</p>
 <p><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Posts/Tagged.cshtml">Posts/Tagged.cshtml</a></p>
 <pre><code class="language-csharp">@page &quot;/posts/tagged/{slug}&quot;
 @model TaggedModel
@@ -625,7 +653,7 @@ and instead capture all required parameters for a page in its <strong>@page rout
 }
 ...
 </code></pre>
-<p>Which lists all related posts with a specific tag, e.g: <a href="/posts/tagged/markdown">/posts/tagged/markdown</a>, and for:</p>
+<p>Which lists all related posts with a specific tag, e.g: <a href="https://razor-ssg.web-templates.io/posts/tagged/markdown">/posts/tagged/markdown</a>, and for:</p>
 <p><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Posts/Year.cshtml">Posts/Year.cshtml</a></p>
 <pre><code class="language-csharp">@page &quot;/posts/year/{year}&quot;
 @model YearModel
@@ -640,7 +668,7 @@ and instead capture all required parameters for a page in its <strong>@page rout
 
 ...
 </code></pre>
-<p>Which lists all posts published in a specific year, e.g: <a href="/posts/year/2023">/posts/year/2023</a>.</p>
+<p>Which lists all posts published in a specific year, e.g: <a href="https://razor-ssg.web-templates.io/posts/year/2023">/posts/year/2023</a>.</p>
 <p>Conceivably these &quot;different views&quot; could've been implemented by the same page with different <code>?author</code>, <code>?tag</code> and <code>?year</code>
 QueryString params, but are instead extracted into different pages to support its statically generated <code>*.html</code> outputs.</p>
 <h2 id="prerendering-task">Prerendering Task<a class="header-anchor" href="javascript:;" onclick="location.hash='#prerendering-task'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
@@ -673,18 +701,42 @@ QueryString params, but are instead extracted into different pages to support it
 specified <code>/dist</code> folder.</p>
 <h3 id="previewing-prerendered-site">Previewing prerendered site<a class="header-anchor" href="javascript:;" onclick="location.hash='#previewing-prerendered-site'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>To preview your SSG website, run the prerendered task with:</p>
-<div class="not-prose text-base" data-component="ShellCommand" data-props="{ text: 'npm run prerender' }"></div>
+<div class="not-prose sh-copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-800">
+                    <div class="pl-4 py-1 pb-1.5 align-middle whitespace-pre text-base text-gray-100"><p>npm run prerender</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-green-600 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
 <p>Which renders your site to <code>/_dist</code> which you can run a HTTP Server from with:</p>
-<div class="not-prose text-base" data-component="ShellCommand" data-props="{ text: 'npm run serve' }"></div>
+<div class="not-prose sh-copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-800">
+                    <div class="pl-4 py-1 pb-1.5 align-middle whitespace-pre text-base text-gray-100"><p>npm run serve</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-green-600 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
 <p>That you can preview with your browser at <code>http://localhost:8080</code>.</p>
 <h3 id="publishing">Publishing<a class="header-anchor" href="javascript:;" onclick="location.hash='#publishing'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The included <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/.github/workflows/build.yml">build.yml</a> GitHub Action
 takes care of running the prerendered task and deploying it to your Repo's GitHub Pages where it will be available at:</p>
 <pre><code>https://$org_name.github.io/$repo/
 </code></pre>
-<p>You'll need to enable GitHub Pages to be hosted from your <strong>gh-pages</strong> branch in your Repository settings:</p>
-<p><img src="/img/posts/razor-ssg/gh-pages.png" alt="" /></p>
-<p>You can use a <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages">Custom domain for GitHub Pages</a>
+<p>Alternatively you can use a <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages">Custom domain for GitHub Pages</a>
 by registering a CNAME DNS entry for your preferred Custom Domain, e.g:</p>
 <table>
 <thead>
@@ -725,9 +777,9 @@ text editors to maintain its code-base and content.</p>
 <p>Deterred by the growing complexity of current SSG solutions, we decided to create a new solution using C#/Razor
 (our preferred technology for generating server HTML) with a clean implementation that allowed full control
 with an <strong>npm dependency-free</strong> solution letting us adopt our preferred approach to
-<a href="https://vue-mjs.web-templates.io/posts/javascript">Simple, Modern JavaScript</a> without any build-tooling or SPA complexity.</p>
+<a href="https://servicestack.net/posts/javascript">Simple, Modern JavaScript</a> without any build-tooling or SPA complexity.</p>
 <p>We're happy with the results of <a href="https://servicestack.net">https://servicestack.net</a> new Razor SSG website:</p>
-<p><a href="https://servicestack.net"><img src="/img/posts/razor-ssg/servicestack.net.png" alt="" /></a></p>
+<p><a href="https://servicestack.net"><img src="https://servicestack.net/img/posts/razor-ssg/servicestack.net.png" alt="" /></a></p>
 <p>A clean, crisp code-base utilizing simple JS Module Vue 3 components, the source code of which is publicly maintained at:</p>
 <ul>
 <li><a href="https://github.com/servicestack/servicestack.net">https://github.com/servicestack/servicestack.net</a></li>
@@ -804,6 +856,47 @@ or maintain a shared community collection if there ends up being community contr
                         More from Lucy Bates
                     </div>
                     <div class="grid grid-cols-2 gap-8">
+                            <div>
+                                <div class="flex flex-col overflow-hidden">
+                                    <div class="flex-shrink-0">
+                                        <a href="posts/razor-ssg-new-blog-features">
+                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
+                                                Article
+                                            </p>
+                                            <a href="posts/razor-ssg-new-blog-features" class="mt-2 block">
+                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="New Blogging features in Razor SSG">
+                                                    New Blogging features in Razor SSG
+                                                </p>
+                                                <p class="mt-3 text-base text-gray-500">Explore the new Blogging Features in Razor SSG</p>
+                                            </a>
+                                        </div>
+                                        <div class="mt-6 flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <a href="">
+                                                    <span class="sr-only">Lucy Bates</span>
+                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author1.svg" alt="New Blogging features in Razor SSG background">
+                                                </a>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-medium text-gray-900">
+                                                        <a href="posts/author/lucy-bates" class="hover:underline">Lucy Bates</a>
+                                                </p>
+                                                <div class="flex space-x-1 text-sm text-gray-500">
+                                                    <time datetime="2023-08-23T00:00:00.0000000">August 23, 2023</time>
+                                                    <span aria-hidden="true">&middot;</span>
+                                                    <span>6 min read</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
                             <div>
                                 <div class="flex flex-col overflow-hidden">
                                     <div class="flex-shrink-0">
@@ -920,47 +1013,6 @@ or maintain a shared community collection if there ends up being community contr
                                                     <time datetime="2021-11-08T00:00:00.0000000">November 8, 2021</time>
                                                     <span aria-hidden="true">&middot;</span>
                                                     <span>21 min read</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div>
-                                <div class="flex flex-col overflow-hidden">
-                                    <div class="flex-shrink-0">
-                                        <a href="posts/jekyll-to-vitepress">
-                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1524668951403-d44b28200ce0?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
-                                        <div class="flex-1">
-                                            <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
-                                                Article
-                                            </p>
-                                            <a href="posts/jekyll-to-vitepress" class="mt-2 block">
-                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="Migrating from Jekyll to VitePress">
-                                                    Migrating from Jekyll to VitePress
-                                                </p>
-                                                <p class="mt-3 text-base text-gray-500">Since Jekyll support has been officially sunset, we decided to migrate our docs site to VitePress</p>
-                                            </a>
-                                        </div>
-                                        <div class="mt-6 flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <a href="">
-                                                    <span class="sr-only">Lucy Bates</span>
-                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author1.svg" alt="Migrating from Jekyll to VitePress background">
-                                                </a>
-                                            </div>
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium text-gray-900">
-                                                        <a href="posts/author/lucy-bates" class="hover:underline">Lucy Bates</a>
-                                                </p>
-                                                <div class="flex space-x-1 text-sm text-gray-500">
-                                                    <time datetime="2021-11-01T00:00:00.0000000">November 1, 2021</time>
-                                                    <span aria-hidden="true">&middot;</span>
-                                                    <span>12 min read</span>
                                                 </div>
                                             </div>
                                         </div>

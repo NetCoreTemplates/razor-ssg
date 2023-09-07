@@ -10,30 +10,30 @@
     </image>
     <generator>razor-ssg</generator>
     <copyright></copyright>
-    <lastBuildDate>Wed, 30 Aug 2023 08:31:28 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 07 Sep 2023 19:19:48 GMT</lastBuildDate>
     <managingEditor>email@example.org (Razor SSG)</managingEditor>
     <webMaster>email@example.org (Razor SSG)</webMaster>
     <atom:link href="https://razor-ssg.web-templates.io/feed.xml" rel="self" type="application/rss+xml" />
     <item>
-        <title>New Blogging Features in Razor SSG</title>
-        <link>https://razor-ssg.web-templates.io/posts/new-blog-features</link>
-        <author>brandon@email.org (Brandon Foley)</author>
-        <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/new-blog-features</guid>
-        <pubDate>Tue, 01 Aug 2023 00:00:00 GMT</pubDate>
-        <atom:updated>2023-08-01T00:00:00Z</atom:updated>
+        <title>New Blogging features in Razor SSG</title>
+        <link>https://razor-ssg.web-templates.io/posts/razor-ssg-new-blog-features</link>
+        <author>lucy@email.org (Lucy Bates)</author>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/razor-ssg-new-blog-features</guid>
+        <pubDate>Wed, 23 Aug 2023 00:00:00 GMT</pubDate>
+        <atom:updated>2023-08-23T00:00:00Z</atom:updated>
         <category>razor</category>
         <category> markdown</category>
         <category> blog</category>
         <category> dev</category>
-        <description>Look at the new Blogging features in the latest version of Razor SSG</description>
+        <description>Explore the new Blogging Features in Razor SSG</description>
     </item>
     <item>
         <title>Introducing Razor SSG</title>
         <link>https://razor-ssg.web-templates.io/posts/razor-ssg</link>
         <author>lucy@email.org (Lucy Bates)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/razor-ssg</guid>
-        <pubDate>Tue, 28 Mar 2023 00:00:00 GMT</pubDate>
-        <atom:updated>2023-03-28T00:00:00Z</atom:updated>
+        <pubDate>Thu, 30 Mar 2023 00:00:00 GMT</pubDate>
+        <atom:updated>2023-03-30T00:00:00Z</atom:updated>
         <category>razor</category>
         <category> markdown</category>
         <category> blog</category>
@@ -45,8 +45,8 @@
         <link>https://razor-ssg.web-templates.io/posts/javascript</link>
         <author>brandon@email.org (Brandon Foley)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/javascript</guid>
-        <pubDate>Tue, 21 Mar 2023 00:00:00 GMT</pubDate>
-        <atom:updated>2023-03-21T00:00:00Z</atom:updated>
+        <pubDate>Wed, 01 Feb 2023 00:00:00 GMT</pubDate>
+        <atom:updated>2023-02-01T00:00:00Z</atom:updated>
         <category>js</category>
         <category> dev</category>
         <description>Learn about JS Modules, Vue 3 and available rich UI Components</description>

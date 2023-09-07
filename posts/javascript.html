@@ -158,7 +158,7 @@ mountAll()
                     </div>
                         <div class="max-w-3xl mx-auto">
                             <div class="mb-6 text-lg text-gray-500">
-                                <time datetime="2023-03-21T00:00:00.0000000">March 21, 2023</time>
+                                <time datetime="2023-02-01T00:00:00.0000000">February 1, 2023</time>
                                 <span aria-hidden="true">&middot;</span>
                                 <span>14 min read</span>
                             </div>
@@ -181,7 +181,7 @@ mountAll()
 that we used to rely on external tools for is now available in modern browsers alleviating the need for
 complex tooling and npm dependencies that have historically plagued modern web development.</p>
 <p>The good news is that the complex npm tooling that was previously considered mandatory in modern JavaScript App
-development can be considered optional as we can now utilize modern browser features like<br />
+development can be considered optional as we can now utilize modern browser features like
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">async/await</a>,
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">JavaScript Modules</a>,
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import">dynamic imports</a>,
@@ -221,7 +221,9 @@ pre-processors like JSX.</p>
     props: { name:String }
 }
 </code></pre>
-<div data-component="Hello" data-props="{ name: 'Vue 3' }" class="text-center text-2xl py-2"></div>
+<div class="text-center text-2xl py-2">
+    <hello name="Vue 3"></hello>
+</div>
 <p>Or a simple reactive example:</p>
 <pre><code class="language-js">import { ref } from &quot;vue&quot;
 
@@ -233,10 +235,18 @@ const Counter = {
     }
 }
 </code></pre>
-<div data-component="Counter" class="text-center text-2xl py-2 cursor-pointer select-none"></div>
-<p>These components can be mounted using the standard <a href="https://vuejs.org/api/application.html#app-mount">Vue 3 mount</a> API, but to
-make it easier we've added additional APIs for declaratively mounting components to pages using the <code>data-component</code> and <code>data-props</code>
-attributes, especially useful for including Vue components in Markdown content like this, e.g:</p>
+<div class="text-center text-2xl py-2 cursor-pointer select-none">
+    <counter></counter>
+</div>
+<h3 id="vue-components-in-markdown">Vue Components in Markdown<a class="header-anchor" href="javascript:;" onclick="location.hash='#vue-components-in-markdown'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Inside <code>.md</code> Markdown pages Vue Components can be embedded using Vue's progressive
+<a href="https://vuejs.org/guide/essentials/template-syntax.html">HTML Template Syntax</a>:</p>
+<pre><code class="language-html">&lt;counter&gt;&lt;/counter&gt;
+</code></pre>
+<h3 id="vue-components-in-razor-pages">Vue Components in Razor Pages<a class="header-anchor" href="javascript:;" onclick="location.hash='#vue-components-in-razor-pages'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Inside <code>.cshtml</code> Razor Pages these components can be mounted using the standard <a href="https://vuejs.org/api/application.html#app-mount">Vue 3 mount</a> API, but to
+make it easier we've added additional APIs for declaratively mounting components to pages using <code>data-component</code> and <code>data-props</code>
+attributes:</p>
 <pre><code class="language-html">&lt;div data-component=&quot;Hello&quot; data-props=&quot;{ name: 'Vue 3' }&quot;&gt;&lt;/div&gt;
 </code></pre>
 <p>Alternatively they can be programatically added using the custom <code>mount</code> method in <code>api.mjs</code>:</p>
@@ -245,8 +255,8 @@ mount('#counter', Counter)
 </code></pre>
 <p>Both methods create components with access to all your Shared Components and any 3rd Party Plugins which
 we can preview in this example that uses <strong>@servicestack/vue</strong>'s
-<a href="https://docs.servicestack.net/vue/gallery/navigation#primarybutton">PrimaryButton</a>
-and <a href="https://docs.servicestack.net/vue/gallery/modals">ModalDialog</a>:</p>
+<a href="https://docs.servicestack.net/vue//navigation#primarybutton">PrimaryButton</a>
+and <a href="https://docs.servicestack.net/vue//modals">ModalDialog</a>:</p>
 <pre><code class="language-js">const Plugin = {
     template:`&lt;div&gt;
         &lt;PrimaryButton @click=&quot;show=true&quot;&gt;Open Modal&lt;/PrimaryButton&gt;
@@ -260,12 +270,16 @@ and <a href="https://docs.servicestack.net/vue/gallery/modals">ModalDialog</a>:<
     }
 }
 </code></pre>
-<div class="text-center"><div data-component="Plugin" id="plugin" class="text-2xl py-4"></div></div>
+<pre><code class="language-html">&lt;plugin&gt;&lt;/plugin&gt;
+</code></pre>
+<div class="text-center">
+    <plugin id="plugin" class="text-2xl py-4"></plugin>
+</div>
 <h3 id="servicestackvue">@servicestack/vue<a class="header-anchor" href="javascript:;" onclick="location.hash='#servicestackvue'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p><a href="https://github.com/ServiceStack/servicestack-vue">@servicestack/vue</a> is our growing Vue 3 Tailwind component library with a number of rich Tailwind components useful
 in .NET Web Apps, including Input Components with auto form validation binding which is used by all HTML forms in
 the <a href="https://github.com/NetCoreTemplates/vue-mjs">vue-mjs</a> template.</p>
-<div data-component="VueComponentGallery"></div>
+<p><vue-component-gallery></vue-component-gallery></p>
 <h3 id="servicestackclient">@servicestack/client<a class="header-anchor" href="javascript:;" onclick="location.hash='#servicestackclient'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p><a href="https://docs.servicestack.net/javascript-client">@servicestack/client</a> is our generic JS/TypeScript client library
 which enables a terse, typed API for using your App's typed DTOs from the built-in
@@ -288,15 +302,27 @@ on('#txtName', {
 &lt;/script&gt;
 </code></pre>
 <p>For better IDE intelli-sense during development, save the annotated Typed DTOs to disk with:</p>
-<pre><code class="language-bash">$ npm run dtos
-</code></pre>
+<div class="not-prose sh-copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-800">
+                    <div class="pl-4 py-1 pb-1.5 align-middle whitespace-pre text-base text-gray-100"><p>npm run dtos</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-green-600 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
 <p>That can be referenced instead to unlock your IDE's static analysis type-checking and intelli-sense benefits during development:</p>
 <pre><code class="language-js">import { Hello } from '/js/dtos.mjs'
 client.api(new Hello({ name }))
 </code></pre>
 <p>You'll typically use all these libraries in your <strong>API-enabled</strong> components as seen in the
 <a href="https://github.com/NetCoreTemplates/vue-mjs/blob/main/MyApp/wwwroot/mjs/components/HelloApi.mjs">HelloApi.mjs</a>
-component on the home page which calls the <a href="https://vue-mjs.web-templates.io/ui/Hello">Hello</a> API on each key press:</p>
+component on the home page which calls the <a href="/ui/Hello">Hello</a> API on each key press:</p>
 <pre><code class="language-js">import { ref } from &quot;vue&quot;
 import { useClient } from &quot;@servicestack/vue&quot;
 import { Hello } from &quot;../dtos.mjs&quot;
@@ -325,14 +351,16 @@ export default {
 }
 </code></pre>
 <p>Which we can also mount below:</p>
-<div data-component="HelloApi" data-props="{ value: 'Vue 3' }" class="w-full font-semibold"></div>
+<pre><code class="language-html">&lt;hello-api value=&quot;Vue 3&quot;&gt;&lt;/hello-api&gt;
+</code></pre>
+<p><hello-api value="Vue 3" class="w-full font-semibold"></hello-api></p>
 <p>We'll also go through and explain other features used in this component:</p>
 <h4 id="html"><code>/*html*/</code><a class="header-anchor" href="javascript:;" onclick="location.hash='#html'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>Although not needed in <a href="rider">Rider</a> (which can automatically infer HTML in strings), the <code>/*html*/</code> type hint can be used
 to instruct tooling like the <a href="https://marketplace.visualstudio.com/items?itemName=Tobermory.es6-string-html">es6-string-html</a>
 VS Code extension to provide syntax highlighting and an enhanced authoring experience for HTML content in string literals.</p>
 <h3 id="useclient">useClient<a class="header-anchor" href="javascript:;" onclick="location.hash='#useclient'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
-<p><a href="https://docs.servicestack.net/vue/use-client">useClient()</a> provides managed APIs around the <code>JsonServiceClient</code>
+<p><a href="https://docs.servicestack.net/vue//use-client">useClient()</a> provides managed APIs around the <code>JsonServiceClient</code>
 instance registered in Vue App's with:</p>
 <pre><code class="language-js">let client = JsonApiClient.create()
 app.provide('client', client)
@@ -377,7 +405,7 @@ async function onSubmit() {
 <a href="https://docs.servicestack.net/error-handling">Error Response DTOs</a> but can also be populated from client-side validation
 as done above.</p>
 <h4 id="explicit-error-handling">Explicit Error Handling<a class="header-anchor" href="javascript:;" onclick="location.hash='#explicit-error-handling'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
-<p>This populated <code>ResponseStatus</code> DTO can either be manually passed into each component's <strong>status</strong> property as done in <a href="https://vue-mjs.web-templates.io/TodoMvc">/TodoMvc</a>:</p>
+<p>This populated <code>ResponseStatus</code> DTO can either be manually passed into each component's <strong>status</strong> property as done in <a href="/TodoMvc">/TodoMvc</a>:</p>
 <pre><code class="language-html">&lt;template id=&quot;TodoMvc-template&quot;&gt;
     &lt;div class=&quot;mb-3&quot;&gt;
         &lt;text-input :status=&quot;store.error&quot; id=&quot;text&quot; label=&quot;&quot; placeholder=&quot;What needs to be done?&quot;
@@ -470,12 +498,14 @@ Input Components are able to automatically apply contextual validation errors ne
 <p><img src="https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/scripts/edit-contact-validation.png" alt="" /></p>
 <h3 id="autoform-components">AutoForm Components<a class="header-anchor" href="javascript:;" onclick="location.hash='#autoform-components'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>We can elevate our productivity even further with
-<a href="https://docs.servicestack.net/vue/gallery/autoform">Auto Form Components</a> that can automatically generate an
+<a href="https://docs.servicestack.net/vue//autoform">Auto Form Components</a> that can automatically generate an
 instant API-enabled form with validation binding by just specifying the Request DTO you want to create the form of, e.g:</p>
 <pre><code class="language-html">&lt;AutoCreateForm type=&quot;CreateBooking&quot; formStyle=&quot;card&quot; /&gt;
 </code></pre>
-<div class="not-prose" data-component="AutoCreateForm" data-props="{ type:'CreateBooking', formStyle:'card' }"></div>
-<p>The AutoForm components are powered by your <a href="https://docs.servicestack.net/vue/use-appmetadata">App Metadata</a> which allows creating
+<div class="not-prose">
+    <auto-create-form type="CreateBooking" form-style="card"></auto-create-form>
+</div>
+<p>The AutoForm components are powered by your <a href="https://docs.servicestack.net/vue//use-appmetadata">App Metadata</a> which allows creating
 highly customized UIs from <a href="https://docs.servicestack.net/locode/declarative">declarative C# attributes</a> whose customizations are
 reused across all ServiceStack Auto UIs, including:</p>
 <ul>
@@ -484,17 +514,17 @@ reused across all ServiceStack Auto UIs, including:</p>
 <li><a href="https://docs.servicestack.net/templates-blazor-components">Blazor Tailwind Components</a></li>
 </ul>
 <h3 id="form-input-components">Form Input Components<a class="header-anchor" href="javascript:;" onclick="location.hash='#form-input-components'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
-<p>In addition to including Tailwind versions of the standard <a href="https://docs.servicestack.net/vue/gallery/form-inputs">HTML Form Inputs</a> controls to create beautiful Tailwind Forms,
+<p>In addition to including Tailwind versions of the standard <a href="https://docs.servicestack.net/vue//form-inputs">HTML Form Inputs</a> controls to create beautiful Tailwind Forms,
 it also contains a variety of integrated high-level components:</p>
 <ul>
-<li><a href="https://docs.servicestack.net/vue/gallery/fileinput">FileInput</a></li>
-<li><a href="https://docs.servicestack.net/vue/gallery/taginput">TagInput</a></li>
-<li><a href="https://docs.servicestack.net/vue/gallery/autocomplete">Autocomplete</a></li>
+<li><a href="https://docs.servicestack.net/vue//fileinput">FileInput</a></li>
+<li><a href="https://docs.servicestack.net/vue//taginput">TagInput</a></li>
+<li><a href="https://docs.servicestack.net/vue//autocomplete">Autocomplete</a></li>
 </ul>
 <h3 id="useauth">useAuth<a class="header-anchor" href="javascript:;" onclick="location.hash='#useauth'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Your Vue.js code can access Authenticated Users using <a href="https://docs.servicestack.net/vue/use-auth">useAuth()</a>
 which can also be populated without the overhead of an Ajax request by embedding the response of the built-in
-<a href="https://vue-mjs.web-templates.io/ui/Authenticate?tab=details">Authenticate API</a> inside <code>_Layout.cshtml</code> with:</p>
+<a href="/ui/Authenticate?tab=details">Authenticate API</a> inside <code>_Layout.cshtml</code> with:</p>
 <pre><code class="language-html">&lt;script type=&quot;module&quot;&gt;
 import { useAuth } from &quot;@@servicestack/vue&quot;
 const { signIn } = useAuth()
@@ -589,7 +619,7 @@ Technical Preview. Luckily this feature can be polyfilled with the <a href="http
 with their JS framework to mount their App component before it starts fetching the data from the server it needs to render its components.</p>
 <p>A complex solution to this problem is to server render the initial HTML content then re-render it again on the client after the page loads.
 A simpler solution is to avoid unnecessary ajax calls by embedding the JSON data the component needs in the page that loads it, which is what
-<a href="https://vue-mjs.web-templates.io/TodoMvc">/TodoMvc</a> does to load its initial list of todos using the <a href="https://docs.servicestack.net/service-gateway">Service Gateway</a>
+<a href="/TodoMvc">/TodoMvc</a> does to load its initial list of todos using the <a href="https://docs.servicestack.net/service-gateway">Service Gateway</a>
 to invoke APIs in process and embed its JSON response with:</p>
 <pre><code class="language-html">&lt;script&gt;todos = @await ApiResultsAsJsonAsync(new QueryTodos())&lt;/script&gt;
 &lt;script type=&quot;module&quot;&gt;
@@ -611,7 +641,7 @@ scripts and CSS in <code>&lt;head&gt;</code>.</p>
 main navigation links:</p>
 <pre><code class="language-html">&lt;nav hx-boost=&quot;true&quot;&gt;
     &lt;ul&gt;
-        &lt;li&gt;&lt;a href=&quot;./Blog&quot;&gt;Blog&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;/Blog&quot;&gt;Blog&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
 &lt;/nav&gt;
 </code></pre>
@@ -630,7 +660,7 @@ Vue.js development model across our <a href="https://docs.servicestack.net/templ
 we'll continue to significantly invest in to unlock even greater productivity benefits in all Vue Tailwind Apps.</p>
 <p>In addition to a variety of high-productive components, it also contains a core library of functionality
 underpinning the Vue Components that most Web Apps should also find useful:</p>
-<div data-component="VueComponentLibrary" class="mt-4"></div>
+<p><vue-component-library class="mt-4"></vue-component-library></p>
 
                 </div>
             </div>
@@ -675,47 +705,6 @@ underpinning the Vue Components that most Web Apps should also find useful:</p>
                         More from Brandon Foley
                     </div>
                     <div class="grid grid-cols-2 gap-8">
-                            <div>
-                                <div class="flex flex-col overflow-hidden">
-                                    <div class="flex-shrink-0">
-                                        <a href="posts/new-blog-features">
-                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
-                                        <div class="flex-1">
-                                            <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
-                                                Article
-                                            </p>
-                                            <a href="posts/new-blog-features" class="mt-2 block">
-                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="New Blogging Features in Razor SSG">
-                                                    New Blogging Features in Razor SSG
-                                                </p>
-                                                <p class="mt-3 text-base text-gray-500">Look at the new Blogging features in the latest version of Razor SSG</p>
-                                            </a>
-                                        </div>
-                                        <div class="mt-6 flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <a href="">
-                                                    <span class="sr-only">Brandon Foley</span>
-                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author3.svg" alt="New Blogging Features in Razor SSG background">
-                                                </a>
-                                            </div>
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium text-gray-900">
-                                                        <a href="posts/author/brandon-foley" class="hover:underline">Brandon Foley</a>
-                                                </p>
-                                                <div class="flex space-x-1 text-sm text-gray-500">
-                                                    <time datetime="2023-08-01T00:00:00.0000000">August 1, 2023</time>
-                                                    <span aria-hidden="true">&middot;</span>
-                                                    <span>5 min read</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
                             <div>
                                 <div class="flex flex-col overflow-hidden">
                                     <div class="flex-shrink-0">
