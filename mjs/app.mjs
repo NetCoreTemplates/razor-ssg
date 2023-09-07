@@ -91,11 +91,6 @@ export function mount(sel, component, props) {
     app.config.compilerOptions.isCustomElement = tag => CustomElements.includes(tag)
     app.mount(el)
     Apps.push(app)
-
-    const { loadMetadata } = useMetadata()
-    loadMetadata({
-        olderThan: 24 * 60 * 60 * 1000, //1day
-    })
     return app
 }
 
@@ -120,6 +115,11 @@ export function mountAll() {
 export function init(exports) {
     if (AppData.init) return
     client = JsonApiClient.create('https://blazor-gallery-api.jamstacks.net')
+    const { loadMetadata } = useMetadata()
+    loadMetadata({
+        olderThan: 24 * 60 * 60 * 1000, //1day
+        resolvePath: `https://blazor-gallery-api.jamstacks.net/metadata/app.json`
+    })
     AppData = reactive(AppData)
     AppData.init = true
     mountAll()
