@@ -1,118 +1,40 @@
 ---
-layout: _LayoutContent
-title: New Blogging Features in Razor SSG
-summary: Look at the new Blogging features in the latest version of Razor SSG
-author: Brandon Foley
+title: New Blogging features in Razor SSG
+summary: Explore the new Blogging Features in Razor SSG
 tags: [razor, markdown, blog, dev]
 image: https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?crop=entropy&fit=crop&h=1000&w=2000
+author: Lucy Bates
 ---
 
-The Razor SSG template continues to improve support for static generated websites and Blogs with new features for
-creating richer and more discoverable blogs:
+## New Blogging features in Razor SSG
+
+[Razor SSG](https://razor-ssg.web-templates.io) is our Free Project Template for creating fast, statically generated Websites and Blogs with
+Markdown & C# Razor Pages. A benefit of using Razor SSG to maintain this 
+[servicestack.net(github)](https://github.com/ServiceStack/servicestack.net) website is that any improvements added
+to our website end up being rolled into the Razor SSG Project Template for everyone else to enjoy.
+
+This latest release brings a number of features and enhancements to improve Razor SSG usage as a Blogging Platform -
+a primary use-case we're focused on as we pen our [22nd Blog Post for the year](https://servicestack.net/posts/year/2023) with improvements
+in both discoverability and capability of blog posts:
 
 ### RSS Feed
 
 Razor SSG websites now generates a valid RSS Feed for its blog to support their readers who'd prefer to read blog posts
-with their favorite RSS reader:
+and notify them as they're published with their favorite RSS reader:
 
 <div class="not-prose my-8">
    <a href="https://razor-ssg.web-templates.io/feed.xml">
       <div class="block flex justify-center shadow hover:shadow-lg rounded overflow-hidden">
-         <img class="max-w-3xl py-8" src="https://docs.servicestack.net/img/pages/release-notes/v6.10/valid-rss.png">
+         <img class="max-w-3xl py-8" src="https://servicestack.net/img/posts/razor-ssg/valid-rss.png">
       </div>
    </a>
-   <div class="mt-4 flex justify-center">
-      <a class="text-indigo-600 hover:text-indigo-800" href="https://razor-ssg.web-templates.io/feed.xml">https://razor-ssg.web-templates.io/feed.xml</a>
-   </div>
+    <div class="mt-4 flex justify-center">
+        <a class="text-indigo-600 hover:text-indigo-800" href="https://razor-ssg.web-templates.io/feed.xml">https://razor-ssg.web-templates.io/feed.xml</a>
+        <a class="ml-4 text-indigo-600 hover:text-indigo-800" href="https://servicestack.net/feed.xml">https://servicestack.net/feed.xml</a>
+    </div>
 </div>
 
-### New Markdown Containers
-
-All Razor Press's [Markdown Containers](https://razor-press.web-templates.io/containers) are also available in Razor SSG
-websites for enabling rich, wrist-friendly consistent markup in your Markdown pages, e.g:
-
-```md
-::: info
-This is an info box.
-:::
-
-::: tip
-This is a tip.
-:::
-
-::: warning
-This is a warning.
-:::
-
-::: danger
-This is a dangerous warning.
-:::
-
-:::copy
-Copy Me!
-:::
-```
-
-::: info
-This is an info box.
-:::
-
-::: tip
-This is a tip.
-:::
-
-::: warning
-This is a warning.
-:::
-
-::: danger
-This is a dangerous warning.
-:::
-
-:::copy
-Copy Me!
-:::
-
-See [Markdown Containers docs](https://razor-press.web-templates.io/containers) for more examples and how to 
-implement your own [Custom Markdown containers](https://razor-press.web-templates.io/containers#implementing-block-containers).
-
-### Support for Includes
-
-Markdown fragments can be added to `_pages/_include` - a special folder rendered with
-[Pages/Includes.cshtml](https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Includes.cshtml) using
-an [Empty Layout](https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Shared/_LayoutEmpty.cshtml)
-which can be included in other Markdown and Razor Pages or fetched on demand with Ajax.
-
-Markdown Fragments can be then included inside other markdown documents with the `::include` inline container, e.g:
-
-:::pre
-::include vue/formatters.md::
-:::
-
-Where it will be replaced with the HTML rendered markdown contents of fragments maintained in `_pages/_include`.
-
-### Include Markdown in Razor Pages
-
-Markdown Fragments can also be included in Razor Pages using the custom `MarkdownTagHelper.cs` `<markdown/>` tag:
-
-```html
-<markdown include="vue/formatters.md"></markdown>
-```
-
-### Inline Markdown in Razor Pages
-
-Alternatively markdown can be rendered inline with:
-
-```html
-<markdown>
-## Using Formatters
-
-Your App and custom templates can also utilize @servicestack/vue's
-[built-in formatting functions](href="/vue/use-formatters).
-</markdown>
-```
-
-### Meta Headers support for Twitter cards and Improved SEO
+### Meta Headers support for Twitter cards and SEO
 
 Blog Posts and Pages now include additional `<meta>` HTML Headers to enable support for 
 [Twitter Cards](https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/abouts-cards) in both
@@ -121,14 +43,21 @@ Twitter and Meta's new [threads.net](https://threads.net), e.g:
 <div class="not-prose my-8 flex justify-center">
    <a class="block max-w-2xl" href="https://www.threads.net/@servicestack/post/CvIFobPBs5h">
       <div class="block flex justify-center shadow hover:shadow-lg rounded overflow-hidden">
-         <img class="py-8" src="https://docs.servicestack.net/img/pages/release-notes/v6.10/twitter-cards.png">
+         <img class="py-8" src="https://servicestack.net/img/posts/razor-ssg/twitter-cards.png">
       </div>
    </a>
 </div>
 
+### Improved Discoverability
+
+To improve discoverability and increase site engagement, bottom of blog posts now include links to other posts by
+the same Blog Author, including links to connect to their preferred social networks and contact preferences:
+
+![](https://servicestack.net/img/posts/razor-ssg/other-author-posts.png)
+
 ### Posts can include Vue Components
 
-Blog Posts can now embed any global Vue Components directly in their Markdown, e.g: 
+Blog Posts can now embed any global Vue Components directly in its Markdown, e.g: 
 
 ```html
 <getting-started template="razor-ssg"></getting-started>
@@ -139,6 +68,8 @@ Blog Posts can now embed any global Vue Components directly in their Markdown, e
 <div class="not-prose my-20 flex justify-center">
     <getting-started template="razor-ssg"></getting-started>
 </div>
+
+#### Individual Blog Post dependencies
 
 Just like Pages and Docs they can also include specific JavaScript **.mjs** or **.css** in the `/wwwroot/posts` folder
 which will only be loaded for that post:
@@ -267,12 +198,95 @@ Chart.js Bar charts:
     ]
 }"></chart-js>
 
-### Improved Discoverability
+### New Markdown Containers
 
-To improve discoverability and increase site engagement, bottom of blog posts now include links to other posts by
-the same Blog Author, including links to connect to their preferred social networks and contact preferences: 
+[Custom Containers](https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/CustomContainerSpecs.md) 
+are a popular method for implementing Markdown Extensions for enabling rich, wrist-friendly consistent 
+content in your Markdown documents.
 
-![](https://servicestack.net/img/posts/razor-ssg/other-author-posts.png)
+Most of [VitePress Markdown Containers](https://vitepress.dev/guide/markdown#custom-containers)
+are also available in Razor SSG websites for enabling rich, wrist-friendly consistent markup in your Markdown pages, e.g:
+
+```md
+::: info
+This is an info box.
+:::
+
+::: tip
+This is a tip.
+:::
+
+::: warning
+This is a warning.
+:::
+
+::: danger
+This is a dangerous warning.
+:::
+
+:::copy
+Copy Me!
+:::
+```
+
+::: info
+This is an info box.
+:::
+
+::: tip
+This is a tip.
+:::
+
+::: warning
+This is a warning.
+:::
+
+::: danger
+This is a dangerous warning.
+:::
+
+:::copy
+Copy Me!
+:::
+
+See Razor Press's [Markdown Containers docs](https://razor-press.web-templates.io/containers) for the complete list of available containers and examples on how to 
+implement your own [Custom Markdown containers](https://razor-press.web-templates.io/containers#implementing-block-containers).
+
+### Support for Includes
+
+Markdown fragments can be added to `_pages/_include` - a special folder rendered with
+[Pages/Includes.cshtml](https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Includes.cshtml) using
+an [Empty Layout](https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Shared/_LayoutEmpty.cshtml)
+which can be included in other Markdown and Razor Pages or fetched on demand with Ajax.
+
+Markdown Fragments can be then included inside other markdown documents with the `::include` inline container, e.g:
+
+:::pre
+::include vue/formatters.md::
+:::
+
+Where it will be replaced with the HTML rendered markdown contents of fragments maintained in `_pages/_include`.
+
+### Include Markdown in Razor Pages
+
+Markdown Fragments can also be included in Razor Pages using the custom `MarkdownTagHelper.cs` `<markdown/>` tag:
+
+```html
+<markdown include="vue/formatters.md"></markdown>
+```
+
+### Inline Markdown in Razor Pages
+
+Alternatively markdown can be rendered inline with:
+
+```html
+<markdown>
+## Using Formatters
+
+Your App and custom templates can also utilize @servicestack/vue's
+[built-in formatting functions](href="/vue/use-formatters).
+</markdown>
+```
 
 ### Light and Dark Mode Query Params
 
@@ -281,10 +295,9 @@ You can link to Dark and Light modes of your Razor SSG website with the `?light`
 - [https://razor-ssg.web-templates.io/?dark](https://razor-ssg.web-templates.io/?dark)
 - [https://razor-ssg.web-templates.io/?light](https://razor-ssg.web-templates.io/?light)
 
-### Blog Post Authors new threads.net and Mastodon links
+### Blog Post Authors threads.net and Mastodon links
 
-The social links for Blog Post Authors can now include [threads.net](https://threads.net) and 
-[mastodon.social](https://mastodon.social) links in their App configurations:
+The social links for Blog Post Authors can now include [threads.net](https://threads.net) and [mastodon.social](https://mastodon.social) links, e.g:
 
 ```json
 {
@@ -304,3 +317,21 @@ The social links for Blog Post Authors can now include [threads.net](https://thr
   }
 }
 ```
+
+## Feature Requests Welcome
+
+Most of Razor SSG's features are currently being driven by requirements from the new 
+[Websites built with Razor SSG](https://razor-ssg.web-templates.io/#showcase) and features we want available in our Blogs, 
+we welcome any requests for missing features in other popular Blogging Platforms you'd like to see in Razor SSG to help 
+make it a high quality blogging solution built with our preferred C#/.NET Technology Stack, by submitting them to:
+
+:::{.text-indigo-600 .text-3xl .text-center}
+[https://servicestack.net/ideas](https://servicestack.net/ideas)
+:::
+
+### SSG or Dynamic Features
+
+Whilst statically generated websites and blogs are generally limited to features that can be generated at build time, we're able to
+add any dynamic features we need in [CreatorKit](https://servicestack.net/creatorkit/) - a Free companion self-host .NET App Mailchimp and Disqus 
+alternative which powers any dynamic functionality in Razor SSG Apps like the blogs comments and Mailing List features 
+in this Blog Post.

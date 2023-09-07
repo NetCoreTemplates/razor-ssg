@@ -4,7 +4,7 @@ order: 9
 group: Portal
 ---
 
-The **Manage Posts** section provides editable [AutoQuery Grid components](https://docs.servicestack.net/vue/gallery/autoquerygrid) 
+The **Manage Posts** section provides editable [AutoQuery Grid components](https://docs.servicestack.net/vue/autoquerygrid) 
 to manage all the RDBMS tables used to implement CreatorKit's comment system like **Threads** which manages the `Thread` 
 table which supports adding Thread comments to every unique URL:
 

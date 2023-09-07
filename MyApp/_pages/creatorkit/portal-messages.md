@@ -50,7 +50,7 @@ public class SimpleTextEmail : CreateEmailBase, IPost, IReturn<MailMessage>
 
 ### Email UI
 
-Which are rendered using the [Vue AutoForm component](https://docs.servicestack.net/vue/gallery/autoform) from the API
+Which are rendered using the [Vue AutoForm component](https://docs.servicestack.net/vue/autoform) from the API
 definition where the `SimpleTextEmail` Request DTO renders the new Email UI:
 
 ![](/img/pages/creatorkit/portal-messages-simple.png)

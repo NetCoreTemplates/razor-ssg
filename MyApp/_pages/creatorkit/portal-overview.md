@@ -36,5 +36,5 @@ the current working database is always snappy and clear of clutter.
 ## Posts Admin
 
 The **Manage Posts** section is for managing and moderating your website's post comments with
-most menu items manages data in different Tables using [AutoQueryGrid](https://docs.servicestack.net/vue/gallery/autoquerygrid)
-and custom [AutoForm](https://docs.servicestack.net/vue/gallery/autoform) components.
+most menu items manages data in different Tables using [AutoQueryGrid](https://docs.servicestack.net/vue/autoquerygrid)
+and custom [AutoForm](https://docs.servicestack.net/vue/autoform) components.

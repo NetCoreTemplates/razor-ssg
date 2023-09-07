@@ -24,11 +24,11 @@ To better be able to keep up-to-date with future CreatorKit improvements we reco
 [forking CreatorKit](https://github.com/NetCoreApps/CreatorKit/fork) so you can easily apply future changes
 to your customized forks:
 
-<div class="my-12 text-center">
-    <button type="button" title="Fork CreatorKit" class="rounded-md bg-white px-3.5 py-2.5 text-2xl font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+<div class="not-prose my-12 text-center">
+    <a href="https://github.com/NetCoreApps/CreatorKit" title="Fork CreatorKit" class="rounded-md bg-white px-3.5 py-2.5 text-2xl font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
         <svg class="w-10 h-10 inline-block" xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256"><path fill="currentColor" d="M224 64a32 32 0 1 0-40 31v9a16 16 0 0 1-16 16H88a16 16 0 0 1-16-16v-9a32 32 0 1 0-16 0v9a32 32 0 0 0 32 32h32v25a32 32 0 1 0 16 0v-25h32a32 32 0 0 0 32-32v-9a32.06 32.06 0 0 0 24-31ZM48 64a16 16 0 1 1 16 16a16 16 0 0 1-16-16Zm96 128a16 16 0 1 1-16-16a16 16 0 0 1 16 16Zm48-112a16 16 0 1 1 16-16a16 16 0 0 1-16 16Z"/></svg>
         <span class="pr-1">CreatorKit</span>
-    </button>
+    </a>
 </div>
 
 Or if you're happy to take CreatorKit's current feature-set as it is, download the .zip to launch a local instance of
@@ -53,14 +53,12 @@ To minimize disruption when upgrading to future versions of CreatorKit we recomm
 [CreatorKit.Extensions](https://github.com/NetCoreApps/CreatorKit/tree/main/CreatorKit.Extensions) and their DTOs
 in [CreatorKit.Extensions.ServiceModel](https://github.com/NetCoreApps/CreatorKit/tree/main/CreatorKit.Extensions.ServiceModel):
 
-<div data-component="FileLayout" data-props="{
-    files: {
-        CreatorKit: { 
-            'CreatorKit.Extensions':  { _: ['CustomEmailRunServices.cs','CustomEmailServices.cs','CustomRendererServices.cs'] },
-            'CreatorKit.Extensions.ServiceModel': { _: ['MarkdownEmail.cs','NewsletterMailRun.cs','RenderNewsletter.cs'] } 
-        }
+<file-layout :files="{
+    CreatorKit: { 
+        'CreatorKit.Extensions':  { _: ['CustomEmailRunServices.cs','CustomEmailServices.cs','CustomRendererServices.cs'] },
+        'CreatorKit.Extensions.ServiceModel': { _: ['MarkdownEmail.cs','NewsletterMailRun.cs','RenderNewsletter.cs'] } 
     }
-}"></div>
+}"></file-layout>
 
 These folders will be limited to optional extras which can added to or removed as needed where it will be isolated from 
 the core set of functionality maintained in the other CreatorKit's folders. 
@@ -73,15 +71,12 @@ Any custom AppHost or IOC dependencies your Services require can be added to
 We need to initialize CreatorKit's database which we can populate with our preferred App Users, Mailing Lists and Subscribers
 by modifying the CSV files in `/Migrations/seed`:
 
-<div data-component="FileLayout" data-props="{
-    files: {
-        Migrations: { 
-            seed:  { _: ['mailinglists.csv','subscribers.csv','users.csv'] },
-            _:     ['Migration1000.cs','Migration1001.cs'] 
-        }
+<file-layout :files="{
+    Migrations: { 
+        seed:  { _: ['mailinglists.csv','subscribers.csv','users.csv'] },
+        _:     ['Migration1000.cs','Migration1001.cs'] 
     }
-}"></div>
-
+}"></file-layout>
 
 ## Mailing Lists
 
@@ -152,7 +147,7 @@ Id,Email,FirstName,LastName,Roles
 
 Once your happy with your seed data run the included [OrmLite DB Migrations](https://docs.servicestack.net/ormlite/db-migrations) with:
 
-<div class="not-prose text-base"><div data-component="ShellCommand" data-props="{ text:'npm run migrate' }"></div></div>
+<copy-line text="npm run migrate"></copy-line>
 
 Which will create the CreatorKit SQLite databases with your seed Users and Mailing List subscribers included.
 
