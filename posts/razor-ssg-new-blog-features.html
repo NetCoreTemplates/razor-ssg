@@ -702,14 +702,7 @@ init()
 <script type="module">
 import { mount } from "app.mjs"
 
-    const App = {
-        setup() {
-            function nav(url) {
-                window.open(url)
-            }
-            return { nav }
-        }
-    }
+        import App from "./posts/razor-ssg-new-blog-features.mjs" 
     mount('#post', App)
 </script>
 
