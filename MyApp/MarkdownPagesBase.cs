@@ -166,6 +166,7 @@ public abstract class MarkdownPagesBase<T> : IMarkdownPages where T : MarkdownFi
             .ConvertTo<T>()
             ?? typeof(T).CreateInstance<T>();
 
+        doc.Tags = doc.Tags.Map(x => x.Trim());
         doc.Content = content;
         doc.DocumentMap = document.GetData(nameof(DocumentMap)) as DocumentMap;
 

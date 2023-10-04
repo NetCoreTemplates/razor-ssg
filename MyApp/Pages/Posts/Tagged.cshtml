@@ -13,7 +13,7 @@
     ViewData["Title"] = $"{selectedTag} tagged posts";
     
     var allPosts = Blog.GetPosts();
-    var allTags = allPosts.SelectMany(x => x.Tags).Distinct();
+    var allTags = allPosts.SelectMany(x => x.Tags).Distinct().ToList();
     var tagCounts = new Dictionary<string, int>();
     allTags.Each(tag => tagCounts[tag] = allPosts.Count(x => x.Tags.Safe().Contains(tag)));
 }
