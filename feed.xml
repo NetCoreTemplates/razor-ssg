@@ -10,7 +10,7 @@
     </image>
     <generator>razor-ssg</generator>
     <copyright></copyright>
-    <lastBuildDate>Fri, 15 Sep 2023 09:30:41 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 04 Oct 2023 12:12:36 GMT</lastBuildDate>
     <managingEditor>email@example.org (Razor SSG)</managingEditor>
     <webMaster>email@example.org (Razor SSG)</webMaster>
     <atom:link href="https://razor-ssg.web-templates.io/feed.xml" rel="self" type="application/rss+xml" />
@@ -22,9 +22,9 @@
         <pubDate>Wed, 23 Aug 2023 00:00:00 GMT</pubDate>
         <atom:updated>2023-08-23T00:00:00Z</atom:updated>
         <category>razor</category>
-        <category> markdown</category>
-        <category> blog</category>
-        <category> dev</category>
+        <category>markdown</category>
+        <category>blog</category>
+        <category>dev</category>
         <description>Explore the new Blogging Features in Razor SSG</description>
     </item>
     <item>
@@ -35,9 +35,9 @@
         <pubDate>Thu, 30 Mar 2023 00:00:00 GMT</pubDate>
         <atom:updated>2023-03-30T00:00:00Z</atom:updated>
         <category>razor</category>
-        <category> markdown</category>
-        <category> blog</category>
-        <category> dev</category>
+        <category>markdown</category>
+        <category>blog</category>
+        <category>dev</category>
         <description>Create fast, beautiful statically rendered Razor Websites &amp; Blogs</description>
     </item>
     <item>
@@ -48,7 +48,7 @@
         <pubDate>Wed, 01 Feb 2023 00:00:00 GMT</pubDate>
         <atom:updated>2023-02-01T00:00:00Z</atom:updated>
         <category>js</category>
-        <category> dev</category>
+        <category>dev</category>
         <description>Learn about JS Modules, Vue 3 and available rich UI Components</description>
     </item>
     <item>
@@ -59,8 +59,8 @@
         <pubDate>Sat, 21 Jan 2023 00:00:00 GMT</pubDate>
         <atom:updated>2023-01-21T00:00:00Z</atom:updated>
         <category>js</category>
-        <category> dev</category>
-        <category> tailwind</category>
+        <category>dev</category>
+        <category>tailwind</category>
         <description>Found out how to use these template features</description>
     </item>
     <item>
@@ -71,7 +71,7 @@
         <pubDate>Wed, 11 Jan 2023 00:00:00 GMT</pubDate>
         <atom:updated>2023-01-11T00:00:00Z</atom:updated>
         <category>c#</category>
-        <category> dev</category>
+        <category>dev</category>
         <description>Setting up &amp; exploring development workflow in Rider</description>
     </item>
     <item>
@@ -82,7 +82,7 @@
         <pubDate>Tue, 10 Jan 2023 00:00:00 GMT</pubDate>
         <atom:updated>2023-01-10T00:00:00Z</atom:updated>
         <category>c#</category>
-        <category> dev</category>
+        <category>dev</category>
         <description>Exploring development workflow in VS Code and Visual Studio .NET</description>
     </item>
     <item>
@@ -93,7 +93,7 @@
         <pubDate>Sun, 01 Jan 2023 00:00:00 GMT</pubDate>
         <atom:updated>2023-01-01T00:00:00Z</atom:updated>
         <category>github-actions</category>
-        <category> devops</category>
+        <category>devops</category>
         <description>Configuring your GitHub repo for SSH and CDN deployments</description>
     </item>
     <item>
@@ -104,7 +104,7 @@
         <pubDate>Sat, 31 Dec 2022 00:00:00 GMT</pubDate>
         <atom:updated>2022-12-31T00:00:00Z</atom:updated>
         <category>tailwind</category>
-        <category> markdown</category>
+        <category>markdown</category>
         <description>tailwindcss/typography enabled for Markdown pages</description>
     </item>
     <item>
@@ -115,8 +115,8 @@
         <pubDate>Tue, 06 Sep 2022 00:00:00 GMT</pubDate>
         <atom:updated>2022-09-06T00:00:00Z</atom:updated>
         <category>dev</category>
-        <category> hosting</category>
-        <category> devops</category>
+        <category>hosting</category>
+        <category>devops</category>
         <description>We&#x27;ve been using AWS at ServiceStack for 10&#x2B; years, it&#x27;s served us well but suffers from complex &amp; expensive pricing</description>
     </item>
     <item>
@@ -127,7 +127,7 @@
         <pubDate>Mon, 08 Nov 2021 00:00:00 GMT</pubDate>
         <atom:updated>2021-11-08T00:00:00Z</atom:updated>
         <category>dev</category>
-        <category> docs</category>
+        <category>docs</category>
         <description>As part of migrating docs to VitePress we&#x27;ve added UX improvements like instant search powered by Typesense!</description>
     </item>
 </channel>
