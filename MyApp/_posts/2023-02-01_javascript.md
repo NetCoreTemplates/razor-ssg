@@ -143,6 +143,41 @@ const Plugin = {
     <plugin id="plugin" class="text-2xl py-4"></plugin>
 </div>
 
+### Vue HTML Templates
+
+An alternative progressive approach for creating Reactive UIs with Vue is by embedding its HTML markup directly in `.html` pages using
+[HTML Template Syntax](https://vuejs.org/guide/essentials/template-syntax.html) which is both great for performance
+as the DOM UI can be rendered before the Vue Component is initialized. UI elements you want hidden can use Vue's
+[v-cloak](https://vuejs.org/api/built-in-directives.html#v-cloak) attribute where they'll be hidden until components are initialized.
+
+It's also great for development as it lets you cohesively maintain most pages functionality need in the HTML page itself - in
+isolation with the rest of the website, i.e. instead of spread across multiple external `.js` source files that for
+SPAs unnecessarily increases the payload sizes of JS bundles with functionality that no other pages need.
+
+With Vue's HTML syntax you can maintain the Vue template in HTML and just use embedded JavaScript for the Reactive UI's functionality, e.g:
+
+```html
+<div id="app">
+    <primary-button v-on:click="show=true">Open Modal</primary-button>
+    <modal-dialog v-if="show" v-on:done="show=false">
+        <div class="p-8">Hello @servicestack/vue!</div>
+    </modal-dialog>
+</div>
+<script>
+const App = {
+    setup() {
+        const show = ref(false)
+        return { show }
+    }
+}
+mount('#app', App)
+</script>
+```
+
+This is the approach used to develop [Vue Stable Diffusion](https://servicestack.net/posts/vue-stable-diffusion) where all functionality specific
+to the page is maintained in the page itself, whilst any common functionality is maintained in external JS Modules loaded
+on-demand by the Browser when needed.
+
 ### @servicestack/vue
 [@servicestack/vue](https://github.com/ServiceStack/servicestack-vue) is our growing Vue 3 Tailwind component library with a number of rich Tailwind components useful 
 in .NET Web Apps, including Input Components with auto form validation binding which is used by all HTML forms in
