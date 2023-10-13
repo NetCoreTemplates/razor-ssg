@@ -160,7 +160,7 @@ mountAll()
                             <div class="mb-6 text-lg text-gray-500">
                                 <time datetime="2023-02-01T00:00:00.0000000">February 1, 2023</time>
                                 <span aria-hidden="true">&middot;</span>
-                                <span>14 min read</span>
+                                <span>15 min read</span>
                             </div>
                         </div>
                 </div>
@@ -275,6 +275,34 @@ and <a href="https://docs.servicestack.net/vue//modals">ModalDialog</a>:</p>
 <div class="text-center">
     <plugin id="plugin" class="text-2xl py-4"></plugin>
 </div>
+<h3 id="vue-html-templates">Vue HTML Templates<a class="header-anchor" href="javascript:;" onclick="location.hash='#vue-html-templates'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>An alternative progressive approach for creating Reactive UIs with Vue is by embedding its HTML markup directly in <code>.html</code> pages using
+<a href="https://vuejs.org/guide/essentials/template-syntax.html">HTML Template Syntax</a> which is both great for performance
+as the DOM UI can be rendered before the Vue Component is initialized. UI elements you want hidden can use Vue's
+<a href="https://vuejs.org/api/built-in-directives.html#v-cloak">v-cloak</a> attribute where they'll be hidden until components are initialized.</p>
+<p>It's also great for development as it lets you cohesively maintain most pages functionality need in the HTML page itself - in
+isolation with the rest of the website, i.e. instead of spread across multiple external <code>.js</code> source files that for
+SPAs unnecessarily increases the payload sizes of JS bundles with functionality that no other pages need.</p>
+<p>With Vue's HTML syntax you can maintain the Vue template in HTML and just use embedded JavaScript for the Reactive UI's functionality, e.g:</p>
+<pre><code class="language-html">&lt;div id=&quot;app&quot;&gt;
+    &lt;primary-button v-on:click=&quot;show=true&quot;&gt;Open Modal&lt;/primary-button&gt;
+    &lt;modal-dialog v-if=&quot;show&quot; v-on:done=&quot;show=false&quot;&gt;
+        &lt;div class=&quot;p-8&quot;&gt;Hello @servicestack/vue!&lt;/div&gt;
+    &lt;/modal-dialog&gt;
+&lt;/div&gt;
+&lt;script&gt;
+const App = {
+    setup() {
+        const show = ref(false)
+        return { show }
+    }
+}
+mount('#app', App)
+&lt;/script&gt;
+</code></pre>
+<p>This is the approach used to develop <a href="https://servicestack.net/posts/vue-stable-diffusion">Vue Stable Diffusion</a> where all functionality specific
+to the page is maintained in the page itself, whilst any common functionality is maintained in external JS Modules loaded
+on-demand by the Browser when needed.</p>
 <h3 id="servicestackvue">@servicestack/vue<a class="header-anchor" href="javascript:;" onclick="location.hash='#servicestackvue'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p><a href="https://github.com/ServiceStack/servicestack-vue">@servicestack/vue</a> is our growing Vue 3 Tailwind component library with a number of rich Tailwind components useful
 in .NET Web Apps, including Input Components with auto form validation binding which is used by all HTML forms in
