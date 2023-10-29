@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.3.2 | MIT License | https://tailwindcss.com
+! tailwindcss v3.3.5 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -191,6 +191,10 @@ select,
 textarea {
   font-family: inherit;
   /* 1 */
+  font-feature-settings: inherit;
+  /* 1 */
+  font-variation-settings: inherit;
+  /* 1 */
   font-size: 100%;
   /* 1 */
   font-weight: inherit;
@@ -338,6 +342,14 @@ ul,
 menu {
   list-style: none;
   margin: 0;
+  padding: 0;
+}
+
+/*
+Reset default styling for dialogs.
+*/
+
+dialog {
   padding: 0;
 }
 
@@ -1297,6 +1309,14 @@ select{
   margin-top: 2rem;
 }
 
+.-mr-28 {
+  margin-right: -7rem;
+}
+
+.-mt-3 {
+  margin-top: -0.75rem;
+}
+
 .block {
   display: block;
 }
@@ -1571,6 +1591,10 @@ select{
 
 .w-screen {
   width: 100vw;
+}
+
+.w-14 {
+  width: 3.5rem;
 }
 
 .min-w-0 {
@@ -2507,6 +2531,10 @@ select{
   padding: 2rem;
 }
 
+.p-3 {
+  padding: 0.75rem;
+}
+
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
@@ -3203,6 +3231,11 @@ select{
 .text-zinc-800 {
   --tw-text-opacity: 1;
   color: rgb(39 39 42 / var(--tw-text-opacity));
+}
+
+.text-purple-500 {
+  --tw-text-opacity: 1;
+  color: rgb(168 85 247 / var(--tw-text-opacity));
 }
 
 .placeholder-red-300::-moz-placeholder {
@@ -4313,6 +4346,11 @@ select{
 :is(.dark .dark\:bg-zinc-800) {
   --tw-bg-opacity: 1;
   background-color: rgb(39 39 42 / var(--tw-bg-opacity));
+}
+
+:is(.dark .dark\:bg-blue-900) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 58 138 / var(--tw-bg-opacity));
 }
 
 :is(.dark .dark\:fill-gray-300) {
