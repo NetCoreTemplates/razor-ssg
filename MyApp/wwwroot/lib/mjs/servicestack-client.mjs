@@ -745,8 +745,6 @@ export class JsonServiceClient {
     static toBase64;
     constructor(baseUrl = "/") {
         this.baseUrl = baseUrl;
-        this.replyBaseUrl = combinePaths(baseUrl, "json", "reply") + "/";
-        this.oneWayBaseUrl = combinePaths(baseUrl, "json", "oneway") + "/";
         this.mode = "cors";
         this.credentials = "include";
         this.headers = new Headers();
@@ -754,6 +752,7 @@ export class JsonServiceClient {
         this.manageCookies = typeof document == "undefined"; //because node-fetch doesn't
         this.cookies = {};
         this.enableAutoRefreshToken = true;
+        this.basePath = 'api';
     }
     setCredentials(userName, password) {
         this.userName = userName;
@@ -769,9 +768,6 @@ export class JsonServiceClient {
             this.oneWayBaseUrl = combinePaths(this.baseUrl, "json", "oneway") + "/";
         }
         else {
-            if (path[0] != '/') {
-                path = '/' + path;
-            }
             this.replyBaseUrl = combinePaths(this.baseUrl, path) + "/";
             this.oneWayBaseUrl = combinePaths(this.baseUrl, path) + "/";
         }
@@ -1053,7 +1049,7 @@ export class JsonServiceClient {
                     let jwtRequest = this.createRequest({ method: HttpMethods.Post, request: jwtReq, args: null, url });
                     return fetch(url, jwtRequest)
                         .then(r => this.createResponse(r, jwtReq).then(jwtResponse => {
-                        this.bearerToken = jwtResponse.accessToken || null;
+                        this.bearerToken = jwtResponse?.accessToken || null;
                         return resendRequest();
                     }))
                         .catch(res => {
@@ -1134,6 +1130,7 @@ export class JsonApiClient {
         let client = new JsonServiceClient(baseUrl).apply(c => {
             c.basePath = "/api";
             c.headers = new Headers(); //avoid pre-flight CORS requests
+            c.enableAutoRefreshToken = false; // Use JWT Cookies by default
             if (f) {
                 f(c);
             }
@@ -1142,9 +1139,9 @@ export class JsonApiClient {
     }
 }
 export function getMethod(request, method) {
-    return (method ?? typeof request.getMethod == "function")
+    return method ?? (typeof request.getMethod == "function"
         ? request.getMethod()
-        : HttpMethods.Post;
+        : HttpMethods.Post);
 }
 export function getResponseStatus(e) {
     return e.responseStatus ?? e.ResponseStatus ??
@@ -1226,30 +1223,32 @@ export function toCamelCase(s) { return !s ? s : s.charAt(0).toLowerCase() + s.s
 export function toPascalCase(s) { return !s ? s : s.charAt(0).toUpperCase() + s.substring(1); }
 export function toKebabCase(s) { return (s || '').replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(); }
 export function map(o, f) { return o == null ? null : f(o); }
+export function camelCaseAny(o) {
+    if (!o || !(o instanceof Object) || Array.isArray(o))
+        return o;
+    let to = {};
+    for (let k in o) {
+        if (o.hasOwnProperty(k)) {
+            const key = toCamelCase(k);
+            const val = o[k];
+            if (Array.isArray(val))
+                to[key] = val.map(x => camelCaseAny(x));
+            else if (val instanceof Object)
+                to[key] = camelCaseAny(val);
+            else
+                to[key] = val;
+        }
+    }
+    return to;
+}
 export function sanitize(status) {
+    if (!sanitize)
+        return sanitize;
     if (status.responseStatus)
         return status;
     if (status.errors)
         return status;
-    let to = {};
-    for (let k in status) {
-        if (status.hasOwnProperty(k)) {
-            if (status[k] instanceof Object)
-                to[toCamelCase(k)] = sanitize(status[k]);
-            else
-                to[toCamelCase(k)] = status[k];
-        }
-    }
-    to.errors = [];
-    if (status.Errors != null) {
-        for (let i = 0, len = status.Errors.length; i < len; i++) {
-            let o = status.Errors[i];
-            let err = {};
-            for (let k in o)
-                err[toCamelCase(k)] = o[k];
-            to.errors.push(err);
-        }
-    }
+    let to = camelCaseAny(status);
     return to;
 }
 export function nameOf(o) {
@@ -1430,7 +1429,7 @@ export function appendQueryString(url, args) {
     for (let k in args) {
         if (args.hasOwnProperty(k)) {
             let val = args[k];
-            if (typeof val == 'undefined')
+            if (typeof val == 'undefined' || typeof val == 'function' || typeof val == 'symbol')
                 continue;
             url += url.indexOf("?") >= 0 ? "&" : "?";
             url += k + (val === null ? '' : "=" + qsValue(val));
@@ -1756,13 +1755,18 @@ function remClass(el, cls) {
                 ? el.className = el.className.replace(/(\s|^)someclass(\s|$)/, ' ')
                 : null;
 }
+export function isElement(el) {
+    return typeof window != "undefined" && (el instanceof window.Element || el == window.document);
+}
 export function $1(sel, el) {
     return typeof sel === "string" ? (el || document).querySelector(sel) : sel || null;
 }
 export function $$(sel, el) {
-    return typeof sel === "string"
-        ? Array.prototype.slice.call((el || document).querySelectorAll(sel))
-        : Array.isArray(sel) ? sel : [sel];
+    if (typeof sel === "string")
+        return Array.from((el || typeof document != "undefined" ? document : null)?.querySelectorAll(sel) ?? []);
+    if (Array.isArray(sel))
+        return sel.flatMap(x => $$(x, el));
+    return [sel];
 }
 export function on(sel, handlers) {
     $$(sel).forEach(e => {
@@ -2255,6 +2259,16 @@ export function omit(o, keys) {
     for (const k in o) {
         if (o.hasOwnProperty(k) && keys.indexOf(k) < 0) {
             to[k] = o[k];
+        }
+    }
+    return to;
+}
+export function omitEmpty(o) {
+    const to = {};
+    for (const k in o) {
+        const v = o[k];
+        if (v != null && v !== '') {
+            to[k] = v;
         }
     }
     return to;
