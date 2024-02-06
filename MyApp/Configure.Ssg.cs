@@ -30,7 +30,7 @@ public class ConfigureSsg : IHostingStartup
                 var meta = appHost.Resolve<MarkdownMeta>();
 
                 blogPosts.Authors = AppConfig.Instance.Authors;
-                meta.Features = new() { pages, whatsNew, videos, blogPosts };
+                meta.Features = [pages, whatsNew, videos, blogPosts];
                 
                 pages.LoadFrom("_pages");
                 whatsNew.LoadFrom("_whatsnew");
