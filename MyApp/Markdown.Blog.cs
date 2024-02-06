@@ -2,9 +2,8 @@
 using System.Globalization;
 using Markdig;
 using ServiceStack.IO;
-using ServiceStack.Logging;
 
-namespace Ssg;
+namespace MyApp;
 
 public class AuthorInfo
 {
@@ -18,18 +17,18 @@ public class AuthorInfo
     public string? MastodonUrl { get; set; }
 }
 
-public class MarkdownBlog : MarkdownPagesBase<MarkdownFileInfo>
+public class MarkdownBlog(ILogger<MarkdownBlog> log, IWebHostEnvironment env, IVirtualFiles fs)
+    : MarkdownPagesBase<MarkdownFileInfo>(log, env, fs)
 {
     public override string Id => "posts";
-    public MarkdownBlog(ILogger<MarkdownBlog> log, IWebHostEnvironment env) : base(log,env) {}
-    List<MarkdownFileInfo> Posts { get; set; } = new();
+    List<MarkdownFileInfo> Posts { get; set; } = [];
 
     public List<MarkdownFileInfo> VisiblePosts => Posts.Where(IsVisible).ToList();
     
     public string FallbackProfileUrl { get; set; } = Svg.ToDataUri(Svg.Create(Svg.Body.User, stroke:"none").Replace("fill='currentColor'","fill='#0891b2'"));
     public string FallbackSplashUrl { get; set; } = "https://source.unsplash.com/random/2000x1000/?stationary";
 
-    public List<AuthorInfo> Authors { get; set; } = new();
+    public List<AuthorInfo> Authors { get; set; } = [];
 
     public Dictionary<string, AuthorInfo> AuthorSlugMap { get; } = new();
     public Dictionary<string, string> TagSlugMap { get; } = new();
@@ -81,19 +80,13 @@ public class MarkdownBlog : MarkdownPagesBase<MarkdownFileInfo>
     public string GetDateLabel(DateTime? date) => X.Map(date ?? DateTime.UtcNow, d => d.ToString("MMMM d, yyyy"))!;
     public string GetDateTimestamp(DateTime? date) => X.Map(date ?? DateTime.UtcNow, d => d.ToString("O"))!;
 
-    public AuthorInfo? GetAuthorBySlug(string? slug)
-    {
-        return AuthorSlugMap.TryGetValue(slug, out var author)
-            ? author
-            : null;
-    }
+    public AuthorInfo? GetAuthorBySlug(string? slug) => slug != null && AuthorSlugMap.TryGetValue(slug, out var author)
+        ? author
+        : null;
 
-    public string? GetTagBySlug(string? slug)
-    {
-        return TagSlugMap.TryGetValue(slug, out var tag)
-            ? tag
-            : null;
-    }
+    public string? GetTagBySlug(string? slug) => slug != null && TagSlugMap.TryGetValue(slug, out var tag)
+        ? tag
+        : null;
 
     public string GetSplashImage(MarkdownFileInfo post)
     {
@@ -108,14 +101,14 @@ public class MarkdownBlog : MarkdownPagesBase<MarkdownFileInfo>
     public override MarkdownFileInfo? Load(string path, MarkdownPipeline? pipeline = null)
     {
         var file = VirtualFiles.GetFile(path)
-                   ?? throw new FileNotFoundException(path.LastRightPart('/'));
+            ?? throw new FileNotFoundException(path.LastRightPart('/'));
         var content = file.ReadAllText();
 
         var writer = new StringWriter();
         var doc = CreateMarkdownFile(content, writer, pipeline);
-        if (doc?.Title == null)
+        if (doc.Title == null)
         {
-            Log.LogWarning("No frontmatter found for {0}, ignoring...", file.VirtualPath);
+            log.LogWarning("No frontmatter found for {VirtualPath}, ignoring...", file.VirtualPath);
             return null;
         }
 
@@ -127,7 +120,7 @@ public class MarkdownBlog : MarkdownPagesBase<MarkdownFileInfo>
         if (!DateTime.TryParseExact(datePart, "yyyy-MM-dd", CultureInfo.InvariantCulture,
                 DateTimeStyles.AdjustToUniversal, out var date))
         {
-            Log.LogWarning("Could not parse date '{0}', ignoring...", datePart);
+            log.LogWarning("Could not parse date '{DatePart}', ignoring...", datePart);
             return null;
         }
 
@@ -143,10 +136,8 @@ public class MarkdownBlog : MarkdownPagesBase<MarkdownFileInfo>
     public void LoadFrom(string fromDirectory)
     {
         Posts.Clear();
-        var fs = AssertVirtualFiles();
-        var files = fs.GetDirectory(fromDirectory).GetAllFiles().ToList();
-        var log = LogManager.GetLogger(GetType());
-        log.InfoFormat("Found {0} posts", files.Count);
+        var files = VirtualFiles.GetDirectory(fromDirectory).GetAllFiles().ToList();
+        log.LogInformation("Found {Count} posts", files.Count);
 
         var pipeline = CreatePipeline();
 
@@ -162,7 +153,7 @@ public class MarkdownBlog : MarkdownPagesBase<MarkdownFileInfo>
             }
             catch (Exception e)
             {
-                log.Error(e, "Couldn't load {0}: {1}", file.VirtualPath, e.Message);
+                log.LogError(e, "Couldn't load {VirtualPath}: {Message}", file.VirtualPath, e.Message);
             }
         }
 

@@ -5,7 +5,7 @@ namespace MyApp;
 
 public class MarkdownMeta
 {
-    public List<IMarkdownPages> Features { get; set; } = new();
+    public List<IMarkdownPages> Features { get; set; } = [];
 
     public async Task RenderToAsync(string metaDir, string baseUrl)
     {
@@ -57,5 +57,4 @@ public class MarkdownMeta
             await File.WriteAllTextAsync(metaDir.CombineWith($"{year}/all.json"), JSON.stringify(yearDocs));
         }
     }
-
 }

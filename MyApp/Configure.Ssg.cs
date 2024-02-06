@@ -31,7 +31,6 @@ public class ConfigureSsg : IHostingStartup
 
                 blogPosts.Authors = AppConfig.Instance.Authors;
                 meta.Features = new() { pages, whatsNew, videos, blogPosts };
-                meta.Features.ForEach(x => x.VirtualFiles = appHost.VirtualFiles);
                 
                 pages.LoadFrom("_pages");
                 whatsNew.LoadFrom("_whatsnew");

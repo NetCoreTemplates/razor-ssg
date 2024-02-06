@@ -8,7 +8,6 @@
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
   </PropertyGroup>
   <ItemGroup>
-    <Using Include="Ssg" />
     <Using Include="MyApp" />
     <Using Include="ServiceStack" />
     <Using Include="ServiceStack.Mvc" />

@@ -2,27 +2,26 @@
 using System.Globalization;
 using ServiceStack.IO;
 
-namespace Ssg;
+namespace MyApp;
 
-public class MarkdownWhatsNew : MarkdownPagesBase<MarkdownFileInfo>
+public class MarkdownWhatsNew(ILogger<MarkdownWhatsNew> log, IWebHostEnvironment env, IVirtualFiles fs)
+    : MarkdownPagesBase<MarkdownFileInfo>(log, env, fs)
 {
     public override string Id => "whatsnew";
-    public MarkdownWhatsNew(ILogger<MarkdownWhatsNew> log, IWebHostEnvironment env) : base(log,env) {}
     public Dictionary<string, List<MarkdownFileInfo>> Features { get; set; } = new();
 
     public List<MarkdownFileInfo> GetFeatures(string release)
     {
         return Features.TryGetValue(release, out var docs)
             ? Fresh(docs.Where(IsVisible).OrderBy(x => x.Order).ThenBy(x => x.FileName).ToList())
-            : new List<MarkdownFileInfo>();
+            : [];
     }
     
     public void LoadFrom(string fromDirectory)
     {
         Features.Clear();
-        var fs = AssertVirtualFiles();
-        var dirs = fs.GetDirectory(fromDirectory).GetDirectories().ToList();
-        Log.LogInformation("Found {0} whatsnew directories", dirs.Count);
+        var dirs = VirtualFiles.GetDirectory(fromDirectory).GetDirectories().ToList();
+        log.LogInformation("Found {Count} whatsnew directories", dirs.Count);
 
         var pipeline = CreatePipeline();
 
@@ -32,7 +31,7 @@ public class MarkdownWhatsNew : MarkdownPagesBase<MarkdownFileInfo>
             if (!DateTime.TryParseExact(datePart, "yyyy-MM-dd", CultureInfo.InvariantCulture,
                     DateTimeStyles.AdjustToUniversal, out var date))
             {
-                Log.LogWarning("Could not parse date '{0}', ignoring...", datePart);
+                log.LogWarning("Could not parse date '{DatePart}', ignoring...", datePart);
                 continue;
             }
 
@@ -55,7 +54,7 @@ public class MarkdownWhatsNew : MarkdownPagesBase<MarkdownFileInfo>
                 }
                 catch (Exception e)
                 {
-                    Log.LogError(e, "Couldn't load {0}: {1}", file.VirtualPath, e.Message);
+                    log.LogError(e, "Couldn't load {VirtualPath}: {Message}", file.VirtualPath, e.Message);
                 }
             }
         }

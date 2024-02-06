@@ -1,4 +1,5 @@
 ﻿var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
 
 // Add services to the container.
 var mvcBuilder = builder.Services.AddRazorPages();
@@ -6,6 +7,11 @@ if (builder.Environment.IsDevelopment())
 {
     mvcBuilder.AddRazorRuntimeCompilation();
 }
+
+services.AddHttpContextAccessor();
+
+services.AddServiceStack(typeof(MyServices).Assembly, c => {
+});
 
 var app = builder.Build();
 
@@ -20,8 +26,6 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseServiceStack(new AppHost());
-
 app.UseRouting();
 
 app.UseAuthorization();
@@ -29,5 +33,9 @@ app.UseAuthorization();
 app.MapRazorPages();
 
 app.UseStatusCodePagesWithReExecute("/Error", "?status={0}");
+
+app.UseServiceStack(new AppHost(), options => {
+    options.MapEndpoints();
+});
 
 app.Run();
