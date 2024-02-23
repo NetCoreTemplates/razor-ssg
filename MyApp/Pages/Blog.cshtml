@@ -157,6 +157,12 @@
                             </div>
                         </div>
                     }
+                    @if (remainingPosts.Count >= 15)
+                    {
+                        <div class="mt-8 text-center">
+                            <a class="text-sm font-semibold hover:underline" href="@Blog.GetPostsLink()">view all posts</a>
+                        </div>
+                    }
                 </div>
                 <div class="w-1/3">
                     <div class="pl-8">
