@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/svg" href="img/logo.svg">
     <link rel="alternate" type="application/rss+xml" title="RSS" href="https://razor-ssg.web-templates.io/feed.xml" />
-    <title>Develop using Visual Studio</title>
+    <title>Built-In Identity Auth Admin UI</title>
     <base href="/" />
     <script>
     if (location.search === "?dark") localStorage.setItem('color-scheme','dark') 
@@ -33,10 +33,10 @@
     <meta name="twitter:site" content="@RazorSsg" />
     <meta name="twitter:creator" content="@lucy" />
     <meta name="twitter:card" content="summary" />
-    <meta property="og:description" content="Exploring development workflow in VS Code and Visual Studio .NET" />
-    <meta property="og:url" content="https://razor-ssg.web-templates.io/posts/vs" />
-    <meta property="og:title" content="Develop using Visual Studio" />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" />
+    <meta property="og:description" content="Explore the new Identity Auth Admin UI for creating and managing Identity Auth users in .NET 8" />
+    <meta property="og:url" content="https://razor-ssg.web-templates.io/posts/identity-auth-admin-ui" />
+    <meta property="og:title" content="Built-In Identity Auth Admin UI" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1563920443079-783e5c786b83?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" />
 
 
 </head>
@@ -121,7 +121,7 @@ mountAll()
 <div class="container px-5 mb-32 mx-auto">
         <article class="mt-20">
             <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
-                Develop using Visual Studio
+                Built-In Identity Auth Admin UI
             </h1>
             <div class="flex justify-between">
                 <div class="md:mb-12 flex items-center">
@@ -162,20 +162,21 @@ mountAll()
             </div>
             <div class="mb-8 md:mb-16 sm:mx-0">
                 <div class="sm:mx-0">
-                    <img src="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" alt="Develop using Visual Studio Background" class="shadow-small">
+                    <img src="https://images.unsplash.com/photo-1563920443079-783e5c786b83?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" alt="Built-In Identity Auth Admin UI Background" class="shadow-small">
                 </div>
             </div>
             <div class="flex max-w-3xl mx-auto justify-between">
                 <div>
                     <div class="mb-4 flex flex-wrap">
-                            <a href="posts/tagged/csharp" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">c#</a>
-                            <a href="posts/tagged/dev" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">dev</a>
+                            <a href="posts/tagged/servicestack" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">servicestack</a>
+                            <a href="posts/tagged/net8" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">.net8</a>
+                            <a href="posts/tagged/auth" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">auth</a>
                     </div>
                         <div class="max-w-3xl mx-auto">
                             <div class="mb-6 text-lg text-gray-500">
-                                <time datetime="2023-01-10T00:00:00.0000000">January 10, 2023</time>
+                                <time datetime="2024-02-10T00:00:00.0000000">February 10, 2024</time>
                                 <span aria-hidden="true">&middot;</span>
-                                <span>6 min read</span>
+                                <span>3 min read</span>
                             </div>
                         </div>
                 </div>
@@ -188,51 +189,123 @@ mountAll()
             </div>
             <div class="max-w-3xl mx-auto">
                 <div id="post" class="prose lg:prose-xl max-w-none mb-32">
-                    <p>A popular alternative development environment to our preferred <a href="rider">JetBrains Rider</a> IDE is to use
-Visual Studio, the primary issue with this is that VS Code is a better IDE with richer support for JavaScript and npm
-projects whilst Visual Studio is a better IDE for C# Projects.</p>
-<p>Essentially this is why we recommend Rider where it's best at both, where both C# and JS/TypeScript projects can
-be developed from within the same solution.</p>
-<h3 id="developing-with-just-vs-code">Developing with just VS Code<a class="header-anchor" href="javascript:;" onclick="location.hash='#developing-with-just-vs-code'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
-<a href="https://visualstudio.microsoft.com/" title="VS Code" class="sm:float-left mr-8">
-    <svg class="w-24 h-24" style="margin-top:1rem" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 254"><defs><linearGradient id="logosVisualStudioCode0" x1="50%" x2="50%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFF"/><stop offset="100%" stop-color="#FFF" stop-opacity="0"/></linearGradient><path id="logosVisualStudioCode1" d="M180.828 252.605a15.872 15.872 0 0 0 12.65-.486l52.501-25.262a15.94 15.94 0 0 0 9.025-14.364V41.197a15.939 15.939 0 0 0-9.025-14.363l-52.5-25.263a15.877 15.877 0 0 0-18.115 3.084L74.857 96.35l-43.78-33.232a10.614 10.614 0 0 0-13.56.603L3.476 76.494c-4.63 4.211-4.635 11.495-.012 15.713l37.967 34.638l-37.967 34.637c-4.623 4.219-4.618 11.502.012 15.714l14.041 12.772a10.614 10.614 0 0 0 13.56.604l43.78-33.233l100.507 91.695a15.853 15.853 0 0 0 5.464 3.571Zm10.464-183.649l-76.262 57.889l76.262 57.888V68.956Z"/></defs><mask id="logosVisualStudioCode2" fill="#fff"><use href="#logosVisualStudioCode1"/></mask><path fill="#0065A9" d="M246.135 26.873L193.593 1.575a15.885 15.885 0 0 0-18.123 3.08L3.466 161.482c-4.626 4.219-4.62 11.502.012 15.714l14.05 12.772a10.625 10.625 0 0 0 13.569.604L238.229 33.436c6.949-5.271 16.93-.315 16.93 8.407v-.61a15.938 15.938 0 0 0-9.024-14.36Z" mask="url(#logosVisualStudioCode2)"/><path fill="#007ACC" d="m246.135 226.816l-52.542 25.298a15.887 15.887 0 0 1-18.123-3.08L3.466 92.207c-4.626-4.218-4.62-11.502.012-15.713l14.05-12.773a10.625 10.625 0 0 1 13.569-.603l207.132 157.135c6.949 5.271 16.93.315 16.93-8.408v.611a15.939 15.939 0 0 1-9.024 14.36Z" mask="url(#logosVisualStudioCode2)"/><path fill="#1F9CF0" d="M193.428 252.134a15.892 15.892 0 0 1-18.125-3.083c5.881 5.88 15.938 1.715 15.938-6.603V11.273c0-8.318-10.057-12.483-15.938-6.602a15.892 15.892 0 0 1 18.125-3.084l52.533 25.263a15.937 15.937 0 0 1 9.03 14.363V212.51c0 6.125-3.51 11.709-9.03 14.363l-52.533 25.262Z" mask="url(#logosVisualStudioCode2)"/><path fill="url(#logosVisualStudioCode0)" fill-opacity=".25" d="M180.828 252.605a15.874 15.874 0 0 0 12.65-.486l52.5-25.263a15.938 15.938 0 0 0 9.026-14.363V41.197a15.939 15.939 0 0 0-9.025-14.363L193.477 1.57a15.877 15.877 0 0 0-18.114 3.084L74.857 96.35l-43.78-33.232a10.614 10.614 0 0 0-13.56.603L3.476 76.494c-4.63 4.211-4.635 11.495-.012 15.713l37.967 34.638l-37.967 34.637c-4.623 4.219-4.618 11.502.012 15.714l14.041 12.772a10.614 10.614 0 0 0 13.56.604l43.78-33.233l100.506 91.695a15.857 15.857 0 0 0 5.465 3.571Zm10.464-183.65l-76.262 57.89l76.262 57.888V68.956Z" mask="url(#logosVisualStudioCode2)"/></svg>
-</a>
-<p>If you prefer the dev UX of a lightweight text editor or your C# project isn't large, than VS Code on its own
-can provide a great development UX which is also what <a href="https://v3.vuejs.org/api/sfc-tooling.html#ide-support">Vue recommends themselves</a>,
-to be used together with the <a href="https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar">Volar extension</a>.</p>
-<p>VSCode's <a href="https://code.visualstudio.com/docs/editor/integrated-terminal">Integrated Terminal</a> has great multi-terminal
-support you can toggle between the editor and terminal with <code>Ctrl+</code> or open a new Terminal Window with
-<code>Ctrl+Shift+`</code> to run Tailwind with:</p>
-<pre><code class="language-bash">$ npm run ui:dev
+                    <p>With ServiceStack now <a href="/posts/servicestack-endpoint-routing">deeply integrated into ASP.NET Core Apps</a> we're back to
+refocusing on adding value-added features that can benefit all .NET Core Apps.</p>
+<h2 id="registration">Registration<a class="header-anchor" href="javascript:;" onclick="location.hash='#registration'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>The new Identity Auth Admin UI is an example of this, which can be enabled when registering the <code>AuthFeature</code> Plugin:</p>
+<pre><code class="language-csharp">public class ConfigureAuth : IHostingStartup
+{
+    public void Configure(IWebHostBuilder builder) =&gt; builder
+        .ConfigureServices(services =&gt; {
+            services.AddPlugin(new AuthFeature(IdentityAuth.For&lt;ApplicationUser&gt;(
+                options =&gt; {
+                    options.SessionFactory = () =&gt; new CustomUserSession();
+                    options.CredentialsAuth();
+                    options.AdminUsersFeature();
+                })));
+        });
+}
 </code></pre>
-<p>Then in a new Terminal Window, start a new watched .NET App with:</p>
-<pre><code class="language-bash">$ dotnet watch
+<p>Which just like the ServiceStack Auth <a href="https://docs.servicestack.net/admin-ui-users">Admin Users UI</a> enables a
+Admin UI that's only accessible to <strong>Admin</strong> Users for managing <strong>Identity Auth</strong> users at <code>/admin-ui/users</code>.</p>
+<h2 id="user-search-results">User Search Results<a class="header-anchor" href="javascript:;" onclick="location.hash='#user-search-results'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>Which displays a limited view due to the minimal properties on the default <code>IdentityAuth</code> model:</p>
+<div style="height:580px">
+    <img class="absolute left-0 right-0 mx-auto shadow" style="max-width:1496px" 
+         src="https://servicestack.net/img/posts/identity-auth-admin-ui/admin-ui-users-default.png">
+</div>
+<h3 id="custom-search-result-properties">Custom Search Result Properties<a class="header-anchor" href="javascript:;" onclick="location.hash='#custom-search-result-properties'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>These User's search results are customizable by specifying the <code>ApplicationUser</code> properties to display instead, e.g:</p>
+<pre><code class="language-csharp">options.AdminUsersFeature(feature =&gt;
+{
+    feature.QueryIdentityUserProperties =
+    [
+        nameof(ApplicationUser.Id),
+        nameof(ApplicationUser.DisplayName),
+        nameof(ApplicationUser.Email),
+        nameof(ApplicationUser.UserName),
+        nameof(ApplicationUser.LockoutEnd),
+    ];
+});
 </code></pre>
-<p>With both projects started you can open a browser tab running at <code>https://localhost:5001</code> where it
-will automatically reload itself at every <code>Ctrl+S</code> save point.</p>
-<h4 id="useful-vs-code-extensions">Useful VS Code extensions<a class="header-anchor" href="javascript:;" onclick="location.hash='#useful-vs-code-extensions'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
-<p>We recommend these extensions below to enhance the development experience of this template:</p>
-<ul>
-<li><a href="https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss">Tailwind CSS IntelliSense</a> - Add Intellisense for Tailwind classes</li>
-<li><a href="https://marketplace.visualstudio.com/items?itemName=Tobermory.es6-string-html">es6-string-html</a> - Add HTML Syntax Highlighting in string literals</li>
-</ul>
-<h3 id="using-visual-studio">Using Visual Studio<a class="header-anchor" href="javascript:;" onclick="location.hash='#using-visual-studio'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
-<a href="https://code.visualstudio.com/" title="Visual Studio" class="sm:float-left mr-8">
-    <svg class="w-24 h-24" style="margin-top:1rem" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><defs><linearGradient id="logosVisualStudio0" x1="50%" x2="50%" y1=".002%" y2="100%"><stop offset="0%" stop-color="#FFF"/><stop offset="100%" stop-color="#FFF" stop-opacity="0"/></linearGradient></defs><path fill="#52218A" d="M36.987 200.406a10.667 10.667 0 0 1-11.04 1.734L6.56 194.006A10.667 10.667 0 0 1 0 184.22V70.46a10.667 10.667 0 0 1 6.56-9.787l19.387-8a10.667 10.667 0 0 1 11.04 1.733l4.346 3.6a5.893 5.893 0 0 0-9.333 4.8v129.067a5.893 5.893 0 0 0 9.333 4.8l-4.346 3.733Z"/><path fill="#6C33AF" d="M6.56 194.006A10.667 10.667 0 0 1 0 184.22v-.88a6.16 6.16 0 0 0 10.667 4.133L176 4.673a16 16 0 0 1 18.187-3.093l52.746 25.386A16 16 0 0 1 256 41.393v.613a10.107 10.107 0 0 0-16.507-7.813l-198.16 162.48l-4.346 3.733a10.667 10.667 0 0 1-11.04 1.734L6.56 194.006Z"/><path fill="#854CC7" d="M6.56 60.673A10.667 10.667 0 0 0 0 70.46v.88a6.16 6.16 0 0 1 10.667-4.134L176 250.006a16 16 0 0 0 18.187 3.094l52.746-25.387A16 16 0 0 0 256 213.286v-.613a10.107 10.107 0 0 1-16.507 7.813L41.333 58.006l-4.346-3.733a10.667 10.667 0 0 0-11.04-1.6l-19.387 8Z"/><path fill="#B179F1" d="M194.187 253.1A16 16 0 0 1 176 250.006a9.387 9.387 0 0 0 16-6.64v-232a9.387 9.387 0 0 0-16-6.693a16 16 0 0 1 18.187-3.093l52.746 25.36A16 16 0 0 1 256 41.366v171.947a16 16 0 0 1-9.067 14.427l-52.746 25.36Z"/><path fill="url(#logosVisualStudio0)" fill-opacity=".25" d="M183.707 254.273a16 16 0 0 0 10.48-1.173l52.746-25.36A16 16 0 0 0 256 213.313V41.366a16 16 0 0 0-9.067-14.426L194.187 1.58A16 16 0 0 0 182.24.806A16 16 0 0 0 176 4.673L90.987 98.7L41.333 58.006l-4.346-3.733a10.667 10.667 0 0 0-9.627-2.213a6.8 6.8 0 0 0-1.413.48L6.56 60.673A10.667 10.667 0 0 0 0 69.66v115.36a10.664 10.664 0 0 0 6.56 8.986l19.387 8a6.8 6.8 0 0 0 1.413.48c3.378.882 6.973.056 9.627-2.213l4.346-3.6l49.654-40.693L176 250.006a16 16 0 0 0 7.707 4.267ZM192 73.153l-66.107 54.187L192 181.526V73.153ZM32 90.726l33.093 36.614L32 163.953V90.726Z"/></svg>
-</a>
-<p>As your C# project grows you'll want to consider running the back-end C# Solution with Visual Studio .NET with its
-much improved intelli-sense, navigation, tests runner &amp; debug capabilities.</p>
-<p>As we've never had a satisfactory experience trying develop npm or JS/TypeScript projects with VS.NET, we'd recommend only
-using VS.NET for C# and Razor and continuing to use VSCode for everything else.</p>
-<p>If you'd prefer to use Visual Studio for front-end development we recommend moving all JS to external files for a better
-Dev UX, e.g:</p>
-<pre><code class="language-html">&lt;script type=&quot;module&quot; src=&quot;./Pages/SignIn.mjs&quot;&gt;&lt;/script&gt;
+<div style="height:580px">
+    <img class="absolute left-0 right-0 mx-auto shadow" style="max-width:1496px" 
+         src="https://servicestack.net/img/posts/identity-auth-admin-ui/admin-ui-users-custom.png">
+</div>
+<h3 id="custom-search-result-behavior">Custom Search Result Behavior<a class="header-anchor" href="javascript:;" onclick="location.hash='#custom-search-result-behavior'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>The default display Order of Users is also customizable:</p>
+<pre><code class="language-csharp">feature.DefaultOrderBy = nameof(ApplicationUser.DisplayName);
 </code></pre>
-<h3 id="deploying-to-production">Deploying to Production<a class="header-anchor" href="javascript:;" onclick="location.hash='#deploying-to-production'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
-<p>This template also includes the necessary GitHub Actions to deploy this Apps production static assets to GitHub Pages CDN,
-for more info, checkout <a href="deploy">GitHub Actions Deployments</a>.</p>
-<h3 id="get-started">Get Started<a class="header-anchor" href="javascript:;" onclick="location.hash='#get-started'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
-<p>If you're new to Vue 3 a good place to start is <a href="https://vuejs.org/api/composition-api-setup.html">Vue 3 Composition API</a>.</p>
+<p>As well as the Search behavior which can be replaced to search any custom fields, e.g:</p>
+<pre><code class="language-csharp">feature.SearchUsersFilter = (q, query) =&gt;
+{
+    var queryUpper = query.ToUpper();
+    return q.Where(x =&gt;
+        x.DisplayName!.Contains(query) ||
+        x.Id.Contains(queryUpper) ||
+        x.NormalizedUserName!.Contains(queryUpper) ||
+        x.NormalizedEmail!.Contains(queryUpper));
+};
+</code></pre>
+<h2 id="default-create-and-edit-users-forms">Default Create and Edit Users Forms<a class="header-anchor" href="javascript:;" onclick="location.hash='#default-create-and-edit-users-forms'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>The default Create and Edit Admin Users UI are also limited to editing the minimal <code>IdentityAuth</code> properties:</p>
+<div style="height:640px">
+    <img class="absolute left-0 right-0 mx-auto shadow" style="max-width:1200px" 
+         src="https://servicestack.net/img/posts/identity-auth-admin-ui/admin-ui-users-create.png">
+</div>
+<p>Whilst the Edit page includes standard features to lockout users, change user passwords and manage their roles:</p>
+<div style="height:650px">
+    <img class="absolute left-0 right-0 mx-auto shadow" style="max-width:1200px" 
+         src="https://servicestack.net/img/posts/identity-auth-admin-ui/admin-ui-users-edit.png">
+</div>
+<h3 id="custom-create-and-edit-forms">Custom Create and Edit Forms<a class="header-anchor" href="javascript:;" onclick="location.hash='#custom-create-and-edit-forms'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>By default Users are locked out indefinitely, but this can also be changed to lock users out to a specific date, e.g:</p>
+<pre><code class="language-csharp">feature.ResolveLockoutDate = user =&gt; DateTimeOffset.Now.AddDays(7);
+</code></pre>
+<p>The forms editable fields can also be customized to include additional properties, e.g:</p>
+<pre><code class="language-csharp">feature.FormLayout =
+[
+    Input.For&lt;ApplicationUser&gt;(x =&gt; x.UserName, c =&gt; c.FieldsPerRow(2)),
+    Input.For&lt;ApplicationUser&gt;(x =&gt; x.Email, c =&gt; { 
+        c.Type = Input.Types.Email;
+        c.FieldsPerRow(2); 
+    }),
+    Input.For&lt;ApplicationUser&gt;(x =&gt; x.FirstName, c =&gt; c.FieldsPerRow(2)),
+    Input.For&lt;ApplicationUser&gt;(x =&gt; x.LastName, c =&gt; c.FieldsPerRow(2)),
+    Input.For&lt;ApplicationUser&gt;(x =&gt; x.DisplayName, c =&gt; c.FieldsPerRow(2)),
+    Input.For&lt;ApplicationUser&gt;(x =&gt; x.PhoneNumber, c =&gt;
+    {
+        c.Type = Input.Types.Tel;
+        c.FieldsPerRow(2); 
+    }),
+];
+</code></pre>
+<p>That can override the new <code>ApplicationUser</code> Model that's created and any Validation:</p>
+<h3 id="custom-user-creation">Custom User Creation<a class="header-anchor" href="javascript:;" onclick="location.hash='#custom-user-creation'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<pre><code class="language-csharp">feature.CreateUser = () =&gt; new ApplicationUser { EmailConfirmed = true };
+feature.CreateUserValidation = async (req, createUser) =&gt;
+{
+    await IdentityAdminUsers.ValidateCreateUserAsync(req, createUser);
+    var displayName = createUser.GetUserProperty(nameof(ApplicationUser.DisplayName));
+    if (string.IsNullOrEmpty(displayName))
+        throw new ArgumentNullException(nameof(AdminUserBase.DisplayName));
+    return null;
+};
+</code></pre>
+<div style="height:640px">
+    <img class="absolute left-0 right-0 mx-auto shadow" style="max-width:1200px" 
+         src="https://servicestack.net/img/posts/identity-auth-admin-ui/admin-ui-users-create-custom.png">
+</div>
+<h3 id="admin-user-events">Admin User Events<a class="header-anchor" href="javascript:;" onclick="location.hash='#admin-user-events'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Should you need to, Admin User Events can use used to execute custom logic before and after creating, updating and
+deleting users, e.g:</p>
+<pre><code class="language-csharp">feature.OnBeforeCreateUser = (request, user) =&gt; { ... };
+feature.OnAfterCreateUser  = (request, user) =&gt; { ... };
+feature.OnBeforeUpdateUser = (request, user) =&gt; { ... };
+feature.OnAfterUpdateUser  = (request, user) =&gt; { ... };
+feature.OnBeforeDeleteUser = (request, userId) =&gt; { ... };
+feature.OnAfterDeleteUser  = (request, userId) =&gt; { ... };
+</code></pre>
 
                 </div>
             </div>
@@ -291,47 +364,6 @@ for more info, checkout <a href="deploy">GitHub Actions Deployments</a>.</p>
                         More from Lucy Bates
                     </div>
                     <div class="grid grid-cols-2 gap-8">
-                            <div>
-                                <div class="flex flex-col overflow-hidden">
-                                    <div class="flex-shrink-0">
-                                        <a href="posts/identity-auth-admin-ui">
-                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1563920443079-783e5c786b83?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
-                                        <div class="flex-1">
-                                            <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
-                                                Article
-                                            </p>
-                                            <a href="posts/identity-auth-admin-ui" class="mt-2 block">
-                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="Built-In Identity Auth Admin UI">
-                                                    Built-In Identity Auth Admin UI
-                                                </p>
-                                                <p class="mt-3 text-base text-gray-500">Explore the new Identity Auth Admin UI for creating and managing Identity Auth users in .NET 8</p>
-                                            </a>
-                                        </div>
-                                        <div class="mt-6 flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <a href="">
-                                                    <span class="sr-only">Lucy Bates</span>
-                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author1.svg" alt="Built-In Identity Auth Admin UI background">
-                                                </a>
-                                            </div>
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium text-gray-900">
-                                                        <a href="posts/author/lucy-bates" class="hover:underline">Lucy Bates</a>
-                                                </p>
-                                                <div class="flex space-x-1 text-sm text-gray-500">
-                                                    <time datetime="2024-02-10T00:00:00.0000000">February 10, 2024</time>
-                                                    <span aria-hidden="true">&middot;</span>
-                                                    <span>3 min read</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
                             <div>
                                 <div class="flex flex-col overflow-hidden">
                                     <div class="flex-shrink-0">
@@ -448,6 +480,47 @@ for more info, checkout <a href="deploy">GitHub Actions Deployments</a>.</p>
                                                     <time datetime="2023-03-30T00:00:00.0000000">March 30, 2023</time>
                                                     <span aria-hidden="true">&middot;</span>
                                                     <span>14 min read</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div>
+                                <div class="flex flex-col overflow-hidden">
+                                    <div class="flex-shrink-0">
+                                        <a href="posts/vs">
+                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
+                                                Article
+                                            </p>
+                                            <a href="posts/vs" class="mt-2 block">
+                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="Develop using Visual Studio">
+                                                    Develop using Visual Studio
+                                                </p>
+                                                <p class="mt-3 text-base text-gray-500">Exploring development workflow in VS Code and Visual Studio .NET</p>
+                                            </a>
+                                        </div>
+                                        <div class="mt-6 flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <a href="">
+                                                    <span class="sr-only">Lucy Bates</span>
+                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author1.svg" alt="Develop using Visual Studio background">
+                                                </a>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-medium text-gray-900">
+                                                        <a href="posts/author/lucy-bates" class="hover:underline">Lucy Bates</a>
+                                                </p>
+                                                <div class="flex space-x-1 text-sm text-gray-500">
+                                                    <time datetime="2023-01-10T00:00:00.0000000">January 10, 2023</time>
+                                                    <span aria-hidden="true">&middot;</span>
+                                                    <span>6 min read</span>
                                                 </div>
                                             </div>
                                         </div>

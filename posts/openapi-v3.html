@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/svg" href="img/logo.svg">
     <link rel="alternate" type="application/rss+xml" title="RSS" href="https://razor-ssg.web-templates.io/feed.xml" />
-    <title>Deployment with GitHub Actions</title>
+    <title>OpenAPI v3 and Swagger UI</title>
     <base href="/" />
     <script>
     if (location.search === "?dark") localStorage.setItem('color-scheme','dark') 
@@ -31,12 +31,11 @@
 </script>
     
     <meta name="twitter:site" content="@RazorSsg" />
-    <meta name="twitter:creator" content="@gayle" />
     <meta name="twitter:card" content="summary" />
-    <meta property="og:description" content="Configuring your GitHub repo for SSH and CDN deployments" />
-    <meta property="og:url" content="https://razor-ssg.web-templates.io/posts/deploy" />
-    <meta property="og:title" content="Deployment with GitHub Actions" />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1485841890310-6a055c88698a?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" />
+    <meta property="og:description" content="A walkthrough of the new OpenAPI v3 support in ServiceStack 8.1" />
+    <meta property="og:url" content="https://razor-ssg.web-templates.io/posts/openapi-v3" />
+    <meta property="og:title" content="OpenAPI v3 and Swagger UI" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1496478981722-3ae516118a04?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" />
 
 
 </head>
@@ -121,30 +120,23 @@ mountAll()
 <div class="container px-5 mb-32 mx-auto">
         <article class="mt-20">
             <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
-                Deployment with GitHub Actions
+                OpenAPI v3 and Swagger UI
             </h1>
             <div class="flex justify-between">
                 <div class="md:mb-12 flex items-center">
-                        <a href="posts/author/gayle-smith"><img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="img/authors/author2.svg"></a>
+                        <a href="posts/author/brandon-foley"><img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="img/authors/author3.svg"></a>
                     <div class="flex flex-col">
-                            <a class="text-xl font-semibold hover:underline" href="posts/author/gayle-smith">Gayle Smith</a>
+                            <a class="text-xl font-semibold hover:underline" href="posts/author/brandon-foley">Brandon Foley</a>
             <ul role="list" class="flex">
                     <li>
-                        <a title="Follow on Twitter" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://twitter.com/gayle">
+                        <a title="Follow on GitHub" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://github.com/brandon">
                             <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500">
-                                <path d="M20.055 7.983c.011.174.011.347.011.523 0 5.338-3.92 11.494-11.09 11.494v-.003A10.755 10.755 0 0 1 3 18.186c.308.038.618.057.928.058a7.655 7.655 0 0 0 4.841-1.733c-1.668-.032-3.13-1.16-3.642-2.805a3.753 3.753 0 0 0 1.76-.07C5.07 13.256 3.76 11.6 3.76 9.676v-.05a3.77 3.77 0 0 0 1.77.505C3.816 8.945 3.288 6.583 4.322 4.737c1.98 2.524 4.9 4.058 8.034 4.22a4.137 4.137 0 0 1 1.128-3.86A3.807 3.807 0 0 1 19 5.274a7.657 7.657 0 0 0 2.475-.98c-.29.934-.9 1.729-1.713 2.233A7.54 7.54 0 0 0 22 5.89a8.084 8.084 0 0 1-1.945 2.093Z"></path>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.475 2 2 6.588 2 12.253c0 4.537 2.862 8.369 6.838 9.727.5.09.687-.218.687-.487 0-.243-.013-1.05-.013-1.91C7 20.059 6.35 18.957 6.15 18.38c-.113-.295-.6-1.205-1.025-1.448-.35-.192-.85-.667-.013-.68.788-.012 1.35.744 1.538 1.051.9 1.551 2.338 1.116 2.912.846.088-.666.35-1.115.638-1.371-2.225-.256-4.55-1.14-4.55-5.062 0-1.115.387-2.038 1.025-2.756-.1-.256-.45-1.307.1-2.717 0 0 .837-.269 2.75 1.051.8-.23 1.65-.346 2.5-.346.85 0 1.7.115 2.5.346 1.912-1.333 2.75-1.05 2.75-1.05.55 1.409.2 2.46.1 2.716.637.718 1.025 1.628 1.025 2.756 0 3.934-2.337 4.806-4.562 5.062.362.32.675.936.675 1.897 0 1.371-.013 2.473-.013 2.82 0 .268.188.589.688.486a10.039 10.039 0 0 0 4.932-3.74A10.447 10.447 0 0 0 22 12.253C22 6.588 17.525 2 12 2Z"></path>
                             </svg>
                         </a>
                     </li>
                     <li>
-                        <a title="Follow on Mastodon" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://mastodon.social/@gayle">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500" width="24" height="24" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M20.94 14c-.28 1.41-2.44 2.96-4.97 3.26c-1.31.15-2.6.3-3.97.24c-2.25-.11-4-.54-4-.54v.62c.32 2.22 2.22 2.35 4.03 2.42c1.82.05 3.44-.46 3.44-.46l.08 1.65s-1.28.68-3.55.81c-1.25.07-2.81-.03-4.62-.5c-3.92-1.05-4.6-5.24-4.7-9.5l-.01-3.43c0-4.34 2.83-5.61 2.83-5.61C6.95 2.3 9.41 2 11.97 2h.06c2.56 0 5.02.3 6.47.96c0 0 2.83 1.27 2.83 5.61c0 0 .04 3.21-.39 5.43M18 8.91c0-1.08-.3-1.91-.85-2.56c-.56-.63-1.3-.96-2.23-.96c-1.06 0-1.87.41-2.42 1.23l-.5.88l-.5-.88c-.56-.82-1.36-1.23-2.43-1.23c-.92 0-1.66.33-2.23.96C6.29 7 6 7.83 6 8.91v5.26h2.1V9.06c0-1.06.45-1.62 1.36-1.62c1 0 1.5.65 1.5 1.93v2.79h2.07V9.37c0-1.28.5-1.93 1.51-1.93c.9 0 1.35.56 1.35 1.62v5.11H18V8.91Z"/>
-                            </svg>
-                        </a>
-                    </li>
-                    <li>
-                        <a title="Email Gayle Smith" href="mailto:gayle@email.org" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500">
+                        <a title="Email Brandon Foley" href="mailto:brandon@email.org" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500">
                             <svg class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M4 20q-.825 0-1.413-.588T2 18V6q0-.825.588-1.413T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.588 1.413T20 20H4Zm8-7L4 8v10h16V8l-8 5Zm0-2l8-5H4l8 5ZM4 8V6v12V8Z"/></svg>
                         </a>
                     </li>
@@ -155,20 +147,20 @@ mountAll()
             </div>
             <div class="mb-8 md:mb-16 sm:mx-0">
                 <div class="sm:mx-0">
-                    <img src="https://images.unsplash.com/photo-1485841890310-6a055c88698a?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" alt="Deployment with GitHub Actions Background" class="shadow-small">
+                    <img src="https://images.unsplash.com/photo-1496478981722-3ae516118a04?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" alt="OpenAPI v3 and Swagger UI Background" class="shadow-small">
                 </div>
             </div>
             <div class="flex max-w-3xl mx-auto justify-between">
                 <div>
                     <div class="mb-4 flex flex-wrap">
-                            <a href="posts/tagged/github-actions" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">github-actions</a>
-                            <a href="posts/tagged/devops" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">devops</a>
+                            <a href="posts/tagged/openapi" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">openapi</a>
+                            <a href="posts/tagged/net8" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">.net8</a>
                     </div>
                         <div class="max-w-3xl mx-auto">
                             <div class="mb-6 text-lg text-gray-500">
-                                <time datetime="2023-01-01T00:00:00.0000000">January 1, 2023</time>
+                                <time datetime="2024-02-08T00:00:00.0000000">February 8, 2024</time>
                                 <span aria-hidden="true">&middot;</span>
-                                <span>4 min read</span>
+                                <span>6 min read</span>
                             </div>
                         </div>
                 </div>
@@ -181,89 +173,157 @@ mountAll()
             </div>
             <div class="max-w-3xl mx-auto">
                 <div id="post" class="prose lg:prose-xl max-w-none mb-32">
-                    <h1 id="servicestack-github-action-deployments">ServiceStack GitHub Action Deployments<a class="header-anchor" href="javascript:;" onclick="location.hash='#servicestack-github-action-deployments'" aria-label="Permalink">&ZeroWidthSpace;</a></h1>
-<p>The <a href="https://github.com/NetCoreTemplates/razor-tailwind/blob/main/.github/workflows/release.yml">release.yml</a>
-in this template enables GitHub Actions CI deployment to a dedicated server with SSH access.</p>
-<h2 id="overview">Overview<a class="header-anchor" href="javascript:;" onclick="location.hash='#overview'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
-<p><code>release.yml</code> is designed to work with a ServiceStack app deploying directly to a single server via SSH. A docker image is built and stored on GitHub's <code>ghcr.io</code> docker registry when a GitHub Release is created.</p>
-<p>GitHub Actions specified in <code>release.yml</code> then copy files remotely via scp and use <code>docker-compose</code> to run the app remotely via SSH.</p>
-<h2 id="whats-the-process-of-release.yml">What's the process of <code>release.yml</code>?<a class="header-anchor" href="javascript:;" onclick="location.hash='#whats-the-process-of-release.yml'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
-<p><img src="https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/mix/release-ghr-vanilla-diagram.png" alt="" /></p>
-<h2 id="deployment-server-setup">Deployment server setup<a class="header-anchor" href="javascript:;" onclick="location.hash='#deployment-server-setup'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
-<p>To get this working, a server needs to be setup with the following:</p>
-<ul>
-<li>SSH access</li>
-<li>docker</li>
-<li>docker-compose</li>
-<li>ports 443 and 80 for web access of your hosted application</li>
-</ul>
-<p>This can be your own server or any cloud hosted server like Digital Ocean, AWS, Azure etc. We use <a href="http://cloud.hetzner.com/">Hetzner Cloud</a>
-to deploy all ServiceStack's <a href="https://github.com/NetCoreTemplates/">GitHub Project Templates</a> as it was the
-<a href="https://servicestack.net/blog/finding-best-us-value-cloud-provider">best value US cloud provider</a> we've found.</p>
-<p>When setting up your server, you'll want to use a dedicated SSH key for access to be used by GitHub Actions. GitHub Actions will need the <em>private</em> SSH key within a GitHub Secret to authenticate. This can be done via ssh-keygen and copying the public key to the authorized clients on the server.</p>
-<p>To let your server handle multiple ServiceStack applications and automate the generation and management of TLS certificates, an additional docker-compose file is provided in this template, <code>nginx-proxy-compose.yml</code>. This docker-compose file is ready to run and can be copied to the deployment server.</p>
-<p>For example, once copied to remote <code>~/nginx-proxy-compose.yml</code>, the following command can be run on the remote server.</p>
-<pre><code>docker-compose -f ~/nginx-proxy-compose.yml up -d
+                    <p>In the ServiceStack v8.1 release, we have introduced a way to better incorporate your ServiceStack APIs into the larger
+ASP.NET Core ecosystem by mapping your ServiceStack APIs to standard <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/routing?view=aspnetcore-8.0#endpoints">ASP.NET Core Endpoints</a>.
+This enables your ServiceStack APIs integrate with your larger ASP.NET Core application in the same way other
+middleware does, opening up more opportunities for reuse of your ServiceStack APIs.</p>
+<p>This opens up the ability to use common third party tooling. A good example of this is adding OpenAPI v3 specification
+generation for your endpoints offered by the <code>Swashbuckle.AspNetCore</code> package.</p>
+<p>Included in the v8.1 Release is the <code>ServiceStack.AspNetCore.OpenApi</code> package to make this integration
+as easy as possible, and incorporate additional information from your ServiceStack APIs into Swagger metadata.</p>
+<p><img src="https://servicestack.net/img/posts/openapi-v3/openapi-v3-swagger-ui.png" alt="" /></p>
+<p>Previously, without the ability to map Endpoints, we've maintained a ServiceStack specific OpenAPI specification generation
+via the <code>OpenApiFeature</code> plugin. While this provided a lot of functionality by accurately describing your ServiceStack APIs,
+it could be tricky to customize those API descriptions to the way some users wanted to.</p>
+<p>In this post we will look at how you can take advantage of the new OpenAPI v3 Swagger support using mapped Endpoints,
+customizing the generated specification, as well as touch on other related changes to ServiceStack v8.1.</p>
+<h2 id="apphost-initialization">AppHost Initialization<a class="header-anchor" href="javascript:;" onclick="location.hash='#apphost-initialization'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>To use ServiceStack APIs as mapped Endpoints, the way ServiceStack is initialized in .
+To convert your App to use <a href="/posts/servicestack-endpoint-routing">Endpoint Routing and ASP.NET Core IOC</a> your ASPNET Core
+application needs to be updated to replace any usage of <code>Funq</code> IoC container to use ASP.NET Core's IOC.</p>
+<p>Previously, the following was used to initialize your ServiceStack <code>AppHost</code>:</p>
+<h4 id="program.cs">Program.cs<a class="header-anchor" href="javascript:;" onclick="location.hash='#program.cs'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<pre><code class="language-csharp">app.UseServiceStack(new AppHost());
 </code></pre>
-<p>This will run an nginx reverse proxy along with a companion container that will watch for additional containers in the same docker network and attempt to initialize them with valid TLS certificates.</p>
-<h3 id="github-actions-secrets">GitHub Actions secrets<a class="header-anchor" href="javascript:;" onclick="location.hash='#github-actions-secrets'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
-<p>The <code>release.yml</code> uses the following secrets.</p>
-<table>
-<thead>
-<tr>
-<th>Required Secrets</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>DEPLOY_HOST</code></td>
-<td>Hostname used to SSH deploy .NET App to, this can either be an IP address or subdomain with A record pointing to the server</td>
-</tr>
-<tr>
-<td><code>DEPLOY_USERNAME</code></td>
-<td>Username to log in with via SSH e.g, <strong>ubuntu</strong>, <strong>ec2-user</strong>, <strong>root</strong></td>
-</tr>
-<tr>
-<td><code>DEPLOY_KEY</code></td>
-<td>SSH private key used to remotely access deploy .NET App</td>
-</tr>
-<tr>
-<td><code>LETSENCRYPT_EMAIL</code></td>
-<td>Email required for Let's Encrypt automated TLS certificates</td>
-</tr>
-</tbody>
-</table>
-<p>These secrets can use the <a href="https://cli.github.com/manual/gh_secret_set">GitHub CLI</a> for ease of creation. Eg, using the GitHub CLI the following can be set.</p>
-<pre><code class="language-bash">gh secret set DEPLOY_HOST -b&quot;&lt;DEPLOY_HOST&gt;&quot;
-gh secret set DEPLOY_USERNAME -b&quot;&lt;DEPLOY_USERNAME&gt;&quot;
-gh secret set DEPLOY_KEY &lt; key.pem # DEPLOY_KEY
-gh secret set LETSENCRYPT_EMAIL -b&quot;&lt;LETSENCRYPT_EMAIL&gt;&quot;
+<p>The <code>app</code> in this example is a <code>WebApplication</code> resulting from an <code>IHostApplicationBuilder</code> calling <code>builder.Build()</code>.</p>
+<p>Whilst we still need to call <code>app.UseServiceStack()</code>, we also need to move the discovery of your ServiceStack APIs to earlier
+in the setup before the <code>WebApplication</code> is built, e.g:</p>
+<pre><code class="language-csharp">// Register ServiceStack APIs, Dependencies and Plugins:
+services.AddServiceStack(typeof(MyServices).Assembly);
+
+var app = builder.Build();
+//...
+
+// Register ServiceStack AppHost
+app.UseServiceStack(new AppHost(), options =&gt; {
+    options.MapEndpoints();
+});
+
+app.Run();
 </code></pre>
-<p>These secrets are used to populate variables within GitHub Actions and other configuration files.</p>
-<h2 id="deployments">Deployments<a class="header-anchor" href="javascript:;" onclick="location.hash='#deployments'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
-<p>A published version of your .NET App created with the standard dotnet publish tool:</p>
-<pre><code class="language-yaml">dotnet publish -c Release
+<p>Once configured to use Endpoint Routing we can the <a href="https://docs.servicestack.net/mix-tool">mix</a> tool to apply the
+<a href="https://gist.github.com/gistlyn/dac47b68e77796902cde0f0b7b9c6ac2">openapi3</a> Startup Configuration with:</p>
+<div class="not-prose sh-copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-800">
+                    <div class="pl-4 py-1 pb-1.5 align-middle whitespace-pre text-base text-gray-100"><p>x mix openapi3</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-green-600 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<h3 id="manually-configure-openapi-v3-and-swagger-ui">Manually Configure OpenAPI v3 and Swagger UI<a class="header-anchor" href="javascript:;" onclick="location.hash='#manually-configure-openapi-v3-and-swagger-ui'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>This will install the required ASP.NET Core Microsoft, Swashbuckle and ServiceStack Open API NuGet packages:</p>
+<pre><code class="language-xml">&lt;PackageReference Include=&quot;Microsoft.AspNetCore.OpenApi&quot; Version=&quot;8.*&quot; /&gt;
+&lt;PackageReference Include=&quot;Swashbuckle.AspNetCore&quot; Version=&quot;6.*&quot; /&gt;
+&lt;PackageReference Include=&quot;ServiceStack.AspNetCore.OpenApi&quot; Version=&quot;8.*&quot; /&gt;
 </code></pre>
-<p>is used to build a production build of your .NET App inside the standard <code>Dockerfile</code> for dockerizing .NET Applications.</p>
-<p>Additional custom deployment tasks can be added to your project's package.json <strong>postinstall</strong> script which also gets run at deployment.</p>
-<p>If preferred additional MS Build tasks can be run by passing in custom parameters in the publish command, e.g:</p>
-<pre><code class="language-yaml">dotnet publish -c Release /p:APP_TASKS=prerender
+<p>Then add the <code>Configure.OpenApi.cs</code> <a href="https://docs.servicestack.net/modular-startup">Modular Startup</a> class to your project:</p>
+<pre><code class="language-csharp">[assembly: HostingStartup(typeof(MyApp.ConfigureOpenApi))]
+
+namespace MyApp;
+
+public class ConfigureOpenApi : IHostingStartup
+{
+    public void Configure(IWebHostBuilder builder) =&gt; builder
+        .ConfigureServices((context, services) =&gt;
+        {
+            if (context.HostingEnvironment.IsDevelopment())
+            {
+                services.AddEndpointsApiExplorer();
+                services.AddSwaggerGen(); // Swashbuckle
+
+                services.AddServiceStackSwagger();
+                services.AddBasicAuth&lt;ApplicationUser&gt;(); // Enable HTTP Basic Auth
+                //services.AddJwtAuth(); // Enable &amp; Use JWT Auth
+
+                services.AddTransient&lt;IStartupFilter, StartupFilter&gt;();
+            }
+        });
+
+    public class StartupFilter : IStartupFilter
+    {
+        public Action&lt;IApplicationBuilder&gt; Configure(Action&lt;IApplicationBuilder&gt; next)
+            =&gt; app =&gt; {
+                // Provided by Swashbuckle library
+                app.UseSwagger();
+                app.UseSwaggerUI();
+                next(app);
+            };
+    }
+}
 </code></pre>
-<p>Which your <code>MyApp.csproj</code> can detect with a target that checks for it:</p>
-<pre><code class="language-xml">&lt;!-- Prerender tasks run in release.yml --&gt;
-&lt;Target Name=&quot;AppTasks&quot; AfterTargets=&quot;Build&quot; Condition=&quot;$(APP_TASKS) != ''&quot;&gt;
-    &lt;CallTarget Targets=&quot;Prerender&quot; Condition=&quot;$(APP_TASKS.Contains('prerender'))&quot; /&gt;
-&lt;/Target&gt;
-&lt;Target Name=&quot;Prerender&quot;&gt;
-    &lt;Message Text=&quot;Prerender...&quot; /&gt;
-&lt;/Target&gt;
+<p>All this setup is done for you in ServiceStack's updated <a href="https://servicestack.net/start">Identity Auth .NET 8 Templates</a>,
+but for existing applications, you will need to do
+<a href="https://docs.servicestack.net/endpoints-migration">convert to use Endpoint Routing</a> to support this new way of running your
+ServiceStack applications.</p>
+<h2 id="more-control">More Control<a class="header-anchor" href="javascript:;" onclick="location.hash='#more-control'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>One point of friction with our previous <code>OpenApiFeature</code> plugin was the missing customization ability to the OpenAPI spec to somewhat disconnect from the defined ServiceStack service, and related C# Request and Response Data Transfer Objects (DTOs). Since the <code>OpenApiFeature</code> plugin used class and property attributes on your Request DTOs, making the <em>structure</em> of the OpenAPI schema mapping quite ridged, preventing the ability for certain customizations.</p>
+<p>For example, if we have an <code>UpdateTodo</code> Request DTO that looks like the following:</p>
+<pre><code class="language-csharp">[Route(&quot;/todos/{Id}&quot;, &quot;PUT&quot;)]
+public class UpdateTodo : IPut, IReturn&lt;Todo&gt;
+{
+    public long Id { get; set; }
+    [ValidateNotEmpty]
+    public string Text { get; set; }
+    public bool IsFinished { get; set; }
+}
 </code></pre>
-<h2 id="pushing-updates-and-rollbacks">Pushing updates and rollbacks<a class="header-anchor" href="javascript:;" onclick="location.hash='#pushing-updates-and-rollbacks'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
-<p>By default, deployments occur on commit to your main branch. A new Docker image for your ServiceStack API is produced, pushed to GHCR.io and hosted on your Linux server with Docker Compose.</p>
-<p>The template also will run the release process on the creation of a GitHub Release making it easier to switch to manual production releases.</p>
-<p>Additionally, the <code>release.yml</code> workflow can be run manually specifying a version. This enables production rollbacks based on previously tagged releases.
-A release must have already been created for the rollback build to work, it doesn't create a new Docker build based on previous code state, only redeploys as existing Docker image.</p>
+<p>Previously, we would get a default Swagger UI that enabled all the properties as <code>Paramters</code> to populate.</p>
+<p><img src="https://servicestack.net/img/posts/openapi-v3/openapi-v2-defaults.png" alt="" /></p>
+<p>While this correctly describes the Request DTO structure, sometimes as developers we get requirements for how we want to present our APIs to our users from within the Swagger UI.</p>
+<p>With the updated SwaggerUI, and the use of the <code>Swashbuckle</code> library, we get the following UI by default.</p>
+<p><img src="https://servicestack.net/img/posts/openapi-v3/openapi-v3-defaults-application-json.png" alt="" /></p>
+<p>These are essentially the same, we have a CRUD Todo API that takes a <code>UpdateTodo</code> Request DTO, and returns a <code>Todo</code> Response DTO. ServiceStack needs to have uniquely named Request DTOs, so we can't have a <code>Todo</code> schema as the Request DTO despite the fact that it is the same structure as our <code>Todo</code> model.
+This is a good thing, as it allows us to have a clean API contract, and separation of concerns between our Request DTOs and our models.
+However, it might not be desired to present this to our users, since it can be convenient to think about CRUD services as taking the same resource type as the response.</p>
+<p>To achieve this, we use the Swashbuckle library to customize the OpenAPI spec generation. Depending on what you want to customize, you can use the <code>SchemaFilter</code> or <code>OperationFilter</code> options. In this case, we want to customize the matching operation to reference the <code>Todo</code> schema for the Request Body.</p>
+<p>First, we create a new class that implements the <code>IOperationFilter</code> interface.</p>
+<pre><code class="language-csharp">public class OperationRenameFilter : IOperationFilter
+{
+    public void Apply(OpenApiOperation operation, OperationFilterContext context)
+    {
+        if (context.ApiDescription.HttpMethod == &quot;PUT&quot; &amp;&amp;
+            context.ApiDescription.RelativePath == &quot;todos/{Id}&quot;)
+        {
+            operation.RequestBody.Content[&quot;application/json&quot;].Schema.Reference = 
+                new OpenApiReference {
+                    Type = ReferenceType.Schema,
+                    Id = &quot;Todo&quot;
+                };
+        }
+    }
+}
+</code></pre>
+<p>The above matches some information about the <code>UpdateTodo</code> request we want to customize, and then sets the <code>Reference</code> property of the <code>RequestBody</code> to the <code>Todo</code> schema.
+We can then add this to the <code>AddSwaggerGen</code> options in the <code>Program.cs</code> file.</p>
+<pre><code class="language-csharp">builder.Services.AddSwaggerGen(o =&gt;
+{
+    o.OperationFilter&lt;OperationRenameFilter&gt;();
+});
+</code></pre>
+<p>The result is the following Swagger UI.</p>
+<p><img src="https://servicestack.net/img/posts/openapi-v3/openapi-v3-customized-application-json.png" alt="" /></p>
+<p>This is just one simple example of how you can customize the OpenAPI spec generation, and <code>Swashbuckle</code> has some great documentation on the different ways you can customize the generated spec.
+And these customizations impact any of your ASP.NET Core Endpoints, not just your ServiceStack APIs.</p>
+<h2 id="closing">Closing<a class="header-anchor" href="javascript:;" onclick="location.hash='#closing'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>Now that ServiceStack APIs can be mapped to standard ASP.NET Core Endpoints, it opens up a lot of possibilities for integrating your ServiceStack APIs into the larger ASP.NET Core ecosystem.
+The use of the <code>Swashbuckle</code> library via the <code>ServiceStack.AspNetCore.OpenApi</code> library is just one example of how you can take advantage of this new functionality.</p>
 
                 </div>
             </div>
@@ -276,33 +336,26 @@ A release must have already been created for the rollback build to work, it does
             <div class="max-w-3xl mx-auto">
                 <div class="flex justify-between">
                     <div>
-                            <a href="posts/author/gayle-smith"><img class="w-20 h-20 rounded-full text-cyan-600" src="img/authors/author2.svg"></a>
+                            <a href="posts/author/brandon-foley"><img class="w-20 h-20 rounded-full text-cyan-600" src="img/authors/author3.svg"></a>
 
                         <div class="mt-2 font-medium text-2xl">
-                            Written by Gayle Smith
+                            Written by Brandon Foley
                         </div>
                         <div class="text-gray-600">
-                            Gayle is an author, consultant, and founder focusing on improving tech.
+                            I am a programmer at heart. I like to tinker with code and build generic coding structures.
                         </div>
                     </div>
                     <div class="flex items-end">
             <ul role="list" class="flex">
                     <li>
-                        <a title="Follow on Twitter" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://twitter.com/gayle">
+                        <a title="Follow on GitHub" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://github.com/brandon">
                             <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500">
-                                <path d="M20.055 7.983c.011.174.011.347.011.523 0 5.338-3.92 11.494-11.09 11.494v-.003A10.755 10.755 0 0 1 3 18.186c.308.038.618.057.928.058a7.655 7.655 0 0 0 4.841-1.733c-1.668-.032-3.13-1.16-3.642-2.805a3.753 3.753 0 0 0 1.76-.07C5.07 13.256 3.76 11.6 3.76 9.676v-.05a3.77 3.77 0 0 0 1.77.505C3.816 8.945 3.288 6.583 4.322 4.737c1.98 2.524 4.9 4.058 8.034 4.22a4.137 4.137 0 0 1 1.128-3.86A3.807 3.807 0 0 1 19 5.274a7.657 7.657 0 0 0 2.475-.98c-.29.934-.9 1.729-1.713 2.233A7.54 7.54 0 0 0 22 5.89a8.084 8.084 0 0 1-1.945 2.093Z"></path>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.475 2 2 6.588 2 12.253c0 4.537 2.862 8.369 6.838 9.727.5.09.687-.218.687-.487 0-.243-.013-1.05-.013-1.91C7 20.059 6.35 18.957 6.15 18.38c-.113-.295-.6-1.205-1.025-1.448-.35-.192-.85-.667-.013-.68.788-.012 1.35.744 1.538 1.051.9 1.551 2.338 1.116 2.912.846.088-.666.35-1.115.638-1.371-2.225-.256-4.55-1.14-4.55-5.062 0-1.115.387-2.038 1.025-2.756-.1-.256-.45-1.307.1-2.717 0 0 .837-.269 2.75 1.051.8-.23 1.65-.346 2.5-.346.85 0 1.7.115 2.5.346 1.912-1.333 2.75-1.05 2.75-1.05.55 1.409.2 2.46.1 2.716.637.718 1.025 1.628 1.025 2.756 0 3.934-2.337 4.806-4.562 5.062.362.32.675.936.675 1.897 0 1.371-.013 2.473-.013 2.82 0 .268.188.589.688.486a10.039 10.039 0 0 0 4.932-3.74A10.447 10.447 0 0 0 22 12.253C22 6.588 17.525 2 12 2Z"></path>
                             </svg>
                         </a>
                     </li>
                     <li>
-                        <a title="Follow on Mastodon" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://mastodon.social/@gayle">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500" width="24" height="24" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M20.94 14c-.28 1.41-2.44 2.96-4.97 3.26c-1.31.15-2.6.3-3.97.24c-2.25-.11-4-.54-4-.54v.62c.32 2.22 2.22 2.35 4.03 2.42c1.82.05 3.44-.46 3.44-.46l.08 1.65s-1.28.68-3.55.81c-1.25.07-2.81-.03-4.62-.5c-3.92-1.05-4.6-5.24-4.7-9.5l-.01-3.43c0-4.34 2.83-5.61 2.83-5.61C6.95 2.3 9.41 2 11.97 2h.06c2.56 0 5.02.3 6.47.96c0 0 2.83 1.27 2.83 5.61c0 0 .04 3.21-.39 5.43M18 8.91c0-1.08-.3-1.91-.85-2.56c-.56-.63-1.3-.96-2.23-.96c-1.06 0-1.87.41-2.42 1.23l-.5.88l-.5-.88c-.56-.82-1.36-1.23-2.43-1.23c-.92 0-1.66.33-2.23.96C6.29 7 6 7.83 6 8.91v5.26h2.1V9.06c0-1.06.45-1.62 1.36-1.62c1 0 1.5.65 1.5 1.93v2.79h2.07V9.37c0-1.28.5-1.93 1.51-1.93c.9 0 1.35.56 1.35 1.62v5.11H18V8.91Z"/>
-                            </svg>
-                        </a>
-                    </li>
-                    <li>
-                        <a title="Email Gayle Smith" href="mailto:gayle@email.org" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500">
+                        <a title="Email Brandon Foley" href="mailto:brandon@email.org" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500">
                             <svg class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M4 20q-.825 0-1.413-.588T2 18V6q0-.825.588-1.413T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.588 1.413T20 20H4Zm8-7L4 8v10h16V8l-8 5Zm0-2l8-5H4l8 5ZM4 8V6v12V8Z"/></svg>
                         </a>
                     </li>
@@ -312,14 +365,14 @@ A release must have already been created for the rollback build to work, it does
 
                 <div class="mt-4 border-t">
                     <div class="py-8 text-lg text-gray-700 font-medium">
-                        More from Gayle Smith
+                        More from Brandon Foley
                     </div>
                     <div class="grid grid-cols-2 gap-8">
                             <div>
                                 <div class="flex flex-col overflow-hidden">
                                     <div class="flex-shrink-0">
-                                        <a href="posts/system-text-json-apis">
-                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1644325349124-d1756b79dd42?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
+                                        <a href="posts/javascript">
+                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1497515114629-f71d768fd07c?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
                                         </a>
                                     </div>
                                     <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
@@ -327,28 +380,28 @@ A release must have already been created for the rollback build to work, it does
                                             <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
                                                 Article
                                             </p>
-                                            <a href="posts/system-text-json-apis" class="mt-2 block">
-                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="System.Text.Json ServiceStack APIs">
-                                                    System.Text.Json ServiceStack APIs
+                                            <a href="posts/javascript" class="mt-2 block">
+                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="Simple, Modern JavaScript">
+                                                    Simple, Modern JavaScript
                                                 </p>
-                                                <p class="mt-3 text-base text-gray-500">ServiceStack .NET 8&#x2B; APIs can now be configured to use high-performance async System.Text.Json serialization</p>
+                                                <p class="mt-3 text-base text-gray-500">Learn about JS Modules, Vue 3 and available rich UI Components</p>
                                             </a>
                                         </div>
                                         <div class="mt-6 flex items-center">
                                             <div class="flex-shrink-0">
                                                 <a href="">
-                                                    <span class="sr-only">Gayle Smith</span>
-                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author2.svg" alt="System.Text.Json ServiceStack APIs background">
+                                                    <span class="sr-only">Brandon Foley</span>
+                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author3.svg" alt="Simple, Modern JavaScript background">
                                                 </a>
                                             </div>
                                             <div class="ml-3">
                                                 <p class="text-sm font-medium text-gray-900">
-                                                        <a href="posts/author/gayle-smith" class="hover:underline">Gayle Smith</a>
+                                                        <a href="posts/author/brandon-foley" class="hover:underline">Brandon Foley</a>
                                                 </p>
                                                 <div class="flex space-x-1 text-sm text-gray-500">
-                                                    <time datetime="2024-02-09T00:00:00.0000000">February 9, 2024</time>
+                                                    <time datetime="2023-02-01T00:00:00.0000000">February 1, 2023</time>
                                                     <span aria-hidden="true">&middot;</span>
-                                                    <span>5 min read</span>
+                                                    <span>15 min read</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -359,8 +412,8 @@ A release must have already been created for the rollback build to work, it does
                             <div>
                                 <div class="flex flex-col overflow-hidden">
                                     <div class="flex-shrink-0">
-                                        <a href="posts/start">
-                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1533090161767-e6ffed986c88?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
+                                        <a href="posts/hetzner-cloud">
+                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
                                         </a>
                                     </div>
                                     <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
@@ -368,69 +421,28 @@ A release must have already been created for the rollback build to work, it does
                                             <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
                                                 Article
                                             </p>
-                                            <a href="posts/start" class="mt-2 block">
-                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="Getting Started">
-                                                    Getting Started
+                                            <a href="posts/hetzner-cloud" class="mt-2 block">
+                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="In pursuit of the best value US cloud provider">
+                                                    In pursuit of the best value US cloud provider
                                                 </p>
-                                                <p class="mt-3 text-base text-gray-500">Found out how to use these template features</p>
+                                                <p class="mt-3 text-base text-gray-500">We&#x27;ve been using AWS at ServiceStack for 10&#x2B; years, it&#x27;s served us well but suffers from complex &amp; expensive pricing</p>
                                             </a>
                                         </div>
                                         <div class="mt-6 flex items-center">
                                             <div class="flex-shrink-0">
                                                 <a href="">
-                                                    <span class="sr-only">Gayle Smith</span>
-                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author2.svg" alt="Getting Started background">
+                                                    <span class="sr-only">Brandon Foley</span>
+                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author3.svg" alt="In pursuit of the best value US cloud provider background">
                                                 </a>
                                             </div>
                                             <div class="ml-3">
                                                 <p class="text-sm font-medium text-gray-900">
-                                                        <a href="posts/author/gayle-smith" class="hover:underline">Gayle Smith</a>
+                                                        <a href="posts/author/brandon-foley" class="hover:underline">Brandon Foley</a>
                                                 </p>
                                                 <div class="flex space-x-1 text-sm text-gray-500">
-                                                    <time datetime="2023-01-21T00:00:00.0000000">January 21, 2023</time>
+                                                    <time datetime="2022-09-06T00:00:00.0000000">September 6, 2022</time>
                                                     <span aria-hidden="true">&middot;</span>
-                                                    <span>2 min read</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div>
-                                <div class="flex flex-col overflow-hidden">
-                                    <div class="flex-shrink-0">
-                                        <a href="posts/rider">
-                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1472289065668-ce650ac443d2?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
-                                        <div class="flex-1">
-                                            <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
-                                                Article
-                                            </p>
-                                            <a href="posts/rider" class="mt-2 block">
-                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="Develop using JetBrains Rider">
-                                                    Develop using JetBrains Rider
-                                                </p>
-                                                <p class="mt-3 text-base text-gray-500">Setting up &amp; exploring development workflow in Rider</p>
-                                            </a>
-                                        </div>
-                                        <div class="mt-6 flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <a href="">
-                                                    <span class="sr-only">Gayle Smith</span>
-                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author2.svg" alt="Develop using JetBrains Rider background">
-                                                </a>
-                                            </div>
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium text-gray-900">
-                                                        <a href="posts/author/gayle-smith" class="hover:underline">Gayle Smith</a>
-                                                </p>
-                                                <div class="flex space-x-1 text-sm text-gray-500">
-                                                    <time datetime="2023-01-11T00:00:00.0000000">January 11, 2023</time>
-                                                    <span aria-hidden="true">&middot;</span>
-                                                    <span>3 min read</span>
+                                                    <span>13 min read</span>
                                                 </div>
                                             </div>
                                         </div>

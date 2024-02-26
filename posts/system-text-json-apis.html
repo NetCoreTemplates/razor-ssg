@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/svg" href="img/logo.svg">
     <link rel="alternate" type="application/rss+xml" title="RSS" href="https://razor-ssg.web-templates.io/feed.xml" />
-    <title>Develop using Visual Studio</title>
+    <title>System.Text.Json ServiceStack APIs</title>
     <base href="/" />
     <script>
     if (location.search === "?dark") localStorage.setItem('color-scheme','dark') 
@@ -31,12 +31,12 @@
 </script>
     
     <meta name="twitter:site" content="@RazorSsg" />
-    <meta name="twitter:creator" content="@lucy" />
+    <meta name="twitter:creator" content="@gayle" />
     <meta name="twitter:card" content="summary" />
-    <meta property="og:description" content="Exploring development workflow in VS Code and Visual Studio .NET" />
-    <meta property="og:url" content="https://razor-ssg.web-templates.io/posts/vs" />
-    <meta property="og:title" content="Develop using Visual Studio" />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" />
+    <meta property="og:description" content="ServiceStack .NET 8&#x2B; APIs can now be configured to use high-performance async System.Text.Json serialization" />
+    <meta property="og:url" content="https://razor-ssg.web-templates.io/posts/system-text-json-apis" />
+    <meta property="og:title" content="System.Text.Json ServiceStack APIs" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1644325349124-d1756b79dd42?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" />
 
 
 </head>
@@ -121,37 +121,30 @@ mountAll()
 <div class="container px-5 mb-32 mx-auto">
         <article class="mt-20">
             <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
-                Develop using Visual Studio
+                System.Text.Json ServiceStack APIs
             </h1>
             <div class="flex justify-between">
                 <div class="md:mb-12 flex items-center">
-                        <a href="posts/author/lucy-bates"><img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="img/authors/author1.svg"></a>
+                        <a href="posts/author/gayle-smith"><img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="img/authors/author2.svg"></a>
                     <div class="flex flex-col">
-                            <a class="text-xl font-semibold hover:underline" href="posts/author/lucy-bates">Lucy Bates</a>
+                            <a class="text-xl font-semibold hover:underline" href="posts/author/gayle-smith">Gayle Smith</a>
             <ul role="list" class="flex">
                     <li>
-                        <a title="Follow on Twitter" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://twitter.com/lucy">
+                        <a title="Follow on Twitter" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://twitter.com/gayle">
                             <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500">
                                 <path d="M20.055 7.983c.011.174.011.347.011.523 0 5.338-3.92 11.494-11.09 11.494v-.003A10.755 10.755 0 0 1 3 18.186c.308.038.618.057.928.058a7.655 7.655 0 0 0 4.841-1.733c-1.668-.032-3.13-1.16-3.642-2.805a3.753 3.753 0 0 0 1.76-.07C5.07 13.256 3.76 11.6 3.76 9.676v-.05a3.77 3.77 0 0 0 1.77.505C3.816 8.945 3.288 6.583 4.322 4.737c1.98 2.524 4.9 4.058 8.034 4.22a4.137 4.137 0 0 1 1.128-3.86A3.807 3.807 0 0 1 19 5.274a7.657 7.657 0 0 0 2.475-.98c-.29.934-.9 1.729-1.713 2.233A7.54 7.54 0 0 0 22 5.89a8.084 8.084 0 0 1-1.945 2.093Z"></path>
                             </svg>
                         </a>
                     </li>
                     <li>
-                        <a title="Follow on threads.net" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://threads.net/@lucy">
+                        <a title="Follow on Mastodon" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://mastodon.social/@gayle">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500" width="24" height="24" viewBox="0 0 24 24">
-                                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7.5c-1.333-3-3.667-4.5-7-4.5c-5 0-8 2.5-8 9s3.5 9 8 9s7-3 7-5s-1-5-7-5c-2.5 0-3 1.25-3 2.5C9 15 10 16 11.5 16c2.5 0 3.5-1.5 3.5-5s-2-4-3-4s-1.833.333-2.5 1"/>
+                                <path fill="currentColor" d="M20.94 14c-.28 1.41-2.44 2.96-4.97 3.26c-1.31.15-2.6.3-3.97.24c-2.25-.11-4-.54-4-.54v.62c.32 2.22 2.22 2.35 4.03 2.42c1.82.05 3.44-.46 3.44-.46l.08 1.65s-1.28.68-3.55.81c-1.25.07-2.81-.03-4.62-.5c-3.92-1.05-4.6-5.24-4.7-9.5l-.01-3.43c0-4.34 2.83-5.61 2.83-5.61C6.95 2.3 9.41 2 11.97 2h.06c2.56 0 5.02.3 6.47.96c0 0 2.83 1.27 2.83 5.61c0 0 .04 3.21-.39 5.43M18 8.91c0-1.08-.3-1.91-.85-2.56c-.56-.63-1.3-.96-2.23-.96c-1.06 0-1.87.41-2.42 1.23l-.5.88l-.5-.88c-.56-.82-1.36-1.23-2.43-1.23c-.92 0-1.66.33-2.23.96C6.29 7 6 7.83 6 8.91v5.26h2.1V9.06c0-1.06.45-1.62 1.36-1.62c1 0 1.5.65 1.5 1.93v2.79h2.07V9.37c0-1.28.5-1.93 1.51-1.93c.9 0 1.35.56 1.35 1.62v5.11H18V8.91Z"/>
                             </svg>
                         </a>
                     </li>
                     <li>
-                        <a title="Follow on GitHub" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://github.com/lucy">
-                            <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.475 2 2 6.588 2 12.253c0 4.537 2.862 8.369 6.838 9.727.5.09.687-.218.687-.487 0-.243-.013-1.05-.013-1.91C7 20.059 6.35 18.957 6.15 18.38c-.113-.295-.6-1.205-1.025-1.448-.35-.192-.85-.667-.013-.68.788-.012 1.35.744 1.538 1.051.9 1.551 2.338 1.116 2.912.846.088-.666.35-1.115.638-1.371-2.225-.256-4.55-1.14-4.55-5.062 0-1.115.387-2.038 1.025-2.756-.1-.256-.45-1.307.1-2.717 0 0 .837-.269 2.75 1.051.8-.23 1.65-.346 2.5-.346.85 0 1.7.115 2.5.346 1.912-1.333 2.75-1.05 2.75-1.05.55 1.409.2 2.46.1 2.716.637.718 1.025 1.628 1.025 2.756 0 3.934-2.337 4.806-4.562 5.062.362.32.675.936.675 1.897 0 1.371-.013 2.473-.013 2.82 0 .268.188.589.688.486a10.039 10.039 0 0 0 4.932-3.74A10.447 10.447 0 0 0 22 12.253C22 6.588 17.525 2 12 2Z"></path>
-                            </svg>
-                        </a>
-                    </li>
-                    <li>
-                        <a title="Email Lucy Bates" href="mailto:lucy@email.org" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500">
+                        <a title="Email Gayle Smith" href="mailto:gayle@email.org" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500">
                             <svg class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M4 20q-.825 0-1.413-.588T2 18V6q0-.825.588-1.413T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.588 1.413T20 20H4Zm8-7L4 8v10h16V8l-8 5Zm0-2l8-5H4l8 5ZM4 8V6v12V8Z"/></svg>
                         </a>
                     </li>
@@ -162,20 +155,22 @@ mountAll()
             </div>
             <div class="mb-8 md:mb-16 sm:mx-0">
                 <div class="sm:mx-0">
-                    <img src="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" alt="Develop using Visual Studio Background" class="shadow-small">
+                    <img src="https://images.unsplash.com/photo-1644325349124-d1756b79dd42?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" alt="System.Text.Json ServiceStack APIs Background" class="shadow-small">
                 </div>
             </div>
             <div class="flex max-w-3xl mx-auto justify-between">
                 <div>
                     <div class="mb-4 flex flex-wrap">
-                            <a href="posts/tagged/csharp" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">c#</a>
-                            <a href="posts/tagged/dev" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">dev</a>
+                            <a href="posts/tagged/servicestack" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">servicestack</a>
+                            <a href="posts/tagged/net8" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">.net8</a>
+                            <a href="posts/tagged/json" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">json</a>
+                            <a href="posts/tagged/apis" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">apis</a>
                     </div>
                         <div class="max-w-3xl mx-auto">
                             <div class="mb-6 text-lg text-gray-500">
-                                <time datetime="2023-01-10T00:00:00.0000000">January 10, 2023</time>
+                                <time datetime="2024-02-09T00:00:00.0000000">February 9, 2024</time>
                                 <span aria-hidden="true">&middot;</span>
-                                <span>6 min read</span>
+                                <span>5 min read</span>
                             </div>
                         </div>
                 </div>
@@ -188,51 +183,183 @@ mountAll()
             </div>
             <div class="max-w-3xl mx-auto">
                 <div id="post" class="prose lg:prose-xl max-w-none mb-32">
-                    <p>A popular alternative development environment to our preferred <a href="rider">JetBrains Rider</a> IDE is to use
-Visual Studio, the primary issue with this is that VS Code is a better IDE with richer support for JavaScript and npm
-projects whilst Visual Studio is a better IDE for C# Projects.</p>
-<p>Essentially this is why we recommend Rider where it's best at both, where both C# and JS/TypeScript projects can
-be developed from within the same solution.</p>
-<h3 id="developing-with-just-vs-code">Developing with just VS Code<a class="header-anchor" href="javascript:;" onclick="location.hash='#developing-with-just-vs-code'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
-<a href="https://visualstudio.microsoft.com/" title="VS Code" class="sm:float-left mr-8">
-    <svg class="w-24 h-24" style="margin-top:1rem" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 254"><defs><linearGradient id="logosVisualStudioCode0" x1="50%" x2="50%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFF"/><stop offset="100%" stop-color="#FFF" stop-opacity="0"/></linearGradient><path id="logosVisualStudioCode1" d="M180.828 252.605a15.872 15.872 0 0 0 12.65-.486l52.501-25.262a15.94 15.94 0 0 0 9.025-14.364V41.197a15.939 15.939 0 0 0-9.025-14.363l-52.5-25.263a15.877 15.877 0 0 0-18.115 3.084L74.857 96.35l-43.78-33.232a10.614 10.614 0 0 0-13.56.603L3.476 76.494c-4.63 4.211-4.635 11.495-.012 15.713l37.967 34.638l-37.967 34.637c-4.623 4.219-4.618 11.502.012 15.714l14.041 12.772a10.614 10.614 0 0 0 13.56.604l43.78-33.233l100.507 91.695a15.853 15.853 0 0 0 5.464 3.571Zm10.464-183.649l-76.262 57.889l76.262 57.888V68.956Z"/></defs><mask id="logosVisualStudioCode2" fill="#fff"><use href="#logosVisualStudioCode1"/></mask><path fill="#0065A9" d="M246.135 26.873L193.593 1.575a15.885 15.885 0 0 0-18.123 3.08L3.466 161.482c-4.626 4.219-4.62 11.502.012 15.714l14.05 12.772a10.625 10.625 0 0 0 13.569.604L238.229 33.436c6.949-5.271 16.93-.315 16.93 8.407v-.61a15.938 15.938 0 0 0-9.024-14.36Z" mask="url(#logosVisualStudioCode2)"/><path fill="#007ACC" d="m246.135 226.816l-52.542 25.298a15.887 15.887 0 0 1-18.123-3.08L3.466 92.207c-4.626-4.218-4.62-11.502.012-15.713l14.05-12.773a10.625 10.625 0 0 1 13.569-.603l207.132 157.135c6.949 5.271 16.93.315 16.93-8.408v.611a15.939 15.939 0 0 1-9.024 14.36Z" mask="url(#logosVisualStudioCode2)"/><path fill="#1F9CF0" d="M193.428 252.134a15.892 15.892 0 0 1-18.125-3.083c5.881 5.88 15.938 1.715 15.938-6.603V11.273c0-8.318-10.057-12.483-15.938-6.602a15.892 15.892 0 0 1 18.125-3.084l52.533 25.263a15.937 15.937 0 0 1 9.03 14.363V212.51c0 6.125-3.51 11.709-9.03 14.363l-52.533 25.262Z" mask="url(#logosVisualStudioCode2)"/><path fill="url(#logosVisualStudioCode0)" fill-opacity=".25" d="M180.828 252.605a15.874 15.874 0 0 0 12.65-.486l52.5-25.263a15.938 15.938 0 0 0 9.026-14.363V41.197a15.939 15.939 0 0 0-9.025-14.363L193.477 1.57a15.877 15.877 0 0 0-18.114 3.084L74.857 96.35l-43.78-33.232a10.614 10.614 0 0 0-13.56.603L3.476 76.494c-4.63 4.211-4.635 11.495-.012 15.713l37.967 34.638l-37.967 34.637c-4.623 4.219-4.618 11.502.012 15.714l14.041 12.772a10.614 10.614 0 0 0 13.56.604l43.78-33.233l100.506 91.695a15.857 15.857 0 0 0 5.465 3.571Zm10.464-183.65l-76.262 57.89l76.262 57.888V68.956Z" mask="url(#logosVisualStudioCode2)"/></svg>
-</a>
-<p>If you prefer the dev UX of a lightweight text editor or your C# project isn't large, than VS Code on its own
-can provide a great development UX which is also what <a href="https://v3.vuejs.org/api/sfc-tooling.html#ide-support">Vue recommends themselves</a>,
-to be used together with the <a href="https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar">Volar extension</a>.</p>
-<p>VSCode's <a href="https://code.visualstudio.com/docs/editor/integrated-terminal">Integrated Terminal</a> has great multi-terminal
-support you can toggle between the editor and terminal with <code>Ctrl+</code> or open a new Terminal Window with
-<code>Ctrl+Shift+`</code> to run Tailwind with:</p>
-<pre><code class="language-bash">$ npm run ui:dev
-</code></pre>
-<p>Then in a new Terminal Window, start a new watched .NET App with:</p>
-<pre><code class="language-bash">$ dotnet watch
-</code></pre>
-<p>With both projects started you can open a browser tab running at <code>https://localhost:5001</code> where it
-will automatically reload itself at every <code>Ctrl+S</code> save point.</p>
-<h4 id="useful-vs-code-extensions">Useful VS Code extensions<a class="header-anchor" href="javascript:;" onclick="location.hash='#useful-vs-code-extensions'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
-<p>We recommend these extensions below to enhance the development experience of this template:</p>
+                    <p>In continuing our focus to enable ServiceStack to become a deeply integrated part of .NET 8 Application's, ServiceStack
+latest .NET 8 templates now default to using standardized ASP.NET Core features wherever possible, including:</p>
 <ul>
-<li><a href="https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss">Tailwind CSS IntelliSense</a> - Add Intellisense for Tailwind classes</li>
-<li><a href="https://marketplace.visualstudio.com/items?itemName=Tobermory.es6-string-html">es6-string-html</a> - Add HTML Syntax Highlighting in string literals</li>
+<li><a href="/posts/net8-identity-auth">ASP.NET Core Identity Auth</a></li>
+<li><a href="/posts/servicestack-endpoint-routing#asp.net-core-ioc">ASP.NET Core IOC</a></li>
+<li><a href="/posts/servicestack-endpoint-routing#endpoint-routing">Endpoint Routing</a></li>
+<li><a href="/posts/openapi-v3-support">Swashbuckle for Open API v3 and Swagger UI</a></li>
+<li><a href="/posts/system-text-json-apis">System.Text.Json APIs</a></li>
 </ul>
-<h3 id="using-visual-studio">Using Visual Studio<a class="header-anchor" href="javascript:;" onclick="location.hash='#using-visual-studio'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
-<a href="https://code.visualstudio.com/" title="Visual Studio" class="sm:float-left mr-8">
-    <svg class="w-24 h-24" style="margin-top:1rem" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><defs><linearGradient id="logosVisualStudio0" x1="50%" x2="50%" y1=".002%" y2="100%"><stop offset="0%" stop-color="#FFF"/><stop offset="100%" stop-color="#FFF" stop-opacity="0"/></linearGradient></defs><path fill="#52218A" d="M36.987 200.406a10.667 10.667 0 0 1-11.04 1.734L6.56 194.006A10.667 10.667 0 0 1 0 184.22V70.46a10.667 10.667 0 0 1 6.56-9.787l19.387-8a10.667 10.667 0 0 1 11.04 1.733l4.346 3.6a5.893 5.893 0 0 0-9.333 4.8v129.067a5.893 5.893 0 0 0 9.333 4.8l-4.346 3.733Z"/><path fill="#6C33AF" d="M6.56 194.006A10.667 10.667 0 0 1 0 184.22v-.88a6.16 6.16 0 0 0 10.667 4.133L176 4.673a16 16 0 0 1 18.187-3.093l52.746 25.386A16 16 0 0 1 256 41.393v.613a10.107 10.107 0 0 0-16.507-7.813l-198.16 162.48l-4.346 3.733a10.667 10.667 0 0 1-11.04 1.734L6.56 194.006Z"/><path fill="#854CC7" d="M6.56 60.673A10.667 10.667 0 0 0 0 70.46v.88a6.16 6.16 0 0 1 10.667-4.134L176 250.006a16 16 0 0 0 18.187 3.094l52.746-25.387A16 16 0 0 0 256 213.286v-.613a10.107 10.107 0 0 1-16.507 7.813L41.333 58.006l-4.346-3.733a10.667 10.667 0 0 0-11.04-1.6l-19.387 8Z"/><path fill="#B179F1" d="M194.187 253.1A16 16 0 0 1 176 250.006a9.387 9.387 0 0 0 16-6.64v-232a9.387 9.387 0 0 0-16-6.693a16 16 0 0 1 18.187-3.093l52.746 25.36A16 16 0 0 1 256 41.366v171.947a16 16 0 0 1-9.067 14.427l-52.746 25.36Z"/><path fill="url(#logosVisualStudio0)" fill-opacity=".25" d="M183.707 254.273a16 16 0 0 0 10.48-1.173l52.746-25.36A16 16 0 0 0 256 213.313V41.366a16 16 0 0 0-9.067-14.426L194.187 1.58A16 16 0 0 0 182.24.806A16 16 0 0 0 176 4.673L90.987 98.7L41.333 58.006l-4.346-3.733a10.667 10.667 0 0 0-9.627-2.213a6.8 6.8 0 0 0-1.413.48L6.56 60.673A10.667 10.667 0 0 0 0 69.66v115.36a10.664 10.664 0 0 0 6.56 8.986l19.387 8a6.8 6.8 0 0 0 1.413.48c3.378.882 6.973.056 9.627-2.213l4.346-3.6l49.654-40.693L176 250.006a16 16 0 0 0 7.707 4.267ZM192 73.153l-66.107 54.187L192 181.526V73.153ZM32 90.726l33.093 36.614L32 163.953V90.726Z"/></svg>
-</a>
-<p>As your C# project grows you'll want to consider running the back-end C# Solution with Visual Studio .NET with its
-much improved intelli-sense, navigation, tests runner &amp; debug capabilities.</p>
-<p>As we've never had a satisfactory experience trying develop npm or JS/TypeScript projects with VS.NET, we'd recommend only
-using VS.NET for C# and Razor and continuing to use VSCode for everything else.</p>
-<p>If you'd prefer to use Visual Studio for front-end development we recommend moving all JS to external files for a better
-Dev UX, e.g:</p>
-<pre><code class="language-html">&lt;script type=&quot;module&quot; src=&quot;./Pages/SignIn.mjs&quot;&gt;&lt;/script&gt;
+<p>This reduces friction for integrating ServiceStack into existing .NET 8 Apps, encourages greater knowledge and reuse and
+simplifies .NET development as developers have a reduced number of concepts to learn, fewer technology implementations to
+configure and maintain that are now applied across their entire .NET App.</p>
+<p>The last integration piece supported was utilizing <strong>System.Text.Json</strong> - the default high-performance async JSON serializer
+used in .NET Applications, can now be used by ServiceStack APIs to serialize and deserialize its JSON API Responses
+that's enabled by default when using <strong>Endpoint Routing</strong>.</p>
+<p>This integrates ServiceStack APIs more than ever where just like Minimal APIs and Web API,
+uses <strong>ASP.NET Core's IOC</strong> to resolve dependencies, uses <strong>Endpoint Routing</strong> to Execute APIs that's secured with
+<strong>ASP.NET Core Identity Auth</strong> then uses <strong>System.Text.Json</strong> to deserialize and serialize its JSON payloads.</p>
+<h3 id="enabled-by-default-when-using-endpoint-routing">Enabled by Default when using Endpoint Routing<a class="header-anchor" href="javascript:;" onclick="location.hash='#enabled-by-default-when-using-endpoint-routing'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<pre><code class="language-csharp">app.UseServiceStack(new AppHost(), options =&gt; {
+    options.MapEndpoints();
+});
 </code></pre>
-<h3 id="deploying-to-production">Deploying to Production<a class="header-anchor" href="javascript:;" onclick="location.hash='#deploying-to-production'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
-<p>This template also includes the necessary GitHub Actions to deploy this Apps production static assets to GitHub Pages CDN,
-for more info, checkout <a href="deploy">GitHub Actions Deployments</a>.</p>
-<h3 id="get-started">Get Started<a class="header-anchor" href="javascript:;" onclick="location.hash='#get-started'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
-<p>If you're new to Vue 3 a good place to start is <a href="https://vuejs.org/api/composition-api-setup.html">Vue 3 Composition API</a>.</p>
+<h3 id="enhanced-configuration">Enhanced Configuration<a class="header-anchor" href="javascript:;" onclick="location.hash='#enhanced-configuration'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>ServiceStack uses a custom <code>JsonSerializerOptions</code> to improve compatibility with existing ServiceStack DTOs and
+ServiceStack's rich ecosystem of generic <a href="https://docs.servicestack.net/add-servicestack-reference">Add ServiceStack Reference</a>
+Service Clients, which is configured to:</p>
+<ul>
+<li>Not serialize <code>null</code> properties</li>
+<li>Supports Case Insensitive Properties</li>
+<li>Uses <code>CamelCaseNamingPolicy</code> for property names</li>
+<li>Serializes <code>TimeSpan</code> and <code>TimeOnly</code> Data Types with <a href="https://www.w3.org/TR/xmlschema-2/#isoformats">XML Schema Time format</a></li>
+<li>Supports <code>[DataContract]</code> annotations</li>
+<li>Supports Custom Enum Serialization</li>
+</ul>
+<h3 id="benefits-all-add-servicestack-reference-languages">Benefits all Add ServiceStack Reference Languages<a class="header-anchor" href="javascript:;" onclick="location.hash='#benefits-all-add-servicestack-reference-languages'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>This compatibility immediately benefits all of ServiceStack's <a href="https://docs.servicestack.net/add-servicestack-reference">Add ServiceStack Reference</a>
+native typed integrations for <strong>11 programming languages</strong> which all utilize ServiceStack's JSON API endpoints - now serialized with System.Text.Json</p>
+<h3 id="support-for-datacontract-annotations">Support for DataContract Annotations<a class="header-anchor" href="javascript:;" onclick="location.hash='#support-for-datacontract-annotations'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Support for .NET's <code>DataContract</code> serialization attributes was added using a custom <code>TypeInfoResolver</code>, specifically it supports:</p>
+<ul>
+<li><code>[DataContract]</code> - When annotated, only <code>[DataMember]</code> properties are serialized</li>
+<li><code>[DataMember]</code> - Specify a custom <strong>Name</strong> or <strong>Order</strong> of properties</li>
+<li><code>[IgnoreDataMember]</code> - Ignore properties from serialization</li>
+<li><code>[EnumMember]</code> - Specify a custom value for Enum values</li>
+</ul>
+<h3 id="custom-enum-serialization">Custom Enum Serialization<a class="header-anchor" href="javascript:;" onclick="location.hash='#custom-enum-serialization'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Below is a good demonstration of the custom Enum serialization support which matches ServiceStack.Text's behavior:</p>
+<pre><code class="language-csharp">public enum EnumType { Value1, Value2, Value3 }
+
+[Flags]
+public enum EnumTypeFlags { Value1, Value2, Value3 }
+
+public enum EnumStyleMembers
+{
+    [EnumMember(Value = &quot;lower&quot;)]
+    Lower,
+    [EnumMember(Value = &quot;UPPER&quot;)]
+    Upper,
+}
+
+return new EnumExamples {
+    EnumProp = EnumType.Value2, // String value by default
+    EnumFlags = EnumTypeFlags.Value2 | EnumTypeFlags.Value3, // [Flags] as int
+    EnumStyleMembers = EnumStyleMembers.Upper, // Serializes [EnumMember] value
+    NullableEnumProp = null, // Ignores nullable enums
+};
+</code></pre>
+<p>Which serializes to:</p>
+<pre><code class="language-json">{
+  &quot;enumProp&quot;: &quot;Value2&quot;,
+  &quot;enumFlags&quot;: 3,
+  &quot;enumStyleMembers&quot;: &quot;UPPER&quot;
+}
+</code></pre>
+<h3 id="custom-configuration">Custom Configuration<a class="header-anchor" href="javascript:;" onclick="location.hash='#custom-configuration'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>You can further customize the <code>JsonSerializerOptions</code> used by ServiceStack by using <code>ConfigureJsonOptions()</code> to add
+any customizations that you can optionally apply to ASP.NET Core's JSON APIs and MVC with:</p>
+<pre><code class="language-csharp">builder.Services.ConfigureJsonOptions(options =&gt; {
+    options.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
+})
+.ApplyToApiJsonOptions()  // Apply to ASP.NET Core's JSON APIs
+.ApplyToMvcJsonOptions(); // Apply to MVC
+</code></pre>
+<h3 id="control-over-when-and-where-system.text.json-is-used">Control over when and where System.Text.Json is used<a class="header-anchor" href="javascript:;" onclick="location.hash='#control-over-when-and-where-system.text.json-is-used'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Whilst <code>System.Text.Json</code> is highly efficient, it's also very strict in the inputs it accepts where you may want to
+revert back to using ServiceStack's JSON Serializer for specific APIs, especially when you need to support external
+clients that can't be updated.</p>
+<p>This can done by annotating Request DTOs with <code>[SystemJson]</code> attribute, e.g: you can limit to only use <code>System.Text.Json</code>
+for an <strong>APIs Response</strong> with:</p>
+<pre><code class="language-csharp">[SystemJson(UseSystemJson.Response)]
+public class CreateUser : IReturn&lt;IdResponse&gt;
+{
+    //...
+}
+</code></pre>
+<p>Or limit to only use <code>System.Text.Json</code> for an <strong>APIs Request</strong> with:</p>
+<pre><code class="language-csharp">[SystemJson(UseSystemJson.Request)]
+public class CreateUser : IReturn&lt;IdResponse&gt;
+{
+    //...
+}
+</code></pre>
+<p>Or not use <code>System.Text.Json</code> at all for an API with:</p>
+<pre><code class="language-csharp">[SystemJson(UseSystemJson.Never)]
+public class CreateUser : IReturn&lt;IdResponse&gt;
+{
+    //...
+}
+</code></pre>
+<h3 id="jsonapiclient-support">JsonApiClient Support<a class="header-anchor" href="javascript:;" onclick="location.hash='#jsonapiclient-support'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>When Endpoints Routing is configured, the <code>JsonApiClient</code> will also be configured to utilize the same <code>System.Text.Json</code>
+options to send and receive its JSON API Requests which also respects the <code>[SystemJson]</code> specified behavior.</p>
+<p>Clients external to the .NET App can be configured to use <code>System.Text.Json</code> with:</p>
+<pre><code class="language-csharp">ClientConfig.UseSystemJson = UseSystemJson.Always;
+</code></pre>
+<p>Whilst any custom configuration can be applied to its <code>JsonSerializerOptions</code> with:</p>
+<pre><code class="language-csharp">TextConfig.ConfigureSystemJsonOptions(options =&gt; {
+    options.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
+});
+</code></pre>
+<h3 id="scoped-json-configuration">Scoped JSON Configuration<a class="header-anchor" href="javascript:;" onclick="location.hash='#scoped-json-configuration'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>We've also added partial support for <a href="https://docs.servicestack.net/customize-json-responses">Customized JSON Responses</a>
+for the following customization options:</p>
+<div class="table,w-full">
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Alias</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EmitCamelCaseNames</td>
+<td>eccn</td>
+</tr>
+<tr>
+<td>EmitLowercaseUnderscoreNames</td>
+<td>elun</td>
+</tr>
+<tr>
+<td>EmitPascalCaseNames</td>
+<td>epcn</td>
+</tr>
+<tr>
+<td>ExcludeDefaultValues</td>
+<td>edv</td>
+</tr>
+<tr>
+<td>IncludeNullValues</td>
+<td>inv</td>
+</tr>
+<tr>
+<td>Indent</td>
+<td>pp</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>These can be applied to the JSON Response by returning a decorated <code>HttpResult</code> with a custom <code>ResultScope</code>, e.g:</p>
+<pre><code class="language-csharp">return new HttpResult(responseDto) {
+    ResultScope = () =&gt; 
+        JsConfig.With(new() { IncludeNullValues = true, ExcludeDefaultValues = true })
+};
+</code></pre>
+<p>They can also be requested by API consumers by adding a <code>?jsconfig</code> query string with the desired option or its alias, e.g:</p>
+<pre><code class="language-csharp">/api/MyRequest?jsconfig=EmitLowercaseUnderscoreNames,ExcludeDefaultValues
+/api/MyRequest?jsconfig=eccn,edv
+</code></pre>
+<h3 id="systemjsoncompatible">SystemJsonCompatible<a class="header-anchor" href="javascript:;" onclick="location.hash='#systemjsoncompatible'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Another configuration automatically applied when <code>System.Text.Json</code> is enabled is:</p>
+<pre><code class="language-csharp">JsConfig.SystemJsonCompatible = true;
+</code></pre>
+<p>Which is being used to make ServiceStack's JSON Serializer more compatible with <code>System.Text.Json</code> output so it's easier
+to switch between the two with minimal effort and incompatibility. Currently this is only used to override
+<code>DateTime</code> and <code>DateTimeOffset</code> behavior which uses <code>System.Text.Json</code> for its Serialization/Deserialization.</p>
 
                 </div>
             </div>
@@ -245,40 +372,33 @@ for more info, checkout <a href="deploy">GitHub Actions Deployments</a>.</p>
             <div class="max-w-3xl mx-auto">
                 <div class="flex justify-between">
                     <div>
-                            <a href="posts/author/lucy-bates"><img class="w-20 h-20 rounded-full text-cyan-600" src="img/authors/author1.svg"></a>
+                            <a href="posts/author/gayle-smith"><img class="w-20 h-20 rounded-full text-cyan-600" src="img/authors/author2.svg"></a>
 
                         <div class="mt-2 font-medium text-2xl">
-                            Written by Lucy Bates
+                            Written by Gayle Smith
                         </div>
                         <div class="text-gray-600">
-                            Works in software design, company building, and the aerospace industry.
+                            Gayle is an author, consultant, and founder focusing on improving tech.
                         </div>
                     </div>
                     <div class="flex items-end">
             <ul role="list" class="flex">
                     <li>
-                        <a title="Follow on Twitter" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://twitter.com/lucy">
+                        <a title="Follow on Twitter" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://twitter.com/gayle">
                             <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500">
                                 <path d="M20.055 7.983c.011.174.011.347.011.523 0 5.338-3.92 11.494-11.09 11.494v-.003A10.755 10.755 0 0 1 3 18.186c.308.038.618.057.928.058a7.655 7.655 0 0 0 4.841-1.733c-1.668-.032-3.13-1.16-3.642-2.805a3.753 3.753 0 0 0 1.76-.07C5.07 13.256 3.76 11.6 3.76 9.676v-.05a3.77 3.77 0 0 0 1.77.505C3.816 8.945 3.288 6.583 4.322 4.737c1.98 2.524 4.9 4.058 8.034 4.22a4.137 4.137 0 0 1 1.128-3.86A3.807 3.807 0 0 1 19 5.274a7.657 7.657 0 0 0 2.475-.98c-.29.934-.9 1.729-1.713 2.233A7.54 7.54 0 0 0 22 5.89a8.084 8.084 0 0 1-1.945 2.093Z"></path>
                             </svg>
                         </a>
                     </li>
                     <li>
-                        <a title="Follow on threads.net" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://threads.net/@lucy">
+                        <a title="Follow on Mastodon" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://mastodon.social/@gayle">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500" width="24" height="24" viewBox="0 0 24 24">
-                                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7.5c-1.333-3-3.667-4.5-7-4.5c-5 0-8 2.5-8 9s3.5 9 8 9s7-3 7-5s-1-5-7-5c-2.5 0-3 1.25-3 2.5C9 15 10 16 11.5 16c2.5 0 3.5-1.5 3.5-5s-2-4-3-4s-1.833.333-2.5 1"/>
+                                <path fill="currentColor" d="M20.94 14c-.28 1.41-2.44 2.96-4.97 3.26c-1.31.15-2.6.3-3.97.24c-2.25-.11-4-.54-4-.54v.62c.32 2.22 2.22 2.35 4.03 2.42c1.82.05 3.44-.46 3.44-.46l.08 1.65s-1.28.68-3.55.81c-1.25.07-2.81-.03-4.62-.5c-3.92-1.05-4.6-5.24-4.7-9.5l-.01-3.43c0-4.34 2.83-5.61 2.83-5.61C6.95 2.3 9.41 2 11.97 2h.06c2.56 0 5.02.3 6.47.96c0 0 2.83 1.27 2.83 5.61c0 0 .04 3.21-.39 5.43M18 8.91c0-1.08-.3-1.91-.85-2.56c-.56-.63-1.3-.96-2.23-.96c-1.06 0-1.87.41-2.42 1.23l-.5.88l-.5-.88c-.56-.82-1.36-1.23-2.43-1.23c-.92 0-1.66.33-2.23.96C6.29 7 6 7.83 6 8.91v5.26h2.1V9.06c0-1.06.45-1.62 1.36-1.62c1 0 1.5.65 1.5 1.93v2.79h2.07V9.37c0-1.28.5-1.93 1.51-1.93c.9 0 1.35.56 1.35 1.62v5.11H18V8.91Z"/>
                             </svg>
                         </a>
                     </li>
                     <li>
-                        <a title="Follow on GitHub" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://github.com/lucy">
-                            <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.475 2 2 6.588 2 12.253c0 4.537 2.862 8.369 6.838 9.727.5.09.687-.218.687-.487 0-.243-.013-1.05-.013-1.91C7 20.059 6.35 18.957 6.15 18.38c-.113-.295-.6-1.205-1.025-1.448-.35-.192-.85-.667-.013-.68.788-.012 1.35.744 1.538 1.051.9 1.551 2.338 1.116 2.912.846.088-.666.35-1.115.638-1.371-2.225-.256-4.55-1.14-4.55-5.062 0-1.115.387-2.038 1.025-2.756-.1-.256-.45-1.307.1-2.717 0 0 .837-.269 2.75 1.051.8-.23 1.65-.346 2.5-.346.85 0 1.7.115 2.5.346 1.912-1.333 2.75-1.05 2.75-1.05.55 1.409.2 2.46.1 2.716.637.718 1.025 1.628 1.025 2.756 0 3.934-2.337 4.806-4.562 5.062.362.32.675.936.675 1.897 0 1.371-.013 2.473-.013 2.82 0 .268.188.589.688.486a10.039 10.039 0 0 0 4.932-3.74A10.447 10.447 0 0 0 22 12.253C22 6.588 17.525 2 12 2Z"></path>
-                            </svg>
-                        </a>
-                    </li>
-                    <li>
-                        <a title="Email Lucy Bates" href="mailto:lucy@email.org" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500">
+                        <a title="Email Gayle Smith" href="mailto:gayle@email.org" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500">
                             <svg class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M4 20q-.825 0-1.413-.588T2 18V6q0-.825.588-1.413T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.588 1.413T20 20H4Zm8-7L4 8v10h16V8l-8 5Zm0-2l8-5H4l8 5ZM4 8V6v12V8Z"/></svg>
                         </a>
                     </li>
@@ -288,14 +408,14 @@ for more info, checkout <a href="deploy">GitHub Actions Deployments</a>.</p>
 
                 <div class="mt-4 border-t">
                     <div class="py-8 text-lg text-gray-700 font-medium">
-                        More from Lucy Bates
+                        More from Gayle Smith
                     </div>
                     <div class="grid grid-cols-2 gap-8">
                             <div>
                                 <div class="flex flex-col overflow-hidden">
                                     <div class="flex-shrink-0">
-                                        <a href="posts/identity-auth-admin-ui">
-                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1563920443079-783e5c786b83?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
+                                        <a href="posts/start">
+                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1533090161767-e6ffed986c88?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
                                         </a>
                                     </div>
                                     <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
@@ -303,26 +423,67 @@ for more info, checkout <a href="deploy">GitHub Actions Deployments</a>.</p>
                                             <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
                                                 Article
                                             </p>
-                                            <a href="posts/identity-auth-admin-ui" class="mt-2 block">
-                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="Built-In Identity Auth Admin UI">
-                                                    Built-In Identity Auth Admin UI
+                                            <a href="posts/start" class="mt-2 block">
+                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="Getting Started">
+                                                    Getting Started
                                                 </p>
-                                                <p class="mt-3 text-base text-gray-500">Explore the new Identity Auth Admin UI for creating and managing Identity Auth users in .NET 8</p>
+                                                <p class="mt-3 text-base text-gray-500">Found out how to use these template features</p>
                                             </a>
                                         </div>
                                         <div class="mt-6 flex items-center">
                                             <div class="flex-shrink-0">
                                                 <a href="">
-                                                    <span class="sr-only">Lucy Bates</span>
-                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author1.svg" alt="Built-In Identity Auth Admin UI background">
+                                                    <span class="sr-only">Gayle Smith</span>
+                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author2.svg" alt="Getting Started background">
                                                 </a>
                                             </div>
                                             <div class="ml-3">
                                                 <p class="text-sm font-medium text-gray-900">
-                                                        <a href="posts/author/lucy-bates" class="hover:underline">Lucy Bates</a>
+                                                        <a href="posts/author/gayle-smith" class="hover:underline">Gayle Smith</a>
                                                 </p>
                                                 <div class="flex space-x-1 text-sm text-gray-500">
-                                                    <time datetime="2024-02-10T00:00:00.0000000">February 10, 2024</time>
+                                                    <time datetime="2023-01-21T00:00:00.0000000">January 21, 2023</time>
+                                                    <span aria-hidden="true">&middot;</span>
+                                                    <span>2 min read</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div>
+                                <div class="flex flex-col overflow-hidden">
+                                    <div class="flex-shrink-0">
+                                        <a href="posts/rider">
+                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1472289065668-ce650ac443d2?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
+                                                Article
+                                            </p>
+                                            <a href="posts/rider" class="mt-2 block">
+                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="Develop using JetBrains Rider">
+                                                    Develop using JetBrains Rider
+                                                </p>
+                                                <p class="mt-3 text-base text-gray-500">Setting up &amp; exploring development workflow in Rider</p>
+                                            </a>
+                                        </div>
+                                        <div class="mt-6 flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <a href="">
+                                                    <span class="sr-only">Gayle Smith</span>
+                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author2.svg" alt="Develop using JetBrains Rider background">
+                                                </a>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-medium text-gray-900">
+                                                        <a href="posts/author/gayle-smith" class="hover:underline">Gayle Smith</a>
+                                                </p>
+                                                <div class="flex space-x-1 text-sm text-gray-500">
+                                                    <time datetime="2023-01-11T00:00:00.0000000">January 11, 2023</time>
                                                     <span aria-hidden="true">&middot;</span>
                                                     <span>3 min read</span>
                                                 </div>
@@ -335,8 +496,8 @@ for more info, checkout <a href="deploy">GitHub Actions Deployments</a>.</p>
                             <div>
                                 <div class="flex flex-col overflow-hidden">
                                     <div class="flex-shrink-0">
-                                        <a href="posts/servicestack-endpoint-routing">
-                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1510022151265-1bb84d406531?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
+                                        <a href="posts/deploy">
+                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1485841890310-6a055c88698a?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
                                         </a>
                                     </div>
                                     <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
@@ -344,110 +505,28 @@ for more info, checkout <a href="deploy">GitHub Actions Deployments</a>.</p>
                                             <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
                                                 Article
                                             </p>
-                                            <a href="posts/servicestack-endpoint-routing" class="mt-2 block">
-                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="ServiceStack Endpoint Routing">
-                                                    ServiceStack Endpoint Routing
+                                            <a href="posts/deploy" class="mt-2 block">
+                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="Deployment with GitHub Actions">
+                                                    Deployment with GitHub Actions
                                                 </p>
-                                                <p class="mt-3 text-base text-gray-500">ServiceStack .NET 8 is now more integrated then ever with support for ASP.NET Core Endpoint Routing and IOC</p>
+                                                <p class="mt-3 text-base text-gray-500">Configuring your GitHub repo for SSH and CDN deployments</p>
                                             </a>
                                         </div>
                                         <div class="mt-6 flex items-center">
                                             <div class="flex-shrink-0">
                                                 <a href="">
-                                                    <span class="sr-only">Lucy Bates</span>
-                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author1.svg" alt="ServiceStack Endpoint Routing background">
+                                                    <span class="sr-only">Gayle Smith</span>
+                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author2.svg" alt="Deployment with GitHub Actions background">
                                                 </a>
                                             </div>
                                             <div class="ml-3">
                                                 <p class="text-sm font-medium text-gray-900">
-                                                        <a href="posts/author/lucy-bates" class="hover:underline">Lucy Bates</a>
+                                                        <a href="posts/author/gayle-smith" class="hover:underline">Gayle Smith</a>
                                                 </p>
                                                 <div class="flex space-x-1 text-sm text-gray-500">
-                                                    <time datetime="2024-02-07T00:00:00.0000000">February 7, 2024</time>
+                                                    <time datetime="2023-01-01T00:00:00.0000000">January 1, 2023</time>
                                                     <span aria-hidden="true">&middot;</span>
-                                                    <span>14 min read</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div>
-                                <div class="flex flex-col overflow-hidden">
-                                    <div class="flex-shrink-0">
-                                        <a href="posts/razor-ssg-new-blog-features">
-                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
-                                        <div class="flex-1">
-                                            <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
-                                                Article
-                                            </p>
-                                            <a href="posts/razor-ssg-new-blog-features" class="mt-2 block">
-                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="New Blogging features in Razor SSG">
-                                                    New Blogging features in Razor SSG
-                                                </p>
-                                                <p class="mt-3 text-base text-gray-500">Explore the new Blogging Features in Razor SSG</p>
-                                            </a>
-                                        </div>
-                                        <div class="mt-6 flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <a href="">
-                                                    <span class="sr-only">Lucy Bates</span>
-                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author1.svg" alt="New Blogging features in Razor SSG background">
-                                                </a>
-                                            </div>
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium text-gray-900">
-                                                        <a href="posts/author/lucy-bates" class="hover:underline">Lucy Bates</a>
-                                                </p>
-                                                <div class="flex space-x-1 text-sm text-gray-500">
-                                                    <time datetime="2023-08-23T00:00:00.0000000">August 23, 2023</time>
-                                                    <span aria-hidden="true">&middot;</span>
-                                                    <span>6 min read</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div>
-                                <div class="flex flex-col overflow-hidden">
-                                    <div class="flex-shrink-0">
-                                        <a href="posts/razor-ssg">
-                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1579767684138-a57e917d30aa?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
-                                        <div class="flex-1">
-                                            <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
-                                                Article
-                                            </p>
-                                            <a href="posts/razor-ssg" class="mt-2 block">
-                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="Introducing Razor SSG">
-                                                    Introducing Razor SSG
-                                                </p>
-                                                <p class="mt-3 text-base text-gray-500">Create fast, beautiful statically rendered Razor Websites &amp; Blogs</p>
-                                            </a>
-                                        </div>
-                                        <div class="mt-6 flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <a href="">
-                                                    <span class="sr-only">Lucy Bates</span>
-                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author1.svg" alt="Introducing Razor SSG background">
-                                                </a>
-                                            </div>
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium text-gray-900">
-                                                        <a href="posts/author/lucy-bates" class="hover:underline">Lucy Bates</a>
-                                                </p>
-                                                <div class="flex space-x-1 text-sm text-gray-500">
-                                                    <time datetime="2023-03-30T00:00:00.0000000">March 30, 2023</time>
-                                                    <span aria-hidden="true">&middot;</span>
-                                                    <span>14 min read</span>
+                                                    <span>4 min read</span>
                                                 </div>
                                             </div>
                                         </div>

@@ -1,0 +1,994 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg" href="img/logo.svg">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://razor-ssg.web-templates.io/feed.xml" />
+    <title>ServiceStack Endpoint Routing</title>
+    <base href="/" />
+    <script>
+    if (location.search === "?dark") localStorage.setItem('color-scheme','dark') 
+    if (location.search === "?light") localStorage.removeItem('color-scheme') 
+    const cls = document.querySelector('html').classList
+    if (localStorage.getItem('color-scheme') === 'dark')
+        cls.add('dark')
+    else
+        cls.remove('dark')
+    </script>
+    <link rel="stylesheet" href="css/app.css">
+
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+{
+    "imports": {
+        "app.mjs": "./mjs/app.mjs",
+        "vue": "./lib/mjs/vue.min.mjs",
+        "@servicestack/client": "./lib/mjs/servicestack-client.min.mjs",
+        "@servicestack/vue": "./lib/mjs/servicestack-vue.min.mjs"
+    }
+}
+</script>
+    
+    <meta name="twitter:site" content="@RazorSsg" />
+    <meta name="twitter:creator" content="@lucy" />
+    <meta name="twitter:card" content="summary" />
+    <meta property="og:description" content="ServiceStack .NET 8 is now more integrated then ever with support for ASP.NET Core Endpoint Routing and IOC" />
+    <meta property="og:url" content="https://razor-ssg.web-templates.io/posts/servicestack-endpoint-routing" />
+    <meta property="og:title" content="ServiceStack Endpoint Routing" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1510022151265-1bb84d406531?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" />
+
+
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+<header class="top-0 fixed z-50 h-14 bg-white dark:bg-black opacity-90 w-full shadow pr-3">
+    <div class="flex flex-wrap items-center">
+        <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
+            <div class="cursor-pointer">
+                <a class="navbar-brand flex items-center" href="./">
+                    <svg class="w-8 h-8 sm:ml-2 sm:w-12 sm:h-12" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="currentColor" d="M10 6c1.544 1.76 2.276 4.15 2.217 6.61c3.968 1.67 9.924 6.12 11.181 12.39H28C26.051 14.31 14.918 6.77 10 6zm-2 7c4.67 4.913.81 11.582-4 12h18.97C21.5 18.289 11.95 13.533 8 13z"/></svg>
+                    <span class="hidden sm:block text-2xl font-semibold">MyApp</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-grow flex-shrink flex-nowrap justify-end items-center">
+            <nav class="relative flex flex-grow leading-6 font-semibold text-slate-700 dark:text-slate-200">
+                <ul class="flex flex-wrap items-center justify-end w-full m-0 pb-2 sm:pb-0">
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="whatsnew" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    What's New
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="videos" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Videos
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="creatorkit/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Creator Kit
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="blog" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Blog
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="posts/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Archive
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="speaking" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Speaking
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="uses" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Uses
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="about" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    About
+                                </a>
+                            </li>
+                    <li class="relative flex flex-wrap just-fu-start m-0">
+                        <div data-component="DarkModeToggle" class="ml-2 w-10"></div>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</header>
+<script type="module">
+import { mountAll } from "app.mjs"
+mountAll()
+</script>
+
+
+<div class="min-h-screen">
+    <main role="main" class="pt-14 pb-3">
+        
+
+
+
+<link rel="stylesheet" href="css/typography.css">
+<link rel="stylesheet" href="css/lite-yt-embed.css">
+
+<div class="container px-5 mb-32 mx-auto">
+        <article class="mt-20">
+            <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
+                ServiceStack Endpoint Routing
+            </h1>
+            <div class="flex justify-between">
+                <div class="md:mb-12 flex items-center">
+                        <a href="posts/author/lucy-bates"><img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="img/authors/author1.svg"></a>
+                    <div class="flex flex-col">
+                            <a class="text-xl font-semibold hover:underline" href="posts/author/lucy-bates">Lucy Bates</a>
+            <ul role="list" class="flex">
+                    <li>
+                        <a title="Follow on Twitter" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://twitter.com/lucy">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500">
+                                <path d="M20.055 7.983c.011.174.011.347.011.523 0 5.338-3.92 11.494-11.09 11.494v-.003A10.755 10.755 0 0 1 3 18.186c.308.038.618.057.928.058a7.655 7.655 0 0 0 4.841-1.733c-1.668-.032-3.13-1.16-3.642-2.805a3.753 3.753 0 0 0 1.76-.07C5.07 13.256 3.76 11.6 3.76 9.676v-.05a3.77 3.77 0 0 0 1.77.505C3.816 8.945 3.288 6.583 4.322 4.737c1.98 2.524 4.9 4.058 8.034 4.22a4.137 4.137 0 0 1 1.128-3.86A3.807 3.807 0 0 1 19 5.274a7.657 7.657 0 0 0 2.475-.98c-.29.934-.9 1.729-1.713 2.233A7.54 7.54 0 0 0 22 5.89a8.084 8.084 0 0 1-1.945 2.093Z"></path>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a title="Follow on threads.net" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://threads.net/@lucy">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7.5c-1.333-3-3.667-4.5-7-4.5c-5 0-8 2.5-8 9s3.5 9 8 9s7-3 7-5s-1-5-7-5c-2.5 0-3 1.25-3 2.5C9 15 10 16 11.5 16c2.5 0 3.5-1.5 3.5-5s-2-4-3-4s-1.833.333-2.5 1"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a title="Follow on GitHub" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://github.com/lucy">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.475 2 2 6.588 2 12.253c0 4.537 2.862 8.369 6.838 9.727.5.09.687-.218.687-.487 0-.243-.013-1.05-.013-1.91C7 20.059 6.35 18.957 6.15 18.38c-.113-.295-.6-1.205-1.025-1.448-.35-.192-.85-.667-.013-.68.788-.012 1.35.744 1.538 1.051.9 1.551 2.338 1.116 2.912.846.088-.666.35-1.115.638-1.371-2.225-.256-4.55-1.14-4.55-5.062 0-1.115.387-2.038 1.025-2.756-.1-.256-.45-1.307.1-2.717 0 0 .837-.269 2.75 1.051.8-.23 1.65-.346 2.5-.346.85 0 1.7.115 2.5.346 1.912-1.333 2.75-1.05 2.75-1.05.55 1.409.2 2.46.1 2.716.637.718 1.025 1.628 1.025 2.756 0 3.934-2.337 4.806-4.562 5.062.362.32.675.936.675 1.897 0 1.371-.013 2.473-.013 2.82 0 .268.188.589.688.486a10.039 10.039 0 0 0 4.932-3.74A10.447 10.447 0 0 0 22 12.253C22 6.588 17.525 2 12 2Z"></path>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a title="Email Lucy Bates" href="mailto:lucy@email.org" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500">
+                            <svg class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M4 20q-.825 0-1.413-.588T2 18V6q0-.825.588-1.413T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.588 1.413T20 20H4Zm8-7L4 8v10h16V8l-8 5Zm0-2l8-5H4l8 5ZM4 8V6v12V8Z"/></svg>
+                        </a>
+                    </li>
+            </ul>
+                    </div>
+                </div>
+                <div class="mb-4 max-w-sm" data-mail="JoinMailingList" data-props="{ submitLabel:'Join our newsletter' }"></div>
+            </div>
+            <div class="mb-8 md:mb-16 sm:mx-0">
+                <div class="sm:mx-0">
+                    <img src="https://images.unsplash.com/photo-1510022151265-1bb84d406531?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" alt="ServiceStack Endpoint Routing Background" class="shadow-small">
+                </div>
+            </div>
+            <div class="flex max-w-3xl mx-auto justify-between">
+                <div>
+                    <div class="mb-4 flex flex-wrap">
+                            <a href="posts/tagged/servicestack" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">servicestack</a>
+                            <a href="posts/tagged/net8" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">.net8</a>
+                            <a href="posts/tagged/apis" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">apis</a>
+                    </div>
+                        <div class="max-w-3xl mx-auto">
+                            <div class="mb-6 text-lg text-gray-500">
+                                <time datetime="2024-02-07T00:00:00.0000000">February 7, 2024</time>
+                                <span aria-hidden="true">&middot;</span>
+                                <span>14 min read</span>
+                            </div>
+                        </div>
+                </div>
+                <div class="flex flex-grow-0">
+                    <div data-post="PostVotes"></div>
+                    <a href="javascript:;" onclick="document.location.hash='comments'" class="cursor-pointer" title="Jump to comments">
+                        <svg class="ml-4 text-gray-700 mt-1 w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M3 11.2c0 .1 0 .1 0 0c0 .1 0 .1 0 0zM8.3 1C3.9 1 0 3.6 0 6.6c0 2 1.1 3.7 3 4.7s0 .1 0 .1c-.1 1.3-.9 1.7-.9 1.7L.3 14h2c2.5 0 4.3-1.1 5.1-1.9h.8c4.3 0 7.8-2.5 7.8-5.6S12.6 1 8.3 1zm-.1 10.1H7l-.2.2c-.5.5-1.6 1.4-3.3 1.7c.3-.5.5-1.1.5-2v-.3l-.3-.1C1.9 9.7 1 8.3 1 6.6C1 4.2 4.5 2 8.3 2C12 2 15 4 15 6.6c0 2.4-3.1 4.5-6.8 4.5z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="max-w-3xl mx-auto">
+                <div id="post" class="prose lg:prose-xl max-w-none mb-32">
+                    <p>In an effort to reduce friction and improve integration with ASP.NET Core Apps, we've continued the trend from last year
+for embracing ASP.NET Core's built-in features and conventions which saw the latest ServiceStack v8 release converting
+all its newest .NET 8 templates to adopt <a href="https://docs.servicestack.net/auth/identity-auth">ASP.NET Core Identity Auth</a>.</p>
+<p>This is a departure from building upon our own platform-agnostic abstractions which allowed the same ServiceStack code-base
+to run on both .NET Core and .NET Framework. Our focus going forward will be to instead adopt De facto standards and conventions
+of the latest .NET platform which also means ServiceStack's new value-added features are only available in the latest <strong>.NET 8+</strong> release.</p>
+<h3 id="servicestack-middleware">ServiceStack Middleware<a class="header-anchor" href="javascript:;" onclick="location.hash='#servicestack-middleware'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Whilst ServiceStack integrates into ASP.NET Core Apps as custom middleware into ASP.NET Core's HTTP Request Pipeline,
+it invokes its own black-box of functionality from there, implemented using its own suite of overlapping features.</p>
+<p>Whilst this allows ServiceStack to have full control over how to implement its features, it's not as integrated as it could be,
+with there being limits on what ServiceStack Functionality could be reused within external ASP .NET Core MVC Controllers, Razor Pages, etc.
+and inhibited the ability to apply application-wide authorization policies across an Application entire surface area,
+using and configuring different JSON Serialization implementations.</p>
+<h3 id="areas-for-tighter-integration">Areas for tighter integration<a class="header-anchor" href="javascript:;" onclick="location.hash='#areas-for-tighter-integration'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>The major areas we've identified that would benefit from tighter integration with ASP.NET Core include:</p>
+<ul>
+<li><a href="https://docs.servicestack.net/ioc">Funq IOC Container</a></li>
+<li><a href="https://docs.servicestack.net/routing">ServiceStack Routing</a> and <a href="https://docs.servicestack.net/order-of-operations">Request Pipeline</a></li>
+<li><a href="https://docs.servicestack.net/json-format">ServiceStack.Text JSON Serializer</a></li>
+</ul>
+<h3 id="servicestack-v8.1-is-fully-integrated">ServiceStack v8.1 is fully integrated!<a class="header-anchor" href="javascript:;" onclick="location.hash='#servicestack-v8.1-is-fully-integrated'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>We're happy to announce the latest release of ServiceStack v8.1 now supports utilizing the optimal ASP.NET Core's
+standardized features to reimplement all these key areas - fostering seamless integration and greater reuse which
+you can learn about below:</p>
+<ul>
+<li><a href="https://docs.servicestack.net/auth/identity-auth">ASP.NET Core Identity Auth</a></li>
+<li><a href="https://docs.servicestack.net/releases/v8_01#asp.net-core-ioc">ASP.NET Core IOC</a></li>
+<li><a href="https://docs.servicestack.net/releases/v8_01#endpoint-routing">Endpoint Routing</a></li>
+<li><a href="https://docs.servicestack.net/releases/v8_01#system.text.json">System.Text.Json APIs</a></li>
+<li><a href="https://docs.servicestack.net/releases/v8_01#openapi-v3">Open API v3 and Swagger UI</a></li>
+<li><a href="https://docs.servicestack.net/releases/v8_01#asp.net-core-identity-auth-admin-ui">ASP.NET Core Identity Auth Admin UI</a></li>
+<li><a href="https://docs.servicestack.net/releases/v8_01#jwt-identity-auth">JWT Identity Auth</a></li>
+</ul>
+<p>Better yet, this new behavior is enabled by default in all of ServiceStack's new ASP .NET Identity Auth .NET 8 templates!</p>
+<h3 id="asp.net-core-ioc">ASP .NET Core IOC<a class="header-anchor" href="javascript:;" onclick="location.hash='#asp.net-core-ioc'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>The primary limitation of ServiceStack using its own Funq IOC is that any dependencies registered in Funq are not injected
+into Razor Pages, Blazor Components, MVC Controllers, etc.</p>
+<p>That's why our <a href="https://docs.servicestack.net/modular-startup">Modular Startup</a> configurations recommend utilizing
+custom <code>IHostingStartup</code> configurations to register application dependencies in ASP .NET Core's IOC where they can be
+injected into both ServiceStack Services and ASP.NET Core's external components, e.g:</p>
+<pre><code class="language-csharp">[assembly: HostingStartup(typeof(MyApp.ConfigureDb))]
+
+namespace MyApp;
+
+public class ConfigureDb : IHostingStartup
+{
+    public void Configure(IWebHostBuilder builder) =&gt; builder
+        .ConfigureServices((context, services) =&gt; {
+            services.AddSingleton&lt;IDbConnectionFactory&gt;(new OrmLiteConnectionFactory(
+                context.Configuration.GetConnectionString(&quot;DefaultConnection&quot;),
+                SqliteDialect.Provider));
+        });
+}
+</code></pre>
+<p>But there were fundamental restrictions on what could be registered in ASP .NET Core's IOC as everything needed to be
+registered before AspNetCore's <code>WebApplication</code> was built and before ServiceStack's AppHost could be initialized,
+which prohibited being able to register any dependencies created by the AppHost including Services, AutoGen Services,
+Validators and internal functionality like App Settings, Virtual File System and Caching providers, etc.</p>
+<h2 id="switch-to-use-asp.net-core-ioc">Switch to use ASP .NET Core IOC<a class="header-anchor" href="javascript:;" onclick="location.hash='#switch-to-use-asp.net-core-ioc'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>To enable ServiceStack to switch to using ASP .NET Core's IOC you'll need to move registration of all dependencies and
+Services to before the WebApplication is built by calling the <code>AddServiceStack()</code> extension method with the Assemblies
+where your ServiceStack Services are located, e.g:</p>
+<pre><code class="language-csharp">builder.Services.AddServiceStack(typeof(MyServices).Assembly);
+
+var app = builder.Build();
+
+//...
+app.UseServiceStack(new AppHost());
+</code></pre>
+<p>Which now registers all ServiceStack dependencies in ASP .NET Core's IOC, including all ServiceStack Services prior to
+the AppHost being initialized which no longer needs to specify the Assemblies where ServiceStack Services are created
+and no longer needs to use Funq as all dependencies should now be registered in ASP .NET Core's IOC.</p>
+<h3 id="registering-dependencies-and-plugins">Registering Dependencies and Plugins<a class="header-anchor" href="javascript:;" onclick="location.hash='#registering-dependencies-and-plugins'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Additionally ASP.NET Core's IOC requirement for all dependencies needing to be registered before the WebApplication is
+built means you'll no longer be able to register any dependencies or plugins in ServiceStack's <code>AppHost.Configure()</code> method.</p>
+<pre><code class="language-csharp">public class AppHost() : AppHostBase(&quot;MyApp&quot;), IHostingStartup
+{
+    public void Configure(IWebHostBuilder builder) =&gt; builder
+        .ConfigureServices(services =&gt; {
+            // Register IOC Dependencies and ServiceStack Plugins
+        });
+
+    public override void Configure()
+    {
+        // DO NOT REGISTER ANY PLUGINS OR DEPENDENCIES HERE
+    }
+}
+</code></pre>
+<p>Instead anything that needs to register dependencies in ASP.NET Core IOC should now use the <code>IServiceCollection</code> extension methods:</p>
+<ul>
+<li>Use <code>IServiceCollection.Add*</code> APIs to register dependencies</li>
+<li>Use <code>IServiceCollection.AddPlugin</code> API to register ServiceStack Plugins</li>
+<li>Use <code>IServiceCollection.RegisterService*</code> APIs to dynamically register ServiceStack Services in external Assemblies</li>
+</ul>
+<p>This can be done whenever you have access to <code>IServiceCollection</code>, either in <code>Program.cs</code>:</p>
+<pre><code class="language-csharp">builder.Services.AddPlugin(new AdminDatabaseFeature());
+</code></pre>
+<p>Or in any Modular Startup <code>IHostingStartup</code> configuration class, e.g:</p>
+<pre><code class="language-csharp">public class ConfigureDb : IHostingStartup
+{
+    public void Configure(IWebHostBuilder builder) =&gt; builder
+        .ConfigureServices((context, services) =&gt; {
+            services.AddSingleton&lt;IDbConnectionFactory&gt;(new OrmLiteConnectionFactory(
+                context.Configuration.GetConnectionString(&quot;DefaultConnection&quot;),
+                SqliteDialect.Provider));
+            
+            // Enable Audit History
+            services.AddSingleton&lt;ICrudEvents&gt;(c =&gt;
+                new OrmLiteCrudEvents(c.GetRequiredService&lt;IDbConnectionFactory&gt;()));
+            
+            // Enable AutoQuery RDBMS APIs
+            services.AddPlugin(new AutoQueryFeature {
+                 MaxLimit = 1000,
+            });
+
+            // Enable AutoQuery Data APIs
+            services.AddPlugin(new AutoQueryDataFeature());
+            
+            // Enable built-in Database Admin UI at /admin-ui/database
+            services.AddPlugin(new AdminDatabaseFeature());
+        })
+        .ConfigureAppHost(appHost =&gt; {
+            appHost.Resolve&lt;ICrudEvents&gt;().InitSchema();
+        });
+}
+</code></pre>
+<p>The <code>ConfigureAppHost()</code> extension method can continue to be used to execute any startup logic that requires access to
+registered dependencies.</p>
+<h3 id="authoring-servicestack-plugins">Authoring ServiceStack Plugins<a class="header-anchor" href="javascript:;" onclick="location.hash='#authoring-servicestack-plugins'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>To enable ServiceStack Plugins to support both Funq and ASP .NET Core IOC, any dependencies and Services a plugin needs
+should be registered in the <code>IConfigureServices.Configure(IServiceCollection)</code> method as seen in the refactored
+<a href="https://github.com/ServiceStack/ServiceStack/blob/main/ServiceStack/src/ServiceStack/ServerEventsFeature.cs">ServerEventsFeature.cs</a>
+plugin, e.g:</p>
+<pre><code class="language-csharp">public class ServerEventsFeature : IPlugin, IConfigureServices
+{
+    //...
+    public void Configure(IServiceCollection services)
+    {
+        if (!services.Exists&lt;IServerEvents&gt;())
+        {
+            services.AddSingleton&lt;IServerEvents&gt;(new MemoryServerEvents
+            {
+                IdleTimeout = IdleTimeout,
+                HouseKeepingInterval = HouseKeepingInterval,
+                OnSubscribeAsync = OnSubscribeAsync,
+                OnUnsubscribeAsync = OnUnsubscribeAsync,
+                OnUpdateAsync = OnUpdateAsync,
+                NotifyChannelOfSubscriptions = NotifyChannelOfSubscriptions,
+                Serialize = Serialize,
+                OnError = OnError,
+            });
+        }
+        
+        if (UnRegisterPath != null)
+            services.RegisterService&lt;ServerEventsUnRegisterService&gt;(UnRegisterPath);
+
+        if (SubscribersPath != null)
+            services.RegisterService&lt;ServerEventsSubscribersService&gt;(SubscribersPath);
+    }
+
+    public void Register(IAppHost appHost)
+    {
+        //...
+    }
+}
+</code></pre>
+<h4 id="all-plugins-refactored-to-support-asp.net-core-ioc">All Plugins refactored to support ASP .NET Core IOC<a class="header-anchor" href="javascript:;" onclick="location.hash='#all-plugins-refactored-to-support-asp.net-core-ioc'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>All of ServiceStack's Plugins have been refactored to make use of <code>IConfigureServices</code> which supports registering in both
+Funq and ASP.NET Core's IOC when enabled.</p>
+<h4 id="funq-ioc-implements-iservicecollection-and-iserviceprovider-interfaces">Funq IOC implements IServiceCollection and IServiceProvider interfaces<a class="header-anchor" href="javascript:;" onclick="location.hash='#funq-ioc-implements-iservicecollection-and-iserviceprovider-interfaces'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>To enable this Funq now implements both <code>IServiceCollection</code> and<code>IServiceProvider</code> interfaces to enable 100% source-code
+compatibility for registering and resolving dependencies with either IOC, which we now recommend using over Funq's
+native Registration and Resolution APIs to simplify migration efforts to ASP.NET Core's IOC in future.</p>
+<h2 id="dependency-injection">Dependency Injection<a class="header-anchor" href="javascript:;" onclick="location.hash='#dependency-injection'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>The primary difference between the IOC's is that ASP.NET Core's IOC does not support property injection by default,
+which will require you to refactor your ServiceStack Services to use constructor injection of dependencies, although
+this has become a lot more pleasant with C# 12's <a href="https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/primary-constructors">Primary Constructors</a>
+which now requires a lot less boilerplate to define, assign and access dependencies, e.g:</p>
+<pre><code class="language-csharp">public class TechStackServices(IAutoQueryDb autoQuery) : Service
+{
+    public async Task&lt;object&gt; Any(QueryTechStacks request)
+    {
+        using var db = autoQuery.GetDb(request, base.Request);
+        var q = autoQuery.CreateQuery(request, Request, db);
+        return await autoQuery.ExecuteAsync(request, q, db);
+    }
+}
+</code></pre>
+<p>This has become our preferred approach for injecting dependencies in ServiceStack Services which have all been refactored
+to use constructor injection utilizing primary constructors in order to support both IOC's.</p>
+<p>To make migrations easier we've also added support for property injection convention in <strong>ServiceStack Services</strong> using
+ASP.NET Core's IOC where you can add the <code>[FromServices]</code> attribute to any public properties you want to be injected, e.g:</p>
+<pre><code class="language-csharp">public class TechStackServices : Service
+{
+    [FromServices]
+    public required IAutoQueryDb AutoQuery { get; set; }
+
+    [FromServices]
+    public MyDependency? OptionalDependency { get; set; }
+}
+</code></pre>
+<p>This feature can be useful for Services wanting to access optional dependencies that may or may not be registered.</p>
+<div class="info custom-block">
+                <p class="custom-block-title">NOTE</p><p><code>[FromServices]</code> is only supported in ServiceStack Services (i.e. not other dependencies)</p>
+</div>
+<h3 id="built-in-servicestack-dependencies">Built-in ServiceStack Dependencies<a class="header-anchor" href="javascript:;" onclick="location.hash='#built-in-servicestack-dependencies'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>This integration now makes it effortless to inject and utilize optional ServiceStack features like
+<a href="https://docs.servicestack.net/autoquery/">AutoQuery</a> and <a href="https://docs.servicestack.net/server-events">Server Events</a>
+in other parts of ASP.NET Core inc. Blazor Components, Razor Pages, MVC Controllers, Minimal APIs, etc.</p>
+<p>Whilst the Built-in ServiceStack features that are registered by default and immediately available to be injected, include:</p>
+<ul>
+<li><code>IVirtualFiles</code> - Read/Write <a href="https://docs.servicestack.net/virtual-file-system">Virtual File System</a>, defaults to <code>FileSystemVirtualFiles</code> at <code>ContentRootPath</code></li>
+<li><code>IVirtualPathProvider</code> - Multi Virtual File System configured to scan multiple read only sources, inc <code>WebRootPath</code>, In Memory and Embedded Resource files</li>
+<li><code>ICacheClient</code> and <code>ICacheClientAsync</code> - In Memory Cache, or distributed Redis cache if <a href="https://docs.servicestack.net/redis/">ServiceStack.Redis</a> is configured</li>
+<li><code>IAppSettings</code> - Multiple <a href="https://docs.servicestack.net/appsettings">AppSettings</a> configuration sources</li>
+</ul>
+<p>With ASP.NET Core's IOC now deeply integrated we moved onto the next area of integration: API Integration and Endpoint Routing.</p>
+<h2 id="endpoint-routing">Endpoint Routing<a class="header-anchor" href="javascript:;" onclick="location.hash='#endpoint-routing'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>Whilst ASP.NET Core's middleware is a flexible way to compose and execute different middleware in a HTTP Request pipeline,
+each middleware is effectively their own island of functionality that's able to handle HTTP Requests in which ever way
+they see fit.</p>
+<p>In particular ServiceStack's middleware would execute its own <a href="https://docs.servicestack.net/order-of-operations">Request Pipeline</a>
+which would execute ServiceStack API's registered at user-defined routes with its own <a href="https://docs.servicestack.net/routing">ServiceStack Routing</a>.</p>
+<p>We're happy to announce that ServiceStack <strong>.NET 8</strong> Apps support an entirely new and integrated way to run all of ServiceStack
+requests including all APIs, metadata and built-in UIs with support for
+<a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/routing">ASP.NET Core Endpoint Routing</a> -
+enabled by calling the <code>MapEndpoints()</code> extension method when configuring ServiceStack, e.g:</p>
+<pre><code class="language-csharp">app.UseServiceStack(new AppHost(), options =&gt; {
+    options.MapEndpoints();
+});
+</code></pre>
+<p>Which configures ServiceStack APIs to be registered and executed along-side Minimal APIs, Razor Pages, SignalR, MVC
+and Web API Controllers, etc, utilizing the same routing, metadata and execution pipeline.</p>
+<h4 id="view-servicestack-apis-along-side-asp.net-core-apis">View ServiceStack APIs along-side ASP.NET Core APIs<a class="header-anchor" href="javascript:;" onclick="location.hash='#view-servicestack-apis-along-side-asp.net-core-apis'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>Amongst other benefits, this integration is evident in endpoint metadata explorers like the <code>Swashbuckle</code> library
+which can now show ServiceStack APIs in its Swagger UI along-side other ASP.NET Core APIs in ServiceStack's new
+<a href="/posts/openapi-v3">Open API v3</a> support.</p>
+<h3 id="routing">Routing<a class="header-anchor" href="javascript:;" onclick="location.hash='#routing'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Using Endpoint Routing also means using ASP.NET Core's Routing System which now lets you use ASP.NET Core's
+<a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/routing#route-constraints">Route constraints</a>
+for defining user-defined routes for your ServiceStack APIs, e.g:</p>
+<pre><code class="language-csharp">[Route(&quot;/users/{Id:int}&quot;)]
+[Route(&quot;/users/{UserName:string}&quot;)]
+public class GetUser : IGet, IReturn&lt;User&gt;
+{
+    public int? Id { get; set; }
+    public int? UserName { get; set; }
+}
+</code></pre>
+<p>For the most part ServiceStack Routing implements a subset of ASP.NET Core's Routing features so your existing user-defined
+routes should continue to work as expected.</p>
+<h3 id="wildcard-routes">Wildcard Routes<a class="header-anchor" href="javascript:;" onclick="location.hash='#wildcard-routes'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>The only incompatibility we found was when using wildcard paths which in ServiceStack Routing would use an '*' suffix, e.g:
+<code>[Route(&quot;/wildcard/{Path*}&quot;)]</code> which will need to change to use a ASP.NET Core's Routing prefix, e.g:</p>
+<pre><code class="language-csharp">[Route(&quot;/wildcard/{*Path}&quot;)]
+[Route(&quot;/wildcard/{**Path}&quot;)]
+public class GetFile : IGet, IReturn&lt;byte[]&gt;
+{
+    public string Path { get; set; }
+}
+</code></pre>
+<h4 id="servicestack-routing-compatibility">ServiceStack Routing Compatibility<a class="header-anchor" href="javascript:;" onclick="location.hash='#servicestack-routing-compatibility'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>To improve compatibility with ASP.NET Core's Routing, ServiceStack's Routing (when not using Endpoint Routing) now
+supports parsing ASP.NET Core's Route Constraints but as they're inert you would need to continue to use
+<a href="https://docs.servicestack.net/routing#custom-rules">Custom Route Rules</a> to distinguish between different routes matching
+the same path at different specificity:</p>
+<pre><code class="language-csharp">[Route(&quot;/users/{Id:int}&quot;, Matches = &quot;**/{int}&quot;)]
+[Route(&quot;/users/{UserName:string}&quot;)]
+public class GetUser : IGet, IReturn&lt;User&gt;
+{
+    public int? Id { get; set; }
+    public int? UserName { get; set; }
+}
+</code></pre>
+<p>It also supports defining Wildcard Routes using ASP.NET Core's syntax which we now recommend using instead
+for compatibility when switching to use Endpoint Routing:</p>
+<pre><code class="language-csharp">[Route(&quot;/wildcard/{*Path}&quot;)]
+[Route(&quot;/wildcard/{**Path}&quot;)]
+public class GetFile : IGet, IReturn&lt;byte[]&gt;
+{
+    public string Path { get; set; }
+}
+</code></pre>
+<h3 id="primary-http-method">Primary HTTP Method<a class="header-anchor" href="javascript:;" onclick="location.hash='#primary-http-method'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Another difference is that an API will only register its Endpoint Route for its <a href="https://docs.servicestack.net/api-design#all-apis-have-a-preferred-default-method">primary HTTP Method</a>,
+if you want an API to be registered for multiple HTTP Methods you can specify them in the <code>Route</code> attribute, e.g:</p>
+<pre><code class="language-csharp">[Route(&quot;/users/{Id:int}&quot;, &quot;GET,POST&quot;)]
+public class GetUser : IGet, IReturn&lt;User&gt;
+{
+    public required int Id { get; set; }
+}
+</code></pre>
+<p>As such we recommend using the IVerb <code>IGet</code>, <code>IPost</code>, <code>IPut</code>, <code>IPatch</code>, <code>IDelete</code> interface markers to specify the primary HTTP Method
+for an API. This isn't needed for <a href="https://docs.servicestack.net/autoquery/">AutoQuery Services</a> which are implicitly configured
+to use their optimal HTTP Method.</p>
+<p>If no HTTP Method is specified, the Primary HTTP Method defaults to HTTP <strong>POST</strong>.</p>
+<h3 id="authorization">Authorization<a class="header-anchor" href="javascript:;" onclick="location.hash='#authorization'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Using Endpoint Routing also means ServiceStack's APIs are authorized the same way, where ServiceStack's
+<a href="https://docs.servicestack.net/auth/#declarative-validation-attributes">Declarative Validation attributes</a> are converted
+into ASP.NET Core's <code>[Authorize]</code> attribute to secure the endpoint:</p>
+<pre><code class="language-csharp">[ValidateIsAuthenticated]
+[ValidateIsAdmin]
+[ValidateHasRole(role)]
+[ValidateHasClaim(type,value)]
+[ValidateHasScope(scope)]
+public class Secured {}
+</code></pre>
+<h4 id="authorize-attribute-on-servicestack-apis">Authorize Attribute on ServiceStack APIs<a class="header-anchor" href="javascript:;" onclick="location.hash='#authorize-attribute-on-servicestack-apis'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>Alternatively you can now use ASP.NET Core's <code>[Authorize]</code> attribute directly to secure ServiceStack APIs should
+you need more fine-grained Authorization:</p>
+<pre><code class="language-csharp">[Authorize(Roles = &quot;RequiredRole&quot;)]
+[Authorize(Policy = &quot;RequiredPolicy&quot;)]
+[Authorize(AuthenticationSchemes = &quot;Identity.Application,Bearer&quot;)]
+public class Secured {}
+</code></pre>
+<h4 id="configuring-authentication-schemes">Configuring Authentication Schemes<a class="header-anchor" href="javascript:;" onclick="location.hash='#configuring-authentication-schemes'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>ServiceStack will default to using the major Authentication Schemes configured for your App to secure the APIs endpoint with,
+this can be overridden to specify which Authentication Schemes to use to restrict ServiceStack APIs by default, e.g:</p>
+<pre><code class="language-csharp">app.UseServiceStack(new AppHost(), options =&gt; {
+    options.AuthenticationSchemes = &quot;Identity.Application,Bearer&quot;;
+    options.MapEndpoints();
+});
+</code></pre>
+<h3 id="hidden-servicestack-endpoints">Hidden ServiceStack Endpoints<a class="header-anchor" href="javascript:;" onclick="location.hash='#hidden-servicestack-endpoints'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Whilst ServiceStack Requests are registered and executed as endpoints, most of them are marked with
+<code>builder.ExcludeFromDescription()</code> to hide them from polluting metadata and API Explorers like Swagger UI and
+<a href="https://docs.servicestack.net/api-explorer">API Explorer</a>.</p>
+<p>To also hide your ServiceStack APIs you can use <code>[ExcludeMetadata]</code> attribute to hide them from all metadata services
+or use <code>[Exclude(Feature.ApiExplorer)]</code> to just hide them from API Explorer UIs:</p>
+<pre><code class="language-csharp">[ExcludeMetadata]
+[Exclude(Feature.ApiExplorer)]
+public class HiddenRequest {}
+</code></pre>
+<h3 id="content-negotiation">Content Negotiation<a class="header-anchor" href="javascript:;" onclick="location.hash='#content-negotiation'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>An example of these hidden routes is the support for invoking and returning ServiceStack APIs in different Content Types
+via hidden Endpoint Routes mapped with the format <code>/api/{Request}.{format}</code>, e.g:</p>
+<ul>
+<li><a href="https://blazor-vue.web-templates.io/api/QueryBookings">/api/QueryBookings</a></li>
+<li><a href="https://blazor-vue.web-templates.io/api/QueryBookings.jsonl">/api/QueryBookings.jsonl</a></li>
+<li><a href="https://blazor-vue.web-templates.io/api/QueryBookings.csv">/api/QueryBookings.csv</a></li>
+<li><a href="https://blazor-vue.web-templates.io/api/QueryBookings.xml">/api/QueryBookings.xml</a></li>
+<li><a href="https://blazor-vue.web-templates.io/api/QueryBookings.html">/api/QueryBookings.html</a></li>
+</ul>
+<h4 id="query-string-format">Query String Format<a class="header-anchor" href="javascript:;" onclick="location.hash='#query-string-format'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>That continues to support specifying the Mime Type via the <code>?format</code> query string, e.g:</p>
+<ul>
+<li><a href="https://blazor-vue.web-templates.io/api/QueryBookings?format=jsonl">/api/QueryBookings?format=jsonl</a></li>
+<li><a href="https://blazor-vue.web-templates.io/api/QueryBookings?format=csv">/api/QueryBookings?format=csv</a></li>
+</ul>
+<h3 id="predefined-routes">Predefined Routes<a class="header-anchor" href="javascript:;" onclick="location.hash='#predefined-routes'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Endpoints are only created for the newer <code>/api/{Request}</code> <a href="https://docs.servicestack.net/routing#pre-defined-routes">pre-defined routes</a>,
+which should be easier to use with less conflicts now that ServiceStack APIs are executed along-side other endpoint routes
+APIs which can share the same <code>/api</code> base path with non-conflicting routes, e.g: <code>app.MapGet(&quot;/api/minimal-api&quot;)</code>.</p>
+<p>As a result clients configured to use the older <code>/json/reply/{Request}</code> pre-defined route will need to be configured
+to use the newer <code>/api</code> base path.</p>
+<p>No change is required for C#/.NET clients using the recommended <code>JsonApiClient</code> JSON Service Client which is already
+configured to use the newer <code>/api</code> base path.</p>
+<pre><code class="language-csharp">var client = new JsonApiClient(baseUri);
+</code></pre>
+<p>Older .NET clients can be configured to use the newer <code>/api</code> pre-defined routes with:</p>
+<pre><code class="language-csharp">var client = new JsonServiceClient(baseUri) {
+    UseBasePath = &quot;/api&quot;
+};
+var client = new JsonHttpClient(baseUri) {
+    UseBasePath = &quot;/api&quot;
+};
+</code></pre>
+<p>To further solidify that <code>/api</code> as the preferred pre-defined route we've also <strong>updated all generic service clients</strong> of
+other languages to use <code>/api</code> base path by default:</p>
+<h4 id="javascripttypescript">JavaScript/TypeScript<a class="header-anchor" href="javascript:;" onclick="location.hash='#javascripttypescript'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<pre><code class="language-ts">const client = new JsonServiceClient(baseUrl)
+</code></pre>
+<h4 id="dart">Dart<a class="header-anchor" href="javascript:;" onclick="location.hash='#dart'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<pre><code class="language-dart">var client = ClientFactory.api(baseUrl);
+</code></pre>
+<h4 id="javakotlin">Java/Kotlin<a class="header-anchor" href="javascript:;" onclick="location.hash='#javakotlin'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<pre><code class="language-java">JsonServiceClient client = new JsonServiceClient(baseUrl);
+</code></pre>
+<h4 id="python">Python<a class="header-anchor" href="javascript:;" onclick="location.hash='#python'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<pre><code class="language-python">client = JsonServiceClient(baseUrl)
+</code></pre>
+<h4 id="php">PHP<a class="header-anchor" href="javascript:;" onclick="location.hash='#php'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<pre><code class="language-php">$client = new JsonServiceClient(baseUrl);
+</code></pre>
+<h3 id="revert-to-legacy-predefined-routes">Revert to Legacy Predefined Routes<a class="header-anchor" href="javascript:;" onclick="location.hash='#revert-to-legacy-predefined-routes'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>You can unset the base path to revert back to using the older <code>/json/reply/{Request}</code> pre-defined route, e.g:</p>
+<h4 id="javascripttypescript-1">JavaScript/TypeScript<a class="header-anchor" href="javascript:;" onclick="location.hash='#javascripttypescript-1'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<pre><code class="language-ts">client.basePath = null;
+</code></pre>
+<h4 id="dart-1">Dart<a class="header-anchor" href="javascript:;" onclick="location.hash='#dart-1'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<pre><code class="language-dart">var client = ClientFactory.create(baseUrl);
+</code></pre>
+<h4 id="javakotlin-1">Java/Kotlin<a class="header-anchor" href="javascript:;" onclick="location.hash='#javakotlin-1'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<pre><code class="language-java">client.setBasePath();
+</code></pre>
+<h4 id="python-1">Python<a class="header-anchor" href="javascript:;" onclick="location.hash='#python-1'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<pre><code class="language-python">client.set_base_path()
+</code></pre>
+<h4 id="php-1">PHP<a class="header-anchor" href="javascript:;" onclick="location.hash='#php-1'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<pre><code class="language-php">$client-&gt;setBasePath();
+</code></pre>
+<h3 id="customize-endpoint-mapping">Customize Endpoint Mapping<a class="header-anchor" href="javascript:;" onclick="location.hash='#customize-endpoint-mapping'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>You can register a RouteHandlerBuilders to customize how ServiceStack APIs endpoints are registered which is also
+what ServiceStack uses to annotate its API endpoints to enable its new <a href="/posts/openapi-v3">Open API v3</a> support:</p>
+<pre><code class="language-csharp">options.RouteHandlerBuilders.Add((builder, operation, method, route) =&gt;
+{
+    builder.WithOpenApi(op =&gt; { ... });
+});
+</code></pre>
+<h3 id="endpoint-routing-compatibility-levels">Endpoint Routing Compatibility Levels<a class="header-anchor" href="javascript:;" onclick="location.hash='#endpoint-routing-compatibility-levels'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>The default behavior of <code>MapEndpoints()</code> is the strictest and recommended configuration that we want future ServiceStack Apps to use,
+however if you're migrating existing App's you may want to relax these defaults to improve compatibility with existing behavior.</p>
+<p>The configurable defaults for mapping endpoints are:</p>
+<pre><code class="language-csharp">app.UseServiceStack(new AppHost(), options =&gt; {
+    options.MapEndpoints(use:true, force:true, useSystemJson:UseSystemJson.Always);
+});
+</code></pre>
+<ul>
+<li><code>use</code> - Whether to use registered endpoints for executing ServiceStack APIs</li>
+<li><code>force</code> - Whether to only allow APIs to be executed through endpoints</li>
+<li><code>useSystemJson</code> - Whether to use System.Text.Json for JSON API Serialization</li>
+</ul>
+<p>So you could for instance register endpoints and not <code>use</code> them, where they'll be visible in endpoint API explorers like
+<a href="https://docs.servicestack.net/releases/v8_01#openapi-v3">Swagger UI</a> but continue to execute in ServiceStack's Request Pipeline.</p>
+<p><code>force</code> disables fallback execution of ServiceStack Requests through ServiceStack's Request Pipeline for requests that
+don't match registered endpoints. You may need to disable this if you have clients calling ServiceStack APIs through
+multiple HTTP Methods, as only the primary HTTP Method is registered as an endpoint.</p>
+<p>When enabled <code>force</code> ensures the only ServiceStack Requests that are not executed through registered endpoints are
+<code>IAppHost.CatchAllHandlers</code> and <code>IAppHost.FallbackHandler</code> handlers.</p>
+<p><code>useSystemJson</code> is a new feature that lets you specify when to use <code>System.Text.Json</code> for JSON API Serialization, which
+is our next exciting feature to standardize on using<br />
+<a href="https://docs.servicestack.net/releases/v8_01#system.text.json">ASP.NET Core's fast async System.Text.Json</a> Serializer.</p>
+<h2 id="endpoint-routing-everywhere">Endpoint Routing Everywhere<a class="header-anchor" href="javascript:;" onclick="location.hash='#endpoint-routing-everywhere'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>Whilst the compatibility levels of Endpoint Routing can be relaxed, we recommend new projects use the strictest and most
+integrated defaults that's now configured on all <a href="/start">ASP.NET Core Identity Auth .NET 8 Projects</a>.</p>
+<p>For additional testing we've also upgraded many of our existing .NET Example Applications, which are now all running with
+our latest recommended Endpoint Routing configuration:</p>
+<ul>
+<li><a href="https://github.com/NetCoreApps/BlazorDiffusionVue">BlazorDiffusionVue</a></li>
+<li><a href="https://github.com/NetCoreApps/BlazorDiffusionAuto">BlazorDiffusionAuto</a></li>
+<li><a href="https://github.com/NetCoreApps/TalentBlazor">TalentBlazor</a></li>
+<li><a href="https://github.com/NetCoreApps/TechStacks">TechStacks</a></li>
+<li><a href="https://github.com/NetCoreApps/Validation">Validation</a></li>
+<li><a href="https://github.com/NetCoreApps/NorthwindAuto">NorthwindAuto</a></li>
+<li><a href="https://github.com/NetCoreApps/FileBlazor">FileBlazor</a></li>
+<li><a href="https://github.com/NetCoreApps/Chinook">Chinook</a></li>
+<li><a href="https://github.com/NetCoreApps/Chat">Chat</a></li>
+</ul>
+
+                </div>
+            </div>
+        </article>
+</div>
+
+<div id="comments" data-post="PostComments" class="my-48"></div>
+
+        <div class="bg-gray-50 py-20">
+            <div class="max-w-3xl mx-auto">
+                <div class="flex justify-between">
+                    <div>
+                            <a href="posts/author/lucy-bates"><img class="w-20 h-20 rounded-full text-cyan-600" src="img/authors/author1.svg"></a>
+
+                        <div class="mt-2 font-medium text-2xl">
+                            Written by Lucy Bates
+                        </div>
+                        <div class="text-gray-600">
+                            Works in software design, company building, and the aerospace industry.
+                        </div>
+                    </div>
+                    <div class="flex items-end">
+            <ul role="list" class="flex">
+                    <li>
+                        <a title="Follow on Twitter" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://twitter.com/lucy">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500">
+                                <path d="M20.055 7.983c.011.174.011.347.011.523 0 5.338-3.92 11.494-11.09 11.494v-.003A10.755 10.755 0 0 1 3 18.186c.308.038.618.057.928.058a7.655 7.655 0 0 0 4.841-1.733c-1.668-.032-3.13-1.16-3.642-2.805a3.753 3.753 0 0 0 1.76-.07C5.07 13.256 3.76 11.6 3.76 9.676v-.05a3.77 3.77 0 0 0 1.77.505C3.816 8.945 3.288 6.583 4.322 4.737c1.98 2.524 4.9 4.058 8.034 4.22a4.137 4.137 0 0 1 1.128-3.86A3.807 3.807 0 0 1 19 5.274a7.657 7.657 0 0 0 2.475-.98c-.29.934-.9 1.729-1.713 2.233A7.54 7.54 0 0 0 22 5.89a8.084 8.084 0 0 1-1.945 2.093Z"></path>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a title="Follow on threads.net" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://threads.net/@lucy">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7.5c-1.333-3-3.667-4.5-7-4.5c-5 0-8 2.5-8 9s3.5 9 8 9s7-3 7-5s-1-5-7-5c-2.5 0-3 1.25-3 2.5C9 15 10 16 11.5 16c2.5 0 3.5-1.5 3.5-5s-2-4-3-4s-1.833.333-2.5 1"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a title="Follow on GitHub" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500" href="https://github.com/lucy">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.475 2 2 6.588 2 12.253c0 4.537 2.862 8.369 6.838 9.727.5.09.687-.218.687-.487 0-.243-.013-1.05-.013-1.91C7 20.059 6.35 18.957 6.15 18.38c-.113-.295-.6-1.205-1.025-1.448-.35-.192-.85-.667-.013-.68.788-.012 1.35.744 1.538 1.051.9 1.551 2.338 1.116 2.912.846.088-.666.35-1.115.638-1.371-2.225-.256-4.55-1.14-4.55-5.062 0-1.115.387-2.038 1.025-2.756-.1-.256-.45-1.307.1-2.717 0 0 .837-.269 2.75 1.051.8-.23 1.65-.346 2.5-.346.85 0 1.7.115 2.5.346 1.912-1.333 2.75-1.05 2.75-1.05.55 1.409.2 2.46.1 2.716.637.718 1.025 1.628 1.025 2.756 0 3.934-2.337 4.806-4.562 5.062.362.32.675.936.675 1.897 0 1.371-.013 2.473-.013 2.82 0 .268.188.589.688.486a10.039 10.039 0 0 0 4.932-3.74A10.447 10.447 0 0 0 22 12.253C22 6.588 17.525 2 12 2Z"></path>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a title="Email Lucy Bates" href="mailto:lucy@email.org" class="mr-1 group flex text-sm font-medium text-zinc-800 transition hover:text-indigo-500 dark:text-zinc-200 dark:hover:text-indigo-500">
+                            <svg class="h-6 w-6 flex-none text-zinc-500 fill-zinc-500 transition group-hover:fill-indigo-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M4 20q-.825 0-1.413-.588T2 18V6q0-.825.588-1.413T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.588 1.413T20 20H4Zm8-7L4 8v10h16V8l-8 5Zm0-2l8-5H4l8 5ZM4 8V6v12V8Z"/></svg>
+                        </a>
+                    </li>
+            </ul>
+                    </div>
+                </div>
+
+                <div class="mt-4 border-t">
+                    <div class="py-8 text-lg text-gray-700 font-medium">
+                        More from Lucy Bates
+                    </div>
+                    <div class="grid grid-cols-2 gap-8">
+                            <div>
+                                <div class="flex flex-col overflow-hidden">
+                                    <div class="flex-shrink-0">
+                                        <a href="posts/identity-auth-admin-ui">
+                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1563920443079-783e5c786b83?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
+                                                Article
+                                            </p>
+                                            <a href="posts/identity-auth-admin-ui" class="mt-2 block">
+                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="Built-In Identity Auth Admin UI">
+                                                    Built-In Identity Auth Admin UI
+                                                </p>
+                                                <p class="mt-3 text-base text-gray-500">Explore the new Identity Auth Admin UI for creating and managing Identity Auth users in .NET 8</p>
+                                            </a>
+                                        </div>
+                                        <div class="mt-6 flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <a href="">
+                                                    <span class="sr-only">Lucy Bates</span>
+                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author1.svg" alt="Built-In Identity Auth Admin UI background">
+                                                </a>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-medium text-gray-900">
+                                                        <a href="posts/author/lucy-bates" class="hover:underline">Lucy Bates</a>
+                                                </p>
+                                                <div class="flex space-x-1 text-sm text-gray-500">
+                                                    <time datetime="2024-02-10T00:00:00.0000000">February 10, 2024</time>
+                                                    <span aria-hidden="true">&middot;</span>
+                                                    <span>3 min read</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div>
+                                <div class="flex flex-col overflow-hidden">
+                                    <div class="flex-shrink-0">
+                                        <a href="posts/razor-ssg-new-blog-features">
+                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
+                                                Article
+                                            </p>
+                                            <a href="posts/razor-ssg-new-blog-features" class="mt-2 block">
+                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="New Blogging features in Razor SSG">
+                                                    New Blogging features in Razor SSG
+                                                </p>
+                                                <p class="mt-3 text-base text-gray-500">Explore the new Blogging Features in Razor SSG</p>
+                                            </a>
+                                        </div>
+                                        <div class="mt-6 flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <a href="">
+                                                    <span class="sr-only">Lucy Bates</span>
+                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author1.svg" alt="New Blogging features in Razor SSG background">
+                                                </a>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-medium text-gray-900">
+                                                        <a href="posts/author/lucy-bates" class="hover:underline">Lucy Bates</a>
+                                                </p>
+                                                <div class="flex space-x-1 text-sm text-gray-500">
+                                                    <time datetime="2023-08-23T00:00:00.0000000">August 23, 2023</time>
+                                                    <span aria-hidden="true">&middot;</span>
+                                                    <span>6 min read</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div>
+                                <div class="flex flex-col overflow-hidden">
+                                    <div class="flex-shrink-0">
+                                        <a href="posts/razor-ssg">
+                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1579767684138-a57e917d30aa?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
+                                                Article
+                                            </p>
+                                            <a href="posts/razor-ssg" class="mt-2 block">
+                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="Introducing Razor SSG">
+                                                    Introducing Razor SSG
+                                                </p>
+                                                <p class="mt-3 text-base text-gray-500">Create fast, beautiful statically rendered Razor Websites &amp; Blogs</p>
+                                            </a>
+                                        </div>
+                                        <div class="mt-6 flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <a href="">
+                                                    <span class="sr-only">Lucy Bates</span>
+                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author1.svg" alt="Introducing Razor SSG background">
+                                                </a>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-medium text-gray-900">
+                                                        <a href="posts/author/lucy-bates" class="hover:underline">Lucy Bates</a>
+                                                </p>
+                                                <div class="flex space-x-1 text-sm text-gray-500">
+                                                    <time datetime="2023-03-30T00:00:00.0000000">March 30, 2023</time>
+                                                    <span aria-hidden="true">&middot;</span>
+                                                    <span>14 min read</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div>
+                                <div class="flex flex-col overflow-hidden">
+                                    <div class="flex-shrink-0">
+                                        <a href="posts/vs">
+                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
+                                                Article
+                                            </p>
+                                            <a href="posts/vs" class="mt-2 block">
+                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="Develop using Visual Studio">
+                                                    Develop using Visual Studio
+                                                </p>
+                                                <p class="mt-3 text-base text-gray-500">Exploring development workflow in VS Code and Visual Studio .NET</p>
+                                            </a>
+                                        </div>
+                                        <div class="mt-6 flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <a href="">
+                                                    <span class="sr-only">Lucy Bates</span>
+                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author1.svg" alt="Develop using Visual Studio background">
+                                                </a>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-medium text-gray-900">
+                                                        <a href="posts/author/lucy-bates" class="hover:underline">Lucy Bates</a>
+                                                </p>
+                                                <div class="flex space-x-1 text-sm text-gray-500">
+                                                    <time datetime="2023-01-10T00:00:00.0000000">January 10, 2023</time>
+                                                    <span aria-hidden="true">&middot;</span>
+                                                    <span>6 min read</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<script type="module">
+import { init } from "app.mjs"
+init()
+</script>
+
+<link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets/styles/atom-one-dark.min.css">
+<script src="//unpkg.com/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script>hljs.highlightAll()</script>
+<script src="lib/js/lite-yt-embed.js"></script>
+<script src="mjs/docs.mjs" type="module"></script>
+
+<script type="module">
+import { mount } from "app.mjs"
+
+    const App = {
+        setup() {
+            function nav(url) {
+                window.open(url)
+            }
+            return { nav }
+        }
+    }
+    mount('#post', App)
+</script>
+
+    </main>
+</div>
+
+<footer class="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+  <div class="mx-auto max-w-7xl overflow-hidden py-20 px-6 sm:py-24 lg:px-8">
+    <nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
+      <div class="pb-6">
+        <a href="whatsnew" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">What's New</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="blog" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Blog</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="posts" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Archive</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="speaking" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Speaking</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="uses" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Uses</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="about" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">About</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="privacy" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Privacy</a>
+      </div>
+    </nav>
+    <div class="mt-10 flex justify-center space-x-10">
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Facebook</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Instagram</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Twitter</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">GitHub</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">YouTube</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+    </div>
+    <p class="mt-10 text-center text-xs leading-5 text-gray-500">
+      <a href="https://github.com/NetCoreTemplates/razor-ssg">powered by razor</a>
+    </p>
+  </div>
+</footer>
+
+<script type="module">
+//TODO: Replace with local and production URLs of CreatorKit .NET App or Remove if not using CreatorKit
+import { mail } from 'https://creatorkit.netcore.io/mjs/components/mail.mjs'
+import { post } from 'https://creatorkit.netcore.io/mjs/components/post.mjs'
+
+mail('[data-mail]', { 
+    mailingLists: ['MonthlyNewsletter'] 
+})
+
+post('[data-post]', {
+    commentLink: { 
+        href: '/community-rules',
+        label: 'read the community rules'
+    } 
+})
+</script>
+
+
+<script type="module">
+import { init } from "app.mjs"
+init()
+</script>
+
+
+
+</body>
+</html>

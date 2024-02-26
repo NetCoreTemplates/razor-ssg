@@ -10,10 +10,58 @@
     </image>
     <generator>razor-ssg</generator>
     <copyright></copyright>
-    <lastBuildDate>Fri, 23 Feb 2024 13:00:28 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 26 Feb 2024 17:28:52 GMT</lastBuildDate>
     <managingEditor>email@example.org (Razor SSG)</managingEditor>
     <webMaster>email@example.org (Razor SSG)</webMaster>
     <atom:link href="https://razor-ssg.web-templates.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+        <title>Built-In Identity Auth Admin UI</title>
+        <link>https://razor-ssg.web-templates.io/posts/identity-auth-admin-ui</link>
+        <author>lucy@email.org (Lucy Bates)</author>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/identity-auth-admin-ui</guid>
+        <pubDate>Sat, 10 Feb 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-02-10T00:00:00Z</atom:updated>
+        <category>servicestack</category>
+        <category>.net8</category>
+        <category>auth</category>
+        <description>Explore the new Identity Auth Admin UI for creating and managing Identity Auth users in .NET 8</description>
+    </item>
+    <item>
+        <title>System.Text.Json ServiceStack APIs</title>
+        <link>https://razor-ssg.web-templates.io/posts/system-text-json-apis</link>
+        <author>gayle@email.org (Gayle Smith)</author>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/system-text-json-apis</guid>
+        <pubDate>Fri, 09 Feb 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-02-09T00:00:00Z</atom:updated>
+        <category>servicestack</category>
+        <category>.net8</category>
+        <category>json</category>
+        <category>apis</category>
+        <description>ServiceStack .NET 8&#x2B; APIs can now be configured to use high-performance async System.Text.Json serialization</description>
+    </item>
+    <item>
+        <title>OpenAPI v3 and Swagger UI</title>
+        <link>https://razor-ssg.web-templates.io/posts/openapi-v3</link>
+        <author>brandon@email.org (Brandon Foley)</author>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/openapi-v3</guid>
+        <pubDate>Thu, 08 Feb 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-02-08T00:00:00Z</atom:updated>
+        <category>openapi</category>
+        <category>.net8</category>
+        <description>A walkthrough of the new OpenAPI v3 support in ServiceStack 8.1</description>
+    </item>
+    <item>
+        <title>ServiceStack Endpoint Routing</title>
+        <link>https://razor-ssg.web-templates.io/posts/servicestack-endpoint-routing</link>
+        <author>lucy@email.org (Lucy Bates)</author>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/servicestack-endpoint-routing</guid>
+        <pubDate>Wed, 07 Feb 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-02-07T00:00:00Z</atom:updated>
+        <category>servicestack</category>
+        <category>.net8</category>
+        <category>apis</category>
+        <description>ServiceStack .NET 8 is now more integrated then ever with support for ASP.NET Core Endpoint Routing and IOC</description>
+    </item>
     <item>
         <title>New Blogging features in Razor SSG</title>
         <link>https://razor-ssg.web-templates.io/posts/razor-ssg-new-blog-features</link>
@@ -84,51 +132,6 @@
         <category>c#</category>
         <category>dev</category>
         <description>Exploring development workflow in VS Code and Visual Studio .NET</description>
-    </item>
-    <item>
-        <title>Deployment with GitHub Actions</title>
-        <link>https://razor-ssg.web-templates.io/posts/deploy</link>
-        <author>gayle@email.org (Gayle Smith)</author>
-        <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/deploy</guid>
-        <pubDate>Sun, 01 Jan 2023 00:00:00 GMT</pubDate>
-        <atom:updated>2023-01-01T00:00:00Z</atom:updated>
-        <category>github-actions</category>
-        <category>devops</category>
-        <description>Configuring your GitHub repo for SSH and CDN deployments</description>
-    </item>
-    <item>
-        <title>Tailwind Typography</title>
-        <link>https://razor-ssg.web-templates.io/posts/typography</link>
-        <author>lucy@email.org (Lucy Bates)</author>
-        <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/typography</guid>
-        <pubDate>Sat, 31 Dec 2022 00:00:00 GMT</pubDate>
-        <atom:updated>2022-12-31T00:00:00Z</atom:updated>
-        <category>tailwind</category>
-        <category>markdown</category>
-        <description>tailwindcss/typography enabled for Markdown pages</description>
-    </item>
-    <item>
-        <title>In pursuit of the best value US cloud provider</title>
-        <link>https://razor-ssg.web-templates.io/posts/hetzner-cloud</link>
-        <author>brandon@email.org (Brandon Foley)</author>
-        <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/hetzner-cloud</guid>
-        <pubDate>Tue, 06 Sep 2022 00:00:00 GMT</pubDate>
-        <atom:updated>2022-09-06T00:00:00Z</atom:updated>
-        <category>dev</category>
-        <category>hosting</category>
-        <category>devops</category>
-        <description>We&#x27;ve been using AWS at ServiceStack for 10&#x2B; years, it&#x27;s served us well but suffers from complex &amp; expensive pricing</description>
-    </item>
-    <item>
-        <title>Real-time search with Typesense</title>
-        <link>https://razor-ssg.web-templates.io/posts/typesense</link>
-        <author>lucy@email.org (Lucy Bates)</author>
-        <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/typesense</guid>
-        <pubDate>Mon, 08 Nov 2021 00:00:00 GMT</pubDate>
-        <atom:updated>2021-11-08T00:00:00Z</atom:updated>
-        <category>dev</category>
-        <category>docs</category>
-        <description>As part of migrating docs to VitePress we&#x27;ve added UX improvements like instant search powered by Typesense!</description>
     </item>
 </channel>
 </rss>
