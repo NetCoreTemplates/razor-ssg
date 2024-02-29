@@ -1,9 +1,9 @@
 @page
 @model string
-@inject AppConfig AppConfig
+@inject MarkdownBlog Blog
 
 <div class="text-center">
-    <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl">@AppConfig.BlogTitle</h2>
+    <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl">@Blog.Config.BlogTitle</h2>
     <p class="mx-auto mt-3 max-w-2xl text-xl text-gray-500 sm:mt-4">
         @Html.Raw(Model)
     </p>

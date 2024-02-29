@@ -1,13 +1,13 @@
 ﻿@page
 @model MyApp.Pages.Shared.MetaHeaders
-@inject AppConfig AppConfig
+@inject MarkdownBlog Blog
 @{
     var doc = Model.Doc;
     var image = Model.Image ?? doc.Image;
 }
-@if (AppConfig.SiteTwitter != null)
+@if (Blog.Config.SiteTwitter != null)
 {
-<meta name="twitter:site" content="@AppConfig.SiteTwitter" />
+<meta name="twitter:site" content="@Blog.Config.SiteTwitter" />
 }
 @if (Model.Author?.TwitterUrl != null)
 {

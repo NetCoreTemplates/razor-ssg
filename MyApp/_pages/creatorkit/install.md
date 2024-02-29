@@ -53,12 +53,17 @@ To minimize disruption when upgrading to future versions of CreatorKit we recomm
 [CreatorKit.Extensions](https://github.com/NetCoreApps/CreatorKit/tree/main/CreatorKit.Extensions) and their DTOs
 in [CreatorKit.Extensions.ServiceModel](https://github.com/NetCoreApps/CreatorKit/tree/main/CreatorKit.Extensions.ServiceModel):
 
-<file-layout :files="{
-    CreatorKit: { 
-        'CreatorKit.Extensions':  { _: ['CustomEmailRunServices.cs','CustomEmailServices.cs','CustomRendererServices.cs'] },
-        'CreatorKit.Extensions.ServiceModel': { _: ['MarkdownEmail.cs','NewsletterMailRun.cs','RenderNewsletter.cs'] } 
-    }
-}"></file-layout>
+```files
+/CreatorKit
+  /CreatorKit.Extensions
+    CustomEmailRunServices.cs
+    CustomEmailServices.cs
+    CustomRendererServices.cs
+  /CreatorKit.Extensions.ServiceModel
+    MarkdownEmail.cs
+    NewsletterMailRun.cs
+    RenderNewsletter.cs
+```
 
 These folders will be limited to optional extras which can added to or removed as needed where it will be isolated from 
 the core set of functionality maintained in the other CreatorKit's folders. 
@@ -71,12 +76,15 @@ Any custom AppHost or IOC dependencies your Services require can be added to
 We need to initialize CreatorKit's database which we can populate with our preferred App Users, Mailing Lists and Subscribers
 by modifying the CSV files in `/Migrations/seed`:
 
-<file-layout :files="{
-    Migrations: { 
-        seed:  { _: ['mailinglists.csv','subscribers.csv','users.csv'] },
-        _:     ['Migration1000.cs','Migration1001.cs'] 
-    }
-}"></file-layout>
+```files
+/Migrations
+  /seed
+    mailinglists.csv
+    subscribers.csv
+    users.csv
+  Migration1000.cs
+  Migration1001.cs
+```
 
 ## Mailing Lists
 

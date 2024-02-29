@@ -1,4 +1,4 @@
-@page "/posts/{Slug}"
+@page "/posts/{slug}"
 @model PostModel
 @inject MarkdownBlog Blog
 @inject AppConfig AppConfig
@@ -290,8 +290,8 @@ import { init } from "app.mjs"
 init()
 </script>
 
-<link rel="stylesheet" href="//unpkg.com/@@highlightjs/cdn-assets/styles/atom-one-dark.min.css">
-<script src="//unpkg.com/@@highlightjs/cdn-assets/highlight.min.js"></script>
+<link rel="stylesheet" href="css/highlight.css">
+<script src="lib/js/highlight.js"></script>
 <script>hljs.highlightAll()</script>
 <script src="lib/js/lite-yt-embed.js"></script>
 <script src="mjs/docs.mjs" type="module"></script>

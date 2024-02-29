@@ -1,0 +1,9 @@
+{
+  "localBaseUrl": "https://localhost:5002",
+  "publicBaseUrl": "https://razor-ssg.web-templates.io",
+  "siteTwitter": "@RazorSsg",
+  "blogTitle": "From the blog",
+  "blogDescription": "Writing on software design, company building, and the aerospace industry.",
+  "blogEmail": "email@example.org (Razor SSG)",
+  "blogImageUrl": "https://servicestack.net/img/logo.png"
+}

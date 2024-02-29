@@ -1,38 +1,37 @@
 ﻿@page "/feed.xml"
 @attribute [RenderStatic]
 @inject MarkdownBlog Blog
-@inject AppConfig AppConfig
 @{
     Layout = "_LayoutEmpty";
     Response.ContentType = MimeTypes.Xml;
 }
 <rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
 <channel>
-    <title>@AppConfig.BlogTitle</title>
-    @Html.Raw($"<link>{AppConfig.PublicBaseUrl}/blog</link>")
-    <description>@AppConfig.BlogDescription</description>
-@if (AppConfig.BlogImageUrl != null)
+    <title>@Blog.Config.BlogTitle</title>
+    @Html.Raw($"<link>{Blog.Config.PublicBaseUrl}/blog</link>")
+    <description>@Blog.Config.BlogDescription</description>
+@if (Blog.Config.BlogImageUrl != null)
 {
     <image>
-        <url>@AppConfig.BlogImageUrl</url>
-        <title>@AppConfig.BlogTitle</title>
-        @Html.Raw($"<link>{AppConfig.PublicBaseUrl}/blog</link>")
+        <url>@Blog.Config.BlogImageUrl</url>
+        <title>@Blog.Config.BlogTitle</title>
+        @Html.Raw($"<link>{Blog.Config.PublicBaseUrl}/blog</link>")
     </image>
 }
     <generator>razor-ssg</generator>
-    <copyright>@AppConfig.CopyrightOwner</copyright>
+    <copyright>@Blog.Config.CopyrightOwner</copyright>
     <lastBuildDate>@DateTime.UtcNow.ToString("R")</lastBuildDate>
-    <managingEditor>@AppConfig.BlogEmail</managingEditor>
-    <webMaster>@AppConfig.BlogEmail</webMaster>
-    <atom:link href="@AppConfig.PublicBaseUrl.CombineWith("feed.xml")" rel="self" type="application/rss+xml" />
+    <managingEditor>@Blog.Config.BlogEmail</managingEditor>
+    <webMaster>@Blog.Config.BlogEmail</webMaster>
+    <atom:link href="@Blog.Config.PublicBaseUrl.CombineWith("feed.xml")" rel="self" type="application/rss+xml" />
 @foreach (var post in Blog.GetPosts().Take(10))
 {
     var author = Blog.Authors.FirstOrDefault(x => x.Name == post.Author);
     <item>
         <title>@post.Title</title>
-        @Html.Raw($"<link>{AppConfig.PublicBaseUrl.CombineWith("posts", post.Slug)}</link>")
+        @Html.Raw($"<link>{Blog.Config.PublicBaseUrl.CombineWith("posts", post.Slug)}</link>")
         <author>@author?.Email (@author?.Name)</author>
-        <guid isPermaLink="false">@AppConfig.PublicBaseUrl.CombineWith("posts", post.Slug)</guid>
+        <guid isPermaLink="false">@Blog.Config.PublicBaseUrl.CombineWith("posts", post.Slug)</guid>
         <pubDate>@post.Date!.Value.ToString("R")</pubDate>
         <atom:updated>@post.Date!.Value.ToUniversalTime().ToString("yyyy-MM-dd'T'HH:mm:ssZ")</atom:updated>
         @foreach (var tag in post.Tags.Safe())

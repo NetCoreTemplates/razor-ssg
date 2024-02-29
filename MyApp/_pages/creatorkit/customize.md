@@ -5,14 +5,26 @@ order: 3
 
 The `/emails` folder contains all email templates and layouts made available to CreatorKit:
 
-<file-layout :files="{
-    emails: { 
-        layouts:  { _: ['basic.html','empty.html','marketing.html'] },
-        partials: { _: ['button-centered.html','divider.html','image-centered.html','section.html','title.html'] },
-        vars:     { _: ['info.txt','urls.txt'] },
-        _:        ['empty.html','newsletter-welcome.html','newsletter.html','verify-email.html'] 
-    }
-}"></file-layout>
+```files
+/emails
+  /layouts
+    basic.html
+    empty.html
+    marketing.html
+  /partials
+    button-centered.html
+    divider.html
+    image-centered.html
+    section.html
+    title.html
+  /vars
+    info.txt
+    urls.txt   
+  empty.html
+  newsletter-welcome.html
+  newsletter.html
+  verify-email.html
+```
 
 Which uses the [#Script](https://sharpscript.net) .NET Templating language to render Emails from Templates, where:
 
@@ -26,7 +38,11 @@ template you can use to send custom Markdown email content with the your preferr
 
 All Branding Information referenced in the templates are maintained in the `/vars` folder:
 
-<file-layout :files="{ vars: { _: ['info.txt','urls.txt'] } }"></file-layout>
+```files
+/vars
+  info.txt
+  urls.txt
+```
 
 At a minimum you'll want to replace all **info.txt** variables from ServiceStack's with your Organization's information:
 
@@ -89,26 +105,23 @@ dropdown:
 
 In addition, a `{{images.*}}` variable collection is also populated from all images in the `/img/mail` folder, e.g:
 
-<file-layout :files="{ 
-    img: {
-        mail: { _: [
-            'blog_48x48@2x.png',
-            'chat_48x48@2x.png',
-            'email_100x100@2x.png',
-            'logo_72x72@2x.png',
-            'logofull_350x60@2x.png',
-            'mail_48x48@2x.png',
-            'speaker_48x48@2x.png',
-            'twitter_24x24@2x.png',
-            'video_48x48@2x.png',
-            'website_24x24@2x.png',
-            'welcome_650x487.jpg',
-            'youtube_24x24@2x.png',
-            'youtube_48x48@2x.png'
-            ]
-        }
-    } 
-}"></file-layout>
+```files
+/img
+  /mail
+    blog_48x48@2x.png
+    chat_48x48@2x.png
+    email_100x100@2x.png
+    logo_72x72@2x.png
+    logofull_350x60@2x.png
+    mail_48x48@2x.png
+    speaker_48x48@2x.png
+    twitter_24x24@2x.png
+    video_48x48@2x.png
+    website_24x24@2x.png
+    welcome_650x487.jpg
+    youtube_24x24@2x.png
+    youtube_48x48@2x.png
+```
 
 That's prefixed with the `{{PublicAppBaseUrl}}` allowing them to be referenced directly in your `*.html` Email templates. e.g:  
 
