@@ -114,11 +114,11 @@ export function mountAll() {
 /** @param {any} [exports] */
 export function init(exports) {
     if (AppData.init) return
-    client = new JsonServiceClient('https://blazor-gallery-api.jamstacks.net')
+    client = new JsonServiceClient('https://blazor-gallery.jamstacks.net')
     const { loadMetadata } = useMetadata()
     loadMetadata({
         olderThan: 24 * 60 * 60 * 1000, //1day
-        resolvePath: `https://blazor-gallery-api.jamstacks.net/metadata/app.json`
+        resolvePath: `https://blazor-gallery.jamstacks.net/metadata/app.json`
     })
     AppData = reactive(AppData)
     AppData.init = true

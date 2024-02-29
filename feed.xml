@@ -10,10 +10,22 @@
     </image>
     <generator>razor-ssg</generator>
     <copyright></copyright>
-    <lastBuildDate>Mon, 26 Feb 2024 17:28:52 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 29 Feb 2024 17:35:42 GMT</lastBuildDate>
     <managingEditor>email@example.org (Razor SSG)</managingEditor>
     <webMaster>email@example.org (Razor SSG)</webMaster>
     <atom:link href="https://razor-ssg.web-templates.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+        <title>ASP.NET Core JWT Identity Auth</title>
+        <link>https://razor-ssg.web-templates.io/posts/jwt-identity-auth</link>
+        <author>brandon@email.org (Brandon Foley)</author>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/jwt-identity-auth</guid>
+        <pubDate>Sun, 11 Feb 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-02-11T00:00:00Z</atom:updated>
+        <category>servicestack</category>
+        <category>.net8</category>
+        <category>auth</category>
+        <description>Learn about integration and value added features of ASP.NET Core JWT Identity Auth</description>
+    </item>
     <item>
         <title>Built-In Identity Auth Admin UI</title>
         <link>https://razor-ssg.web-templates.io/posts/identity-auth-admin-ui</link>
@@ -121,17 +133,6 @@
         <category>c#</category>
         <category>dev</category>
         <description>Setting up &amp; exploring development workflow in Rider</description>
-    </item>
-    <item>
-        <title>Develop using Visual Studio</title>
-        <link>https://razor-ssg.web-templates.io/posts/vs</link>
-        <author>lucy@email.org (Lucy Bates)</author>
-        <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/vs</guid>
-        <pubDate>Tue, 10 Jan 2023 00:00:00 GMT</pubDate>
-        <atom:updated>2023-01-10T00:00:00Z</atom:updated>
-        <category>c#</category>
-        <category>dev</category>
-        <description>Exploring development workflow in VS Code and Visual Studio .NET</description>
     </item>
 </channel>
 </rss>

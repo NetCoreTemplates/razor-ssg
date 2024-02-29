@@ -176,7 +176,7 @@ mountAll()
                             <div class="mb-6 text-lg text-gray-500">
                                 <time datetime="2024-02-07T00:00:00.0000000">February 7, 2024</time>
                                 <span aria-hidden="true">&middot;</span>
-                                <span>14 min read</span>
+                                <span>15 min read</span>
                             </div>
                         </div>
                 </div>
@@ -223,6 +223,10 @@ you can learn about below:</p>
 <li><a href="https://docs.servicestack.net/releases/v8_01#jwt-identity-auth">JWT Identity Auth</a></li>
 </ul>
 <p>Better yet, this new behavior is enabled by default in all of ServiceStack's new ASP .NET Identity Auth .NET 8 templates!</p>
+<h3 id="migrating-to-asp.net-core-endpoints">Migrating to ASP.NET Core Endpoints<a class="header-anchor" href="javascript:;" onclick="location.hash='#migrating-to-asp.net-core-endpoints'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>To assist ServiceStack users in upgrading their existing projects we've created a migration guide walking through
+the steps required to adopt these new defaults:</p>
+<lite-youtube class="w-full mx-4 my-4" width="560" height="315" videoid="RaDHkk4tfdU" playlabel="Upgrade your APIs to use ASP.NET Core Endpoints" style="background-image:url('https://img.youtube.com/vi/RaDHkk4tfdU/maxresdefault.jpg')"></lite-youtube>
 <h3 id="asp.net-core-ioc">ASP .NET Core IOC<a class="header-anchor" href="javascript:;" onclick="location.hash='#asp.net-core-ioc'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The primary limitation of ServiceStack using its own Funq IOC is that any dependencies registered in Funq are not injected
 into Razor Pages, Blazor Components, MVC Controllers, etc.</p>
@@ -392,7 +396,7 @@ ASP.NET Core's IOC where you can add the <code>[FromServices]</code> attribute t
 </code></pre>
 <p>This feature can be useful for Services wanting to access optional dependencies that may or may not be registered.</p>
 <div class="info custom-block">
-                <p class="custom-block-title">NOTE</p><p><code>[FromServices]</code> is only supported in ServiceStack Services (i.e. not other dependencies)</p>
+            <p class="custom-block-title">NOTE</p><p><code>[FromServices]</code> is only supported in ServiceStack Services (i.e. not other dependencies)</p>
 </div>
 <h3 id="built-in-servicestack-dependencies">Built-in ServiceStack Dependencies<a class="header-anchor" href="javascript:;" onclick="location.hash='#built-in-servicestack-dependencies'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>This integration now makes it effortless to inject and utilize optional ServiceStack features like
@@ -869,8 +873,8 @@ import { init } from "app.mjs"
 init()
 </script>
 
-<link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets/styles/atom-one-dark.min.css">
-<script src="//unpkg.com/@highlightjs/cdn-assets/highlight.min.js"></script>
+<link rel="stylesheet" href="css/highlight.css">
+<script src="lib/js/highlight.js"></script>
 <script>hljs.highlightAll()</script>
 <script src="lib/js/lite-yt-embed.js"></script>
 <script src="mjs/docs.mjs" type="module"></script>

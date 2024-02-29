@@ -52,7 +52,7 @@ export class StringResponse {
 export class Hello {
     constructor(init) { Object.assign(this, init) }
     getTypeName() { return 'Hello' }
-    getMethod() { return 'POST' }
+    getMethod() { return 'GET' }
     createResponse() { return new StringResponse() }
 }
 
