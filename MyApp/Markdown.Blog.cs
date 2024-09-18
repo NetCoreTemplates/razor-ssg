@@ -40,7 +40,7 @@ public class MarkdownBlog(ILogger<MarkdownBlog> log, IWebHostEnvironment env, IV
     public List<MarkdownFileInfo> VisiblePosts => Posts.Where(IsVisible).ToList();
     
     public string FallbackProfileUrl { get; set; } = Svg.ToDataUri(Svg.Create(Svg.Body.User, stroke:"none").Replace("fill='currentColor'","fill='#0891b2'"));
-    public string FallbackSplashUrl { get; set; } = "https://source.unsplash.com/random/2000x1000/?stationary";
+    public string FallbackSplashUrl { get; set; } = "https://picsum.photos/2000/1000";
 
     public BlogConfig Config { get; set; } = new();
     public List<AuthorInfo> Authors { get; set; } = [];
