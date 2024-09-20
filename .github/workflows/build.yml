@@ -10,15 +10,15 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v2.0.0
+        uses: actions/checkout@v3
 
       - name: setup .net core
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 8.0
+          dotnet-version: '8.*'
 
       - name: build
         working-directory: ./MyApp
