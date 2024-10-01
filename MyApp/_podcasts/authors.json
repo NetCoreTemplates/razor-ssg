@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Razor SSG",
+    "email": "email@example.org",
+    "profileUrl": "/img/logo.png",
+    "gitHubUrl": "https://github.com/ServiceStack",
+    "twitterUrl": "https://twitter.com/servicestack",
+    "threadsUrl": "https://threads.net/@servicestack"
+  }
+]
