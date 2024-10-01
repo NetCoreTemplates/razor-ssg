@@ -1,0 +1,852 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg" href="img/logo.svg">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://razor-ssg.web-templates.io/feed.xml" />
+    <title>logging tagged podcast episodes - ServiceStack</title>
+    <base href="/" />
+    <script>
+    if (location.search === "?dark") localStorage.setItem('color-scheme','dark') 
+    if (location.search === "?light") localStorage.removeItem('color-scheme') 
+    const cls = document.querySelector('html').classList
+    if (localStorage.getItem('color-scheme') === 'dark')
+        cls.add('dark')
+    else
+        cls.remove('dark')
+    </script>
+    <link rel="stylesheet" href="css/app.css">
+
+    <script type="importmap">
+{
+    "imports": {
+        "app.mjs": "./mjs/app.mjs",
+        "dtos.mjs": "./mjs/dtos.mjs",
+        "vue": "./lib/mjs/vue.min.mjs",
+        "@servicestack/client": "./lib/mjs/servicestack-client.min.mjs",
+        "@servicestack/vue": "./lib/mjs/servicestack-vue.min.mjs"
+    }
+}
+</script>
+    
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+<header class="top-0 fixed z-50 h-14 bg-white dark:bg-black opacity-90 w-full shadow pr-3">
+    <div class="flex flex-wrap items-center">
+        <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
+            <div class="cursor-pointer">
+                <a class="navbar-brand flex items-center" href="./">
+                    <svg class="w-8 h-8 sm:ml-2 sm:w-12 sm:h-12" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="currentColor" d="M10 6c1.544 1.76 2.276 4.15 2.217 6.61c3.968 1.67 9.924 6.12 11.181 12.39H28C26.051 14.31 14.918 6.77 10 6zm-2 7c4.67 4.913.81 11.582-4 12h18.97C21.5 18.289 11.95 13.533 8 13z"/></svg>
+                    <span class="hidden sm:block text-2xl font-semibold">MyApp</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-grow flex-shrink flex-nowrap justify-end items-center">
+            <nav class="relative flex flex-grow leading-6 font-semibold text-slate-700 dark:text-slate-200">
+                <ul class="flex flex-wrap items-center justify-end w-full m-0 pb-2 sm:pb-0">
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="whatsnew" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    What's New
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="videos" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Videos
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="podcasts" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Podcasts
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="creatorkit/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Creator Kit
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="blog" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Blog
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="posts/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Archive
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="speaking" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Speaking
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="uses" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Uses
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="about" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    About
+                                </a>
+                            </li>
+                    <li class="relative flex flex-wrap just-fu-start m-0">
+                        <div data-component="DarkModeToggle" class="ml-2 w-10"></div>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</header>
+<script type="module">
+import { mountAll } from "app.mjs"
+mountAll()
+</script>
+
+
+
+<div class="min-h-screen">
+    <main role="main" class="pt-14">
+        <div>
+            <div class="bg-slate-50 dark:bg-slate-900 lg:fixed lg:inset-y-0 lg:left-0 lg:flex lg:w-112 lg:items-start lg:overflow-y-auto xl:w-120">
+                <div class="relative z-10 mx-auto px-4 pb-4 pt-24 sm:px-6 md:max-w-2xl md:px-4 lg:min-h-full lg:flex-auto lg:border-x lg:border-slate-200 dark:border-slate-700 lg:px-8 xl:px-10">
+                    <a href="/podcasts"
+                       class="relative mx-auto block w-48 overflow-hidden rounded-lg bg-slate-200 dark:bg-slate-700 shadow-xl shadow-slate-200 dark:shadow-slate-700 sm:w-64 sm:rounded-xl lg:w-auto lg:rounded-2xl"
+                       aria-label="Homepage">
+                        <img class="w-full"
+                             src="/img/podcasts/cover.png"
+                             alt=""
+                             sizes="(min-width: 1024px) 20rem, (min-width: 640px) 16rem, 12rem"
+                             priority>
+                        <div class="absolute inset-0 rounded-lg ring-1 ring-inset ring-black/10 sm:rounded-xl lg:rounded-2xl"></div>
+                    </a>
+                    <div class="mt-10 text-center lg:mt-12 lg:text-left">
+                        <p class="text-xl font-bold text-slate-900 dark:text-slate-50">
+                            <a href="/podcasts">Their Side</a>
+                        </p>
+                        <p class="mt-3 text-lg font-medium leading-8 text-slate-700 dark:text-slate-200">
+                            Conversations with the most tragically misunderstood people of our time.
+                        </p>
+                    </div>
+        <section class="mt-12 hidden lg:block">
+            <h2 class="flex items-center font-mono text-sm font-medium leading-7 text-slate-900 dark:text-slate-50">
+        <svg aria-hidden="true" viewBox="0 0 10 10" class="h-2.5 w-2.5">
+            <path d="M0 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5Z"
+                  class="fill-violet-300" />
+            <path d="M6 1a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V1Z"
+                  class="fill-pink-300" />
+        </svg>
+                <span class="ml-2.5">About</span>
+            </h2>
+            <p class="mt-2 text-base leading-7 text-slate-700 dark:text-slate-200">
+                In this show, Eric and Wes dig deep to get to the facts with guests who have been labeled villains by a society quick to judge, without actually getting the full story. Tune in every Thursday to get to the truth with another misunderstood outcast as they share the missing context in their tragic tale.
+            </p>
+        </section>
+                    <section class="mt-10 lg:mt-12">
+                        <h2 class="sr-only flex items-center font-mono text-sm font-medium leading-7 text-slate-900 dark:text-slate-50 lg:not-sr-only">
+        <svg aria-hidden="true" viewBox="0 0 10 10" class="h-2.5 w-2.5">
+            <path d="M0 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5Z"
+                  class="fill-indigo-300" />
+            <path d="M6 1a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V1Z"
+                  class="fill-blue-300" />
+        </svg>
+                            <span class="ml-2.5">Listen</span>
+                        </h2>
+                        <div class="h-px bg-gradient-to-r from-slate-200/0 via-slate-200 to-slate-200/0 lg:hidden"></div>
+                        <ul role="list" class="mt-4 flex justify-center gap-10 text-base font-medium leading-7 text-slate-700 dark:text-slate-200 sm:gap-8 lg:flex-col lg:gap-4">
+                                <li>
+                                    <a href="https://podcasters.spotify.com/pod/show/servicestack" class="group flex items-center">
+                                        <svg aria-hidden='true' viewBox='0 0 32 32' class='h-8 w-8 fill-slate-400 dark:fill-slate-500 group-hover:fill-slate-600 dark:group-hover:fill-slate-300'><path d='M15.8 3a12.8 12.8 0 1 0 0 25.6 12.8 12.8 0 0 0 0-25.6Zm5.87 18.461a.8.8 0 0 1-1.097.266c-3.006-1.837-6.787-2.252-11.244-1.234a.796.796 0 1 1-.355-1.555c4.875-1.115 9.058-.635 12.432 1.427a.8.8 0 0 1 .265 1.096Zm1.565-3.485a.999.999 0 0 1-1.371.33c-3.44-2.116-8.685-2.728-12.755-1.493a1 1 0 0 1-.58-1.91c4.65-1.41 10.428-.726 14.378 1.7a1 1 0 0 1 .33 1.375l-.002-.002Zm.137-3.629c-4.127-2.45-10.933-2.675-14.871-1.478a1.196 1.196 0 1 1-.695-2.291c4.52-1.374 12.037-1.107 16.785 1.711a1.197 1.197 0 1 1-1.221 2.06'></path></svg>
+                                        <span class="hidden sm:ml-3 sm:block">Spotify</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://podcasts.apple.com/us/podcast/-net-technology-show/id1770031289" class="group flex items-center">
+                                        <svg aria-hidden='true' viewBox='0 0 32 32' class='h-8 w-8 fill-slate-400 dark:fill-slate-500 group-hover:fill-slate-600 dark:group-hover:fill-slate-300'><path fillrule='evenodd' cliprule='evenodd' d='M27.528 24.8c-.232.592-.768 1.424-1.536 2.016-.44.336-.968.664-1.688.88-.768.232-1.72.304-2.904.304H10.6c-1.184 0-2.128-.08-2.904-.304a4.99 4.99 0 0 1-1.688-.88c-.76-.584-1.304-1.424-1.536-2.016C4.008 23.608 4 22.256 4 21.4V10.6c0-.856.008-2.208.472-3.4.232-.592.768-1.424 1.536-2.016.44-.336.968-.664 1.688-.88C8.472 4.08 9.416 4 10.6 4h10.8c1.184 0 2.128.08 2.904.304a4.99 4.99 0 0 1 1.688.88c.76.584 1.304 1.424 1.536 2.016C28 8.392 28 9.752 28 10.6v10.8c0 .856-.008 2.208-.472 3.4Zm-9.471-6.312a1.069 1.069 0 0 0-.32-.688c-.36-.376-.992-.624-1.736-.624-.745 0-1.377.24-1.737.624-.183.2-.287.4-.32.688-.063.558-.024 1.036.04 1.807v.009c.065.736.184 1.72.336 2.712.112.712.2 1.096.28 1.368.136.448.625.832 1.4.832.776 0 1.273-.392 1.4-.832.08-.272.169-.656.28-1.368.152-1 .273-1.976.337-2.712.072-.776.104-1.256.04-1.816ZM16 16.375c1.088 0 1.968-.88 1.968-1.967 0-1.08-.88-1.968-1.968-1.968s-1.968.88-1.968 1.968.88 1.967 1.968 1.967Zm-.024-9.719c-4.592.016-8.352 3.744-8.416 8.336-.048 3.72 2.328 6.904 5.648 8.072.08.032.16-.04.152-.12a35.046 35.046 0 0 0-.041-.288c-.029-.192-.057-.384-.079-.576a.317.317 0 0 0-.168-.232 7.365 7.365 0 0 1-4.424-6.824c.04-4 3.304-7.256 7.296-7.288 4.088-.032 7.424 3.28 7.424 7.36 0 3.016-1.824 5.608-4.424 6.752a.272.272 0 0 0-.168.232l-.12.864c-.016.088.072.152.152.12a8.448 8.448 0 0 0 5.648-7.968c-.016-4.656-3.816-8.448-8.48-8.44Zm-5.624 8.376c.04-2.992 2.44-5.464 5.432-5.576 3.216-.128 5.88 2.456 5.872 5.64a5.661 5.661 0 0 1-2.472 4.672c-.08.056-.184-.008-.176-.096.016-.344.024-.648.008-.96 0-.104.04-.2.112-.272a4.584 4.584 0 0 0 1.448-3.336 4.574 4.574 0 0 0-4.752-4.568 4.585 4.585 0 0 0-4.392 4.448 4.574 4.574 0 0 0 1.448 3.456c.08.072.12.168.112.272-.016.32-.016.624.008.968 0 .088-.104.144-.176.096a5.65 5.65 0 0 1-2.472-4.744Z'></path></svg>
+                                        <span class="hidden sm:ml-3 sm:block">Apple Podcasts</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/podcasts/feed.xml" class="group flex items-center">
+                                        <svg aria-hidden='true' viewBox='0 0 32 32' class='h-8 w-8 fill-slate-400 dark:fill-slate-500 group-hover:fill-slate-600 dark:group-hover:fill-slate-300'><path fillrule='evenodd' cliprule='evenodd' d='M8.5 4h15A4.5 4.5 0 0 1 28 8.5v15a4.5 4.5 0 0 1-4.5 4.5h-15A4.5 4.5 0 0 1 4 23.5v-15A4.5 4.5 0 0 1 8.5 4ZM13 22a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-6-6a9 9 0 0 1 9 9h3A12 12 0 0 0 7 13v3Zm5.74-4.858A15 15 0 0 0 7 10V7a18 18 0 0 1 18 18h-3a15 15 0 0 0-9.26-13.858Z'></path></svg>
+                                        <span class="hidden sm:ml-3 sm:block">RSS Feed</span>
+                                    </a>
+                                </li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+            <div class="border-t border-slate-200 dark:border-slate-700 lg:relative lg:mb-28 lg:ml-112 lg:border-t-0 xl:ml-120">
+        <svg aria-hidden="true" class="absolute left-0 top-0 h-20 w-full">
+            <defs>
+                <linearGradient id="waveform-142-fade" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="40%" stop-color="white"></stop>
+                    <stop offset="100%" stop-color="black"></stop>
+                </linearGradient>
+                <linearGradient id="waveform-142-gradient">
+                    <stop offset="0%" stop-color="#4989E8"></stop>
+                    <stop offset="50%" stop-color="#6159DA"></stop>
+                    <stop offset="100%" stop-color="#FF54AD"></stop>
+                </linearGradient>
+                <mask id="waveform-142-mask">
+                    <rect width="100%" height="100%" fill="url(#waveform-142-pattern)"></rect>
+                </mask>
+                <pattern id="waveform-142-pattern"
+                         width="400"
+                         height="100%"
+                         patternUnits="userSpaceOnUse">
+                    <rect width="2"
+                          height="62"
+                          x="2"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="69"
+                          x="6"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="52"
+                          x="10"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="55"
+                          x="14"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="51"
+                          x="18"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="44"
+                          x="22"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="79"
+                          x="26"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="58"
+                          x="30"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="69"
+                          x="34"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="76"
+                          x="38"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="78"
+                          x="42"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="52"
+                          x="46"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="78"
+                          x="50"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="62"
+                          x="54"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="42"
+                          x="58"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="70"
+                          x="62"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="49"
+                          x="66"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="58"
+                          x="70"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="68"
+                          x="74"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="58"
+                          x="78"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="68"
+                          x="82"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="72"
+                          x="86"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="53"
+                          x="90"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="41"
+                          x="94"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="46"
+                          x="98"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="59"
+                          x="102"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="41"
+                          x="106"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="62"
+                          x="110"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="71"
+                          x="114"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="61"
+                          x="118"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="42"
+                          x="122"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="62"
+                          x="126"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="60"
+                          x="130"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="73"
+                          x="134"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="74"
+                          x="138"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="74"
+                          x="142"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="63"
+                          x="146"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="63"
+                          x="150"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="67"
+                          x="154"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="68"
+                          x="158"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="60"
+                          x="162"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="63"
+                          x="166"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="69"
+                          x="170"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="55"
+                          x="174"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="63"
+                          x="178"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="58"
+                          x="182"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="52"
+                          x="186"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="66"
+                          x="190"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="42"
+                          x="194"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="40"
+                          x="198"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="76"
+                          x="202"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="54"
+                          x="206"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="50"
+                          x="210"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="41"
+                          x="214"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="63"
+                          x="218"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="60"
+                          x="222"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="67"
+                          x="226"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="53"
+                          x="230"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="59"
+                          x="234"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="54"
+                          x="238"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="47"
+                          x="242"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="65"
+                          x="246"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="48"
+                          x="250"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="77"
+                          x="254"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="58"
+                          x="258"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="69"
+                          x="262"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="42"
+                          x="266"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="60"
+                          x="270"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="50"
+                          x="274"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="73"
+                          x="278"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="43"
+                          x="282"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="65"
+                          x="286"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="78"
+                          x="290"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="74"
+                          x="294"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="74"
+                          x="298"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="70"
+                          x="302"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="71"
+                          x="306"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="63"
+                          x="310"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="78"
+                          x="314"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="73"
+                          x="318"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="45"
+                          x="322"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="54"
+                          x="326"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="77"
+                          x="330"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="64"
+                          x="334"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="78"
+                          x="338"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="56"
+                          x="342"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="50"
+                          x="346"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="74"
+                          x="350"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="60"
+                          x="354"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="70"
+                          x="358"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="71"
+                          x="362"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="51"
+                          x="366"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="79"
+                          x="370"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="53"
+                          x="374"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="56"
+                          x="378"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="63"
+                          x="382"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="55"
+                          x="386"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="68"
+                          x="390"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="66"
+                          x="394"
+                          fill="url(#waveform-142-fade)"></rect>
+                    <rect width="2"
+                          height="56"
+                          x="398"
+                          fill="url(#waveform-142-fade)"></rect>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#waveform-142-gradient)" mask="url(#waveform-142-mask)" opacity="0.25"></rect>
+        </svg>
+                <div class="relative">
+                    
+
+
+<div class="pb-12 pt-16 sm:pb-4 lg:pt-12">
+    <div class="lg:px-8">
+        <div class="lg:max-w-4xl">
+            <div class="mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4 lg:px-0">
+                <h1 class="text-2xl font-bold leading-7 text-slate-900">
+                    Episodes
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="divide-y divide-slate-100 dark:divide-slate-800 sm:mt-4 lg:mt-8 lg:border-t lg:border-slate-100 dark:lg:border-slate-800">
+
+        <div class="relative p-4 mx-auto max-w-7xl">
+            <div class="flex flex-wrap justify-center">
+                    <a href="podcasts/tagged/net8" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">.net8</a>
+                    <a href="podcasts/tagged/admin-ui" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">admin-ui</a>
+                    <a href="podcasts/tagged/api" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">api</a>
+                    <a href="podcasts/tagged/release" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">release</a>
+                    <a href="podcasts/tagged/commands" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">commands</a>
+                    <a href="podcasts/tagged/auth" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">auth</a>
+                    <a href="podcasts/tagged/apikeys" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">apikeys</a>
+                    <a href="podcasts/tagged/sqlite" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">sqlite</a>
+                    <span class="mr-2 mb-2 text-xs leading-5 font-semibold bg-indigo-600 dark:bg-indigo-300 text-white dark:text-black rounded-full py-1 px-3 flex items-center space-x-2">logging</span>
+                    <a href="podcasts/tagged/jobs" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">jobs</a>
+                    <a href="podcasts/tagged/template" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">template</a>
+                    <a href="podcasts/tagged/react" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">react</a>
+                    <a href="podcasts/tagged/autoquery" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">autoquery</a>
+                    <a href="podcasts/tagged/vue" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">vue</a>
+                    <a href="podcasts/tagged/identity-auth" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">identity-auth</a>
+                    <a href="podcasts/tagged/performance" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">performance</a>
+                    <a href="podcasts/tagged/scalability" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">scalability</a>
+                    <a href="podcasts/tagged/rdbms" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">rdbms</a>
+                    <a href="podcasts/tagged/caching" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">caching</a>
+                    <a href="podcasts/tagged/redis" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">redis</a>
+                    <a href="podcasts/tagged/middleware" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">middleware</a>
+                    <a href="podcasts/tagged/vite" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">vite</a>
+                    <a href="podcasts/tagged/markdown" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">markdown</a>
+                    <a href="podcasts/tagged/kotlin" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">kotlin</a>
+                    <a href="podcasts/tagged/ioc" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">ioc</a>
+                    <a href="podcasts/tagged/json" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">json</a>
+                    <a href="podcasts/tagged/openapi" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">openapi</a>
+                    <a href="podcasts/tagged/swagger" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">swagger</a>
+                    <a href="podcasts/tagged/docker" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">docker</a>
+                    <a href="podcasts/tagged/blazor" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">blazor</a>
+                    <a href="podcasts/tagged/mvc" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">mvc</a>
+                    <a href="podcasts/tagged/razor" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">razor</a>
+            </div>
+        </div>
+
+        
+    
+    <article aria-labelledby="episode-sqlite-request-logs-title" class="py-10 sm:py-12">
+        <div class="lg:px-8">
+            <div class="lg:max-w-4xl">
+                <div class="mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4 lg:px-0">
+                    <div class="flex flex-col items-start">
+                        <h2 id="episode-sqlite-request-logs-title" class="mt-2 text-lg font-bold text-slate-900 dark:text-slate-50">
+                            <a href="podcasts/sqlite-request-logs">SQLite Request Logging</a>
+                        </h2>
+                        <time dateTime=2024-09-17 00:00:00Z class="order-first font-mono text-sm leading-7 text-slate-500 dark:text-slate-400">
+                            Tuesday, 17 September 2024
+                        </time>
+                        <p class="mt-1 text-base leading-7 text-slate-700 dark:text-slate-200">
+                            Checking out ServiceStack&#x27;s new SQLite-backed Request Logs feature and enhanced log querying and filtering in the Admin UI
+                        </p>
+                        <div class="mt-4 flex items-center gap-4">
+        <button data-slug="sqlite-request-logs" data-title="SQLite Request Logging" data-url="https://media.servicestack.com/podcasts/sqlite-request-logs.mp3"
+                type="button" aria-label="Play episode SQLite Request Logging"
+                onclick="togglePlayButton(this)"
+                class="flex items-center gap-x-3 text-sm font-bold leading-6 text-pink-500 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-200 active:text-pink-900 dark:active:text-pink-50">
+            <div class="paused flex items-center gap-x-1">
+                <svg aria-hidden="true" viewBox="0 0 10 10" class="h-2.5 w-2.5 fill-current">
+                    <path d="M8.25 4.567a.5.5 0 0 1 0 .866l-7.5 4.33A.5.5 0 0 1 0 9.33V.67A.5.5 0 0 1 .75.237l7.5 4.33Z" />
+                </svg>
+                <span aria-hidden="true">Listen</span>
+            </div>
+            <div class="hidden playing flex items-center gap-x-1">
+                <svg aria-hidden="true" viewBox="0 0 10 10" class="h-2.5 w-2.5 fill-current">
+                    <path fillRule="evenodd" clipRule="evenodd"
+                          d="M1.496 0a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5H2.68a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5H1.496Zm5.82 0a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5H8.5a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5H7.316Z" />
+                </svg>
+                <span aria-hidden="true">Listen</span>
+            </div>
+        </button>
+        <script>
+            window.togglePlayButton = function (el) {
+                document.querySelectorAll('[data-url] .paused').forEach(x => {
+                    x.classList.remove('hidden')
+                })
+                document.querySelectorAll('[data-url] .playing').forEach(x => {
+                    x.classList.add('hidden')
+                })
+                const isPlaying = window.toggleEpisode(el.dataset,"episodes")
+                el.querySelector('.paused').classList.toggle('hidden', isPlaying)
+                el.querySelector('.playing').classList.toggle('hidden', !isPlaying)
+                el.setAttribute('aria-label', (isPlaying ? 'Play' : 'Pause') + ` episode ${el.dataset.title}`);
+            }
+        </script>
+                            <span aria-hidden="true" class="text-sm font-bold text-slate-400">/</span>
+                            <a href="podcasts/sqlite-request-logs"
+                               class="flex items-center text-sm font-bold leading-6 text-pink-500 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-200 active:text-pink-900 dark:active:text-pink-50"
+                               aria-label="Show notes for episode SQLite Request Logging">
+                                Show notes
+                            </a>
+                                <span aria-hidden="true" class="text-sm font-bold text-slate-400">/</span>
+                                <div class="flex flex-wrap gap-1">
+                                    <a href="podcasts/tagged/sqlite" class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-slate-400/20 px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100">sqlite</a>
+                                    <a href="podcasts/tagged/logging" class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-slate-400/20 px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100">logging</a>
+                                    <a href="podcasts/tagged/admin-ui" class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-slate-400/20 px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100">admin-ui</a>
+                                    <a href="podcasts/tagged/api" class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-slate-400/20 px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100">api</a>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+    <article aria-labelledby="episode-v8-4-release-title" class="py-10 sm:py-12">
+        <div class="lg:px-8">
+            <div class="lg:max-w-4xl">
+                <div class="mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4 lg:px-0">
+                    <div class="flex flex-col items-start">
+                        <h2 id="episode-v8-4-release-title" class="mt-2 text-lg font-bold text-slate-900 dark:text-slate-50">
+                            <a href="podcasts/v8-4-release">ServiceStack v8.4 Release</a>
+                        </h2>
+                        <time dateTime=2024-09-11 00:00:00Z class="order-first font-mono text-sm leading-7 text-slate-500 dark:text-slate-400">
+                            Wednesday, 11 September 2024
+                        </time>
+                        <p class="mt-1 text-base leading-7 text-slate-700 dark:text-slate-200">
+                            The latest features and improvements in ServiceStack v8.4 covering Background Jobs, SQLite Request Logs, Scalable SQLite Apps and more!
+                        </p>
+                        <div class="mt-4 flex items-center gap-4">
+        <button data-slug="v8-4-release" data-title="ServiceStack v8.4 Release" data-url="https://media.servicestack.com/podcasts/v8-4-release.mp3"
+                type="button" aria-label="Play episode ServiceStack v8.4 Release"
+                onclick="togglePlayButton(this)"
+                class="flex items-center gap-x-3 text-sm font-bold leading-6 text-pink-500 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-200 active:text-pink-900 dark:active:text-pink-50">
+            <div class="paused flex items-center gap-x-1">
+                <svg aria-hidden="true" viewBox="0 0 10 10" class="h-2.5 w-2.5 fill-current">
+                    <path d="M8.25 4.567a.5.5 0 0 1 0 .866l-7.5 4.33A.5.5 0 0 1 0 9.33V.67A.5.5 0 0 1 .75.237l7.5 4.33Z" />
+                </svg>
+                <span aria-hidden="true">Listen</span>
+            </div>
+            <div class="hidden playing flex items-center gap-x-1">
+                <svg aria-hidden="true" viewBox="0 0 10 10" class="h-2.5 w-2.5 fill-current">
+                    <path fillRule="evenodd" clipRule="evenodd"
+                          d="M1.496 0a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5H2.68a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5H1.496Zm5.82 0a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5H8.5a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5H7.316Z" />
+                </svg>
+                <span aria-hidden="true">Listen</span>
+            </div>
+        </button>
+        <script>
+            window.togglePlayButton = function (el) {
+                document.querySelectorAll('[data-url] .paused').forEach(x => {
+                    x.classList.remove('hidden')
+                })
+                document.querySelectorAll('[data-url] .playing').forEach(x => {
+                    x.classList.add('hidden')
+                })
+                const isPlaying = window.toggleEpisode(el.dataset,"episodes")
+                el.querySelector('.paused').classList.toggle('hidden', isPlaying)
+                el.querySelector('.playing').classList.toggle('hidden', !isPlaying)
+                el.setAttribute('aria-label', (isPlaying ? 'Play' : 'Pause') + ` episode ${el.dataset.title}`);
+            }
+        </script>
+                            <span aria-hidden="true" class="text-sm font-bold text-slate-400">/</span>
+                            <a href="podcasts/v8-4-release"
+                               class="flex items-center text-sm font-bold leading-6 text-pink-500 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-200 active:text-pink-900 dark:active:text-pink-50"
+                               aria-label="Show notes for episode ServiceStack v8.4 Release">
+                                Show notes
+                            </a>
+                                <span aria-hidden="true" class="text-sm font-bold text-slate-400">/</span>
+                                <div class="flex flex-wrap gap-1">
+                                    <a href="podcasts/tagged/release" class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-slate-400/20 px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100">release</a>
+                                    <a href="podcasts/tagged/jobs" class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-slate-400/20 px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100">jobs</a>
+                                    <a href="podcasts/tagged/logging" class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-slate-400/20 px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100">logging</a>
+                                    <a href="podcasts/tagged/admin-ui" class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-slate-400/20 px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100">admin-ui</a>
+                                    <a href="podcasts/tagged/commands" class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-slate-400/20 px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100">commands</a>
+                                    <a href="podcasts/tagged/api" class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-slate-400/20 px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100">api</a>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    </div>
+</div>
+                </div>
+            </div>
+            <footer class="border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 py-10 pb-40 sm:py-16 sm:pb-32 lg:hidden">
+                <div class="mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4">
+        <section class="mt-12 hidden lg:block">
+            <h2 class="flex items-center font-mono text-sm font-medium leading-7 text-slate-900 dark:text-slate-50">
+        <svg aria-hidden="true" viewBox="0 0 10 10" class="h-2.5 w-2.5">
+            <path d="M0 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5Z"
+                  class="fill-violet-300" />
+            <path d="M6 1a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V1Z"
+                  class="fill-pink-300" />
+        </svg>
+                <span class="ml-2.5">About</span>
+            </h2>
+            <p class="mt-2 text-base leading-7 text-slate-700 dark:text-slate-200">
+                In this show, Eric and Wes dig deep to get to the facts with guests who have been labeled villains by a society quick to judge, without actually getting the full story. Tune in every Thursday to get to the truth with another misunderstood outcast as they share the missing context in their tragic tale.
+            </p>
+        </section>
+                </div>
+            </footer>
+            <div class="fixed inset-x-0 bottom-0 z-10 lg:left-112 xl:left-120">
+                <div id="audioPlayer"></div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script type="module">
+import AudioPlayer from "./pages/podcasts/AudioPlayer.mjs"
+import { init, mount, unmount } from "app.mjs"
+import {EventBus} from "@servicestack/client"
+init()
+
+const audioPlayer = document.getElementById('audioPlayer')
+
+let lastEpisode = null
+let lastApp = null
+
+const bus = new EventBus()
+
+globalThis.toggleEpisode = function (episode,source="layout") {
+    if (!lastEpisode || episode.url !== lastEpisode?.src) {
+        unmount(audioPlayer)
+        lastEpisode = { id:episode.slug, title:episode.title, src:episode.url, autoPlay:true, bus}
+        lastApp = mount(audioPlayer, AudioPlayer, lastEpisode)
+        return true
+    } else {
+       bus.publish('toggleAudioPlayer')
+       return !audioPlayer.querySelector('audio')?.paused
+    }
+}
+</script>
+
+
+
+</body>
+</html>

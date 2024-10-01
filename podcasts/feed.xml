@@ -1,13 +1,291 @@
 <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:podcast="https://podcastindex.org/namespace/1.0" xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
 <channel>
-    <title></title>
-    <link>/podcasts</link>
-    <description><![CDATA[  ]]></description>
+    <title>Their Side</title>
+    <link>https://servicestack.net/podcasts</link>
+    <description><![CDATA[ Conversations with the most tragically misunderstood people of our time. ]]></description>
+    <image>
+        <url>https://servicestack.net/img/podcasts/cover.png</url>
+        <title>Their Side</title>
+        <link>/podcasts</link>
+    </image>
     <generator>razor-ssg</generator>
-    <copyright></copyright>
-    <lastBuildDate>Tue, 01 Oct 2024 08:40:26 GMT</lastBuildDate>
-    <managingEditor></managingEditor>
-    <webMaster></webMaster>
-    <atom:link href="podcasts/feed.xml" rel="self" type="application/rss+xml" />
+    <copyright>ServiceStack</copyright>
+    <lastBuildDate>Tue, 01 Oct 2024 08:40:39 GMT</lastBuildDate>
+    <managingEditor>team@servicestack.net (Team ServiceStack)</managingEditor>
+    <webMaster>team@servicestack.net (Team ServiceStack)</webMaster>
+    <atom:link href="https://servicestack.net/podcasts/feed.xml" rel="self" type="application/rss+xml" />
+    <itunes:author>Razor SSG</itunes:author>
+    <itunes:owner>
+        <itunes:name>Razor SSG</itunes:name>
+        <itunes:email>email@example.org</itunes:email>
+    </itunes:owner>        
+    <itunes:image href="https://razor-ssg.web-templates.io/img/podcasts/cover-1920.jpg"/>
+    <itunes:subtitle>Conversations with the most tragically misunderstood people of our time.</itunes:subtitle>
+    <itunes:summary><![CDATA[ In this show, Eric and Wes dig deep to get to the facts with guests who have been labeled villains by a society quick to judge, without actually getting the full story. Tune in every Thursday to get to the truth with another misunderstood outcast as they share the missing context in their tragic tale. ]]></itunes:summary>
+    <itunes:category text="Technology"/>
+    <itunes:category text="News">
+        <itunes:category text="Tech News" />
+    </itunes:category>
+    <itunes:explicit>no</itunes:explicit>
+    <item>
+        <title>Scalable SQLite</title>
+        <link>https://servicestack.net/podcasts/scalable-sqlite</link>
+        <guid isPermaLink="false">https://servicestack.net/podcasts/scalable-sqlite</guid>
+        <pubDate>Thu, 19 Sep 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-09-19T00:00:00Z</atom:updated>
+        <enclosure url="https://media.servicestack.com/podcasts/scalable-sqlite.mp3" length="2301741" type="audio/mpeg"/>
+        <category>sqlite</category>
+        <category>performance</category>
+        <category>scalability</category>
+        <description>Exploring different techniques in ServiceStack for building maximum value, high-performance Scalable SQLite Web Apps</description>
+        <itunes:summary><![CDATA[ Exploring different techniques in ServiceStack for building maximum value, high-performance Scalable SQLite Web Apps ]]></itunes:summary>
+        <itunes:duration>575</itunes:duration>
+        <itunes:keywords>sqlite,performance,scalability</itunes:keywords>        
+        <itunes:image href="https://razor-ssg.web-templates.io/img/podcasts/cover-1920.jpg"/>
+    </item>
+    <item>
+        <title>SQLite Request Logging</title>
+        <link>https://servicestack.net/podcasts/sqlite-request-logs</link>
+        <guid isPermaLink="false">https://servicestack.net/podcasts/sqlite-request-logs</guid>
+        <pubDate>Tue, 17 Sep 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-09-17T00:00:00Z</atom:updated>
+        <enclosure url="https://media.servicestack.com/podcasts/sqlite-request-logs.mp3" length="809613" type="audio/mpeg"/>
+        <category>sqlite</category>
+        <category>logging</category>
+        <category>admin-ui</category>
+        <category>api</category>
+        <description>Checking out ServiceStack&#x27;s new SQLite-backed Request Logs feature and enhanced log querying and filtering in the Admin UI</description>
+        <itunes:summary><![CDATA[ Checking out ServiceStack&#x27;s new SQLite-backed Request Logs feature and enhanced log querying and filtering in the Admin UI ]]></itunes:summary>
+        <itunes:duration>202</itunes:duration>
+        <itunes:keywords>sqlite,logging,admin-ui,api</itunes:keywords>        
+        <itunes:image href="https://razor-ssg.web-templates.io/img/podcasts/cover-1920.jpg"/>
+    </item>
+    <item>
+        <title>Background Jobs</title>
+        <link>https://servicestack.net/podcasts/background-jobs</link>
+        <guid isPermaLink="false">https://servicestack.net/podcasts/background-jobs</guid>
+        <pubDate>Thu, 12 Sep 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-09-12T00:00:00Z</atom:updated>
+        <enclosure url="https://media.servicestack.com/podcasts/background-jobs.mp3" length="1990029" type="audio/mpeg"/>
+        <category>jobs</category>
+        <category>admin-ui</category>
+        <category>commands</category>
+        <category>api</category>
+        <description>Taking a deep dive into Background Jobs, a new library for .NET 8 Apps for simplifying task scheduling and management</description>
+        <itunes:summary><![CDATA[ Taking a deep dive into Background Jobs, a new library for .NET 8 Apps for simplifying task scheduling and management ]]></itunes:summary>
+        <itunes:duration>497</itunes:duration>
+        <itunes:keywords>jobs,admin-ui,commands,api</itunes:keywords>        
+        <itunes:image href="https://razor-ssg.web-templates.io/img/podcasts/cover-1920.jpg"/>
+    </item>
+    <item>
+        <title>ServiceStack v8.4 Release</title>
+        <link>https://servicestack.net/podcasts/v8-4-release</link>
+        <guid isPermaLink="false">https://servicestack.net/podcasts/v8-4-release</guid>
+        <pubDate>Wed, 11 Sep 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-09-11T00:00:00Z</atom:updated>
+        <enclosure url="https://media.servicestack.com/podcasts/v8-4-release.mp3" length="9605805" type="audio/mpeg"/>
+        <category>release</category>
+        <category>jobs</category>
+        <category>logging</category>
+        <category>admin-ui</category>
+        <category>commands</category>
+        <category>api</category>
+        <description>The latest features and improvements in ServiceStack v8.4 covering Background Jobs, SQLite Request Logs, Scalable SQLite Apps and more!</description>
+        <itunes:summary><![CDATA[ The latest features and improvements in ServiceStack v8.4 covering Background Jobs, SQLite Request Logs, Scalable SQLite Apps and more! ]]></itunes:summary>
+        <itunes:duration>600</itunes:duration>
+        <itunes:keywords>release,jobs,logging,admin-ui,commands,api</itunes:keywords>        
+        <itunes:image href="https://razor-ssg.web-templates.io/img/podcasts/cover-1920.jpg"/>
+    </item>
+    <item>
+        <title>Commands Feature</title>
+        <link>https://servicestack.net/podcasts/commands-feature</link>
+        <guid isPermaLink="false">https://servicestack.net/podcasts/commands-feature</guid>
+        <pubDate>Wed, 03 Jul 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-07-03T00:00:00Z</atom:updated>
+        <enclosure url="https://media.servicestack.com/podcasts/commands-feature.mp3" length="2474061" type="audio/mpeg"/>
+        <category>commands</category>
+        <category>admin-ui</category>
+        <category>api</category>
+        <description>Looking into how to utilize Commands to build more robust and observable systems</description>
+        <itunes:summary><![CDATA[ Looking into how to utilize Commands to build more robust and observable systems ]]></itunes:summary>
+        <itunes:duration>618</itunes:duration>
+        <itunes:keywords>commands,admin-ui,api</itunes:keywords>        
+        <itunes:image href="https://razor-ssg.web-templates.io/img/podcasts/cover-1920.jpg"/>
+    </item>
+    <item>
+        <title>Simple Auth Story for .NET 8 Microservices</title>
+        <link>https://servicestack.net/podcasts/simple-auth-microservices</link>
+        <guid isPermaLink="false">https://servicestack.net/podcasts/simple-auth-microservices</guid>
+        <pubDate>Tue, 02 Jul 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-07-02T00:00:00Z</atom:updated>
+        <enclosure url="https://media.servicestack.com/podcasts/simple-auth-microservices.mp3" length="2623341" type="audio/mpeg"/>
+        <category>.net8</category>
+        <category>auth</category>
+        <category>apikeys</category>
+        <description>Taking a look at the simple &quot;user-free&quot; Auth story made possible with API Keys and Admin UI that&#x27;s ideal for .NET 8 Microservices</description>
+        <itunes:summary><![CDATA[ Taking a look at the simple &quot;user-free&quot; Auth story made possible with API Keys and Admin UI that&#x27;s ideal for .NET 8 Microservices ]]></itunes:summary>
+        <itunes:duration>655</itunes:duration>
+        <itunes:keywords>.net8,auth,apikeys</itunes:keywords>        
+        <itunes:image href="https://razor-ssg.web-templates.io/img/podcasts/cover-1920.jpg"/>
+    </item>
+    <item>
+        <title>Using API Keys to secure .NET 8 APIs</title>
+        <link>https://servicestack.net/podcasts/apikeys</link>
+        <guid isPermaLink="false">https://servicestack.net/podcasts/apikeys</guid>
+        <pubDate>Mon, 01 Jul 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-07-01T00:00:00Z</atom:updated>
+        <enclosure url="https://media.servicestack.com/podcasts/apikeys.mp3" length="2403309" type="audio/mpeg"/>
+        <category>apikeys</category>
+        <category>.net8</category>
+        <category>auth</category>
+        <category>rdbms</category>
+        <description>Exploring the new API Keys Identity Auth feature and how its Admin UI enables simple fine-grained access control in ServiceStack .NET 8 APIs</description>
+        <itunes:summary><![CDATA[ Exploring the new API Keys Identity Auth feature and how its Admin UI enables simple fine-grained access control in ServiceStack .NET 8 APIs ]]></itunes:summary>
+        <itunes:duration>600</itunes:duration>
+        <itunes:keywords>apikeys,.net8,auth,rdbms</itunes:keywords>        
+        <itunes:image href="https://razor-ssg.web-templates.io/img/podcasts/cover-1920.jpg"/>
+    </item>
+    <item>
+        <title>ServiceStack v8.3 Release</title>
+        <link>https://servicestack.net/podcasts/v8-3-release</link>
+        <guid isPermaLink="false">https://servicestack.net/podcasts/v8-3-release</guid>
+        <pubDate>Mon, 17 Jun 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-06-17T00:00:00Z</atom:updated>
+        <enclosure url="https://media.servicestack.com/podcasts/v8-3-release.mp3" length="1838829" type="audio/mpeg"/>
+        <category>release</category>
+        <category>apikeys</category>
+        <category>admin-ui</category>
+        <category>commands</category>
+        <category>api</category>
+        <description>The latest features and improvements in ServiceStack v8.3 covering Commands Feature, API Keys, Integrated Admin UIs and more!</description>
+        <itunes:summary><![CDATA[ The latest features and improvements in ServiceStack v8.3 covering Commands Feature, API Keys, Integrated Admin UIs and more! ]]></itunes:summary>
+        <itunes:duration>459</itunes:duration>
+        <itunes:keywords>release,apikeys,admin-ui,commands,api</itunes:keywords>        
+        <itunes:image href="https://razor-ssg.web-templates.io/img/podcasts/cover-1920.jpg"/>
+    </item>
+    <item>
+        <title>ASP.NET Core Output Caching</title>
+        <link>https://servicestack.net/podcasts/redis-outputcache</link>
+        <guid isPermaLink="false">https://servicestack.net/podcasts/redis-outputcache</guid>
+        <pubDate>Wed, 05 Jun 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-06-05T00:00:00Z</atom:updated>
+        <enclosure url="https://media.servicestack.com/podcasts/redis-outputcache.mp3" length="2012973" type="audio/mpeg"/>
+        <category>caching</category>
+        <category>.net8</category>
+        <category>redis</category>
+        <description>A look at how to use ASP.NET Core Output Caching and ServiceStack.Redis to cache the response of ServiceStack APIs in Redis</description>
+        <itunes:summary><![CDATA[ A look at how to use ASP.NET Core Output Caching and ServiceStack.Redis to cache the response of ServiceStack APIs in Redis ]]></itunes:summary>
+        <itunes:duration>503</itunes:duration>
+        <itunes:keywords>caching,.net8,redis</itunes:keywords>        
+        <itunes:image href="https://razor-ssg.web-templates.io/img/podcasts/cover-1920.jpg"/>
+    </item>
+    <item>
+        <title>ASP.NET Core Rate Limiter Middleware</title>
+        <link>https://servicestack.net/podcasts/asp-rate-limiter-middleware</link>
+        <guid isPermaLink="false">https://servicestack.net/podcasts/asp-rate-limiter-middleware</guid>
+        <pubDate>Mon, 08 Apr 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-04-08T00:00:00Z</atom:updated>
+        <enclosure url="https://media.servicestack.com/podcasts/asp-rate-limiter-middleware.mp3" length="2585901" type="audio/mpeg"/>
+        <category>.net8</category>
+        <category>auth</category>
+        <category>middleware</category>
+        <description>A guide explaining how ASP.NET Core&#x27;s Rate Limiter Middleware can be used to protect ServiceStack APIs and Apps from abuse</description>
+        <itunes:summary><![CDATA[ A guide explaining how ASP.NET Core&#x27;s Rate Limiter Middleware can be used to protect ServiceStack APIs and Apps from abuse ]]></itunes:summary>
+        <itunes:duration>646</itunes:duration>
+        <itunes:keywords>.net8,auth,middleware</itunes:keywords>        
+        <itunes:image href="https://razor-ssg.web-templates.io/img/podcasts/cover-1920.jpg"/>
+    </item>
+    <item>
+        <title>New React SPA Template</title>
+        <link>https://servicestack.net/podcasts/net8-react-spa-template</link>
+        <guid isPermaLink="false">https://servicestack.net/podcasts/net8-react-spa-template</guid>
+        <pubDate>Wed, 06 Mar 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-03-06T00:00:00Z</atom:updated>
+        <enclosure url="https://media.servicestack.com/podcasts/net8-react-spa-template.mp3" length="2731533" type="audio/mpeg"/>
+        <category>template</category>
+        <category>react</category>
+        <category>.net8</category>
+        <category>autoquery</category>
+        <description>A tour of the features in the new enhanced Vite TypeScript React SPA template for .NET 8</description>
+        <itunes:summary><![CDATA[ A tour of the features in the new enhanced Vite TypeScript React SPA template for .NET 8 ]]></itunes:summary>
+        <itunes:duration>682</itunes:duration>
+        <itunes:keywords>template,react,.net8,autoquery</itunes:keywords>        
+        <itunes:image href="https://razor-ssg.web-templates.io/img/podcasts/cover-1920.jpg"/>
+    </item>
+    <item>
+        <title>New Vue SPA Template</title>
+        <link>https://servicestack.net/podcasts/net8-vue-spa-template</link>
+        <guid isPermaLink="false">https://servicestack.net/podcasts/net8-vue-spa-template</guid>
+        <pubDate>Tue, 05 Mar 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-03-05T00:00:00Z</atom:updated>
+        <enclosure url="https://media.servicestack.com/podcasts/net8-vue-spa-template.mp3" length="1414413" type="audio/mpeg"/>
+        <category>template</category>
+        <category>vue</category>
+        <category>.net8</category>
+        <category>autoquery</category>
+        <description>Getting to know the advanced features and capabilities of the enhanced Vite TypeScript Vue SPA template for .NET 8</description>
+        <itunes:summary><![CDATA[ Getting to know the advanced features and capabilities of the enhanced Vite TypeScript Vue SPA template for .NET 8 ]]></itunes:summary>
+        <itunes:duration>353</itunes:duration>
+        <itunes:keywords>template,vue,.net8,autoquery</itunes:keywords>        
+        <itunes:image href="https://razor-ssg.web-templates.io/img/podcasts/cover-1920.jpg"/>
+    </item>
+    <item>
+        <title>ServiceStack v8.2 Release</title>
+        <link>https://servicestack.net/podcasts/v8-2-release</link>
+        <guid isPermaLink="false">https://servicestack.net/podcasts/v8-2-release</guid>
+        <pubDate>Mon, 04 Mar 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-03-04T00:00:00Z</atom:updated>
+        <enclosure url="https://media.servicestack.com/podcasts/v8-2-release.mp3" length="2698701" type="audio/mpeg"/>
+        <category>release</category>
+        <category>vue</category>
+        <category>react</category>
+        <category>vite</category>
+        <category>markdown</category>
+        <category>kotlin</category>
+        <description>All about ServiceStack v8.2 Release new Vue &amp; React Vite SPA Tailwind Markdown powered Templates, integrated Identity Auth, new Kotlin Compose Multiplatform template and new Vite Press Plugin</description>
+        <itunes:summary><![CDATA[ All about ServiceStack v8.2 Release new Vue &amp; React Vite SPA Tailwind Markdown powered Templates, integrated Identity Auth, new Kotlin Compose Multiplatform template and new Vite Press Plugin ]]></itunes:summary>
+        <itunes:duration>674</itunes:duration>
+        <itunes:keywords>release,vue,react,vite,markdown,kotlin</itunes:keywords>        
+        <itunes:image href="https://razor-ssg.web-templates.io/img/podcasts/cover-1920.jpg"/>
+    </item>
+    <item>
+        <title>ServiceStack v8.1 Release</title>
+        <link>https://servicestack.net/podcasts/v8-1-release</link>
+        <guid isPermaLink="false">https://servicestack.net/podcasts/v8-1-release</guid>
+        <pubDate>Tue, 06 Feb 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-02-06T00:00:00Z</atom:updated>
+        <enclosure url="https://media.servicestack.com/podcasts/v8-1-release.mp3" length="2482893" type="audio/mpeg"/>
+        <category>release</category>
+        <category>identity-auth</category>
+        <category>ioc</category>
+        <category>json</category>
+        <category>openapi</category>
+        <category>swagger</category>
+        <description>ServiceStack v8.1 is here with a host of new features including full integration with Identity Auth, ASP .NET IOC, Endpoint Routing, System.Text.Json APIs, enhanced Admin UIs with JWT support, and much more!</description>
+        <itunes:summary><![CDATA[ ServiceStack v8.1 is here with a host of new features including full integration with Identity Auth, ASP .NET IOC, Endpoint Routing, System.Text.Json APIs, enhanced Admin UIs with JWT support, and much more! ]]></itunes:summary>
+        <itunes:duration>620</itunes:duration>
+        <itunes:keywords>release,identity-auth,ioc,json,openapi,swagger</itunes:keywords>        
+        <itunes:image href="https://razor-ssg.web-templates.io/img/podcasts/cover-1920.jpg"/>
+    </item>
+    <item>
+        <title>ServiceStack v8.0 Release</title>
+        <link>https://servicestack.net/podcasts/v8-0-release</link>
+        <guid isPermaLink="false">https://servicestack.net/podcasts/v8-0-release</guid>
+        <pubDate>Mon, 20 Nov 2023 00:00:00 GMT</pubDate>
+        <atom:updated>2023-11-20T00:00:00Z</atom:updated>
+        <enclosure url="https://media.servicestack.com/podcasts/v8-0-release.mp3" length="2715309" type="audio/mpeg"/>
+        <category>release</category>
+        <category>.net8</category>
+        <category>docker</category>
+        <category>identity-auth</category>
+        <category>blazor</category>
+        <category>mvc</category>
+        <category>razor</category>
+        <description>ServiceStack v8 is here with all packages now including .net8.0 builds, all Project Templates upgraded to .NET 8, GitHub Actions now using .NET 8 Docker containers, new Tailwind Blazor, Razor Pages &amp; MVC Templates now using ASP .NET Identity Auth &amp; EF</description>
+        <itunes:summary><![CDATA[ ServiceStack v8 is here with all packages now including .net8.0 builds, all Project Templates upgraded to .NET 8, GitHub Actions now using .NET 8 Docker containers, new Tailwind Blazor, Razor Pages &amp; MVC Templates now using ASP .NET Identity Auth &amp; EF ]]></itunes:summary>
+        <itunes:duration>678</itunes:duration>
+        <itunes:keywords>release,.net8,docker,identity-auth,blazor,mvc,razor</itunes:keywords>        
+        <itunes:image href="https://razor-ssg.web-templates.io/img/podcasts/cover-1920.jpg"/>
+    </item>
 </channel>
 </rss>

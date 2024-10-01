@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg" href="img/logo.svg">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://razor-ssg.web-templates.io/feed.xml" />
+    <title>ServiceStack v8.4 Release - ServiceStack</title>
+    <base href="/" />
+    <script>
+    if (location.search === "?dark") localStorage.setItem('color-scheme','dark') 
+    if (location.search === "?light") localStorage.removeItem('color-scheme') 
+    const cls = document.querySelector('html').classList
+    if (localStorage.getItem('color-scheme') === 'dark')
+        cls.add('dark')
+    else
+        cls.remove('dark')
+    </script>
+    <link rel="stylesheet" href="css/app.css">
+
+    <script type="importmap">
+{
+    "imports": {
+        "app.mjs": "./mjs/app.mjs",
+        "dtos.mjs": "./mjs/dtos.mjs",
+        "vue": "./lib/mjs/vue.min.mjs",
+        "@servicestack/client": "./lib/mjs/servicestack-client.min.mjs",
+        "@servicestack/vue": "./lib/mjs/servicestack-vue.min.mjs"
+    }
+}
+</script>
+    
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+<header class="top-0 fixed z-50 h-14 bg-white dark:bg-black opacity-90 w-full shadow pr-3">
+    <div class="flex flex-wrap items-center">
+        <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
+            <div class="cursor-pointer">
+                <a class="navbar-brand flex items-center" href="./">
+                    <svg class="w-8 h-8 sm:ml-2 sm:w-12 sm:h-12" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="currentColor" d="M10 6c1.544 1.76 2.276 4.15 2.217 6.61c3.968 1.67 9.924 6.12 11.181 12.39H28C26.051 14.31 14.918 6.77 10 6zm-2 7c4.67 4.913.81 11.582-4 12h18.97C21.5 18.289 11.95 13.533 8 13z"/></svg>
+                    <span class="hidden sm:block text-2xl font-semibold">MyApp</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-grow flex-shrink flex-nowrap justify-end items-center">
+            <nav class="relative flex flex-grow leading-6 font-semibold text-slate-700 dark:text-slate-200">
+                <ul class="flex flex-wrap items-center justify-end w-full m-0 pb-2 sm:pb-0">
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="whatsnew" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    What's New
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="videos" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Videos
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="podcasts" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Podcasts
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="creatorkit/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Creator Kit
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="blog" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Blog
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="posts/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Archive
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="speaking" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Speaking
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="uses" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Uses
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="about" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    About
+                                </a>
+                            </li>
+                    <li class="relative flex flex-wrap just-fu-start m-0">
+                        <div data-component="DarkModeToggle" class="ml-2 w-10"></div>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</header>
+<script type="module">
+import { mountAll } from "app.mjs"
+mountAll()
+</script>
+
+
+
+<div class="min-h-screen">
+    <main role="main" class="pt-14">
+        <div>
+            <div class="bg-slate-50 dark:bg-slate-900 lg:fixed lg:inset-y-0 lg:left-0 lg:flex lg:w-112 lg:items-start lg:overflow-y-auto xl:w-120">
+                <div class="relative z-10 mx-auto px-4 pb-4 pt-24 sm:px-6 md:max-w-2xl md:px-4 lg:min-h-full lg:flex-auto lg:border-x lg:border-slate-200 dark:border-slate-700 lg:px-8 xl:px-10">
+                    <a href="/podcasts"
+                       class="relative mx-auto block w-48 overflow-hidden rounded-lg bg-slate-200 dark:bg-slate-700 shadow-xl shadow-slate-200 dark:shadow-slate-700 sm:w-64 sm:rounded-xl lg:w-auto lg:rounded-2xl"
+                       aria-label="Homepage">
+                        <img class="w-full"
+                             src="/img/podcasts/cover.png"
+                             alt=""
+                             sizes="(min-width: 1024px) 20rem, (min-width: 640px) 16rem, 12rem"
+                             priority>
+                        <div class="absolute inset-0 rounded-lg ring-1 ring-inset ring-black/10 sm:rounded-xl lg:rounded-2xl"></div>
+                    </a>
+                    <div class="mt-10 text-center lg:mt-12 lg:text-left">
+                        <p class="text-xl font-bold text-slate-900 dark:text-slate-50">
+                            <a href="/podcasts">Their Side</a>
+                        </p>
+                        <p class="mt-3 text-lg font-medium leading-8 text-slate-700 dark:text-slate-200">
+                            Conversations with the most tragically misunderstood people of our time.
+                        </p>
+                    </div>
+        <section class="mt-12 hidden lg:block">
+            <h2 class="flex items-center font-mono text-sm font-medium leading-7 text-slate-900 dark:text-slate-50">
+        <svg aria-hidden="true" viewBox="0 0 10 10" class="h-2.5 w-2.5">
+            <path d="M0 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5Z"
+                  class="fill-violet-300" />
+            <path d="M6 1a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V1Z"
+                  class="fill-pink-300" />
+        </svg>
+                <span class="ml-2.5">About</span>
+            </h2>
+            <p class="mt-2 text-base leading-7 text-slate-700 dark:text-slate-200">
+                In this show, Eric and Wes dig deep to get to the facts with guests who have been labeled villains by a society quick to judge, without actually getting the full story. Tune in every Thursday to get to the truth with another misunderstood outcast as they share the missing context in their tragic tale.
+            </p>
+        </section>
+                    <section class="mt-10 lg:mt-12">
+                        <h2 class="sr-only flex items-center font-mono text-sm font-medium leading-7 text-slate-900 dark:text-slate-50 lg:not-sr-only">
+        <svg aria-hidden="true" viewBox="0 0 10 10" class="h-2.5 w-2.5">
+            <path d="M0 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5Z"
+                  class="fill-indigo-300" />
+            <path d="M6 1a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V1Z"
+                  class="fill-blue-300" />
+        </svg>
+                            <span class="ml-2.5">Listen</span>
+                        </h2>
+                        <div class="h-px bg-gradient-to-r from-slate-200/0 via-slate-200 to-slate-200/0 lg:hidden"></div>
+                        <ul role="list" class="mt-4 flex justify-center gap-10 text-base font-medium leading-7 text-slate-700 dark:text-slate-200 sm:gap-8 lg:flex-col lg:gap-4">
+                                <li>
+                                    <a href="https://podcasters.spotify.com/pod/show/servicestack" class="group flex items-center">
+                                        <svg aria-hidden='true' viewBox='0 0 32 32' class='h-8 w-8 fill-slate-400 dark:fill-slate-500 group-hover:fill-slate-600 dark:group-hover:fill-slate-300'><path d='M15.8 3a12.8 12.8 0 1 0 0 25.6 12.8 12.8 0 0 0 0-25.6Zm5.87 18.461a.8.8 0 0 1-1.097.266c-3.006-1.837-6.787-2.252-11.244-1.234a.796.796 0 1 1-.355-1.555c4.875-1.115 9.058-.635 12.432 1.427a.8.8 0 0 1 .265 1.096Zm1.565-3.485a.999.999 0 0 1-1.371.33c-3.44-2.116-8.685-2.728-12.755-1.493a1 1 0 0 1-.58-1.91c4.65-1.41 10.428-.726 14.378 1.7a1 1 0 0 1 .33 1.375l-.002-.002Zm.137-3.629c-4.127-2.45-10.933-2.675-14.871-1.478a1.196 1.196 0 1 1-.695-2.291c4.52-1.374 12.037-1.107 16.785 1.711a1.197 1.197 0 1 1-1.221 2.06'></path></svg>
+                                        <span class="hidden sm:ml-3 sm:block">Spotify</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://podcasts.apple.com/us/podcast/-net-technology-show/id1770031289" class="group flex items-center">
+                                        <svg aria-hidden='true' viewBox='0 0 32 32' class='h-8 w-8 fill-slate-400 dark:fill-slate-500 group-hover:fill-slate-600 dark:group-hover:fill-slate-300'><path fillrule='evenodd' cliprule='evenodd' d='M27.528 24.8c-.232.592-.768 1.424-1.536 2.016-.44.336-.968.664-1.688.88-.768.232-1.72.304-2.904.304H10.6c-1.184 0-2.128-.08-2.904-.304a4.99 4.99 0 0 1-1.688-.88c-.76-.584-1.304-1.424-1.536-2.016C4.008 23.608 4 22.256 4 21.4V10.6c0-.856.008-2.208.472-3.4.232-.592.768-1.424 1.536-2.016.44-.336.968-.664 1.688-.88C8.472 4.08 9.416 4 10.6 4h10.8c1.184 0 2.128.08 2.904.304a4.99 4.99 0 0 1 1.688.88c.76.584 1.304 1.424 1.536 2.016C28 8.392 28 9.752 28 10.6v10.8c0 .856-.008 2.208-.472 3.4Zm-9.471-6.312a1.069 1.069 0 0 0-.32-.688c-.36-.376-.992-.624-1.736-.624-.745 0-1.377.24-1.737.624-.183.2-.287.4-.32.688-.063.558-.024 1.036.04 1.807v.009c.065.736.184 1.72.336 2.712.112.712.2 1.096.28 1.368.136.448.625.832 1.4.832.776 0 1.273-.392 1.4-.832.08-.272.169-.656.28-1.368.152-1 .273-1.976.337-2.712.072-.776.104-1.256.04-1.816ZM16 16.375c1.088 0 1.968-.88 1.968-1.967 0-1.08-.88-1.968-1.968-1.968s-1.968.88-1.968 1.968.88 1.967 1.968 1.967Zm-.024-9.719c-4.592.016-8.352 3.744-8.416 8.336-.048 3.72 2.328 6.904 5.648 8.072.08.032.16-.04.152-.12a35.046 35.046 0 0 0-.041-.288c-.029-.192-.057-.384-.079-.576a.317.317 0 0 0-.168-.232 7.365 7.365 0 0 1-4.424-6.824c.04-4 3.304-7.256 7.296-7.288 4.088-.032 7.424 3.28 7.424 7.36 0 3.016-1.824 5.608-4.424 6.752a.272.272 0 0 0-.168.232l-.12.864c-.016.088.072.152.152.12a8.448 8.448 0 0 0 5.648-7.968c-.016-4.656-3.816-8.448-8.48-8.44Zm-5.624 8.376c.04-2.992 2.44-5.464 5.432-5.576 3.216-.128 5.88 2.456 5.872 5.64a5.661 5.661 0 0 1-2.472 4.672c-.08.056-.184-.008-.176-.096.016-.344.024-.648.008-.96 0-.104.04-.2.112-.272a4.584 4.584 0 0 0 1.448-3.336 4.574 4.574 0 0 0-4.752-4.568 4.585 4.585 0 0 0-4.392 4.448 4.574 4.574 0 0 0 1.448 3.456c.08.072.12.168.112.272-.016.32-.016.624.008.968 0 .088-.104.144-.176.096a5.65 5.65 0 0 1-2.472-4.744Z'></path></svg>
+                                        <span class="hidden sm:ml-3 sm:block">Apple Podcasts</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/podcasts/feed.xml" class="group flex items-center">
+                                        <svg aria-hidden='true' viewBox='0 0 32 32' class='h-8 w-8 fill-slate-400 dark:fill-slate-500 group-hover:fill-slate-600 dark:group-hover:fill-slate-300'><path fillrule='evenodd' cliprule='evenodd' d='M8.5 4h15A4.5 4.5 0 0 1 28 8.5v15a4.5 4.5 0 0 1-4.5 4.5h-15A4.5 4.5 0 0 1 4 23.5v-15A4.5 4.5 0 0 1 8.5 4ZM13 22a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-6-6a9 9 0 0 1 9 9h3A12 12 0 0 0 7 13v3Zm5.74-4.858A15 15 0 0 0 7 10V7a18 18 0 0 1 18 18h-3a15 15 0 0 0-9.26-13.858Z'></path></svg>
+                                        <span class="hidden sm:ml-3 sm:block">RSS Feed</span>
+                                    </a>
+                                </li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+            <div class="border-t border-slate-200 dark:border-slate-700 lg:relative lg:mb-28 lg:ml-112 lg:border-t-0 xl:ml-120">
+        <svg aria-hidden="true" class="absolute left-0 top-0 h-20 w-full">
+            <defs>
+                <linearGradient id="waveform-263-fade" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="40%" stop-color="white"></stop>
+                    <stop offset="100%" stop-color="black"></stop>
+                </linearGradient>
+                <linearGradient id="waveform-263-gradient">
+                    <stop offset="0%" stop-color="#4989E8"></stop>
+                    <stop offset="50%" stop-color="#6159DA"></stop>
+                    <stop offset="100%" stop-color="#FF54AD"></stop>
+                </linearGradient>
+                <mask id="waveform-263-mask">
+                    <rect width="100%" height="100%" fill="url(#waveform-263-pattern)"></rect>
+                </mask>
+                <pattern id="waveform-263-pattern"
+                         width="400"
+                         height="100%"
+                         patternUnits="userSpaceOnUse">
+                    <rect width="2"
+                          height="45"
+                          x="2"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="75"
+                          x="6"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="56"
+                          x="10"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="64"
+                          x="14"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="52"
+                          x="18"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="68"
+                          x="22"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="74"
+                          x="26"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="40"
+                          x="30"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="46"
+                          x="34"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="67"
+                          x="38"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="62"
+                          x="42"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="76"
+                          x="46"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="74"
+                          x="50"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="64"
+                          x="54"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="75"
+                          x="58"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="63"
+                          x="62"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="58"
+                          x="66"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="43"
+                          x="70"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="55"
+                          x="74"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="57"
+                          x="78"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="60"
+                          x="82"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="51"
+                          x="86"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="60"
+                          x="90"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="79"
+                          x="94"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="61"
+                          x="98"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="54"
+                          x="102"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="63"
+                          x="106"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="77"
+                          x="110"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="58"
+                          x="114"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="45"
+                          x="118"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="75"
+                          x="122"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="43"
+                          x="126"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="66"
+                          x="130"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="68"
+                          x="134"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="65"
+                          x="138"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="58"
+                          x="142"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="73"
+                          x="146"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="53"
+                          x="150"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="44"
+                          x="154"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="56"
+                          x="158"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="55"
+                          x="162"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="74"
+                          x="166"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="41"
+                          x="170"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="55"
+                          x="174"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="42"
+                          x="178"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="67"
+                          x="182"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="73"
+                          x="186"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="74"
+                          x="190"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="56"
+                          x="194"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="61"
+                          x="198"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="41"
+                          x="202"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="75"
+                          x="206"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="49"
+                          x="210"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="40"
+                          x="214"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="61"
+                          x="218"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="77"
+                          x="222"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="43"
+                          x="226"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="40"
+                          x="230"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="61"
+                          x="234"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="40"
+                          x="238"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="58"
+                          x="242"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="76"
+                          x="246"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="57"
+                          x="250"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="55"
+                          x="254"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="52"
+                          x="258"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="76"
+                          x="262"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="46"
+                          x="266"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="67"
+                          x="270"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="54"
+                          x="274"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="60"
+                          x="278"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="77"
+                          x="282"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="64"
+                          x="286"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="47"
+                          x="290"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="76"
+                          x="294"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="73"
+                          x="298"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="55"
+                          x="302"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="55"
+                          x="306"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="56"
+                          x="310"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="72"
+                          x="314"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="64"
+                          x="318"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="79"
+                          x="322"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="68"
+                          x="326"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="74"
+                          x="330"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="69"
+                          x="334"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="76"
+                          x="338"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="75"
+                          x="342"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="42"
+                          x="346"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="76"
+                          x="350"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="79"
+                          x="354"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="50"
+                          x="358"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="56"
+                          x="362"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="62"
+                          x="366"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="63"
+                          x="370"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="70"
+                          x="374"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="78"
+                          x="378"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="55"
+                          x="382"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="54"
+                          x="386"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="73"
+                          x="390"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="62"
+                          x="394"
+                          fill="url(#waveform-263-fade)"></rect>
+                    <rect width="2"
+                          height="67"
+                          x="398"
+                          fill="url(#waveform-263-fade)"></rect>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#waveform-263-gradient)" mask="url(#waveform-263-mask)" opacity="0.25"></rect>
+        </svg>
+                <div class="relative">
+                    
+<link rel="stylesheet" href="css/typography.css">
+<link rel="stylesheet" href="css/lite-yt-embed.css">
+
+
+<article class="py-16 lg:py-36">
+    <div class="lg:px-8">
+        <div class="lg:max-w-4xl">
+            <div class="mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4 lg:px-0">
+                <header class="flex flex-col">
+                    <div class="flex items-center gap-6">
+        <button data-slug="v8-4-release" data-title="ServiceStack v8.4 Release" data-url="https://media.servicestack.com/podcasts/v8-4-release.mp3"
+                type="button" aria-label="Play episode ServiceStack v8.4 Release"
+                onclick="togglePlayButton(this)"
+                class="group relative flex h-18 w-18 flex-shrink-0 items-center justify-center rounded-full bg-slate-700 dark:bg-slate-200 hover:bg-slate-900 dark:hover:bg-slate-50 focus:outline-none focus:ring focus:ring-slate-700 dark:focus:ring-slate-200 focus:ring-offset-4 dark:ring-offset-black">
+            <div class="paused flex items-center gap-x-1">
+                <svg viewBox="0 0 36 36" aria-hidden="true" class="h-9 w-9 fill-white dark:fill-black group-active:fill-white/80 dark:group-active:fill-black/80">
+                    <path d="M33.75 16.701C34.75 17.2783 34.75 18.7217 33.75 19.299L11.25 32.2894C10.25 32.8668 9 32.1451 9 30.9904L9 5.00962C9 3.85491 10.25 3.13323 11.25 3.71058L33.75 16.701Z" />
+                </svg>
+            </div>
+            <div class="hidden playing flex items-center gap-x-1">
+                <svg viewBox="0 0 36 36" aria-hidden="true" class="h-9 w-9 fill-white dark:fill-black group-active:fill-white/80 dark:group-active:fill-black/80">
+                    <path d="M8.5 4C7.67157 4 7 4.67157 7 5.5V30.5C7 31.3284 7.67157 32 8.5 32H11.5C12.3284 32 13 31.3284 13 30.5V5.5C13 4.67157 12.3284 4 11.5 4H8.5ZM24.5 4C23.6716 4 23 4.67157 23 5.5V30.5C23 31.3284 23.6716 32 24.5 32H27.5C28.3284 32 29 31.3284 29 30.5V5.5C29 4.67157 28.3284 4 27.5 4H24.5Z" />
+                </svg>
+            </div>
+        </button>
+        <script>
+        window.togglePlayButton = function (el) {
+            const isPlaying = window.toggleEpisode(el.dataset,"podcast")
+            el.querySelector('.paused').classList.toggle('hidden', isPlaying)
+            el.querySelector('.playing').classList.toggle('hidden', !isPlaying)
+            el.setAttribute('aria-label', (isPlaying ? 'Play' : 'Pause') + ` episode ${el.dataset.title}`);
+        }
+        </script>
+                        <div class="flex flex-col">
+                            <h1 class="mt-2 text-4xl font-bold text-slate-900 dark:text-slate-50">
+                                ServiceStack v8.4 Release
+                            </h1>
+                            <time dateTime=2024-09-11 00:00:00Z class="order-first font-mono text-sm leading-7 text-slate-500 dark:text-slate-400">
+                                Wednesday, 11 September 2024
+                            </time>
+                        </div>
+                    </div>
+                    <p class="ml-24 mt-3 text-lg font-medium leading-8 text-slate-700 dark:text-slate-200">
+                        The latest features and improvements in ServiceStack v8.4 covering Background Jobs, SQLite Request Logs, Scalable SQLite Apps and more!
+                    </p>
+                        <div class="ml-24 mt-4 flex flex-wrap gap-1">
+                                <a href="podcasts/tagged/release" class="text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">release</a>
+                                <a href="podcasts/tagged/jobs" class="text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">jobs</a>
+                                <a href="podcasts/tagged/logging" class="text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">logging</a>
+                                <a href="podcasts/tagged/admin-ui" class="text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">admin-ui</a>
+                                <a href="podcasts/tagged/commands" class="text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">commands</a>
+                                <a href="podcasts/tagged/api" class="text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">api</a>
+                        </div>
+                </header>
+                <hr class="my-12 border-gray-200" />
+                <div id="podcast" class="prose prose-slate mt-14 [&>h2:nth-of-type(3n)]:before:bg-violet-200 [&>h2:nth-of-type(3n+2)]:before:bg-indigo-200 [&>h2]:mt-12 [&>h2]:flex [&>h2]:items-center [&>h2]:font-mono [&>h2]:text-sm [&>h2]:font-medium [&>h2]:leading-7 [&>h2]:text-slate-900 dark:text-slate-50 [&>h2]:before:mr-3 [&>h2]:before:h-3 [&>h2]:before:w-1.5 [&>h2]:before:rounded-r-full [&>h2]:before:bg-cyan-200 [&>ul]:mt-6 [&>ul]:list-['\2013\20'] [&>ul]:pl-5">
+                    <p>This episode covers the ServiceStack v8.4 release which introduces Background Jobs,
+a feature for queueing and managing background tasks. This feature leverages SQLite as a
+persistent store, providing robust, scalable, and infrastructure-free job management.
+All existing .NET 8 Identity Auth templates have also been upgraded to integrate with
+Background Jobs for sending Identity Auth emails.</p>
+<p>The release also includes SQLite Request Logs support for persisting Request Logs into monthly
+archivable rolling databases enabling a richer monitoring and logging experience.</p>
+<p>Finally, this episode highlights the recommended usage of SQLite in high performance scalable
+applications with a number of OSS Apps built by ServiceStack, demonstrating the
+advantages of SQLite in web development.</p>
+<h3 id="getting-started">Getting Started<a class="header-anchor" href="javascript:;" onclick="location.hash='#getting-started'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Create any new <a href="/start">Identity Auth template</a> which is pre-configured with Background Jobs, e.g:</p>
+<project-creator v-slot="x">
+    <project-template :name="x.text" repo="NetCoreTemplates/blazor-vue" :tags="['auth','vue']">
+        <div class="mb-3 text-xl font-medium text-gray-700 dark:text-gray-200">Blazor Vue</div>
+        <template #icon>
+            <svg class="w-12 h-12" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" style="color:rgb(168 85 247)" role="img" class="" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M23.834 8.101a13.912 13.912 0 0 1-13.643 11.72a10.105 10.105 0 0 1-1.994-.12a6.111 6.111 0 0 1-5.082-5.761a5.934 5.934 0 0 1 11.867-.084c.025.983-.401 1.846-1.277 1.871c-.936 0-1.374-.668-1.374-1.567v-2.5a1.531 1.531 0 0 0-1.52-1.533H8.715a3.648 3.648 0 1 0 2.695 6.08l.073-.11l.074.121a2.58 2.58 0 0 0 2.2 1.048a2.909 2.909 0 0 0 2.695-3.04a7.912 7.912 0 0 0-.217-1.933a7.404 7.404 0 0 0-14.64 1.603a7.497 7.497 0 0 0 7.308 7.405s.549.05 1.167.035a15.803 15.803 0 0 0 8.475-2.528c.036-.025.072.025.048.061a12.44 12.44 0 0 1-9.69 3.963a8.744 8.744 0 0 1-8.9-8.972a9.049 9.049 0 0 1 3.635-7.247a8.863 8.863 0 0 1 5.229-1.726h2.813a7.915 7.915 0 0 0 5.839-2.578a.11.11 0 0 1 .059-.034a.112.112 0 0 1 .12.053a.113.113 0 0 1 .015.067a7.934 7.934 0 0 1-1.227 3.549a.107.107 0 0 0-.014.06a.11.11 0 0 0 .073.095a.109.109 0 0 0 .062.004a8.505 8.505 0 0 0 5.913-4.876a.155.155 0 0 1 .055-.053a.15.15 0 0 1 .147 0a.153.153 0 0 1 .054.053A10.779 10.779 0 0 1 23.834 8.1zM8.895 11.628a2.188 2.188 0 1 0 2.188 2.188v-2.042a.158.158 0 0 0-.15-.15Z"></path></svg>
+        </template>
+    </project-template>
+</project-creator>
+<p>Alternatively create a new project with the <a href="https://docs.servicestack.net/dotnet-new">x dotnet tool</a>:</p>
+<div class="not-prose sh-copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-800">
+                    <div class="pl-4 py-1 pb-1.5 align-middle whitespace-pre text-base text-gray-100"><p>x new blazor-vue ProjectName</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-green-600 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<h3 id="videos">Videos<a class="header-anchor" href="javascript:;" onclick="location.hash='#videos'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<lite-youtube class="w-full mx-4 my-4" width="560" height="315" videoid="2Cza_a_rrjA" playlabel="Durable Background Jobs and Scheduled Tasks for .NET" style="background-image:url('https://img.youtube.com/vi/2Cza_a_rrjA/maxresdefault.jpg')"></lite-youtube>
+<lite-youtube class="w-full mx-4 my-4" width="560" height="315" videoid="DtB8KaXXMCM" playlabel="Schedule your Reoccurring Tasks with Background Jobs!" style="background-image:url('https://img.youtube.com/vi/DtB8KaXXMCM/maxresdefault.jpg')"></lite-youtube>
+<h3 id="links">Links<a class="header-anchor" href="javascript:;" onclick="location.hash='#links'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<ul>
+<li><a href="https://docs.servicestack.net/releases/v8_04">ServiceStack v8.4 Release Notes</a></li>
+</ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<script type="module">
+import { init } from "app.mjs"
+init()
+</script>
+
+<link rel="stylesheet" href="css/highlight.css">
+<script src="lib/js/highlight.js"></script>
+<script>hljs.highlightAll()</script>
+<script src="lib/js/lite-yt-embed.js"></script>
+<script src="mjs/docs.mjs" type="module"></script>
+
+<script type="module">
+import { mount } from "app.mjs"
+
+    const App = {
+        setup() {
+            function nav(url) {
+                window.open(url)
+            }
+            return { nav }
+        }
+    }
+    mount('#podcast', App)
+</script>
+
+                </div>
+            </div>
+            <footer class="border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 py-10 pb-40 sm:py-16 sm:pb-32 lg:hidden">
+                <div class="mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4">
+        <section class="mt-12 hidden lg:block">
+            <h2 class="flex items-center font-mono text-sm font-medium leading-7 text-slate-900 dark:text-slate-50">
+        <svg aria-hidden="true" viewBox="0 0 10 10" class="h-2.5 w-2.5">
+            <path d="M0 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5Z"
+                  class="fill-violet-300" />
+            <path d="M6 1a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V1Z"
+                  class="fill-pink-300" />
+        </svg>
+                <span class="ml-2.5">About</span>
+            </h2>
+            <p class="mt-2 text-base leading-7 text-slate-700 dark:text-slate-200">
+                In this show, Eric and Wes dig deep to get to the facts with guests who have been labeled villains by a society quick to judge, without actually getting the full story. Tune in every Thursday to get to the truth with another misunderstood outcast as they share the missing context in their tragic tale.
+            </p>
+        </section>
+                </div>
+            </footer>
+            <div class="fixed inset-x-0 bottom-0 z-10 lg:left-112 xl:left-120">
+                <div id="audioPlayer"></div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script type="module">
+import AudioPlayer from "./pages/podcasts/AudioPlayer.mjs"
+import { init, mount, unmount } from "app.mjs"
+import {EventBus} from "@servicestack/client"
+init()
+
+const audioPlayer = document.getElementById('audioPlayer')
+
+let lastEpisode = null
+let lastApp = null
+
+const bus = new EventBus()
+
+globalThis.toggleEpisode = function (episode,source="layout") {
+    if (!lastEpisode || episode.url !== lastEpisode?.src) {
+        unmount(audioPlayer)
+        lastEpisode = { id:episode.slug, title:episode.title, src:episode.url, autoPlay:true, bus}
+        lastApp = mount(audioPlayer, AudioPlayer, lastEpisode)
+        return true
+    } else {
+       bus.publish('toggleAudioPlayer')
+       return !audioPlayer.querySelector('audio')?.paused
+    }
+}
+</script>
+
+
+
+</body>
+</html>
