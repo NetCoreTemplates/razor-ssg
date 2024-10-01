@@ -1,0 +1,120 @@
+﻿@page "/podcasts/feed.xml"
+@attribute [RenderStatic]
+@inject MarkdownPodcasts Podcasts
+@{
+    Layout = "_LayoutEmpty";
+    Response.ContentType = MimeTypes.Xml;
+    var itunes = Podcasts.Config.Itunes;
+    var categories = itunes?.Categories ?? (Podcasts.Config.Category != null ? [Podcasts.Config.Category] : []);
+}
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:podcast="https://podcastindex.org/namespace/1.0" xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
+<channel>
+    <title>@Podcasts.Config.Title</title>
+    @Html.Raw($"<link>{Podcasts.GetPodcastsAbsoluteUrl()}</link>")
+    <description><![CDATA[ @Podcasts.Config.Description ]]></description>
+@if (Podcasts.Config.ImageUrl != null)
+{
+    <image>
+        <url>@Podcasts.Config.GetAbsoluteImageUrl()</url>
+        <title>@(Podcasts.Config.ImageTitle ?? Podcasts.Config.Title)</title>
+        @Html.Raw($"<link>{Podcasts.Config.ImageLink ?? Podcasts.GetPodcastsAbsoluteUrl()}</link>")
+    </image>
+}
+    <generator>razor-ssg</generator>
+    <copyright>@Podcasts.Config.CopyrightOwner</copyright>
+    <lastBuildDate>@DateTime.UtcNow.ToString("R")</lastBuildDate>
+    <managingEditor>@Podcasts.Config.Email</managingEditor>
+    <webMaster>@Podcasts.Config.Email</webMaster>
+    <atom:link href="@Podcasts.GetFeedAbsoluteUrl()" rel="self" type="application/rss+xml" />
+@if (itunes != null)
+{
+    if (itunes.Author != null)
+    {
+    <itunes:author>@(itunes.Author)</itunes:author>
+    }
+    if (itunes.OwnerName != null)
+    {
+    <itunes:owner>
+        <itunes:name>@itunes.OwnerName</itunes:name>
+        <itunes:email>@itunes.OwnerEmail</itunes:email>
+    </itunes:owner>        
+    }
+    if (Podcasts.Config.ItunesImageUrl != null)
+    {
+    <itunes:image href="@Podcasts.Config.GetAbsoluteItunesImageUrl()"/>
+    }
+    <itunes:subtitle>@(itunes.Subtitle ?? Podcasts.Config.Description)</itunes:subtitle>
+    <itunes:summary><![CDATA[ @(itunes.Summary ?? Podcasts.Config.About) ]]></itunes:summary>
+    @foreach (var category in categories)
+    {
+    if (category.Contains('/'))
+    {
+    <itunes:category text="@category.LeftPart('/')">
+        <itunes:category text="@category.RightPart('/')" />
+    </itunes:category>
+    }
+    else
+    {
+    <itunes:category text="@category"/>
+    }
+    }
+    if (itunes.Explicit != null)
+    {
+    <itunes:explicit>@(itunes.Explicit.Value ? "yes" : "no")</itunes:explicit>
+    }
+    if (itunes.Type != null)
+    {
+    <itunes:type>@(itunes.Type)</itunes:type>
+    }
+}
+@foreach (var doc in Podcasts.GetEpisodes().Take(50))
+{
+    var author = Podcasts.Authors.FirstOrDefault(x => x.Name == doc.Author);
+    <item>
+        <title>@doc.Title</title>
+        @Html.Raw($"<link>{Podcasts.Config.PublicBaseUrl.CombineWith("podcasts", doc.Slug)}</link>")
+        @if (author != null)
+        {
+        <author>@author.Email (@author.Name)</author>
+        }
+        <guid isPermaLink="false">@Podcasts.Config.PublicBaseUrl.CombineWith("podcasts", doc.Slug)</guid>
+        <pubDate>@doc.Date!.Value.ToString("R")</pubDate>
+        <atom:updated>@doc.Date!.Value.ToUniversalTime().ToString("yyyy-MM-dd'T'HH:mm:ssZ")</atom:updated>
+        @if (doc.Media != null)
+        {
+        <enclosure url="@doc.Url" length="@doc.Media.Size" type="audio/mpeg"/>
+        }
+        else
+        {
+        <enclosure url="@doc.Url" type="audio/mpeg"/>
+        }
+        @foreach (var tag in doc.Tags.Safe())
+        {
+        <category>@tag</category>
+        }
+        @if (doc.Summary != null)
+        {
+        <description>@doc.Summary</description>
+        <itunes:summary><![CDATA[ @doc.Summary ]]></itunes:summary>
+        }
+        else
+        {
+        <description>@Html.Raw($"<![CDATA[ {doc.Preview} ]]>")</description>
+        <itunes:summary>@Html.Raw($"<![CDATA[ {doc.Preview} ]]>")</itunes:summary>
+        }
+        @if (doc.Media?.Duration != null)
+        {
+        <itunes:duration>@((int)doc.Media.Duration.Value.TotalSeconds)</itunes:duration>
+        }
+        @if (doc.Tags?.Count > 0)
+        {
+        <itunes:keywords>@string.Join(",", doc.Tags)</itunes:keywords>        
+        }
+        @if (Podcasts.Config.ItunesImageUrl != null)
+        {
+        <itunes:image href="@Podcasts.Config.GetAbsoluteItunesImageUrl()"/>
+        }
+    </item>
+}
+</channel>
+</rss>

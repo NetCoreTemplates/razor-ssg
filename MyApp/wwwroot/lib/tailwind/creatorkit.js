@@ -15,7 +15,7 @@ export const SignInDialog = {
             <form @submit.prevent="submit">
                 <div class="flex flex-col gap-y-4">
                     <TextInput id="userName" label="Email" help="Email you signed up with" v-model="request.userName" placeholder="" />
-                    <TextInput id="password" type="password" help="6 characters or more" v-model="request.password" placeholder="" />
+                    <TextInput id="password" type="password" help="8 characters or more" v-model="request.password" placeholder="" />
                 </div>
                 <div class="mt-8">
                     <PrimaryButton class="w-full mb-4">Sign In</PrimaryButton>

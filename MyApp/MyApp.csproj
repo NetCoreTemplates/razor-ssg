@@ -29,4 +29,9 @@
     <!-- Required for Razor compilation on change: https://docs.microsoft.com/en-us/aspnet/core/mvc/views/view-compilation?view=aspnetcore-5.0 -->
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.*" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\img\podcasts\" />
+    <Folder Include="wwwroot\pages\" />
+  </ItemGroup>
 </Project>

@@ -26,6 +26,13 @@ public class MarkdigConfig
     }
 }
 
+ public class MediaInfo
+{
+    public int? Size { get; set; }
+    public TimeSpan? Duration { get; set; }
+    public string? Format { get; set; }
+}
+
 public class MarkdownFileBase
 {
     public string Path { get; set; } = default!;
@@ -63,6 +70,7 @@ public class MarkdownFileBase
     public int? LineCount { get; set; }
     public string? Group { get; set; }
     public int? Order { get; set; }
+    public MediaInfo? Media { get; set; }
     public DocumentMap? DocumentMap { get; set; }
 
     /// <summary>
@@ -628,19 +636,19 @@ public class IncludeContainerInlineRenderer : HtmlObjectRenderer<CustomContainer
         MarkdownFileBase? doc = null;
         if (include.EndsWith(".md"))
         {
-            var includes = HostContext.Resolve<MarkdownIncludes>();
-            var markdown = HostContext.Resolve<MarkdownPages>();
+            var includes = HostContext.TryResolve<MarkdownIncludes>();
+            var pages = HostContext.TryResolve<MarkdownPages>();
             // default relative path to _includes/
             include = include[0] != '/'
                 ? "_includes/" + include
                 : include.TrimStart('/');
 
-            doc = includes.Pages.FirstOrDefault(x => x.Path == include);
-            if (doc == null)
+            doc = includes?.Pages.FirstOrDefault(x => x.Path == include);
+            if (doc == null && pages != null)
             {
                 var prefix = include.LeftPart('/');
                 var slug = include.LeftPart('.');
-                var allIncludes = markdown.GetVisiblePages(prefix, allDirectories: true);
+                var allIncludes = pages.GetVisiblePages(prefix, allDirectories: true);
                 doc = allIncludes.FirstOrDefault(x => x.Slug == slug);
             }
         }

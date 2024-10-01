@@ -15,6 +15,7 @@ public class ConfigureSsg : IHostingStartup
             services.AddSingleton<MarkdownWhatsNew>();
             services.AddSingleton<MarkdownVideos>();
             services.AddSingleton<MarkdownBlog>();
+            services.AddSingleton<MarkdownPodcasts>();
             services.AddSingleton<MarkdownMeta>();
         })
         .ConfigureAppHost(
@@ -39,16 +40,18 @@ public class ConfigureSsg : IHostingStartup
                 var whatsNew = appHost.Resolve<MarkdownWhatsNew>();
                 var videos = appHost.Resolve<MarkdownVideos>();
                 var blogPosts = appHost.Resolve<MarkdownBlog>();
+                var podcasts = appHost.Resolve<MarkdownPodcasts>();
                 var meta = appHost.Resolve<MarkdownMeta>();
 
                 //blogPosts.Authors = BlogConfig.Instance.Authors;
-                meta.Features = [pages, whatsNew, videos, blogPosts];
+                meta.Features = [pages, whatsNew, videos, blogPosts, podcasts];
                 
                 includes.LoadFrom("_includes");
                 pages.LoadFrom("_pages");
                 whatsNew.LoadFrom("_whatsnew");
                 videos.LoadFrom("_videos");
                 blogPosts.LoadFrom("_posts");
+                podcasts.LoadFrom("_podcasts");
             },
             afterAppHostInit: appHost =>
             {

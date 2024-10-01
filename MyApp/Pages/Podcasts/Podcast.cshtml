@@ -1,0 +1,143 @@
+@page "/podcasts/{Slug}"
+@model PodcastModel
+@inject MarkdownPodcasts Podcasts
+@implements IRenderStatic<PodcastModel>
+@functions {
+    public List<PodcastModel> GetStaticProps(RenderContext ctx)
+    {
+        var podcasts = ctx.Resolve<MarkdownPodcasts>();
+        return podcasts.VisibleEpisodes.Map(doc => new PodcastModel { Slug = doc.Slug });
+    }
+}
+
+@{
+    Layout = "_LayoutPodcast";
+    var doc = Podcasts.FindPodcastBySlug(Model.Slug!);
+    if (doc == null)
+    {
+        Response.Redirect("/404");
+        return;
+    }
+    if (doc.Layout != null)
+        Layout = doc.Layout == "none"
+            ? null
+            : doc.Layout;
+
+    ViewData["Title"] = doc.Title;
+
+    var author = Podcasts.Authors.FirstOrDefault(x => x.Name == doc.Author);
+    var image = doc.Image ?? Podcasts.FallbackSplashUrl;
+    
+    var docMjs = Podcasts.VirtualFiles.GetFile($"/wwwroot/podcasts/{doc.Slug}.mjs");
+    var docCss = Podcasts.VirtualFiles.GetFile($"/wwwroot/podcasts/{doc.Slug}.css");
+
+    void EpisodePlayButton(MarkdownFileBase episode)
+    {
+        <button data-slug="@episode.Slug" data-title="@episode.Title" data-url="@episode.Url"
+                type="button" aria-label="Play episode @episode.Title"
+                onclick="togglePlayButton(this)"
+                class="group relative flex h-18 w-18 flex-shrink-0 items-center justify-center rounded-full bg-slate-700 dark:bg-slate-200 hover:bg-slate-900 dark:hover:bg-slate-50 focus:outline-none focus:ring focus:ring-slate-700 dark:focus:ring-slate-200 focus:ring-offset-4 dark:ring-offset-black">
+            <div class="paused flex items-center gap-x-1">
+                <svg viewBox="0 0 36 36" aria-hidden="true" class="h-9 w-9 fill-white dark:fill-black group-active:fill-white/80 dark:group-active:fill-black/80">
+                    <path d="M33.75 16.701C34.75 17.2783 34.75 18.7217 33.75 19.299L11.25 32.2894C10.25 32.8668 9 32.1451 9 30.9904L9 5.00962C9 3.85491 10.25 3.13323 11.25 3.71058L33.75 16.701Z" />
+                </svg>
+            </div>
+            <div class="hidden playing flex items-center gap-x-1">
+                <svg viewBox="0 0 36 36" aria-hidden="true" class="h-9 w-9 fill-white dark:fill-black group-active:fill-white/80 dark:group-active:fill-black/80">
+                    <path d="M8.5 4C7.67157 4 7 4.67157 7 5.5V30.5C7 31.3284 7.67157 32 8.5 32H11.5C12.3284 32 13 31.3284 13 30.5V5.5C13 4.67157 12.3284 4 11.5 4H8.5ZM24.5 4C23.6716 4 23 4.67157 23 5.5V30.5C23 31.3284 23.6716 32 24.5 32H27.5C28.3284 32 29 31.3284 29 30.5V5.5C29 4.67157 28.3284 4 27.5 4H24.5Z" />
+                </svg>
+            </div>
+        </button>
+        <script>
+        window.togglePlayButton = function (el) {
+            const isPlaying = window.toggleEpisode(el.dataset,"podcast")
+            el.querySelector('.paused').classList.toggle('hidden', isPlaying)
+            el.querySelector('.playing').classList.toggle('hidden', !isPlaying)
+            el.setAttribute('aria-label', (isPlaying ? 'Play' : 'Pause') + ` episode ${el.dataset.title}`);
+        }
+        </script>
+    }
+}
+<link rel="stylesheet" href="css/typography.css">
+<link rel="stylesheet" href="css/lite-yt-embed.css">
+
+@{
+    if (docCss != null)
+    {
+        <link rel="stylesheet" href="posts/@(doc.Slug).css">
+    }
+}
+
+<article class="py-16 lg:py-36">
+    <div class="lg:px-8">
+        <div class="lg:max-w-4xl">
+            <div class="mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4 lg:px-0">
+                <header class="flex flex-col">
+                    <div class="flex items-center gap-6">
+                        @{ EpisodePlayButton(doc); }
+                        <div class="flex flex-col">
+                            <h1 class="mt-2 text-4xl font-bold text-slate-900 dark:text-slate-50">
+                                @doc.Title
+                            </h1>
+                            <time dateTime=@($"{doc.Date:u}") class="order-first font-mono text-sm leading-7 text-slate-500 dark:text-slate-400">
+                                @($"{doc.Date:D}")
+                            </time>
+                        </div>
+                    </div>
+                    <p class="ml-24 mt-3 text-lg font-medium leading-8 text-slate-700 dark:text-slate-200">
+                        @doc.Summary
+                    </p>
+                    @if (doc.Tags?.Count > 0)
+                    {
+                        <div class="ml-24 mt-4 flex flex-wrap gap-1">
+                            @foreach (var tag in doc.Tags)
+                            {
+                                <a href="@Podcasts.GetTagLink(tag)" class="text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">@tag</a>
+                            }
+                        </div>
+                    }
+                </header>
+                <hr class="my-12 border-gray-200" />
+                <div id="podcast" class="prose prose-slate mt-14 [&>h2:nth-of-type(3n)]:before:bg-violet-200 [&>h2:nth-of-type(3n+2)]:before:bg-indigo-200 [&>h2]:mt-12 [&>h2]:flex [&>h2]:items-center [&>h2]:font-mono [&>h2]:text-sm [&>h2]:font-medium [&>h2]:leading-7 [&>h2]:text-slate-900 dark:text-slate-50 [&>h2]:before:mr-3 [&>h2]:before:h-3 [&>h2]:before:w-1.5 [&>h2]:before:rounded-r-full [&>h2]:before:bg-cyan-200 [&>ul]:mt-6 [&>ul]:list-['\2013\20'] [&>ul]:pl-5">
+                    @Html.Raw(doc.Preview)
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<script type="module">
+import { init } from "app.mjs"
+init()
+</script>
+
+<link rel="stylesheet" href="css/highlight.css">
+<script src="lib/js/highlight.js"></script>
+<script>hljs.highlightAll()</script>
+<script src="lib/js/lite-yt-embed.js"></script>
+<script src="mjs/docs.mjs" type="module"></script>
+
+<script type="module">
+import { mount } from "app.mjs"
+@if (docMjs != null)
+{
+    <text>
+        import App from "./podcasts/@(doc.Slug).mjs" 
+    </text>
+}
+else
+{
+    <text>
+    const App = {
+        setup() {
+            function nav(url) {
+                window.open(url)
+            }
+            return { nav }
+        }
+    }
+    </text>
+}
+mount('#podcast', App)
+</script>

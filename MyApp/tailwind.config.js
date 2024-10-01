@@ -13,7 +13,7 @@ const defaultTheme = {
 }
 
 module.exports = {
-  content: ["./**/*.{html,js,mjs,md,cshtml,razor}","./Pages/**/*.{cshtml,razor}"],
+  content: ["./**/*.{html,cs,js,mjs,md,cshtml,razor,json}","./Pages/**/*.{cshtml,razor}"],
   darkMode: 'class',
   theme: {
     extend: {

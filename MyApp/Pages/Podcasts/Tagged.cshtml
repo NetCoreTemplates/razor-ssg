@@ -1,0 +1,55 @@
+@page "/podcasts/tagged/{slug}"
+@using MyApp.Pages.Shared
+@model MyApp.Pages.Posts.TaggedModel
+@inject MarkdownPodcasts Podcasts
+
+@implements IRenderStatic<MyApp.Pages.Posts.TaggedModel>
+@functions {
+    public List<Posts.TaggedModel> GetStaticProps(RenderContext ctx) => ctx.Resolve<MarkdownPodcasts>()
+        .TagSlugMap.Keys.Map(x => new Posts.TaggedModel { Slug = x });
+}
+
+@{
+    Layout = "_LayoutPodcast";
+    var selectedTag = Podcasts.GetTagBySlug(Model.Slug);
+    ViewData["Title"] = $"{selectedTag} tagged podcast episodes";
+    
+    var allEpisodes = Podcasts.GetEpisodes();
+    var allTags = allEpisodes.SelectMany(x => x.Tags).Distinct().ToList();
+    var tagCounts = new Dictionary<string, int>();
+    allTags.Each(tag => tagCounts[tag] = allEpisodes.Count(x => x.Tags.Safe().Contains(tag)));
+}
+
+<div class="pb-12 pt-16 sm:pb-4 lg:pt-12">
+    <div class="lg:px-8">
+        <div class="lg:max-w-4xl">
+            <div class="mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4 lg:px-0">
+                <h1 class="text-2xl font-bold leading-7 text-slate-900">
+                    Episodes
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="divide-y divide-slate-100 dark:divide-slate-800 sm:mt-4 lg:mt-8 lg:border-t lg:border-slate-100 dark:lg:border-slate-800">
+
+        <div class="relative p-4 mx-auto max-w-7xl">
+            <div class="flex flex-wrap justify-center">
+            @foreach (var tag in allTags.OrderByDescending(tag => tagCounts[tag]))
+            {
+                if (tag == selectedTag)
+                {
+                    <span class="mr-2 mb-2 text-xs leading-5 font-semibold bg-indigo-600 dark:bg-indigo-300 text-white dark:text-black rounded-full py-1 px-3 flex items-center space-x-2">@tag</span>
+                }
+                else
+                {
+                    <a href="@Podcasts.GetTagLink(tag)" class="mr-2 mb-2 text-xs leading-5 font-semibold bg-slate-400/10 dark:bg-slate-400/40 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:hover:bg-slate-400/50 dark:highlight-white/5">@tag</a>
+                }
+            }
+            </div>
+        </div>
+
+        @await Html.PartialAsync(nameof(PodcastEpisodes), 
+            new PodcastEpisodes { Episodes = Podcasts.GetEpisodes(tag:selectedTag ?? "unknown") })
+    </div>
+</div>

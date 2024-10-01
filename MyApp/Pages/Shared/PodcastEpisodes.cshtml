@@ -1,0 +1,84 @@
+@page
+@model MyApp.Pages.Shared.PodcastEpisodes
+@inject MarkdownPodcasts Podcasts
+
+@{
+    void EpisodePlayButton(MarkdownFileBase episode)
+    {
+        <button data-slug="@episode.Slug" data-title="@episode.Title" data-url="@episode.Url"
+                type="button" aria-label="Play episode @episode.Title"
+                onclick="togglePlayButton(this)"
+                class="flex items-center gap-x-3 text-sm font-bold leading-6 text-pink-500 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-200 active:text-pink-900 dark:active:text-pink-50">
+            <div class="paused flex items-center gap-x-1">
+                <svg aria-hidden="true" viewBox="0 0 10 10" class="h-2.5 w-2.5 fill-current">
+                    <path d="M8.25 4.567a.5.5 0 0 1 0 .866l-7.5 4.33A.5.5 0 0 1 0 9.33V.67A.5.5 0 0 1 .75.237l7.5 4.33Z" />
+                </svg>
+                <span aria-hidden="true">Listen</span>
+            </div>
+            <div class="hidden playing flex items-center gap-x-1">
+                <svg aria-hidden="true" viewBox="0 0 10 10" class="h-2.5 w-2.5 fill-current">
+                    <path fillRule="evenodd" clipRule="evenodd"
+                          d="M1.496 0a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5H2.68a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5H1.496Zm5.82 0a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5H8.5a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5H7.316Z" />
+                </svg>
+                <span aria-hidden="true">Listen</span>
+            </div>
+        </button>
+        <script>
+            window.togglePlayButton = function (el) {
+                document.querySelectorAll('[data-url] .paused').forEach(x => {
+                    x.classList.remove('hidden')
+                })
+                document.querySelectorAll('[data-url] .playing').forEach(x => {
+                    x.classList.add('hidden')
+                })
+                const isPlaying = window.toggleEpisode(el.dataset,"episodes")
+                el.querySelector('.paused').classList.toggle('hidden', isPlaying)
+                el.querySelector('.playing').classList.toggle('hidden', !isPlaying)
+                el.setAttribute('aria-label', (isPlaying ? 'Play' : 'Pause') + ` episode ${el.dataset.title}`);
+            }
+        </script>
+    }
+}
+    
+@foreach (var episode in Model.Episodes)
+{
+    var id = episode.Slug;
+    <article aria-labelledby="episode-@id-title" class="py-10 sm:py-12">
+        <div class="lg:px-8">
+            <div class="lg:max-w-4xl">
+                <div class="mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4 lg:px-0">
+                    <div class="flex flex-col items-start">
+                        <h2 id="episode-@id-title" class="mt-2 text-lg font-bold text-slate-900 dark:text-slate-50">
+                            <a href="@Podcasts.GetPodcastLink(episode)">@episode.Title</a>
+                        </h2>
+                        <time dateTime=@($"{episode.Date:u}") class="order-first font-mono text-sm leading-7 text-slate-500 dark:text-slate-400">
+                            @($"{episode.Date:D}")
+                        </time>
+                        <p class="mt-1 text-base leading-7 text-slate-700 dark:text-slate-200">
+                            @episode.Summary
+                        </p>
+                        <div class="mt-4 flex items-center gap-4">
+                            @{ EpisodePlayButton(episode); }
+                            <span aria-hidden="true" class="text-sm font-bold text-slate-400">/</span>
+                            <a href="@Podcasts.GetPodcastLink(episode)"
+                               class="flex items-center text-sm font-bold leading-6 text-pink-500 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-200 active:text-pink-900 dark:active:text-pink-50"
+                               aria-label="Show notes for episode @episode.Title">
+                                Show notes
+                            </a>
+                            @if (episode.Tags?.Count > 0)
+                            {
+                                <span aria-hidden="true" class="text-sm font-bold text-slate-400">/</span>
+                                <div class="flex flex-wrap gap-1">
+                                @foreach (var tag in episode.Tags)
+                                {
+                                    <a href="@Podcasts.GetTagLink(tag)" class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-slate-400/20 px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100">@tag</a>
+                                }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+}

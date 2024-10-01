@@ -1,0 +1,51 @@
+@page "/podcasts"
+@using MyApp.Pages.Shared
+@attribute [RenderStatic]
+@inject MarkdownPodcasts Podcasts
+@{
+    Layout = "_LayoutPodcast";
+    ViewData["Title"] = Podcasts.Config.Title;
+}
+
+<div class="pb-12 pt-16 sm:pb-4 lg:pt-12">
+    <div class="lg:px-8">
+        <div class="lg:max-w-4xl">
+            <div class="mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4 lg:px-0">
+                <h1 class="text-2xl font-bold leading-7 text-slate-900 dark:text-slate-50">
+                    Episodes
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    @{
+        var allYears = Podcasts.VisibleEpisodes.Select(x => x.Date.Value.Year).Distinct().OrderByDescending(x => x);
+        List<MarkdownFileInfo> CurrentYearOrLast5(List<MarkdownFileInfo> episodes)
+        {
+            var year = DateTime.UtcNow.Year;
+            var currentYear = episodes.Where(x => x.Date?.Year == year).ToList();
+            return currentYear.Count > 5
+                ? currentYear
+                : episodes.Take(5).ToList();
+        }
+    }
+    <div>
+        <div class="float-right mt-12 mr-4 flex flex-col text-sm font-semibold leading-6">
+        @foreach (var year in allYears)
+        {
+            if (year == DateTime.UtcNow.Year)
+            {
+                <span class="text-gray-600 dark:text-gray-300">@year</span>
+            }
+            else
+            {
+                <a href="@Podcasts.GetYearLink(year)" class="text-indigo-600 dark:text-indigo-300">@year</a>
+            }
+        }
+        </div>
+    </div>
+    
+    <div class="divide-y divide-slate-100 dark:divide-slate-800 sm:mt-4 lg:mt-8 lg:border-t lg:border-slate-100 dark:lg:border-slate-800">
+        @await Html.PartialAsync(nameof(PodcastEpisodes), new PodcastEpisodes { Episodes = CurrentYearOrLast5(Podcasts.GetEpisodes()) })
+    </div>
+</div>

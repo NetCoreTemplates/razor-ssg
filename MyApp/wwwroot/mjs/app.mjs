@@ -6,6 +6,8 @@ import GettingStarted from "./components/GettingStarted.mjs"
 import ShellCommand from "./components/ShellCommand.mjs"
 import VueComponentGallery from "./components/VueComponentGallery.mjs"
 import VueComponentLibrary from "./components/VueComponentLibrary.mjs"
+import ProjectTemplate from "./components/ProjectTemplate.mjs"
+import ProjectCreator from "./components/ProjectCreator.mjs"
 import { PagingNav, FileLayout } from './components/CreatorKitDocs.mjs'
 
 let client = null, Apps = []
@@ -49,6 +51,8 @@ const Components = {
     Plugin,
     VueComponentGallery,
     VueComponentLibrary,
+    ProjectTemplate,
+    ProjectCreator,
     PagingNav,
     FileLayout,
 }
@@ -92,6 +96,19 @@ export function mount(sel, component, props) {
     app.mount(el)
     Apps.push(app)
     return app
+}
+
+export function unmount(el) {
+    if (!el) return
+
+    try {
+        if (el.__vue_app__) {
+            el.__vue_app__.unmount(el)
+        }
+    } catch (e) {
+        console.log('force unmount', el.id)
+        el._vnode = el.__vue_app__ = undefined
+    }
 }
 
 export function mountAll() {
