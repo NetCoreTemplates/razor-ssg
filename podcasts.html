@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg" href="img/logo.svg">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://razor-ssg.web-templates.io/feed.xml" />
+    <title> - ServiceStack</title>
+    <base href="/" />
+    <script>
+    if (location.search === "?dark") localStorage.setItem('color-scheme','dark') 
+    if (location.search === "?light") localStorage.removeItem('color-scheme') 
+    const cls = document.querySelector('html').classList
+    if (localStorage.getItem('color-scheme') === 'dark')
+        cls.add('dark')
+    else
+        cls.remove('dark')
+    </script>
+    <link rel="stylesheet" href="css/app.css">
+
+    <script type="importmap">
+{
+    "imports": {
+        "app.mjs": "./mjs/app.mjs",
+        "dtos.mjs": "./mjs/dtos.mjs",
+        "vue": "./lib/mjs/vue.min.mjs",
+        "@servicestack/client": "./lib/mjs/servicestack-client.min.mjs",
+        "@servicestack/vue": "./lib/mjs/servicestack-vue.min.mjs"
+    }
+}
+</script>
+    
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+<header class="top-0 fixed z-50 h-14 bg-white dark:bg-black opacity-90 w-full shadow pr-3">
+    <div class="flex flex-wrap items-center">
+        <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
+            <div class="cursor-pointer">
+                <a class="navbar-brand flex items-center" href="./">
+                    <svg class="w-8 h-8 sm:ml-2 sm:w-12 sm:h-12" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="currentColor" d="M10 6c1.544 1.76 2.276 4.15 2.217 6.61c3.968 1.67 9.924 6.12 11.181 12.39H28C26.051 14.31 14.918 6.77 10 6zm-2 7c4.67 4.913.81 11.582-4 12h18.97C21.5 18.289 11.95 13.533 8 13z"/></svg>
+                    <span class="hidden sm:block text-2xl font-semibold">MyApp</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-grow flex-shrink flex-nowrap justify-end items-center">
+            <nav class="relative flex flex-grow leading-6 font-semibold text-slate-700 dark:text-slate-200">
+                <ul class="flex flex-wrap items-center justify-end w-full m-0 pb-2 sm:pb-0">
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="whatsnew" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    What's New
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="videos" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Videos
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="podcasts" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Podcasts
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="creatorkit/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Creator Kit
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="blog" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Blog
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="posts/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Archive
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="speaking" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Speaking
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="uses" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Uses
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="about" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    About
+                                </a>
+                            </li>
+                    <li class="relative flex flex-wrap just-fu-start m-0">
+                        <div data-component="DarkModeToggle" class="ml-2 w-10"></div>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</header>
+<script type="module">
+import { mountAll } from "app.mjs"
+mountAll()
+</script>
+
+
+
+<div class="min-h-screen">
+    <main role="main" class="pt-14">
+        <div>
+            <div class="bg-slate-50 dark:bg-slate-900 lg:fixed lg:inset-y-0 lg:left-0 lg:flex lg:w-112 lg:items-start lg:overflow-y-auto xl:w-120">
+                <div class="relative z-10 mx-auto px-4 pb-4 pt-24 sm:px-6 md:max-w-2xl md:px-4 lg:min-h-full lg:flex-auto lg:border-x lg:border-slate-200 dark:border-slate-700 lg:px-8 xl:px-10">
+                    <a href="/podcasts"
+                       class="relative mx-auto block w-48 overflow-hidden rounded-lg bg-slate-200 dark:bg-slate-700 shadow-xl shadow-slate-200 dark:shadow-slate-700 sm:w-64 sm:rounded-xl lg:w-auto lg:rounded-2xl"
+                       aria-label="Homepage">
+                        <img class="w-full"
+                             alt=""
+                             sizes="(min-width: 1024px) 20rem, (min-width: 640px) 16rem, 12rem"
+                             priority>
+                        <div class="absolute inset-0 rounded-lg ring-1 ring-inset ring-black/10 sm:rounded-xl lg:rounded-2xl"></div>
+                    </a>
+                    <div class="mt-10 text-center lg:mt-12 lg:text-left">
+                        <p class="text-xl font-bold text-slate-900 dark:text-slate-50">
+                            <a href="/podcasts"></a>
+                        </p>
+                        <p class="mt-3 text-lg font-medium leading-8 text-slate-700 dark:text-slate-200">
+                            
+                        </p>
+                    </div>
+        <section class="mt-12 hidden lg:block">
+            <h2 class="flex items-center font-mono text-sm font-medium leading-7 text-slate-900 dark:text-slate-50">
+        <svg aria-hidden="true" viewBox="0 0 10 10" class="h-2.5 w-2.5">
+            <path d="M0 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5Z"
+                  class="fill-violet-300" />
+            <path d="M6 1a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V1Z"
+                  class="fill-pink-300" />
+        </svg>
+                <span class="ml-2.5">About</span>
+            </h2>
+            <p class="mt-2 text-base leading-7 text-slate-700 dark:text-slate-200">
+                
+            </p>
+        </section>
+                    <section class="mt-10 lg:mt-12">
+                        <h2 class="sr-only flex items-center font-mono text-sm font-medium leading-7 text-slate-900 dark:text-slate-50 lg:not-sr-only">
+        <svg aria-hidden="true" viewBox="0 0 10 10" class="h-2.5 w-2.5">
+            <path d="M0 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5Z"
+                  class="fill-indigo-300" />
+            <path d="M6 1a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V1Z"
+                  class="fill-blue-300" />
+        </svg>
+                            <span class="ml-2.5">Listen</span>
+                        </h2>
+                        <div class="h-px bg-gradient-to-r from-slate-200/0 via-slate-200 to-slate-200/0 lg:hidden"></div>
+                        <ul role="list" class="mt-4 flex justify-center gap-10 text-base font-medium leading-7 text-slate-700 dark:text-slate-200 sm:gap-8 lg:flex-col lg:gap-4">
+                        </ul>
+                    </section>
+                </div>
+            </div>
+            <div class="border-t border-slate-200 dark:border-slate-700 lg:relative lg:mb-28 lg:ml-112 lg:border-t-0 xl:ml-120">
+        <svg aria-hidden="true" class="absolute left-0 top-0 h-20 w-full">
+            <defs>
+                <linearGradient id="waveform-320-fade" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="40%" stop-color="white"></stop>
+                    <stop offset="100%" stop-color="black"></stop>
+                </linearGradient>
+                <linearGradient id="waveform-320-gradient">
+                    <stop offset="0%" stop-color="#4989E8"></stop>
+                    <stop offset="50%" stop-color="#6159DA"></stop>
+                    <stop offset="100%" stop-color="#FF54AD"></stop>
+                </linearGradient>
+                <mask id="waveform-320-mask">
+                    <rect width="100%" height="100%" fill="url(#waveform-320-pattern)"></rect>
+                </mask>
+                <pattern id="waveform-320-pattern"
+                         width="400"
+                         height="100%"
+                         patternUnits="userSpaceOnUse">
+                    <rect width="2"
+                          height="40"
+                          x="2"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="76"
+                          x="6"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="77"
+                          x="10"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="72"
+                          x="14"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="56"
+                          x="18"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="44"
+                          x="22"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="73"
+                          x="26"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="41"
+                          x="30"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="59"
+                          x="34"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="74"
+                          x="38"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="63"
+                          x="42"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="59"
+                          x="46"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="48"
+                          x="50"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="77"
+                          x="54"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="65"
+                          x="58"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="59"
+                          x="62"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="61"
+                          x="66"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="78"
+                          x="70"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="72"
+                          x="74"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="55"
+                          x="78"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="40"
+                          x="82"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="43"
+                          x="86"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="63"
+                          x="90"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="55"
+                          x="94"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="45"
+                          x="98"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="77"
+                          x="102"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="67"
+                          x="106"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="75"
+                          x="110"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="68"
+                          x="114"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="43"
+                          x="118"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="72"
+                          x="122"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="51"
+                          x="126"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="71"
+                          x="130"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="66"
+                          x="134"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="53"
+                          x="138"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="72"
+                          x="142"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="78"
+                          x="146"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="63"
+                          x="150"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="58"
+                          x="154"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="64"
+                          x="158"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="67"
+                          x="162"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="57"
+                          x="166"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="65"
+                          x="170"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="42"
+                          x="174"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="72"
+                          x="178"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="72"
+                          x="182"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="50"
+                          x="186"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="75"
+                          x="190"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="76"
+                          x="194"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="70"
+                          x="198"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="68"
+                          x="202"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="79"
+                          x="206"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="65"
+                          x="210"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="51"
+                          x="214"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="47"
+                          x="218"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="57"
+                          x="222"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="54"
+                          x="226"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="59"
+                          x="230"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="73"
+                          x="234"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="74"
+                          x="238"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="61"
+                          x="242"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="77"
+                          x="246"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="64"
+                          x="250"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="59"
+                          x="254"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="43"
+                          x="258"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="56"
+                          x="262"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="66"
+                          x="266"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="48"
+                          x="270"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="43"
+                          x="274"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="64"
+                          x="278"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="75"
+                          x="282"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="59"
+                          x="286"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="67"
+                          x="290"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="50"
+                          x="294"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="56"
+                          x="298"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="58"
+                          x="302"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="53"
+                          x="306"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="57"
+                          x="310"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="47"
+                          x="314"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="40"
+                          x="318"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="56"
+                          x="322"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="55"
+                          x="326"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="40"
+                          x="330"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="69"
+                          x="334"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="53"
+                          x="338"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="47"
+                          x="342"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="78"
+                          x="346"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="49"
+                          x="350"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="76"
+                          x="354"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="76"
+                          x="358"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="64"
+                          x="362"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="40"
+                          x="366"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="40"
+                          x="370"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="41"
+                          x="374"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="49"
+                          x="378"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="46"
+                          x="382"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="66"
+                          x="386"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="43"
+                          x="390"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="72"
+                          x="394"
+                          fill="url(#waveform-320-fade)"></rect>
+                    <rect width="2"
+                          height="67"
+                          x="398"
+                          fill="url(#waveform-320-fade)"></rect>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#waveform-320-gradient)" mask="url(#waveform-320-mask)" opacity="0.25"></rect>
+        </svg>
+                <div class="relative">
+                    
+<div class="pb-12 pt-16 sm:pb-4 lg:pt-12">
+    <div class="lg:px-8">
+        <div class="lg:max-w-4xl">
+            <div class="mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4 lg:px-0">
+                <h1 class="text-2xl font-bold leading-7 text-slate-900 dark:text-slate-50">
+                    Episodes
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="float-right mt-12 mr-4 flex flex-col text-sm font-semibold leading-6">
+        </div>
+    </div>
+    
+    <div class="divide-y divide-slate-100 dark:divide-slate-800 sm:mt-4 lg:mt-8 lg:border-t lg:border-slate-100 dark:lg:border-slate-800">
+        
+    
+
+    </div>
+</div>
+                </div>
+            </div>
+            <footer class="border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 py-10 pb-40 sm:py-16 sm:pb-32 lg:hidden">
+                <div class="mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4">
+        <section class="mt-12 hidden lg:block">
+            <h2 class="flex items-center font-mono text-sm font-medium leading-7 text-slate-900 dark:text-slate-50">
+        <svg aria-hidden="true" viewBox="0 0 10 10" class="h-2.5 w-2.5">
+            <path d="M0 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5Z"
+                  class="fill-violet-300" />
+            <path d="M6 1a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V1Z"
+                  class="fill-pink-300" />
+        </svg>
+                <span class="ml-2.5">About</span>
+            </h2>
+            <p class="mt-2 text-base leading-7 text-slate-700 dark:text-slate-200">
+                
+            </p>
+        </section>
+                </div>
+            </footer>
+            <div class="fixed inset-x-0 bottom-0 z-10 lg:left-112 xl:left-120">
+                <div id="audioPlayer"></div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script type="module">
+import AudioPlayer from "./pages/podcasts/AudioPlayer.mjs"
+import { init, mount, unmount } from "app.mjs"
+import {EventBus} from "@servicestack/client"
+init()
+
+const audioPlayer = document.getElementById('audioPlayer')
+
+let lastEpisode = null
+let lastApp = null
+
+const bus = new EventBus()
+
+globalThis.toggleEpisode = function (episode,source="layout") {
+    if (!lastEpisode || episode.url !== lastEpisode?.src) {
+        unmount(audioPlayer)
+        lastEpisode = { id:episode.slug, title:episode.title, src:episode.url, autoPlay:true, bus}
+        lastApp = mount(audioPlayer, AudioPlayer, lastEpisode)
+        return true
+    } else {
+       bus.publish('toggleAudioPlayer')
+       return !audioPlayer.querySelector('audio')?.paused
+    }
+}
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:podcast="https://podcastindex.org/namespace/1.0" xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
+<channel>
+    <title></title>
+    <link>/podcasts</link>
+    <description><![CDATA[  ]]></description>
+    <generator>razor-ssg</generator>
+    <copyright></copyright>
+    <lastBuildDate>Tue, 01 Oct 2024 08:40:26 GMT</lastBuildDate>
+    <managingEditor></managingEditor>
+    <webMaster></webMaster>
+    <atom:link href="podcasts/feed.xml" rel="self" type="application/rss+xml" />
+</channel>
+</rss>
