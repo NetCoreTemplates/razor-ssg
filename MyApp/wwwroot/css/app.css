@@ -5492,6 +5492,10 @@ select{
     margin-bottom: 7rem;
   }
 
+  .md\:mt-0 {
+    margin-top: 0px;
+  }
+
   .md\:mt-24 {
     margin-top: 6rem;
   }
@@ -5538,6 +5542,10 @@ select{
 
   .md\:w-7 {
     width: 1.75rem;
+  }
+
+  .md\:w-\[450px\] {
+    width: 450px;
   }
 
   .md\:max-w-2xl {

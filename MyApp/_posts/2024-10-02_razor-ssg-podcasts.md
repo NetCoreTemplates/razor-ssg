@@ -77,7 +77,7 @@ Vue Component that's enabled on each podcast page which will appear at the botto
 [![](https://servicestack.net/img/posts/razor-ssg-podcasts/razor-ssg-podcast-audioplayer.webp)](https://razor-ssg.web-templates.io/podcasts)
 
 The `AudioPlayer` component is also independently usable as a standard Vue Component in
-markdown content:
+markdown content like [this .md page](https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/_posts/2024-10-02_razor-ssg-podcasts.md#audio-player):
 
 ```html
 <audio-player id="scalable-sqlite" title="Scalable SQLite" variant="compact"
@@ -85,7 +85,11 @@ markdown content:
 </audio-player>
 ```
 
-[![](https://servicestack.net/img/posts/razor-ssg-podcasts/razor-ssg-podcast-audioplayer-compact.webp)](https://razor-ssg.web-templates.io/podcasts)
+:::{.py-8 .mx-auto .w-2/3 .not-prose}
+<audio-player id="scalable-sqlite" title="Scalable SQLite" variant="compact"
+    src="https://media.servicestack.com/podcasts/scalable-sqlite.mp3">
+</audio-player>
+:::
 
 It can also be embeddable inside Razor `.cshtml` pages using 
 [Declarative Vue Components](https://servicestack.net/posts/net8-best-blazor#declarative-vue-components), e.g:
