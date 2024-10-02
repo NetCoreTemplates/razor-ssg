@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/svg" href="img/logo.svg">
     <link rel="alternate" type="application/rss+xml" title="RSS" href="https://razor-ssg.web-templates.io/feed.xml" />
-    <title>Develop using JetBrains Rider</title>
+    <title>Podcasts now in Razor SSG</title>
     <base href="/" />
     <script>
+    if (location.search === "?dark") localStorage.setItem('color-scheme','dark') 
+    if (location.search === "?light") localStorage.removeItem('color-scheme') 
     const cls = document.querySelector('html').classList
     if (localStorage.getItem('color-scheme') === 'dark')
         cls.add('dark')
@@ -15,7 +17,7 @@
         cls.remove('dark')
     </script>
     <link rel="stylesheet" href="css/app.css">
-    
+
     <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
     <script type="importmap">
 {
@@ -31,39 +33,14 @@
     <meta name="twitter:site" content="@RazorSsg" />
     <meta name="twitter:creator" content="@gayle" />
     <meta name="twitter:card" content="summary" />
-    <meta property="og:description" content="Setting up &amp; exploring development workflow in Rider" />
-    <meta property="og:url" content="https://razor-ssg.web-templates.io/posts/rider" />
-    <meta property="og:title" content="Develop using JetBrains Rider" />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1472289065668-ce650ac443d2?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" />
+    <meta property="og:description" content="Razor SSG now includes support for Podcasts" />
+    <meta property="og:url" content="https://razor-ssg.web-templates.io/posts/razor-ssg-podcasts" />
+    <meta property="og:title" content="Podcasts now in Razor SSG" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1482442120256-9c03866de390?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" />
 
 
 </head>
 <body class="bg-white dark:bg-black dark:text-white">
-
-<!-- Background backdrop, visually different from main _Layout -->
-<svg class="absolute inset-x-0 top-0 -z-10 h-[64rem] w-full stroke-gray-200 [mask-image:radial-gradient(32rem_32rem_at_center,white,transparent)]" aria-hidden="true">
-  <defs>
-    <pattern id="1f932ae7-37de-4c0a-a8b0-a6e3b4d44b84" width="200" height="200" x="50%" y="-1" patternUnits="userSpaceOnUse">
-      <path d="M.5 200V.5H200" fill="none"/>
-    </pattern>
-  </defs>
-  <svg x="50%" y="-1" class="overflow-visible fill-gray-50">
-    <path d="M-200 0h201v201h-201Z M600 0h201v201h-201Z M-400 600h201v201h-201Z M200 800h201v201h-201Z" stroke-width="0"/>
-  </svg>
-  <rect width="100%" height="100%" stroke-width="0" fill="url(#1f932ae7-37de-4c0a-a8b0-a6e3b4d44b84)"/>
-</svg>
-<div class="absolute top-0 left-1/2 right-0 -z-10 -ml-24 transform-gpu overflow-hidden blur-3xl lg:ml-24 xl:ml-48">
-  <svg viewBox="0 0 801 1036" aria-hidden="true" class="w-[50.0625rem]">
-    <path fill="url(#70656b7e-db44-4b9b-b7d2-1f06791bed52)" fill-opacity=".3" d="m282.279 843.371 32.285 192.609-313.61-25.32 281.325-167.289-58.145-346.888c94.5 92.652 277.002 213.246 251.009-45.597C442.651 127.331 248.072 10.369 449.268.891c160.956-7.583 301.235 116.434 351.256 179.39L507.001 307.557l270.983 241.04-495.705 294.774Z"/>
-    <defs>
-      <linearGradient id="70656b7e-db44-4b9b-b7d2-1f06791bed52" x1="508.179" x2="-28.677" y1="-116.221" y2="1091.63" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#9089FC"/>
-        <stop offset="1" stop-color="#FF80B5"/>
-      </linearGradient>
-    </defs>
-  </svg>
-</div>
-
 <header class="top-0 fixed z-50 h-14 bg-white dark:bg-black opacity-90 w-full shadow pr-3">
     <div class="flex flex-wrap items-center">
         <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
@@ -138,8 +115,8 @@ mountAll()
 
 
 <div class="min-h-screen">
-  <main role="main" class="pt-14 pb-3">
-    
+    <main role="main" class="pt-14 pb-3">
+        
 
 
 
@@ -149,7 +126,7 @@ mountAll()
 <div class="container px-5 mb-32 mx-auto">
         <article class="mt-20">
             <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
-                Develop using JetBrains Rider
+                Podcasts now in Razor SSG
             </h1>
             <div class="flex justify-between">
                 <div class="md:mb-12 flex items-center">
@@ -183,20 +160,21 @@ mountAll()
             </div>
             <div class="mb-8 md:mb-16 sm:mx-0">
                 <div class="sm:mx-0">
-                    <img src="https://images.unsplash.com/photo-1472289065668-ce650ac443d2?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" alt="Develop using JetBrains Rider Background" class="shadow-small">
+                    <img src="https://images.unsplash.com/photo-1482442120256-9c03866de390?crop=entropy&amp;fit=crop&amp;h=1000&amp;w=2000" alt="Podcasts now in Razor SSG Background" class="shadow-small">
                 </div>
             </div>
             <div class="flex max-w-3xl mx-auto justify-between">
                 <div>
                     <div class="mb-4 flex flex-wrap">
-                            <a href="posts/tagged/csharp" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">c#</a>
-                            <a href="posts/tagged/dev" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">dev</a>
+                            <a href="posts/tagged/razor" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">razor</a>
+                            <a href="posts/tagged/ssg" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">ssg</a>
+                            <a href="posts/tagged/markdown" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">markdown</a>
                     </div>
                         <div class="max-w-3xl mx-auto">
                             <div class="mb-6 text-lg text-gray-500">
-                                <time datetime="2023-01-11T00:00:00.0000000">January 11, 2023</time>
+                                <time datetime="2024-10-02T00:00:00.0000000">October 2, 2024</time>
                                 <span aria-hidden="true">&middot;</span>
-                                <span>3 min read</span>
+                                <span>5 min read</span>
                             </div>
                         </div>
                 </div>
@@ -209,49 +187,166 @@ mountAll()
             </div>
             <div class="max-w-3xl mx-auto">
                 <div id="post" class="prose lg:prose-xl max-w-none mb-32">
-                    <a href="https://www.jetbrains.com/rider/">
-<img src="https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/svg/rider.svg" 
-     class="sm:float-left mr-8 w-24 h-24" style="margin-top:0"></a>
-<p><a href="https://www.jetbrains.com/rider/">JetBrains Rider</a> is our recommended IDE for any C# + JavaScript development as it
-offers a great development UX for both, including excellent support
-for TypeScript and popular JavaScript Framework SPA assets like <a href="https://v3.vuejs.org/guide/single-file-component.html">Vue SFC's</a>.</p>
-<h4 id="setup-rider-ide">Setup Rider IDE<a class="header-anchor" href="javascript:;" onclick="location.hash='#setup-rider-ide'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
-<p>As Rider already understands and provides excellent HTML/JS/TypeScript support you'll be immediately productive out-of-the-box,
-we can further improve the development experience for Vue.js Apps by adding an empty <strong>vue</strong> dependency to <strong>package.json</strong>:</p>
-<pre><code class="language-json">{
-  &quot;devDependencies&quot;: {
-    &quot;vue&quot;: &quot;&quot;
-  }
+                    <h2 id="razor-ssg-now-supports-podcasts">Razor SSG now supports Podcasts!<a class="header-anchor" href="javascript:;" onclick="location.hash='#razor-ssg-now-supports-podcasts'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p><a href="https://razor-ssg.web-templates.io">Razor SSG</a> is our FREE Project Template for creating fast, statically generated Websites and Blogs with
+Markdown &amp; C# Razor Pages. A benefit of using Razor SSG to maintain our
+<a href="https://github.com/ServiceStack/servicestack.net">github.com/ServiceStack/servicestack.net</a> website is that
+any improvements added to <strong>servicestack.net</strong> end up being rolled into the Razor SSG Project Template
+for everyone else to enjoy.</p>
+<p>The latest feature recently added is <a href="https://servicestack.net/podcasts">ServiceStack Podcasts</a>, providing an easy alternative to
+learning about new features in our <a href="https://docs.servicestack.net/releases/v8_04">TL;DR Release Notes</a> during a commute as well as a
+fun and more informative experience whilst reading <a href="https://servicestack.net/blog">blog posts</a>.</p>
+<p>The same podcast feature has now been rolled into the Razor SSG template allowing anyone to add the same
+feature to their Razor SSG Websites which can be developed and hosted for FREE on GitHub Pages CDN:</p>
+<h3 id="create-a-new-razor-ssg-project">Create a new Razor SSG Project<a class="header-anchor" href="javascript:;" onclick="location.hash='#create-a-new-razor-ssg-project'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<project-creator v-slot="x">
+    <project-template :name="x.text" repo="NetCoreTemplates/razor-ssg" :tags="['ssg','markdown']">
+        <div class="mb-3 text-xl font-medium text-gray-700 dark:text-gray-200">Razor SSG</div>
+        <template #icon>
+            <svg class="w-12 h-12 text-indigo-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="currentColor" d="M23.844 27.692a16.332 16.332 0 0 1-6.645 1.3q-6.364 0-10.013-3.243a11.3 11.3 0 0 1-3.649-8.9a13.716 13.716 0 0 1 3.785-9.898A12.716 12.716 0 0 1 16.9 3.008a11.676 11.676 0 0 1 8.425 3.006a9.994 9.994 0 0 1 3.142 7.533a10.187 10.187 0 0 1-2.318 7.114a7.532 7.532 0 0 1-5.817 2.547a2.613 2.613 0 0 1-1.845-.642a2.323 2.323 0 0 1-.764-1.6a4.9 4.9 0 0 1-4.148 2.243a4.6 4.6 0 0 1-3.507-1.479a5.706 5.706 0 0 1-1.384-4.063a9.913 9.913 0 0 1 2.2-6.357q2.2-2.763 4.8-2.763a5.063 5.063 0 0 1 4.256 1.716l.311-1.338h2.405l-2.081 9.08a10.716 10.716 0 0 0-.352 2.243q0 .972.744.972a4.819 4.819 0 0 0 3.877-2.047a8.93 8.93 0 0 0 1.621-5.681a7.98 7.98 0 0 0-2.675-6.175a9.887 9.887 0 0 0-6.919-2.432a10.6 10.6 0 0 0-8.158 3.467a12.066 12.066 0 0 0-3.2 8.495a9.561 9.561 0 0 0 3.06 7.573q3.06 2.7 8.586 2.7a13.757 13.757 0 0 0 5.675-1.054ZM19.466 12.25a3.977 3.977 0 0 0-3.6-1.716q-1.824 0-3.263 2.23a8.726 8.726 0 0 0-1.439 4.824q0 3.635 2.905 3.635a3.771 3.771 0 0 0 2.651-1.183a6.309 6.309 0 0 0 1.7-3.2Z"></path></svg>
+        </template>
+    </project-template>
+</project-creator>
+<h3 id="markdown-powered">Markdown Powered<a class="header-anchor" href="javascript:;" onclick="location.hash='#markdown-powered'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>The Podcast feature is very similar to the Markdown Blog Posts where each podcast is a simple
+<code>.md</code> Markdown page seperated by a publish date and its unique slug, e.g:</p>
+<p><strong><a href="https://github.com/NetCoreTemplates/razor-ssg/tree/main/MyApp/_podcasts">/_podcasts</a></strong></p>
+<div class="language-files"><div class="ml-6">
+  <div class="flex items-center text-base leading-8">
+    <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 12 12" width="12" height="12" fill="currentColor"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg>
+    <svg class="mr-1 text-sky-500" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M.513 1.513A1.75 1.75 0 0 1 1.75 1h3.5c.55 0 1.07.26 1.4.7l.9 1.2a.25.25 0 0 0 .2.1H13a1 1 0 0 1 1 1v.5H2.75a.75.75 0 0 0 0 1.5h11.978a1 1 0 0 1 .994 1.117L15 13.25A1.75 1.75 0 0 1 13.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75c0-.464.184-.91.513-1.237Z"></path></svg>
+    <span>_pages</span>
+  </div>
+</div>
+<div class="ml-6">
+  <div class="flex items-center text-base leading-8">
+    <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 12 12" width="12" height="12" fill="currentColor"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg>
+    <svg class="mr-1 text-sky-500" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M.513 1.513A1.75 1.75 0 0 1 1.75 1h3.5c.55 0 1.07.26 1.4.7l.9 1.2a.25.25 0 0 0 .2.1H13a1 1 0 0 1 1 1v.5H2.75a.75.75 0 0 0 0 1.5h11.978a1 1 0 0 1 .994 1.117L15 13.25A1.75 1.75 0 0 1 13.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75c0-.464.184-.91.513-1.237Z"></path></svg>
+    <span>_podcasts</span>
+  </div>
+<div>
+<div class="ml-6 flex items-center text-base leading-8">
+  <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg>
+  <span>config.json</span>
+</div>
+<div class="ml-6 flex items-center text-base leading-8">
+  <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg>
+  <span>2024-10-02_razor-ssg-podcasts.md</span>
+</div>
+<div class="ml-6 flex items-center text-base leading-8">
+  <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg>
+  <span>2024-09-19_scalable-sqlite.md</span>
+</div>
+<div class="ml-6 flex items-center text-base leading-8">
+  <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg>
+  <span>2024-09-17_sqlite-request-logs.md</span>
+</div>
+<div class="ml-6 flex items-center text-base leading-8">
+  <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg>
+  <span>...</span>
+</div>
+</div>
+</div>
+<div class="ml-6">
+  <div class="flex items-center text-base leading-8">
+    <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 12 12" width="12" height="12" fill="currentColor"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg>
+    <svg class="mr-1 text-sky-500" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M.513 1.513A1.75 1.75 0 0 1 1.75 1h3.5c.55 0 1.07.26 1.4.7l.9 1.2a.25.25 0 0 0 .2.1H13a1 1 0 0 1 1 1v.5H2.75a.75.75 0 0 0 0 1.5h11.978a1 1 0 0 1 .994 1.117L15 13.25A1.75 1.75 0 0 1 13.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75c0-.464.184-.91.513-1.237Z"></path></svg>
+    <span>_posts</span>
+  </div>
+</div>
+<div class="ml-6">
+  <div class="flex items-center text-base leading-8">
+    <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 12 12" width="12" height="12" fill="currentColor"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg>
+    <svg class="mr-1 text-sky-500" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M.513 1.513A1.75 1.75 0 0 1 1.75 1h3.5c.55 0 1.07.26 1.4.7l.9 1.2a.25.25 0 0 0 .2.1H13a1 1 0 0 1 1 1v.5H2.75a.75.75 0 0 0 0 1.5h11.978a1 1 0 0 1 .994 1.117L15 13.25A1.75 1.75 0 0 1 13.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75c0-.464.184-.91.513-1.237Z"></path></svg>
+    <span>_videos</span>
+  </div>
+</div>
+<div class="ml-6">
+  <div class="flex items-center text-base leading-8">
+    <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 12 12" width="12" height="12" fill="currentColor"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg>
+    <svg class="mr-1 text-sky-500" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M.513 1.513A1.75 1.75 0 0 1 1.75 1h3.5c.55 0 1.07.26 1.4.7l.9 1.2a.25.25 0 0 0 .2.1H13a1 1 0 0 1 1 1v.5H2.75a.75.75 0 0 0 0 1.5h11.978a1 1 0 0 1 .994 1.117L15 13.25A1.75 1.75 0 0 1 13.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75c0-.464.184-.91.513-1.237Z"></path></svg>
+    <span>_whatsnew</span>
+  </div>
+</div>
+</div>
+<p>All editable content within different Podcast pages like the Podcast Sidebar is customizable within
+<a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/_podcasts/config.json">_podcasts/config.json</a>.</p>
+<p><a href="https://razor-ssg.web-templates.io/podcasts"><img src="https://servicestack.net/img/posts/razor-ssg-podcasts/razor-ssg-podcast-layout.webp" alt="" /></a></p>
+<h3 id="podcast-page">Podcast Page<a class="header-anchor" href="javascript:;" onclick="location.hash='#podcast-page'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Whilst all content about a podcast is contained within its <code>.md</code> file and frontmatter which just like
+Blog Posts can contain interactive Vue Components and custom <a href="https://razor-press.web-templates.io/containers">Markdown Containers</a>.</p>
+<p>The <a href="https://razor-ssg.web-templates.io/podcasts/background-jobs">Backgrounds Jobs Podcast Page</a> is a
+good example of this where its <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/_podcasts/2024-09-12_background-jobs.md">2024-09-12_background-jobs.md</a>
+contains both a <code>&lt;project-creator&gt;</code> Vue Component as well as <code>sh</code> and <code>youtube</code> custom markdown
+containers to render its page:</p>
+<p><a href="https://razor-ssg.web-templates.io/podcasts/background-jobs"><img src="https://servicestack.net/img/posts/razor-ssg-podcasts/razor-ssg-podcast-page.webp" alt="" /></a></p>
+<h3 id="audio-player">Audio Player<a class="header-anchor" href="javascript:;" onclick="location.hash='#audio-player'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Podcasts are played using the <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/pages/podcasts/AudioPlayer.mjs">AudioPlayer.mjs</a>
+Vue Component that's enabled on each podcast page which will appear at the bottom of the page when played:</p>
+<p><a href="https://razor-ssg.web-templates.io/podcasts"><img src="https://servicestack.net/img/posts/razor-ssg-podcasts/razor-ssg-podcast-audioplayer.webp" alt="" /></a></p>
+<p>The <code>AudioPlayer</code> component is also independently usable as a standard Vue Component in
+markdown content:</p>
+<pre><code class="language-html">&lt;audio-player id=&quot;scalable-sqlite&quot; title=&quot;Scalable SQLite&quot; variant=&quot;compact&quot;
+    src=&quot;https://media.servicestack.com/podcasts/scalable-sqlite.mp3&quot;&gt;
+&lt;/audio-player&gt;
+</code></pre>
+<p><a href="https://razor-ssg.web-templates.io/podcasts"><img src="https://servicestack.net/img/posts/razor-ssg-podcasts/razor-ssg-podcast-audioplayer-compact.webp" alt="" /></a></p>
+<p>It can also be embeddable inside Razor <code>.cshtml</code> pages using
+<a href="https://servicestack.net/posts/net8-best-blazor#declarative-vue-components">Declarative Vue Components</a>, e.g:</p>
+<pre><code class="language-html">@{
+    var episode = Podcasts.GetEpisodes().FirstOrDefault(x =&gt; x.Slug == doc.Slug);
+    &lt;div data-component=&quot;pages/podcasts/AudioPlayer.mjs&quot;
+         data-props=&quot;{ id:'@episode.Slug', title:'@episode.Title', src:'@episode.Url', variant:'compact' }&quot;
+         class=&quot;mt-4 md:w-[450px] md:mt-0&quot;&gt;&lt;/div&gt;
 }
 </code></pre>
-<p>As this is just a heuristic Rider looks for to enable its Vue support, installing the dependency itself isn't used or required.</p>
-<p>Other than that the only plugin we recommend adding is:</p>
-<a href="https://plugins.jetbrains.com/plugin/15321-tailwind-css" class="text-2xl flex items-center" style="text-decoration:none">
-     <svg class="sm:float-left w-12 h-12" style="margin:0 .5rem 0 0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="#44a8b3" d="M9 13.7q1.4-5.6 7-5.6c5.6 0 6.3 4.2 9.1 4.9q2.8.7 4.9-2.1q-1.4 5.6-7 5.6c-5.6 0-6.3-4.2-9.1-4.9q-2.8-.7-4.9 2.1Zm-7 8.4q1.4-5.6 7-5.6c5.6 0 6.3 4.2 9.1 4.9q2.8.7 4.9-2.1q-1.4 5.6-7 5.6c-5.6 0-6.3-4.2-9.1-4.9q-2.8-.7-4.9 2.1Z"/></svg>
-     <span class="">Tailwind CSS Plugin</span>
-</a>
-<p>Which provides provides intelli-sense support for <a href="https://tailwindcss.com">Tailwind CSS</a>.</p>
-<h3 id="start-both-dotnet-and-tailwind">Start both dotnet and Tailwind<a class="header-anchor" href="javascript:;" onclick="location.hash='#start-both-dotnet-and-tailwind'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
-<p>The only additional development workflow requirement to use tailwind is to start it running in the background
-which can be done from a new Terminal:</p>
-<pre><code class="language-bash">$ npm run ui:dev
+<h3 id="dark-mode">Dark Mode<a class="header-anchor" href="javascript:;" onclick="location.hash='#dark-mode'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>As Razor SSG is built with Tailwind CSS, Dark Mode is also easily supported:</p>
+<p><a href="https://razor-ssg.web-templates.io/podcasts/background-jobs"><img src="https://servicestack.net/img/posts/razor-ssg-podcasts/razor-ssg-podcast-dark.webp" alt="" /></a></p>
+<h3 id="browse-by-tags">Browse by Tags<a class="header-anchor" href="javascript:;" onclick="location.hash='#browse-by-tags'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Just like <a href="https://razor-ssg.web-templates.io/posts/">blog post archives</a>, the frontmatter collection of <code>tags</code> is used to generate related podcast pages,
+aiding discoverability by grouping related podcasts by <strong>tag</strong> at the following route:</p>
+<pre><code>/podcasts/tagged/{tag}
 </code></pre>
-<p>We find <code>dotnet watch</code> offers the most productive iterative development workflow for .NET which refreshes on save
-which works great with Tailwind which rewrites your <code>app.css</code> on save.</p>
-<p>How you want to run them is largely a matter of preference, our personal preference is to run the <strong>dev</strong> and <strong>ui:dev</strong>
-npm scripts in your <strong>package.json</strong>:</p>
-<p><img src="https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/scripts/dotnet-tailwind.png" alt="" /></p>
-<h3 id="riders-task-runner">Rider's Task Runner<a class="header-anchor" href="javascript:;" onclick="location.hash='#riders-task-runner'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
-<p>Where they will appear in Rider's useful task runner widget where you'll be able to easily, stop and rerun all project tasks:</p>
-<p><img src="https://github.com/ServiceStack/docs/raw/master/docs/images/spa/rider-run-widget.png" alt="" /></p>
-<h3 id="running-from-the-terminal">Running from the terminal<a class="header-anchor" href="javascript:;" onclick="location.hash='#running-from-the-terminal'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
-<p>These GUI tasks are just managing running CLI commands behind-the-scenes, which if you prefer you can use JetBrains
-excellent multi-terminal support to run <code>$ dotnet watch</code> and <code>$ npm run ui:dev</code> from separate or split Terminal windows.</p>
-<h3 id="deploying-to-production">Deploying to Production<a class="header-anchor" href="javascript:;" onclick="location.hash='#deploying-to-production'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
-<p>This template also includes the necessary GitHub Actions to deploy this Apps production static assets to GitHub Pages CDN,
-for more info, checkout <a href="deploy">GitHub Actions Deployments</a>.</p>
-<h3 id="get-started">Get Started<a class="header-anchor" href="javascript:;" onclick="location.hash='#get-started'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
-<p>If you're new to Vue 3 a good place to start is <a href="https://vuejs.org/api/composition-api-setup.html">Vue 3 Composition API</a>.</p>
+<p><a href="https://razor-ssg.web-templates.io/podcasts/tagged/release">https://razor-ssg.web-templates.io/podcasts/tagged/release</a></p>
+<p><a href="https://razor-ssg.web-templates.io/podcasts/tagged/release"><img src="https://servicestack.net/img/posts/razor-ssg-podcasts/razor-ssg-podcast-tag.webp" alt="" /></a></p>
+<h3 id="browse-by-year">Browse by Year<a class="header-anchor" href="javascript:;" onclick="location.hash='#browse-by-year'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Likewise podcast archives are also browsable by the year their published at the route:</p>
+<pre><code>/podcasts/year/{year}
+</code></pre>
+<p><a href="https://razor-ssg.web-templates.io/podcasts/year/2024">https://razor-ssg.web-templates.io/podcasts/year/2024</a></p>
+<p><a href="https://razor-ssg.web-templates.io/podcasts/year/2024"><img src="https://servicestack.net/img/posts/razor-ssg-podcasts/razor-ssg-podcast-year.webp" alt="" /></a></p>
+<h3 id="itunes-compatible-podcast-rss-feed">iTunes-compatible Podcast RSS Feed<a class="header-anchor" href="javascript:;" onclick="location.hash='#itunes-compatible-podcast-rss-feed'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>The information in <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/_podcasts/config.json">config.json</a>
+is also used in the generated podcast RSS feed at:</p>
+<p><a href="https://razor-ssg.web-templates.io/podcasts/feed.xml">/podcasts/feed.xml</a></p>
+<p>Which is a popular format podcast Applications can use to get notified when new Podcast
+episodes are available. The RSS Feed is also compatible with <a href="https://podcasters.apple.com">podcasters.apple.com</a>
+and can be used to publish your podcast to <a href="https://podcasts.apple.com">Apple Podcasts</a>.</p>
+<pre><code class="language-xml">&lt;rss xmlns:itunes=&quot;http://www.itunes.com/dtds/podcast-1.0.dtd&quot; xmlns:atom=&quot;http://www.w3.org/2005/Atom&quot; xmlns:podcast=&quot;https://podcastindex.org/namespace/1.0&quot; xmlns:media=&quot;http://search.yahoo.com/mrss/&quot; version=&quot;2.0&quot;&gt;
+    &lt;channel&gt;
+        &lt;title&gt;Their Side&lt;/title&gt;
+        &lt;link&gt;https://razor-ssg.web-templates.io/podcasts&lt;/link&gt;
+        &lt;description&gt;&lt;![CDATA[ Conversations with the most tragically misunderstood people of our time. ]]&gt;&lt;/description&gt;
+        &lt;image&gt;
+            &lt;url&gt;https://razor-ssg.web-templates.io/img/posts/cover.png&lt;/url&gt;
+            &lt;title&gt;Their Side&lt;/title&gt;
+            &lt;link&gt;/podcasts&lt;/link&gt;
+        &lt;/image&gt;
+        &lt;generator&gt;razor-ssg&lt;/generator&gt;
+        &lt;copyright&gt;Razor SSG&lt;/copyright&gt;
+        &lt;lastBuildDate&gt;Wed, 02 Oct 2024 03:54:03 GMT&lt;/lastBuildDate&gt;
+        &lt;managingEditor&gt;email@example.org (Razor SSG)&lt;/managingEditor&gt;
+        &lt;webMaster&gt;email@example.org (Razor SSG)&lt;/webMaster&gt;
+        &lt;atom:link href=&quot;https://razor-ssg.web-templates.io/podcasts/feed.xml&quot; rel=&quot;self&quot; type=&quot;application/rss+xml&quot; /&gt;
+        &lt;itunes:author&gt;Razor SSG&lt;/itunes:author&gt;
+        &lt;itunes:owner&gt;
+            &lt;itunes:name&gt;Razor SSG&lt;/itunes:name&gt;
+            &lt;itunes:email&gt;email@example.org&lt;/itunes:email&gt;
+        &lt;/itunes:owner&gt;
+        &lt;itunes:image href=&quot;https://razor-ssg.web-templates.io/img/posts/cover-1920.jpg&quot;/&gt;
+...
+</code></pre>
 
                 </div>
             </div>
@@ -303,47 +398,6 @@ for more info, checkout <a href="deploy">GitHub Actions Deployments</a>.</p>
                         More from Gayle Smith
                     </div>
                     <div class="grid grid-cols-2 gap-8">
-                            <div>
-                                <div class="flex flex-col overflow-hidden">
-                                    <div class="flex-shrink-0">
-                                        <a href="posts/razor-ssg-podcasts">
-                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1482442120256-9c03866de390?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
-                                        <div class="flex-1">
-                                            <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
-                                                Article
-                                            </p>
-                                            <a href="posts/razor-ssg-podcasts" class="mt-2 block">
-                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="Podcasts now in Razor SSG">
-                                                    Podcasts now in Razor SSG
-                                                </p>
-                                                <p class="mt-3 text-base text-gray-500">Razor SSG now includes support for Podcasts</p>
-                                            </a>
-                                        </div>
-                                        <div class="mt-6 flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <a href="">
-                                                    <span class="sr-only">Gayle Smith</span>
-                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author2.svg" alt="Podcasts now in Razor SSG background">
-                                                </a>
-                                            </div>
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium text-gray-900">
-                                                        <a href="posts/author/gayle-smith" class="hover:underline">Gayle Smith</a>
-                                                </p>
-                                                <div class="flex space-x-1 text-sm text-gray-500">
-                                                    <time datetime="2024-10-02T00:00:00.0000000">October 2, 2024</time>
-                                                    <span aria-hidden="true">&middot;</span>
-                                                    <span>5 min read</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
                             <div>
                                 <div class="flex flex-col overflow-hidden">
                                     <div class="flex-shrink-0">
@@ -429,6 +483,47 @@ for more info, checkout <a href="deploy">GitHub Actions Deployments</a>.</p>
                             <div>
                                 <div class="flex flex-col overflow-hidden">
                                     <div class="flex-shrink-0">
+                                        <a href="posts/rider">
+                                            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1472289065668-ce650ac443d2?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="flex flex-1 flex-col justify-between bg-white dark:bg-black p-6">
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-indigo-600 dark:text-indigo-300">
+                                                Article
+                                            </p>
+                                            <a href="posts/rider" class="mt-2 block">
+                                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-50 whitespace-nowrap overflow-hidden text-ellipsis" title="Develop using JetBrains Rider">
+                                                    Develop using JetBrains Rider
+                                                </p>
+                                                <p class="mt-3 text-base text-gray-500">Setting up &amp; exploring development workflow in Rider</p>
+                                            </a>
+                                        </div>
+                                        <div class="mt-6 flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <a href="">
+                                                    <span class="sr-only">Gayle Smith</span>
+                                                    <img class="h-10 w-10 rounded-full" src="img/authors/author2.svg" alt="Develop using JetBrains Rider background">
+                                                </a>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-medium text-gray-900">
+                                                        <a href="posts/author/gayle-smith" class="hover:underline">Gayle Smith</a>
+                                                </p>
+                                                <div class="flex space-x-1 text-sm text-gray-500">
+                                                    <time datetime="2023-01-11T00:00:00.0000000">January 11, 2023</time>
+                                                    <span aria-hidden="true">&middot;</span>
+                                                    <span>3 min read</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div>
+                                <div class="flex flex-col overflow-hidden">
+                                    <div class="flex-shrink-0">
                                         <a href="posts/deploy">
                                             <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1485841890310-6a055c88698a?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=80" alt="">
                                         </a>
@@ -497,7 +592,7 @@ import { mount } from "app.mjs"
     mount('#post', App)
 </script>
 
-  </main>
+    </main>
 </div>
 
 <footer class="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
@@ -589,6 +684,14 @@ post('[data-post]', {
     } 
 })
 </script>
+
+
+<script type="module">
+import { init } from "app.mjs"
+init()
+</script>
+
+
 
 </body>
 </html>

@@ -10,10 +10,22 @@
     </image>
     <generator>razor-ssg</generator>
     <copyright></copyright>
-    <lastBuildDate>Wed, 02 Oct 2024 03:54:03 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 02 Oct 2024 14:00:31 GMT</lastBuildDate>
     <managingEditor>email@example.org (Razor SSG)</managingEditor>
     <webMaster>email@example.org (Razor SSG)</webMaster>
     <atom:link href="https://razor-ssg.web-templates.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+        <title>Podcasts now in Razor SSG</title>
+        <link>https://razor-ssg.web-templates.io/posts/razor-ssg-podcasts</link>
+        <author>gayle@email.org (Gayle Smith)</author>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/razor-ssg-podcasts</guid>
+        <pubDate>Wed, 02 Oct 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-10-02T00:00:00Z</atom:updated>
+        <category>razor</category>
+        <category>ssg</category>
+        <category>markdown</category>
+        <description>Razor SSG now includes support for Podcasts</description>
+    </item>
     <item>
         <title>ASP.NET Core JWT Identity Auth</title>
         <link>https://razor-ssg.web-templates.io/posts/jwt-identity-auth</link>
@@ -122,17 +134,6 @@
         <category>dev</category>
         <category>tailwind</category>
         <description>Found out how to use these template features</description>
-    </item>
-    <item>
-        <title>Develop using JetBrains Rider</title>
-        <link>https://razor-ssg.web-templates.io/posts/rider</link>
-        <author>gayle@email.org (Gayle Smith)</author>
-        <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/rider</guid>
-        <pubDate>Wed, 11 Jan 2023 00:00:00 GMT</pubDate>
-        <atom:updated>2023-01-11T00:00:00Z</atom:updated>
-        <category>c#</category>
-        <category>dev</category>
-        <description>Setting up &amp; exploring development workflow in Rider</description>
     </item>
 </channel>
 </rss>

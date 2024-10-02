@@ -10,7 +10,7 @@
     </image>
     <generator>razor-ssg</generator>
     <copyright>Razor SSG</copyright>
-    <lastBuildDate>Wed, 02 Oct 2024 03:54:03 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 02 Oct 2024 14:00:31 GMT</lastBuildDate>
     <managingEditor>email@example.org (Razor SSG)</managingEditor>
     <webMaster>email@example.org (Razor SSG)</webMaster>
     <atom:link href="https://razor-ssg.web-templates.io/podcasts/feed.xml" rel="self" type="application/rss+xml" />
@@ -27,6 +27,22 @@
         <itunes:category text="Tech News" />
     </itunes:category>
     <itunes:explicit>no</itunes:explicit>
+    <item>
+        <title>Podcasts now in Razor SSG</title>
+        <link>https://razor-ssg.web-templates.io/podcasts/razor-ssg-podcasts</link>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/podcasts/razor-ssg-podcasts</guid>
+        <pubDate>Wed, 02 Oct 2024 00:00:00 GMT</pubDate>
+        <atom:updated>2024-10-02T00:00:00Z</atom:updated>
+        <enclosure url="https://media.servicestack.com/podcasts/razor-ssg-podcasts.mp3" length="842061" type="audio/mpeg"/>
+        <category>razor</category>
+        <category>ssg</category>
+        <category>markdown</category>
+        <description>Razor SSG now includes support for Podcasts</description>
+        <itunes:summary><![CDATA[ Razor SSG now includes support for Podcasts ]]></itunes:summary>
+        <itunes:duration>210</itunes:duration>
+        <itunes:keywords>razor,ssg,markdown</itunes:keywords>        
+        <itunes:image href="https://razor-ssg.web-templates.io/img/podcasts/cover-1920.jpg"/>
+    </item>
     <item>
         <title>Scalable SQLite</title>
         <link>https://razor-ssg.web-templates.io/podcasts/scalable-sqlite</link>
