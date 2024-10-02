@@ -1,19 +1,19 @@
 <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:podcast="https://podcastindex.org/namespace/1.0" xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
 <channel>
     <title>Their Side</title>
-    <link>https://servicestack.net/podcasts</link>
+    <link>https://razor-ssg.web-templates.io/podcasts</link>
     <description><![CDATA[ Conversations with the most tragically misunderstood people of our time. ]]></description>
     <image>
-        <url>https://servicestack.net/img/podcasts/cover.png</url>
+        <url>https://razor-ssg.web-templates.io/img/podcasts/cover.png</url>
         <title>Their Side</title>
         <link>/podcasts</link>
     </image>
     <generator>razor-ssg</generator>
-    <copyright>ServiceStack</copyright>
-    <lastBuildDate>Tue, 01 Oct 2024 08:40:39 GMT</lastBuildDate>
-    <managingEditor>team@servicestack.net (Team ServiceStack)</managingEditor>
-    <webMaster>team@servicestack.net (Team ServiceStack)</webMaster>
-    <atom:link href="https://servicestack.net/podcasts/feed.xml" rel="self" type="application/rss+xml" />
+    <copyright>Razor SSG</copyright>
+    <lastBuildDate>Wed, 02 Oct 2024 03:54:03 GMT</lastBuildDate>
+    <managingEditor>email@example.org (Razor SSG)</managingEditor>
+    <webMaster>email@example.org (Razor SSG)</webMaster>
+    <atom:link href="https://razor-ssg.web-templates.io/podcasts/feed.xml" rel="self" type="application/rss+xml" />
     <itunes:author>Razor SSG</itunes:author>
     <itunes:owner>
         <itunes:name>Razor SSG</itunes:name>
@@ -29,8 +29,8 @@
     <itunes:explicit>no</itunes:explicit>
     <item>
         <title>Scalable SQLite</title>
-        <link>https://servicestack.net/podcasts/scalable-sqlite</link>
-        <guid isPermaLink="false">https://servicestack.net/podcasts/scalable-sqlite</guid>
+        <link>https://razor-ssg.web-templates.io/podcasts/scalable-sqlite</link>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/podcasts/scalable-sqlite</guid>
         <pubDate>Thu, 19 Sep 2024 00:00:00 GMT</pubDate>
         <atom:updated>2024-09-19T00:00:00Z</atom:updated>
         <enclosure url="https://media.servicestack.com/podcasts/scalable-sqlite.mp3" length="2301741" type="audio/mpeg"/>
@@ -45,8 +45,8 @@
     </item>
     <item>
         <title>SQLite Request Logging</title>
-        <link>https://servicestack.net/podcasts/sqlite-request-logs</link>
-        <guid isPermaLink="false">https://servicestack.net/podcasts/sqlite-request-logs</guid>
+        <link>https://razor-ssg.web-templates.io/podcasts/sqlite-request-logs</link>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/podcasts/sqlite-request-logs</guid>
         <pubDate>Tue, 17 Sep 2024 00:00:00 GMT</pubDate>
         <atom:updated>2024-09-17T00:00:00Z</atom:updated>
         <enclosure url="https://media.servicestack.com/podcasts/sqlite-request-logs.mp3" length="809613" type="audio/mpeg"/>
@@ -62,8 +62,8 @@
     </item>
     <item>
         <title>Background Jobs</title>
-        <link>https://servicestack.net/podcasts/background-jobs</link>
-        <guid isPermaLink="false">https://servicestack.net/podcasts/background-jobs</guid>
+        <link>https://razor-ssg.web-templates.io/podcasts/background-jobs</link>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/podcasts/background-jobs</guid>
         <pubDate>Thu, 12 Sep 2024 00:00:00 GMT</pubDate>
         <atom:updated>2024-09-12T00:00:00Z</atom:updated>
         <enclosure url="https://media.servicestack.com/podcasts/background-jobs.mp3" length="1990029" type="audio/mpeg"/>
@@ -79,8 +79,8 @@
     </item>
     <item>
         <title>ServiceStack v8.4 Release</title>
-        <link>https://servicestack.net/podcasts/v8-4-release</link>
-        <guid isPermaLink="false">https://servicestack.net/podcasts/v8-4-release</guid>
+        <link>https://razor-ssg.web-templates.io/podcasts/v8-4-release</link>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/podcasts/v8-4-release</guid>
         <pubDate>Wed, 11 Sep 2024 00:00:00 GMT</pubDate>
         <atom:updated>2024-09-11T00:00:00Z</atom:updated>
         <enclosure url="https://media.servicestack.com/podcasts/v8-4-release.mp3" length="9605805" type="audio/mpeg"/>
@@ -98,8 +98,8 @@
     </item>
     <item>
         <title>Commands Feature</title>
-        <link>https://servicestack.net/podcasts/commands-feature</link>
-        <guid isPermaLink="false">https://servicestack.net/podcasts/commands-feature</guid>
+        <link>https://razor-ssg.web-templates.io/podcasts/commands-feature</link>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/podcasts/commands-feature</guid>
         <pubDate>Wed, 03 Jul 2024 00:00:00 GMT</pubDate>
         <atom:updated>2024-07-03T00:00:00Z</atom:updated>
         <enclosure url="https://media.servicestack.com/podcasts/commands-feature.mp3" length="2474061" type="audio/mpeg"/>
@@ -114,8 +114,8 @@
     </item>
     <item>
         <title>Simple Auth Story for .NET 8 Microservices</title>
-        <link>https://servicestack.net/podcasts/simple-auth-microservices</link>
-        <guid isPermaLink="false">https://servicestack.net/podcasts/simple-auth-microservices</guid>
+        <link>https://razor-ssg.web-templates.io/podcasts/simple-auth-microservices</link>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/podcasts/simple-auth-microservices</guid>
         <pubDate>Tue, 02 Jul 2024 00:00:00 GMT</pubDate>
         <atom:updated>2024-07-02T00:00:00Z</atom:updated>
         <enclosure url="https://media.servicestack.com/podcasts/simple-auth-microservices.mp3" length="2623341" type="audio/mpeg"/>
@@ -130,8 +130,8 @@
     </item>
     <item>
         <title>Using API Keys to secure .NET 8 APIs</title>
-        <link>https://servicestack.net/podcasts/apikeys</link>
-        <guid isPermaLink="false">https://servicestack.net/podcasts/apikeys</guid>
+        <link>https://razor-ssg.web-templates.io/podcasts/apikeys</link>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/podcasts/apikeys</guid>
         <pubDate>Mon, 01 Jul 2024 00:00:00 GMT</pubDate>
         <atom:updated>2024-07-01T00:00:00Z</atom:updated>
         <enclosure url="https://media.servicestack.com/podcasts/apikeys.mp3" length="2403309" type="audio/mpeg"/>
@@ -147,8 +147,8 @@
     </item>
     <item>
         <title>ServiceStack v8.3 Release</title>
-        <link>https://servicestack.net/podcasts/v8-3-release</link>
-        <guid isPermaLink="false">https://servicestack.net/podcasts/v8-3-release</guid>
+        <link>https://razor-ssg.web-templates.io/podcasts/v8-3-release</link>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/podcasts/v8-3-release</guid>
         <pubDate>Mon, 17 Jun 2024 00:00:00 GMT</pubDate>
         <atom:updated>2024-06-17T00:00:00Z</atom:updated>
         <enclosure url="https://media.servicestack.com/podcasts/v8-3-release.mp3" length="1838829" type="audio/mpeg"/>
@@ -165,8 +165,8 @@
     </item>
     <item>
         <title>ASP.NET Core Output Caching</title>
-        <link>https://servicestack.net/podcasts/redis-outputcache</link>
-        <guid isPermaLink="false">https://servicestack.net/podcasts/redis-outputcache</guid>
+        <link>https://razor-ssg.web-templates.io/podcasts/redis-outputcache</link>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/podcasts/redis-outputcache</guid>
         <pubDate>Wed, 05 Jun 2024 00:00:00 GMT</pubDate>
         <atom:updated>2024-06-05T00:00:00Z</atom:updated>
         <enclosure url="https://media.servicestack.com/podcasts/redis-outputcache.mp3" length="2012973" type="audio/mpeg"/>
@@ -181,8 +181,8 @@
     </item>
     <item>
         <title>ASP.NET Core Rate Limiter Middleware</title>
-        <link>https://servicestack.net/podcasts/asp-rate-limiter-middleware</link>
-        <guid isPermaLink="false">https://servicestack.net/podcasts/asp-rate-limiter-middleware</guid>
+        <link>https://razor-ssg.web-templates.io/podcasts/asp-rate-limiter-middleware</link>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/podcasts/asp-rate-limiter-middleware</guid>
         <pubDate>Mon, 08 Apr 2024 00:00:00 GMT</pubDate>
         <atom:updated>2024-04-08T00:00:00Z</atom:updated>
         <enclosure url="https://media.servicestack.com/podcasts/asp-rate-limiter-middleware.mp3" length="2585901" type="audio/mpeg"/>
@@ -197,8 +197,8 @@
     </item>
     <item>
         <title>New React SPA Template</title>
-        <link>https://servicestack.net/podcasts/net8-react-spa-template</link>
-        <guid isPermaLink="false">https://servicestack.net/podcasts/net8-react-spa-template</guid>
+        <link>https://razor-ssg.web-templates.io/podcasts/net8-react-spa-template</link>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/podcasts/net8-react-spa-template</guid>
         <pubDate>Wed, 06 Mar 2024 00:00:00 GMT</pubDate>
         <atom:updated>2024-03-06T00:00:00Z</atom:updated>
         <enclosure url="https://media.servicestack.com/podcasts/net8-react-spa-template.mp3" length="2731533" type="audio/mpeg"/>
@@ -214,8 +214,8 @@
     </item>
     <item>
         <title>New Vue SPA Template</title>
-        <link>https://servicestack.net/podcasts/net8-vue-spa-template</link>
-        <guid isPermaLink="false">https://servicestack.net/podcasts/net8-vue-spa-template</guid>
+        <link>https://razor-ssg.web-templates.io/podcasts/net8-vue-spa-template</link>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/podcasts/net8-vue-spa-template</guid>
         <pubDate>Tue, 05 Mar 2024 00:00:00 GMT</pubDate>
         <atom:updated>2024-03-05T00:00:00Z</atom:updated>
         <enclosure url="https://media.servicestack.com/podcasts/net8-vue-spa-template.mp3" length="1414413" type="audio/mpeg"/>
@@ -231,8 +231,8 @@
     </item>
     <item>
         <title>ServiceStack v8.2 Release</title>
-        <link>https://servicestack.net/podcasts/v8-2-release</link>
-        <guid isPermaLink="false">https://servicestack.net/podcasts/v8-2-release</guid>
+        <link>https://razor-ssg.web-templates.io/podcasts/v8-2-release</link>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/podcasts/v8-2-release</guid>
         <pubDate>Mon, 04 Mar 2024 00:00:00 GMT</pubDate>
         <atom:updated>2024-03-04T00:00:00Z</atom:updated>
         <enclosure url="https://media.servicestack.com/podcasts/v8-2-release.mp3" length="2698701" type="audio/mpeg"/>
@@ -250,8 +250,8 @@
     </item>
     <item>
         <title>ServiceStack v8.1 Release</title>
-        <link>https://servicestack.net/podcasts/v8-1-release</link>
-        <guid isPermaLink="false">https://servicestack.net/podcasts/v8-1-release</guid>
+        <link>https://razor-ssg.web-templates.io/podcasts/v8-1-release</link>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/podcasts/v8-1-release</guid>
         <pubDate>Tue, 06 Feb 2024 00:00:00 GMT</pubDate>
         <atom:updated>2024-02-06T00:00:00Z</atom:updated>
         <enclosure url="https://media.servicestack.com/podcasts/v8-1-release.mp3" length="2482893" type="audio/mpeg"/>
@@ -269,8 +269,8 @@
     </item>
     <item>
         <title>ServiceStack v8.0 Release</title>
-        <link>https://servicestack.net/podcasts/v8-0-release</link>
-        <guid isPermaLink="false">https://servicestack.net/podcasts/v8-0-release</guid>
+        <link>https://razor-ssg.web-templates.io/podcasts/v8-0-release</link>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/podcasts/v8-0-release</guid>
         <pubDate>Mon, 20 Nov 2023 00:00:00 GMT</pubDate>
         <atom:updated>2023-11-20T00:00:00Z</atom:updated>
         <enclosure url="https://media.servicestack.com/podcasts/v8-0-release.mp3" length="2715309" type="audio/mpeg"/>
