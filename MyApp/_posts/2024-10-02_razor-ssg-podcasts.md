@@ -63,7 +63,7 @@ Whilst all content about a podcast is contained within its `.md` file and frontm
 Blog Posts can contain interactive Vue Components and custom [Markdown Containers](https://razor-press.web-templates.io/containers).
 
 The [Backgrounds Jobs Podcast Page](https://razor-ssg.web-templates.io/podcasts/background-jobs) is a
-good example of this where its [2024-09-12_background-jobs.md](https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/_podcasts/2024-09-12_background-jobs.md)
+good example of this where its [2024-09-12_background-jobs.md](https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/_podcasts/2024-09-12_background-jobs.md?plain=1)
 contains both a `<project-creator>` Vue Component as well as `sh` and `youtube` custom markdown
 containers to render its page:
 
@@ -77,7 +77,7 @@ Vue Component that's enabled on each podcast page which will appear at the botto
 [![](https://servicestack.net/img/posts/razor-ssg-podcasts/razor-ssg-podcast-audioplayer.webp)](https://razor-ssg.web-templates.io/podcasts)
 
 The `AudioPlayer` component is also independently usable as a standard Vue Component in
-markdown content like [this .md page](https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/_posts/2024-10-02_razor-ssg-podcasts.md#audio-player):
+markdown content like [this .md page](https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/_posts/2024-10-02_razor-ssg-podcasts.md?plain=1#L72):
 
 ```html
 <audio-player id="scalable-sqlite" title="Scalable SQLite" variant="compact"
