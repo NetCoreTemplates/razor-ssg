@@ -1,14 +1,14 @@
 {
   "localBaseUrl": "https://localhost:5002",
-  "publicBaseUrl": "https://servicestack.net",
+  "publicBaseUrl": "https://razor-ssg.web-templates.io",
   "title": "Their Side",
   "description": "Conversations with the most tragically misunderstood people of our time.",
   "about": "In this show, Eric and Wes dig deep to get to the facts with guests who have been labeled villains by a society quick to judge, without actually getting the full story. Tune in every Thursday to get to the truth with another misunderstood outcast as they share the missing context in their tragic tale.",
   "imageUrl": "/img/podcasts/cover.png",
   "imageTitle": "Their Side",
   "imageLink": "/podcasts",
-  "email": "team@servicestack.net (Team ServiceStack)",
-  "copyrightOwner": "ServiceStack",
+  "email": "email@example.org (Razor SSG)",
+  "copyrightOwner": "Razor SSG",
   "category": "Technology",
   "itunes": {
     "author": "Razor SSG",
