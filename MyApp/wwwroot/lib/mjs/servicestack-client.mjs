@@ -1361,7 +1361,11 @@ export function splitTitleCase(s) {
     to.push(s.substring(lastSplit, s.length));
     return to.filter(x => !!x);
 }
-export function humanify(s) { return !s || s.indexOf(' ') >= 0 ? s : ucFirst(splitTitleCase(s).join(' ')); }
+export function humanify(s) {
+    return !s || indexOfAny(s, [' ', ',', '.', ':', '-']) >= 0
+        ? s
+        : ucFirst(splitTitleCase(s).join(' '));
+}
 export function queryString(url) {
     if (!url || url.indexOf('?') === -1)
         return {};
