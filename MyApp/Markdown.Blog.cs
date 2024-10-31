@@ -120,7 +120,7 @@ public class MarkdownBlog(ILogger<MarkdownBlog> log, IWebHostEnvironment env, IV
         var content = file.ReadAllText();
 
         var writer = new StringWriter();
-        var doc = CreateMarkdownFile(content, writer, pipeline);
+        var doc = CreateMarkdownFile(path, content, writer, pipeline);
         if (doc.Title == null)
         {
             log.LogWarning("No frontmatter found for {VirtualPath}, ignoring...", file.VirtualPath);
@@ -155,7 +155,7 @@ public class MarkdownBlog(ILogger<MarkdownBlog> log, IWebHostEnvironment env, IV
         var files = VirtualFiles.GetDirectory(fromDirectory).GetAllFiles().ToList();
         log.LogInformation("Found {Count} posts", files.Count);
 
-        var pipeline = CreatePipeline();
+        var pipeline = CreatePipeline(string.Empty);
 
         foreach (var file in files)
         {
