@@ -23,7 +23,7 @@ public class MarkdownWhatsNew(ILogger<MarkdownWhatsNew> log, IWebHostEnvironment
         var dirs = VirtualFiles.GetDirectory(fromDirectory).GetDirectories().ToList();
         log.LogInformation("Found {Count} whatsnew directories", dirs.Count);
 
-        var pipeline = CreatePipeline();
+        var pipeline = CreatePipeline(string.Empty);
 
         foreach (var dir in dirs)
         {
