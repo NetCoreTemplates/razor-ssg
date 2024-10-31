@@ -35,7 +35,7 @@ public class MarkdownPages(ILogger<MarkdownPages> log, IWebHostEnvironment env, 
             .ToList();
         log.LogInformation("Found {Count} pages", files.Count);
 
-        var pipeline = CreatePipeline();
+        var pipeline = CreatePipeline(string.Empty);
 
         foreach (var file in files)
         {
