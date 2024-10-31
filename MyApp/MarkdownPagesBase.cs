@@ -338,6 +338,10 @@ public class AutoLinkHeadingRenderer : HtmlObjectRenderer<HeadingBlock>
         this._relativeHtmlPath = relativeHtmlPath;
     }
 
+    public AutoLinkHeadingRenderer()
+    {
+    }
+
     public event Action<HeadingBlock>? OnHeading;
 
     protected override void Write(HtmlRenderer renderer, HeadingBlock obj)
@@ -379,6 +383,13 @@ public class AutoLinkHeadingRenderer : HtmlObjectRenderer<HeadingBlock>
 
 public class AutoLinkHeadingsExtension : IMarkdownExtension
 {
+    private string relativeHtmlPath;
+
+    public AutoLinkHeadingsExtension(string relativeHtmlPath)
+    {
+        this.relativeHtmlPath = relativeHtmlPath;
+    }
+
     public void Setup(MarkdownPipelineBuilder pipeline)
     {
     }
