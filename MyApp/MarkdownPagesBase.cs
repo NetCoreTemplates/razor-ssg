@@ -322,7 +322,7 @@ public struct HeadingInfo(int level, string id, string content)
 /// <seealso cref="HtmlObjectRenderer{TObject}" />
 public class AutoLinkHeadingRenderer : HtmlObjectRenderer<HeadingBlock>
 {
-    private string _relativeHtmlPath;
+    private string RelativeHtmlPath;
 
     private static readonly string[] HeadingTexts = [
         "h1",
@@ -335,7 +335,15 @@ public class AutoLinkHeadingRenderer : HtmlObjectRenderer<HeadingBlock>
     
     public AutoLinkHeadingRenderer(string relativeHtmlPath)
     {
-        this._relativeHtmlPath = relativeHtmlPath;
+        this.RelativeHtmlPath = relativeHtmlPath;
+    }
+
+    public AutoLinkHeadingRenderer()
+    {
+    }
+
+    public AutoLinkHeadingRenderer()
+    {
     }
 
     public event Action<HeadingBlock>? OnHeading;
@@ -360,9 +368,7 @@ public class AutoLinkHeadingRenderer : HtmlObjectRenderer<HeadingBlock>
         var attrs = obj.TryGetAttributes();
         if (attrs?.Id != null && obj.Level <= 4)
         {
-            renderer.Write("<a class=\"header-anchor\" href=\"javascript:;\" onclick=\"location.hash='#");
-            renderer.Write(attrs.Id);
-            renderer.Write("'\" aria-label=\"Permalink\">&ZeroWidthSpace;</a>");
+            renderer.Write($"<a class=\"header-anchor\" href=\"{this.RelativeHtmlPath}#{attrs.Id}\" aria-label=\"Permalink\">&ZeroWidthSpace;</a>");
         }
 
         if (renderer.EnableHtmlForBlock)
@@ -379,13 +385,20 @@ public class AutoLinkHeadingRenderer : HtmlObjectRenderer<HeadingBlock>
 
 public class AutoLinkHeadingsExtension : IMarkdownExtension
 {
+    private string RelativeHtmlPath;
+
+    public AutoLinkHeadingsExtension(string relativeHtmlPath)
+    {
+        this.RelativeHtmlPath = relativeHtmlPath;
+    }
+
     public void Setup(MarkdownPipelineBuilder pipeline)
     {
     }
 
     public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
     {
-        renderer.ObjectRenderers.Replace<HeadingRenderer>(new AutoLinkHeadingRenderer());
+        renderer.ObjectRenderers.Replace<HeadingRenderer>(new AutoLinkHeadingRenderer(RelativeHtmlPath));
     }
 }
 
