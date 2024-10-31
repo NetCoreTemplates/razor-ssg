@@ -338,14 +338,6 @@ public class AutoLinkHeadingRenderer : HtmlObjectRenderer<HeadingBlock>
         this.RelativeHtmlPath = relativeHtmlPath;
     }
 
-    public AutoLinkHeadingRenderer()
-    {
-    }
-
-    public AutoLinkHeadingRenderer()
-    {
-    }
-
     public event Action<HeadingBlock>? OnHeading;
 
     protected override void Write(HtmlRenderer renderer, HeadingBlock obj)
