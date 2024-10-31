@@ -113,12 +113,12 @@ public abstract class MarkdownPagesBase<T>(ILogger log, IWebHostEnvironment env,
     public abstract string Id { get; }
     public IVirtualFiles VirtualFiles => fs;
 
-    public virtual MarkdownPipeline CreatePipeline()
+    public virtual MarkdownPipeline CreatePipeline(string path)
     {
         var builder = new MarkdownPipelineBuilder()
             .UseYamlFrontMatter()
             .UseAdvancedExtensions()
-            .UseAutoLinkHeadings()
+            .UseAutoLinkHeadings(this, path)
             .UseHeadingsMap()
             .UseCustomContainers(MarkdigConfig.Instance.ConfigureContainers);
         MarkdigConfig.Instance.ConfigurePipeline?.Invoke(builder);
@@ -149,9 +149,9 @@ public abstract class MarkdownPagesBase<T>(ILogger log, IWebHostEnvironment env,
         return doc;
     }
 
-    public virtual T CreateMarkdownFile(string content, TextWriter writer, MarkdownPipeline? pipeline = null)
+    public virtual T CreateMarkdownFile(string path, string content, TextWriter writer, MarkdownPipeline? pipeline = null)
     {
-        pipeline ??= CreatePipeline();
+        pipeline ??= CreatePipeline(path);
 
         var renderer = new Markdig.Renderers.HtmlRenderer(writer);
         pipeline.Setup(renderer);
@@ -190,7 +190,7 @@ public abstract class MarkdownPagesBase<T>(ILogger log, IWebHostEnvironment env,
 
         var writer = new StringWriter();
 
-        var doc = CreateMarkdownFile(content, writer, pipeline);
+        var doc = CreateMarkdownFile(string.Empty, content, writer, pipeline);
         doc.Title ??= file.Name;
 
         doc.Path = file.VirtualPath;
@@ -278,7 +278,7 @@ public class MarkdownIncludes(ILogger<MarkdownIncludes> log, IWebHostEnvironment
             .ToList();
         log.LogInformation("Found {Count} includes", files.Count);
 
-        var pipeline = CreatePipeline();
+        var pipeline = CreatePipeline(string.Empty);
 
         foreach (var file in files)
         {
@@ -322,6 +322,8 @@ public struct HeadingInfo(int level, string id, string content)
 /// <seealso cref="HtmlObjectRenderer{TObject}" />
 public class AutoLinkHeadingRenderer : HtmlObjectRenderer<HeadingBlock>
 {
+    private string _relativeHtmlPath;
+
     private static readonly string[] HeadingTexts = [
         "h1",
         "h2",
@@ -330,6 +332,11 @@ public class AutoLinkHeadingRenderer : HtmlObjectRenderer<HeadingBlock>
         "h5",
         "h6"
     ];
+    
+    public AutoLinkHeadingRenderer(string relativeHtmlPath)
+    {
+        this._relativeHtmlPath = relativeHtmlPath;
+    }
 
     public event Action<HeadingBlock>? OnHeading;
 
@@ -942,9 +949,22 @@ public static class MarkdigExtensions
     /// <summary>
     /// Uses the auto-identifier extension.
     /// </summary>
-    public static MarkdownPipelineBuilder UseAutoLinkHeadings(this MarkdownPipelineBuilder pipeline)
+    public static MarkdownPipelineBuilder UseAutoLinkHeadings(this MarkdownPipelineBuilder pipeline, object input, string path)
     {
-        pipeline.Extensions.AddIfNotAlready(new AutoLinkHeadingsExtension());
+        var relativeHtmlPath = string.Empty;
+
+        if(input.GetType() == typeof(MarkdownBlog))
+        {
+            var post = ((MarkdownBlog)input).VisiblePosts.FirstOrDefault(x => path.Contains(x.FileName));
+
+            if(post != null)
+            {
+                relativeHtmlPath = $"/posts/{post.Slug}";
+            }
+        }
+
+        pipeline.Extensions.AddIfNotAlready(new AutoLinkHeadingsExtension(relativeHtmlPath));
+
         return pipeline;
     }
 
