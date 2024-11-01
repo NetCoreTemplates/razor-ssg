@@ -206,12 +206,12 @@ that's enabled by default when using <strong>Endpoint Routing</strong>.</p>
 <p>This integrates ServiceStack APIs more than ever where just like Minimal APIs and Web API,
 uses <strong>ASP.NET Core's IOC</strong> to resolve dependencies, uses <strong>Endpoint Routing</strong> to Execute APIs that's secured with
 <strong>ASP.NET Core Identity Auth</strong> then uses <strong>System.Text.Json</strong> to deserialize and serialize its JSON payloads.</p>
-<h3 id="enabled-by-default-when-using-endpoint-routing">Enabled by Default when using Endpoint Routing<a class="header-anchor" href="javascript:;" onclick="location.hash='#enabled-by-default-when-using-endpoint-routing'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="enabled-by-default-when-using-endpoint-routing">Enabled by Default when using Endpoint Routing<a class="header-anchor" href="#enabled-by-default-when-using-endpoint-routing" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <pre><code class="language-csharp">app.UseServiceStack(new AppHost(), options =&gt; {
     options.MapEndpoints();
 });
 </code></pre>
-<h3 id="enhanced-configuration">Enhanced Configuration<a class="header-anchor" href="javascript:;" onclick="location.hash='#enhanced-configuration'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="enhanced-configuration">Enhanced Configuration<a class="header-anchor" href="#enhanced-configuration" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>ServiceStack uses a custom <code>JsonSerializerOptions</code> to improve compatibility with existing ServiceStack DTOs and
 ServiceStack's rich ecosystem of generic <a href="https://docs.servicestack.net/add-servicestack-reference">Add ServiceStack Reference</a>
 Service Clients, which is configured to:</p>
@@ -223,10 +223,10 @@ Service Clients, which is configured to:</p>
 <li>Supports <code>[DataContract]</code> annotations</li>
 <li>Supports Custom Enum Serialization</li>
 </ul>
-<h3 id="benefits-all-add-servicestack-reference-languages">Benefits all Add ServiceStack Reference Languages<a class="header-anchor" href="javascript:;" onclick="location.hash='#benefits-all-add-servicestack-reference-languages'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="benefits-all-add-servicestack-reference-languages">Benefits all Add ServiceStack Reference Languages<a class="header-anchor" href="#benefits-all-add-servicestack-reference-languages" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>This compatibility immediately benefits all of ServiceStack's <a href="https://docs.servicestack.net/add-servicestack-reference">Add ServiceStack Reference</a>
 native typed integrations for <strong>11 programming languages</strong> which all utilize ServiceStack's JSON API endpoints - now serialized with System.Text.Json</p>
-<h3 id="support-for-datacontract-annotations">Support for DataContract Annotations<a class="header-anchor" href="javascript:;" onclick="location.hash='#support-for-datacontract-annotations'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="support-for-datacontract-annotations">Support for DataContract Annotations<a class="header-anchor" href="#support-for-datacontract-annotations" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Support for .NET's <code>DataContract</code> serialization attributes was added using a custom <code>TypeInfoResolver</code>, specifically it supports:</p>
 <ul>
 <li><code>[DataContract]</code> - When annotated, only <code>[DataMember]</code> properties are serialized</li>
@@ -234,7 +234,7 @@ native typed integrations for <strong>11 programming languages</strong> which al
 <li><code>[IgnoreDataMember]</code> - Ignore properties from serialization</li>
 <li><code>[EnumMember]</code> - Specify a custom value for Enum values</li>
 </ul>
-<h3 id="custom-enum-serialization">Custom Enum Serialization<a class="header-anchor" href="javascript:;" onclick="location.hash='#custom-enum-serialization'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="custom-enum-serialization">Custom Enum Serialization<a class="header-anchor" href="#custom-enum-serialization" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Below is a good demonstration of the custom Enum serialization support which matches ServiceStack.Text's behavior:</p>
 <pre><code class="language-csharp">public enum EnumType { Value1, Value2, Value3 }
 
@@ -263,7 +263,7 @@ return new EnumExamples {
   &quot;enumStyleMembers&quot;: &quot;UPPER&quot;
 }
 </code></pre>
-<h3 id="custom-configuration">Custom Configuration<a class="header-anchor" href="javascript:;" onclick="location.hash='#custom-configuration'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="custom-configuration">Custom Configuration<a class="header-anchor" href="#custom-configuration" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>You can further customize the <code>JsonSerializerOptions</code> used by ServiceStack by using <code>ConfigureJsonOptions()</code> to add
 any customizations that you can optionally apply to ASP.NET Core's JSON APIs and MVC with:</p>
 <pre><code class="language-csharp">builder.Services.ConfigureJsonOptions(options =&gt; {
@@ -272,7 +272,7 @@ any customizations that you can optionally apply to ASP.NET Core's JSON APIs and
 .ApplyToApiJsonOptions()  // Apply to ASP.NET Core's JSON APIs
 .ApplyToMvcJsonOptions(); // Apply to MVC
 </code></pre>
-<h3 id="control-over-when-and-where-system.text.json-is-used">Control over when and where System.Text.Json is used<a class="header-anchor" href="javascript:;" onclick="location.hash='#control-over-when-and-where-system.text.json-is-used'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="control-over-when-and-where-system.text.json-is-used">Control over when and where System.Text.Json is used<a class="header-anchor" href="#control-over-when-and-where-system.text.json-is-used" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Whilst <code>System.Text.Json</code> is highly efficient, it's also very strict in the inputs it accepts where you may want to
 revert back to using ServiceStack's JSON Serializer for specific APIs, especially when you need to support external
 clients that can't be updated.</p>
@@ -298,7 +298,7 @@ public class CreateUser : IReturn&lt;IdResponse&gt;
     //...
 }
 </code></pre>
-<h3 id="jsonapiclient-support">JsonApiClient Support<a class="header-anchor" href="javascript:;" onclick="location.hash='#jsonapiclient-support'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="jsonapiclient-support">JsonApiClient Support<a class="header-anchor" href="#jsonapiclient-support" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>When Endpoints Routing is configured, the <code>JsonApiClient</code> will also be configured to utilize the same <code>System.Text.Json</code>
 options to send and receive its JSON API Requests which also respects the <code>[SystemJson]</code> specified behavior.</p>
 <p>Clients external to the .NET App can be configured to use <code>System.Text.Json</code> with:</p>
@@ -309,7 +309,7 @@ options to send and receive its JSON API Requests which also respects the <code>
     options.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
 });
 </code></pre>
-<h3 id="scoped-json-configuration">Scoped JSON Configuration<a class="header-anchor" href="javascript:;" onclick="location.hash='#scoped-json-configuration'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="scoped-json-configuration">Scoped JSON Configuration<a class="header-anchor" href="#scoped-json-configuration" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>We've also added partial support for <a href="https://docs.servicestack.net/customize-json-responses">Customized JSON Responses</a>
 for the following customization options:</p>
 <div class="table,w-full">
@@ -358,7 +358,7 @@ for the following customization options:</p>
 <pre><code class="language-csharp">/api/MyRequest?jsconfig=EmitLowercaseUnderscoreNames,ExcludeDefaultValues
 /api/MyRequest?jsconfig=eccn,edv
 </code></pre>
-<h3 id="systemjsoncompatible">SystemJsonCompatible<a class="header-anchor" href="javascript:;" onclick="location.hash='#systemjsoncompatible'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="systemjsoncompatible">SystemJsonCompatible<a class="header-anchor" href="#systemjsoncompatible" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Another configuration automatically applied when <code>System.Text.Json</code> is enabled is:</p>
 <pre><code class="language-csharp">JsConfig.SystemJsonCompatible = true;
 </code></pre>

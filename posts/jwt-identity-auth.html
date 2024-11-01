@@ -183,11 +183,11 @@ mountAll()
 or perform any I/O to validate a token. As such,
 <a href="https://docs.servicestack.net/auth/jwt-authprovider#stateless-auth-microservices">JWTs are a popular choice for Microservices</a>
 as they only need to configured with confidential keys to validate access.</p>
-<h3 id="asp.net-core-jwt-authentication">ASP.NET Core JWT Authentication<a class="header-anchor" href="javascript:;" onclick="location.hash='#asp.net-core-jwt-authentication'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="asp.net-core-jwt-authentication">ASP.NET Core JWT Authentication<a class="header-anchor" href="#asp.net-core-jwt-authentication" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>ServiceStack's JWT Identity Auth reimplements many of the existing <a href="https://docs.servicestack.net/auth/jwt-authprovider">ServiceStack JWT AuthProvider</a>
 features but instead of its own implementation, integrates with and utilizes ASP.NET Core's built-in JWT Authentication that's
 configurable in .NET Apps with the <code>.AddJwtBearer()</code> extension method, e.g:</p>
-<h4 id="program.cs">Program.cs<a class="header-anchor" href="javascript:;" onclick="location.hash='#program.cs'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="program.cs">Program.cs<a class="header-anchor" href="#program.cs" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-csharp">services.AddAuthentication()
     .AddJwtBearer(options =&gt; {
         options.TokenValidationParameters = new()
@@ -202,7 +202,7 @@ configurable in .NET Apps with the <code>.AddJwtBearer()</code> extension method
     .AddIdentityCookies(options =&gt; options.DisableRedirectsForApis());
 </code></pre>
 <p>Then use the <code>JwtAuth()</code> method to enable and configure ServiceStack's support for ASP.NET Core JWT Identity Auth:</p>
-<h4 id="configure.auth.cs">Configure.Auth.cs<a class="header-anchor" href="javascript:;" onclick="location.hash='#configure.auth.cs'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="configure.auth.cs">Configure.Auth.cs<a class="header-anchor" href="#configure.auth.cs" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-csharp">public class ConfigureAuth : IHostingStartup
 {
     public void Configure(IWebHostBuilder builder) =&gt; builder
@@ -218,7 +218,7 @@ configurable in .NET Apps with the <code>.AddJwtBearer()</code> extension method
         });
 }
 </code></pre>
-<h3 id="enable-in-swagger-ui">Enable in Swagger UI<a class="header-anchor" href="javascript:;" onclick="location.hash='#enable-in-swagger-ui'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="enable-in-swagger-ui">Enable in Swagger UI<a class="header-anchor" href="#enable-in-swagger-ui" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Once configured we can enable JWT Auth in Swagger UI by installing <strong>Swashbuckle.AspNetCore</strong>:</p>
 <div class="not-prose copy cp flex cursor-pointer mb-3" onclick="copy(this)">
                 <div class="flex-grow bg-gray-700">
@@ -265,13 +265,13 @@ configurable in .NET Apps with the <code>.AddJwtBearer()</code> extension method
 </code></pre>
 <p>This will enable the <strong>Authorize</strong> button in Swagger UI where you can authenticate with a JWT Token:</p>
 <p><img src="https://servicestack.net/img/posts/jwt-identity-auth/jwt-swagger-ui.png" alt="" /></p>
-<h3 id="jwt-auth-in-built-in-uis">JWT Auth in Built-in UIs<a class="header-anchor" href="javascript:;" onclick="location.hash='#jwt-auth-in-built-in-uis'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="jwt-auth-in-built-in-uis">JWT Auth in Built-in UIs<a class="header-anchor" href="#jwt-auth-in-built-in-uis" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>This also enables the <strong>JWT</strong> Auth Option in ServiceStack's built-in
 <a href="https://docs.servicestack.net/api-explorer">API Explorer</a>,
 <a href="https://docs.servicestack.net/locode/">Locode</a> and
 <a href="https://docs.servicestack.net/admin-ui">Admin UIs</a>:</p>
 <img class="shadow p-1" src="https://servicestack.net/img/posts/jwt-identity-auth/jwt-api-explorer.png">
-<h3 id="authenticating-with-jwt">Authenticating with JWT<a class="header-anchor" href="javascript:;" onclick="location.hash='#authenticating-with-jwt'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="authenticating-with-jwt">Authenticating with JWT<a class="header-anchor" href="#authenticating-with-jwt" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>JWT Identity Auth is a drop-in replacement for ServiceStack's JWT AuthProvider where Authenticating via Credentials
 will convert the Authenticated User into a JWT Bearer Token returned in the <strong>HttpOnly</strong>, <strong>Secure</strong> <code>ss-tok</code> Cookie
 that will be used to Authenticate the client:</p>
@@ -284,7 +284,7 @@ await client.SendAsync(new Authenticate {
 
 var bearerToken = client.GetTokenCookie(); // ss-tok Cookie
 </code></pre>
-<h2 id="jwt-refresh-tokens">JWT Refresh Tokens<a class="header-anchor" href="javascript:;" onclick="location.hash='#jwt-refresh-tokens'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="jwt-refresh-tokens">JWT Refresh Tokens<a class="header-anchor" href="#jwt-refresh-tokens" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Refresh Tokens can be used to allow users to request a new JWT Access Token when the current one expires.</p>
 <p>To enable support for JWT Refresh Tokens your <code>IdentityUser</code> model should implement the <code>IRequireRefreshToken</code> interface
 which will be used to store the 64 byte Base64 URL-safe <code>RefreshToken</code> and its <code>RefreshTokenExpiry</code> in its persisted properties:</p>
@@ -297,7 +297,7 @@ which will be used to store the 64 byte Base64 URL-safe <code>RefreshToken</code
 <p>Now after successful authentication, the <code>RefreshToken</code> will also be returned in the <code>ss-reftok</code> Cookie:</p>
 <pre><code class="language-csharp">var refreshToken = client.GetRefreshTokenCookie(); // ss-reftok Cookie
 </code></pre>
-<h3 id="transparent-server-auto-refresh-of-jwt-tokens">Transparent Server Auto Refresh of JWT Tokens<a class="header-anchor" href="javascript:;" onclick="location.hash='#transparent-server-auto-refresh-of-jwt-tokens'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="transparent-server-auto-refresh-of-jwt-tokens">Transparent Server Auto Refresh of JWT Tokens<a class="header-anchor" href="#transparent-server-auto-refresh-of-jwt-tokens" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>To be able to terminate a users access, Users need to revalidate their eligibility to verify they're still allowed access
 (e.g. deny Locked out users). This JWT revalidation pattern is implemented using Refresh Tokens which are used to request
 revalidation of their access and reissuing a new JWT Access Token which can be used to make authenticated requests until it expires.</p>
@@ -319,7 +319,7 @@ otherwise expires if they stop. How long to extend the expiry of Refresh Tokens 
     x.ExtendRefreshTokenExpiryAfterUsage = TimeSpan.FromDays(90);
 });
 </code></pre>
-<h2 id="convert-session-to-token-service">Convert Session to Token Service<a class="header-anchor" href="javascript:;" onclick="location.hash='#convert-session-to-token-service'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="convert-session-to-token-service">Convert Session to Token Service<a class="header-anchor" href="#convert-session-to-token-service" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Another useful Service that's available is being able to Convert your current Authenticated Session into a Token
 with the <code>ConvertSessionToToken</code> Service which can be enabled with:</p>
 <pre><code class="language-csharp">options.JwtAuth(x =&gt; {
@@ -328,10 +328,10 @@ with the <code>ConvertSessionToToken</code> Service which can be enabled with:</
 </code></pre>
 <p>This can be useful for when you want to Authenticate via an external OAuth Provider that you then want to convert into a stateless
 JWT Token by calling the <code>ConvertSessionToToken</code> on the client, e.g:</p>
-<h4 id="net-clients">.NET Clients<a class="header-anchor" href="javascript:;" onclick="location.hash='#net-clients'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="net-clients">.NET Clients<a class="header-anchor" href="#net-clients" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-csharp">await client.SendAsync(new ConvertSessionToToken());
 </code></pre>
-<h4 id="typescriptjavascript">TypeScript/JavaScript<a class="header-anchor" href="javascript:;" onclick="location.hash='#typescriptjavascript'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="typescriptjavascript">TypeScript/JavaScript<a class="header-anchor" href="#typescriptjavascript" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-ts">fetch('/session-to-token', { method:'POST', credentials:'include' })
 </code></pre>
 <p>The default behavior of <code>ConvertSessionToToken</code> is to remove the Current Session from the Auth Server which will prevent
@@ -341,7 +341,7 @@ you can indicate this with:</p>
     PreserveSession = true 
 });
 </code></pre>
-<h3 id="jwt-options">JWT Options<a class="header-anchor" href="javascript:;" onclick="location.hash='#jwt-options'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="jwt-options">JWT Options<a class="header-anchor" href="#jwt-options" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Other configuration options available for Identity JWT Auth include:</p>
 <pre><code class="language-csharp">options.JwtAuth(x =&gt; {
     // How long should JWT Tokens be valid for. (default 14 days)

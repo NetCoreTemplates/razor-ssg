@@ -205,7 +205,7 @@ We were so pleased with its effortless adoption, simplicity-focus and end-user U
 <a href="https://docs.servicestack.net">navigate our docs</a>. So that more people can find out about Typesense's amazing OSS Search
 product we've documented our approach used for creating and deploying an index of our site using GitHub Actions.</p>
 <p>Documentation search is a common use case which Typesense caters for with their <a href="https://github.com/typesense/typesense-docsearch-scraper">typesense-docsearch-scraper</a>. This is a utility designed to easily scrape a documentation site and post the results to a Typesense server to create a fast searchable index.</p>
-<h2 id="self-hosting-option">Self hosting option<a class="header-anchor" href="javascript:;" onclick="location.hash='#self-hosting-option'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="self-hosting-option">Self hosting option<a class="header-anchor" href="#self-hosting-option" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Since we already have several AWS instances hosting our example applications, we opted to start with a self hosting on AWS Elastic Container Service (ECS) since Typesense is already packaged into <a href="https://hub.docker.com/r/typesense/typesense/">an easy to use Docker image</a>.</p>
 <p>Trying it locally, we used the following commands to spin up a local Typesense server ready to scrape out docs site.</p>
 <pre><code class="language-shell">mkdir /tmp/typesense-data
@@ -214,7 +214,7 @@ docker run -p 8108:8108 -v/tmp/data:/data typesense/typesense:0.21.0 \
 </code></pre>
 <p>To check that the server is running, we can open a browser at <code>/health</code> and we get back 200 OK with <code>ok: true</code>.</p>
 <p>The Typesense server has a <a href="https://typesense.org/docs/0.21.0/api">REST API</a> which can be used to manage the indexes you create. The cloud offering comes with a web dashboard to manage your data which is a definite advantage over the self hosting, but for now we were still trying it out.</p>
-<h2 id="populating-our-index">Populating our index<a class="header-anchor" href="javascript:;" onclick="location.hash='#populating-our-index'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="populating-our-index">Populating our index<a class="header-anchor" href="#populating-our-index" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Now that our local server is running, we can scrape our docs site using the <a href="https://github.com/typesense/typesense-docsearch-scraper">typesense-docsearch-scraper</a>. This needs some configuration since the scraper needs to know:</p>
 <ul>
 <li>Where is the Typesense server.</li>
@@ -259,7 +259,7 @@ TYPESENSE_PROTOCOL=http
     typesense/docsearch-scraper
 </code></pre>
 <p>Here we are using <code>-i</code> so we can reference our local <code>--env-file</code> and use <code>cat</code> and <code>jq</code> to populate the <code>CONFIG</code> environment variable using our <code>.json</code> config file.</p>
-<h2 id="docker-networking">Docker networking<a class="header-anchor" href="javascript:;" onclick="location.hash='#docker-networking'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="docker-networking">Docker networking<a class="header-anchor" href="#docker-networking" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Here we run into a bit of a issue, since the scraper itself is running in Docker via WSL, <code>localhost</code> isn't resolving to our host machine to find the Typesense server also running in Docker.
 Instead we need to point the scraper to the Typesense server using the Docker local IP address space of 172.17.0.0/16 for it to resolve without additional configuration.</p>
 <p>We can see in the output of the Typesense server that it is running using <code>172.17.0.2</code>. We can swap the <code>localhost</code> with this IP address and communication is flowing.</p>
@@ -279,7 +279,7 @@ This takes a minute or so, and in the end we can see in the Typesense sever outp
 <pre><code>_index: 443, applying_index: 0, pending_index: 0, disk_index: 443, pending_queue_size: 0, local_sequence: 44671
 I20211028 03:39:40.402626   328 raft_server.h:58] Peer refresh succeeded!
 </code></pre>
-<h2 id="searching-content">Searching content<a class="header-anchor" href="javascript:;" onclick="location.hash='#searching-content'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="searching-content">Searching content<a class="header-anchor" href="#searching-content" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>So now we have a Typesense server with an index full of content, we want to be able to search it on our docs site.
 Querying our index using straight <code>cURL</code>, we can see the query itself only needs to known 3 pieces of information at a minimum.</p>
 <ul>
@@ -309,7 +309,7 @@ Querying our index using straight <code>cURL</code>, we can see the query itself
   -d '{&quot;description&quot;: &quot;Search only&quot;,&quot;actions&quot;: [&quot;documents:search&quot;],&quot;collections&quot;:[&quot;*&quot;]}'
 </code></pre>
 <p>Now we can share this generated key safely to be used with any of our browser clients.</p>
-<h2 id="keeping-the-index-updated">Keeping the index updated<a class="header-anchor" href="javascript:;" onclick="location.hash='#keeping-the-index-updated'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="keeping-the-index-updated">Keeping the index updated<a class="header-anchor" href="#keeping-the-index-updated" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Another problem that becomes apparent is that subsequent usages of the scraper increases the size of our index since it currently doesn't detect and update existing documents.
 It wasn't clear if this is possible to configure or manage from the current scraper (ideally by using URL paths as the unique identifier), so we needed a way to achieve the following goals.</p>
 <ul>
@@ -331,7 +331,7 @@ However, every additional scrape will use additional disk space and memory for t
 </ul>
 <p>This dance would require multiple commits/actions in GitHub (we use GitHub Actions), and also be time sensitive since it will be non-deterministic as to how long it will take to scrape, update, and deploy our changes.</p>
 <p>Additional operational burden is something we want to avoid since it an on going cost on developer time that would otherwise be spent improving ServiceStack offerings for our customers.</p>
-<h2 id="read-only-docker-container">Read-only Docker container<a class="header-anchor" href="javascript:;" onclick="location.hash='#read-only-docker-container'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="read-only-docker-container">Read-only Docker container<a class="header-anchor" href="#read-only-docker-container" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Something to keep in mind when making architecture decisions is looking at the specifics of what is involved when it comes to the <em>flow of data</em> of your systems.</p>
 <p>You can ask yourself questions like:</p>
 <ul>
@@ -361,7 +361,7 @@ This means if our search index is updated even a day after the actual documentat
 <p>This means we will be able to host this using a single EC2 instance among various other or the ServiceStack hosted example applications and use the same <a href="https://docs.servicestack.net/mix-github-actions-aws-ecs">deployment patterns we've shared in our GitHub Actions templates</a>.</p>
 <p><a href="https://docs.servicestack.net/mix-github-actions-aws-ecs"><img src="https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/mix/cloudcraft-host-digram-release-ecr-aws.png" alt="" /></a></p>
 <p>So while this approach of shipping an index along with the Docker image isn't practical for large or 'living' indexes, many opensource documentation sites would likely be able to reuse this simplified approach.</p>
-<h2 id="github-actions-process">GitHub Actions Process<a class="header-anchor" href="javascript:;" onclick="location.hash='#github-actions-process'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="github-actions-process">GitHub Actions Process<a class="header-anchor" href="#github-actions-process" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Since the ServiceStack docs site is hosted using GitHub Pages and we already use GitHub Actions to publish updates to our docs, using GitHub Actions was the natural place for this automation.</p>
 <p>To create our own Docker image for our search server we need to perform the following tasks on our CI process.</p>
 <ul>
@@ -397,7 +397,7 @@ COPY ./data /data
 <p>To make things more hands off and reduce any possible issues from GitHub Pages CDN caching, updates to our search index are done on a daily basis using GitHub Action <code>schedule</code>.
 Once a day, the process checks if the latest commit in the repository is less than 1 day old. If it is,we ship an updated search index, otherwise we actually cancel the GitHub Action process early to save on CI minutes.</p>
 <p>The whole GitHub Action can be seen in our <a href="https://github.com/ServiceStack/docs/blob/master/.github/workflows/search-index-update.yml">ServiceStack/docs repository</a> if you are interested or are setting up your own process the same way.</p>
-<h2 id="search-ui-dialog">Search UI Dialog<a class="header-anchor" href="javascript:;" onclick="location.hash='#search-ui-dialog'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="search-ui-dialog">Search UI Dialog<a class="header-anchor" href="#search-ui-dialog" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Now that our docs are indexed the only thing left to do is display the results. We set out to create a comparable UX to
 algolia's doc search which we've implemented in custom Vue3 components and have Open sourced in
 <a href="https://gist.github.com/gistlyn/d215e9ff31abd9adce719a663a4bd8af">this gist</a> in hope it will serve useful in adopting
@@ -460,12 +460,12 @@ the integral part being the API search query to our typesense instance:</p>
 <p>Which instructs Typesense to search through each documents content and h1-3 headings, grouping results by its page title.
 Refer to the <a href="https://typesense.org/docs/0.21.0/api/documents.html#search">Typesense API Search Reference</a> to learn how
 to further fine-tune search results for your use-case.</p>
-<h2 id="search-results">Search Results<a class="header-anchor" href="javascript:;" onclick="location.hash='#search-results'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="search-results">Search Results<a class="header-anchor" href="#search-results" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p><img src="img/posts/typesense/typesense-dart.gif" alt="" /></p>
 <p>The results are <strong>excellent</strong>, <a href="https://docs.servicestack.net">see for yourself</a> by using the search at the top right or using Ctrl+K shortcut key on our docs site.
 It handles typos really well, it is very quick and has become the fastest way to navigate our extensive documentation.</p>
 <p>We have been super impressed with the search experience that Typesense enabled, the engineers behind the Typesense product have created something with a better developer experience than even paid SaaS options and provided it with a clear value proposition.</p>
-<h2 id="servicestack-a-sponsor-of-typesense">ServiceStack a Sponsor of Typesense<a class="header-anchor" href="javascript:;" onclick="location.hash='#servicestack-a-sponsor-of-typesense'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="servicestack-a-sponsor-of-typesense">ServiceStack a Sponsor of Typesense<a class="header-anchor" href="#servicestack-a-sponsor-of-typesense" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>We were so impressed by the amazing results, that as a way to show our thanks we've become sponsors of
 <a href="https://github.com/sponsors/typesense">Typesense on GitHub sponsors</a> 🎉 🎉</p>
 <p>We know how challenging it can be to try make open source software sustainable that if you find yourself using

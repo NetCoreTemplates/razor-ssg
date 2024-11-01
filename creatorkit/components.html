@@ -204,7 +204,7 @@ or if you're also in need of a fast, beautiful website we highly recommend the <
 template which is already configured to include CreatorKit's components.</p>
 <p>The components are included using a declarative progressive markup so that it doesn't affect the behavior of the website
 if the CreatorKit is down or unresponsive.</p>
-<h2 id="enabling-creatorkit-components">Enabling CreatorKit Components<a class="header-anchor" href="javascript:;" onclick="location.hash='#enabling-creatorkit-components'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="enabling-creatorkit-components">Enabling CreatorKit Components<a class="header-anchor" href="#enabling-creatorkit-components" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>To utilize CreatorKit's Components in your website you'll need to initialize the components you want to use by embedding
 this script at the bottom of your page, e.g. in <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Shared/Footer.cshtml">Footer.cshtml</a>:</p>
 <pre><code class="language-html">&lt;script type=&quot;module&quot;&gt;
@@ -223,21 +223,21 @@ post('[data-post]')
 does the same for any Thread/Post components.</p>
 <p>The <code>@components</code> URL lets you load Components from your <code>localhost:5001</code> instance during development and your public CreatorKit
 instance in production which you'll need to replace <code>creatorkit.netcore.io</code> to use.</p>
-<h2 id="post-voting-and-comments">Post Voting and Comments<a class="header-anchor" href="javascript:;" onclick="location.hash='#post-voting-and-comments'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="post-voting-and-comments">Post Voting and Comments<a class="header-anchor" href="#post-voting-and-comments" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>You can enable voting for individual posts or pages with and Thread comments by including the <code>PostComments</code> component with:</p>
 <pre><code class="language-html">&lt;div data-post=&quot;PostComments&quot;&quot;&gt;&lt;/div&gt;
 </code></pre>
 <p>Which when loaded will render a thread like icon where users can up vote posts or pages and either Sign In/Sign Up
 buttons for unauthenticated users or a comment box for Signed in Users:</p>
 <div data-post="PostComments" data-props="{ commentLink: null }" class="not-prose text-base mb-12"></div>
-<h4 id="postcomments-properties">PostComments Properties<a class="header-anchor" href="javascript:;" onclick="location.hash='#postcomments-properties'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="postcomments-properties">PostComments Properties<a class="header-anchor" href="#postcomments-properties" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>The available PostComments properties for customizing its behavior include:</p>
 <pre><code class="language-ts">defineProps&lt;{
     hide?: &quot;threadLikes&quot;|&quot;threadLikes&quot;[]
     commentLink?: { href: string, label: string }
 }&gt;()
 </code></pre>
-<h3 id="component-properties">Component Properties<a class="header-anchor" href="javascript:;" onclick="location.hash='#component-properties'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="component-properties">Component Properties<a class="header-anchor" href="#component-properties" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Any component properties can be either declared inline using <code>data-props</code>, e.g:</p>
 <pre><code class="language-html">&lt;div data-post=&quot;PostComments&quot; data-props=&quot;{
     hide: 'threadLikes', 
@@ -273,8 +273,8 @@ post('[data-post]', {
 })
 &lt;/script&gt;
 </code></pre>
-<h2 id="mailing-list-components">Mailing List Components<a class="header-anchor" href="javascript:;" onclick="location.hash='#mailing-list-components'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
-<h3 id="joinmailinglist">JoinMailingList<a class="header-anchor" href="javascript:;" onclick="location.hash='#joinmailinglist'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h2 id="mailing-list-components">Mailing List Components<a class="header-anchor" href="#mailing-list-components" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h3 id="joinmailinglist">JoinMailingList<a class="header-anchor" href="#joinmailinglist" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The <code>JoinMailingList</code> component can be added anywhere you want to accept Mailing List subscriptions on your website, e.g:</p>
 <pre><code class="language-html">&lt;div data-mail=&quot;JoinMailingList&quot; data-props=&quot;{ submitLabel:'Join our newsletter' }&quot;&gt;&lt;/div&gt;
 </code></pre>
@@ -284,7 +284,7 @@ post('[data-post]', {
 <p>Which you can style as needed as this template wraps in a
 <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Shared/Newsletter.cshtml">Newsletter.cshtml</a>
 Tailwind component that's displayed on the <a href="/">Home Page</a>.</p>
-<h4 id="joinmailinglist-properties">JoinMailingList Properties<a class="header-anchor" href="javascript:;" onclick="location.hash='#joinmailinglist-properties'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="joinmailinglist-properties">JoinMailingList Properties<a class="header-anchor" href="#joinmailinglist-properties" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>Which allows for the following customizations:</p>
 <pre><code class="language-ts">defineProps&lt;{
     //= MonthlyNewsletter
@@ -297,7 +297,7 @@ Tailwind component that's displayed on the <a href="/">Home Page</a>.</p>
     thanksIcon?: { svg?:string, uri?:string, alt?:string, cls?:string }
 }&gt;
 </code></pre>
-<h3 id="mailpreferences">MailPreferences<a class="header-anchor" href="javascript:;" onclick="location.hash='#mailpreferences'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="mailpreferences">MailPreferences<a class="header-anchor" href="#mailpreferences" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The <code>MailPreferences</code> component manages a users Mailing List subscriptions which you can be linked in your Email footers
 for users wishing to manage or unsubscribe from mailing list emails.</p>
 <p>It can be include in any HTML or Markdown page as Razor SSG does in its
@@ -310,7 +310,7 @@ for users wishing to manage or unsubscribe from mailing list emails.</p>
 of the Contact's External Ref, e.g: <code>/mail-preferences?ref={‎{ExternalRef}‎}</code></p>
 <p>You can also add <code>&amp;unsubscribe=1</code> to optimize the page for users wishing to Unsubscribe where it will also display
 an <strong>Unsubscribe</strong> button to subscribe to all mailing lists.</p>
-<h4 id="mailpreferences-properties">MailPreferences Properties<a class="header-anchor" href="javascript:;" onclick="location.hash='#mailpreferences-properties'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="mailpreferences-properties">MailPreferences Properties<a class="header-anchor" href="#mailpreferences-properties" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>Most of the copy used in the <code>MailPreferences</code> component can be overridden with:</p>
 <pre><code class="language-ts">defineProps&lt;{
     emailPrompt?: string            //= Enter your email to manage your email...
@@ -324,7 +324,7 @@ an <strong>Unsubscribe</strong> button to subscribe to all mailing lists.</p>
     submitUnsubscribeLabel?: string //= Unsubscribe
 }&gt;()
 </code></pre>
-<h2 id="tailwind-styles">Tailwind Styles<a class="header-anchor" href="javascript:;" onclick="location.hash='#tailwind-styles'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="tailwind-styles">Tailwind Styles<a class="header-anchor" href="#tailwind-styles" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>CreatorKit's components are styled with tailwind classes which will also need to be included in your website.
 For Tailwind projects we recommend copying a concatenation of all Components from
 <a href="https://raw.githubusercontent.com/NetCoreApps/CreatorKit/main/CreatorKit/wwwroot/tailwind/all.components.txt">/CreatorKit/wwwroot/tailwind/all.components.txt</a>

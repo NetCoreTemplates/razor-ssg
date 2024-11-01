@@ -196,7 +196,7 @@ mountAll()
                 <div id="post" class="prose lg:prose-xl max-w-none mb-32">
                     <p>With ServiceStack now <a href="/posts/servicestack-endpoint-routing">deeply integrated into ASP.NET Core Apps</a> we're back to
 refocusing on adding value-added features that can benefit all .NET Core Apps.</p>
-<h2 id="registration">Registration<a class="header-anchor" href="javascript:;" onclick="location.hash='#registration'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="registration">Registration<a class="header-anchor" href="#registration" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>The new Identity Auth Admin UI is an example of this, which can be enabled when registering the <code>AuthFeature</code> Plugin:</p>
 <pre><code class="language-csharp">public class ConfigureAuth : IHostingStartup
 {
@@ -213,13 +213,13 @@ refocusing on adding value-added features that can benefit all .NET Core Apps.</
 </code></pre>
 <p>Which just like the ServiceStack Auth <a href="https://docs.servicestack.net/admin-ui-users">Admin Users UI</a> enables a
 Admin UI that's only accessible to <strong>Admin</strong> Users for managing <strong>Identity Auth</strong> users at <code>/admin-ui/users</code>.</p>
-<h2 id="user-search-results">User Search Results<a class="header-anchor" href="javascript:;" onclick="location.hash='#user-search-results'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="user-search-results">User Search Results<a class="header-anchor" href="#user-search-results" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Which displays a limited view due to the minimal properties on the default <code>IdentityAuth</code> model:</p>
 <div style="height:580px">
     <img class="absolute left-0 right-0 mx-auto shadow" style="max-width:1496px" 
          src="https://servicestack.net/img/posts/identity-auth-admin-ui/admin-ui-users-default.png">
 </div>
-<h3 id="custom-search-result-properties">Custom Search Result Properties<a class="header-anchor" href="javascript:;" onclick="location.hash='#custom-search-result-properties'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="custom-search-result-properties">Custom Search Result Properties<a class="header-anchor" href="#custom-search-result-properties" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>These User's search results are customizable by specifying the <code>ApplicationUser</code> properties to display instead, e.g:</p>
 <pre><code class="language-csharp">options.AdminUsersFeature(feature =&gt;
 {
@@ -237,7 +237,7 @@ Admin UI that's only accessible to <strong>Admin</strong> Users for managing <st
     <img class="absolute left-0 right-0 mx-auto shadow" style="max-width:1496px" 
          src="https://servicestack.net/img/posts/identity-auth-admin-ui/admin-ui-users-custom.png">
 </div>
-<h3 id="custom-search-result-behavior">Custom Search Result Behavior<a class="header-anchor" href="javascript:;" onclick="location.hash='#custom-search-result-behavior'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="custom-search-result-behavior">Custom Search Result Behavior<a class="header-anchor" href="#custom-search-result-behavior" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The default display Order of Users is also customizable:</p>
 <pre><code class="language-csharp">feature.DefaultOrderBy = nameof(ApplicationUser.DisplayName);
 </code></pre>
@@ -252,7 +252,7 @@ Admin UI that's only accessible to <strong>Admin</strong> Users for managing <st
         x.NormalizedEmail!.Contains(queryUpper));
 };
 </code></pre>
-<h2 id="default-create-and-edit-users-forms">Default Create and Edit Users Forms<a class="header-anchor" href="javascript:;" onclick="location.hash='#default-create-and-edit-users-forms'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="default-create-and-edit-users-forms">Default Create and Edit Users Forms<a class="header-anchor" href="#default-create-and-edit-users-forms" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>The default Create and Edit Admin Users UI are also limited to editing the minimal <code>IdentityAuth</code> properties:</p>
 <div style="height:640px">
     <img class="absolute left-0 right-0 mx-auto shadow" style="max-width:1200px" 
@@ -263,7 +263,7 @@ Admin UI that's only accessible to <strong>Admin</strong> Users for managing <st
     <img class="absolute left-0 right-0 mx-auto shadow" style="max-width:1200px" 
          src="https://servicestack.net/img/posts/identity-auth-admin-ui/admin-ui-users-edit.png">
 </div>
-<h3 id="custom-create-and-edit-forms">Custom Create and Edit Forms<a class="header-anchor" href="javascript:;" onclick="location.hash='#custom-create-and-edit-forms'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="custom-create-and-edit-forms">Custom Create and Edit Forms<a class="header-anchor" href="#custom-create-and-edit-forms" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>By default Users are locked out indefinitely, but this can also be changed to lock users out to a specific date, e.g:</p>
 <pre><code class="language-csharp">feature.ResolveLockoutDate = user =&gt; DateTimeOffset.Now.AddDays(7);
 </code></pre>
@@ -286,7 +286,7 @@ Admin UI that's only accessible to <strong>Admin</strong> Users for managing <st
 ];
 </code></pre>
 <p>That can override the new <code>ApplicationUser</code> Model that's created and any Validation:</p>
-<h3 id="custom-user-creation">Custom User Creation<a class="header-anchor" href="javascript:;" onclick="location.hash='#custom-user-creation'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="custom-user-creation">Custom User Creation<a class="header-anchor" href="#custom-user-creation" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <pre><code class="language-csharp">feature.CreateUser = () =&gt; new ApplicationUser { EmailConfirmed = true };
 feature.CreateUserValidation = async (req, createUser) =&gt;
 {
@@ -301,7 +301,7 @@ feature.CreateUserValidation = async (req, createUser) =&gt;
     <img class="absolute left-0 right-0 mx-auto shadow" style="max-width:1200px" 
          src="https://servicestack.net/img/posts/identity-auth-admin-ui/admin-ui-users-create-custom.png">
 </div>
-<h3 id="admin-user-events">Admin User Events<a class="header-anchor" href="javascript:;" onclick="location.hash='#admin-user-events'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="admin-user-events">Admin User Events<a class="header-anchor" href="#admin-user-events" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Should you need to, Admin User Events can use used to execute custom logic before and after creating, updating and
 deleting users, e.g:</p>
 <pre><code class="language-csharp">feature.OnBeforeCreateUser = (request, user) =&gt; { ... };

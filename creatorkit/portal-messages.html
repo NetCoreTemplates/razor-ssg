@@ -199,7 +199,7 @@ Creator Kit                                    </span>
 
                 <div class="not-prose"></div>
 
-                <h3 id="sending-single-plain-text-emails">Sending Single plain-text Emails<a class="header-anchor" href="javascript:;" onclick="location.hash='#sending-single-plain-text-emails'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+                <h3 id="sending-single-plain-text-emails">Sending Single plain-text Emails<a class="header-anchor" href="#sending-single-plain-text-emails" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p><strong>Messages</strong> lets you craft and send emails to a single contact which can be sent immediately or saved as a draft so
 you can review the HTML rendered email and send later.</p>
 <p><img src="/img/pages/creatorkit/portal-messages.png" alt="" /></p>
@@ -234,7 +234,7 @@ public class SimpleTextEmail : CreateEmailBase, IPost, IReturn&lt;MailMessage&gt
     public bool? Draft { get; set; }
 }
 </code></pre>
-<h3 id="email-ui">Email UI<a class="header-anchor" href="javascript:;" onclick="location.hash='#email-ui'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="email-ui">Email UI<a class="header-anchor" href="#email-ui" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Which are rendered using the <a href="https://docs.servicestack.net/vue/autoform">Vue AutoForm component</a> from the API
 definition where the <code>SimpleTextEmail</code> Request DTO renders the new Email UI:</p>
 <p><img src="/img/pages/creatorkit/portal-messages-simple.png" alt="" /></p>
@@ -279,7 +279,7 @@ public class RenderSimpleText : RenderEmailBase, IGet, IReturn&lt;string&gt;
     return await ctx.RenderScriptAsync(request.Body,request.ToObjectDictionary());
 }
 </code></pre>
-<h3 id="sending-custom-html-emails">Sending Custom HTML Emails<a class="header-anchor" href="javascript:;" onclick="location.hash='#sending-custom-html-emails'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="sending-custom-html-emails">Sending Custom HTML Emails<a class="header-anchor" href="#sending-custom-html-emails" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p><code>CustomHtmlEmail</code> is a configurable API for sending HTML emails utilizing custom Email Layout and Templates
 from populated dropdowns configured with available Templates in <code>/emails</code>:</p>
 <pre><code class="language-csharp">[Renderer(typeof(RenderCustomHtml))]
@@ -306,7 +306,7 @@ public class CustomHtmlEmail : CreateEmailBase, IPost, IReturn&lt;MailMessage&gt
 }
 </code></pre>
 <p><img src="/img/pages/creatorkit/portal-messages-custom.png" alt="" /></p>
-<h4 id="custom-html-implementation">Custom HTML Implementation<a class="header-anchor" href="javascript:;" onclick="location.hash='#custom-html-implementation'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="custom-html-implementation">Custom HTML Implementation<a class="header-anchor" href="#custom-html-implementation" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>It follows the same pattern as other email implementations where it uses the <code>EmailRenderer</code> to create and send emails:</p>
 <pre><code class="language-csharp">public async Task&lt;object&gt; Any(CustomHtmlEmail request)
 {
@@ -343,11 +343,11 @@ the Email <strong>#Script</strong> context configured to use the selected Email 
         });
 }
 </code></pre>
-<h2 id="creatorkit.extensions">CreatorKit.Extensions<a class="header-anchor" href="javascript:;" onclick="location.hash='#creatorkit.extensions'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="creatorkit.extensions">CreatorKit.Extensions<a class="header-anchor" href="#creatorkit.extensions" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Any additional services should be maintained in <a href="https://github.com/NetCoreApps/CreatorKit/tree/main/CreatorKit.Extensions">CreatorKit.Extensions</a>
 project with any custom email implementations added to
 <a href="https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit.Extensions/CustomEmailServices.cs">CustomEmailServices.cs</a>.</p>
-<h3 id="sending-html-markdown-emails">Sending HTML Markdown Emails<a class="header-anchor" href="javascript:;" onclick="location.hash='#sending-html-markdown-emails'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="sending-html-markdown-emails">Sending HTML Markdown Emails<a class="header-anchor" href="#sending-html-markdown-emails" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p><a href="https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit.Extensions.ServiceModel/MarkdownEmail.cs">MarkdownEmail.cs</a>
 is an example of a more user-friendly custom HTML Email you may want to send, which is pre-configured to use the
 <a href="https://github.com/NetCoreApps/CreatorKit/blob/main/CreatorKit/emails/layouts/basic.html">basic.html</a>
@@ -372,7 +372,7 @@ public class MarkdownEmail : CreateEmailBase, IPost, IReturn&lt;MailMessage&gt;
 </code></pre>
 <p>As defined, this DTO renders the form utilizing a custom <code>MarkdownEmailInput</code> rich text editor which provides an optimal UX
 for authoring Markdown content with icons to assist with discovery of Markdown's different formatting syntax.</p>
-<h4 id="template-variables">Template Variables<a class="header-anchor" href="javascript:;" onclick="location.hash='#template-variables'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="template-variables">Template Variables<a class="header-anchor" href="#template-variables" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>The editor also includes a dropdown to provide convenient access to your <a href="creatorkit/customize#template-variables">Template Variables</a>:</p>
 <p><img src="/img/pages/creatorkit/portal-messages-markdown.png" alt="" /></p>
 <p>The implementation of <code>MarkdownEmail</code> just sends a Custom HTML Email configured to use the <strong>basic</strong> Layout with the <strong>empty</strong> Email Template:</p>

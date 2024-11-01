@@ -195,7 +195,7 @@ mountAll()
             </div>
             <div class="max-w-3xl mx-auto">
                 <div id="post" class="prose lg:prose-xl max-w-none mb-32">
-                    <h2 id="new-blogging-features-in-razor-ssg">New Blogging features in Razor SSG<a class="header-anchor" href="javascript:;" onclick="location.hash='#new-blogging-features-in-razor-ssg'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+                    <h2 id="new-blogging-features-in-razor-ssg">New Blogging features in Razor SSG<a class="header-anchor" href="#new-blogging-features-in-razor-ssg" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p><a href="https://razor-ssg.web-templates.io">Razor SSG</a> is our Free Project Template for creating fast, statically generated Websites and Blogs with
 Markdown &amp; C# Razor Pages. A benefit of using Razor SSG to maintain this
 <a href="https://github.com/ServiceStack/servicestack.net">servicestack.net(github)</a> website is that any improvements added
@@ -203,7 +203,7 @@ to our website end up being rolled into the Razor SSG Project Template for every
 <p>This latest release brings a number of features and enhancements to improve Razor SSG usage as a Blogging Platform -
 a primary use-case we're focused on as we pen our <a href="https://servicestack.net/posts/year/2023">22nd Blog Post for the year</a> with improvements
 in both discoverability and capability of blog posts:</p>
-<h3 id="rss-feed">RSS Feed<a class="header-anchor" href="javascript:;" onclick="location.hash='#rss-feed'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="rss-feed">RSS Feed<a class="header-anchor" href="#rss-feed" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Razor SSG websites now generates a valid RSS Feed for its blog to support their readers who'd prefer to read blog posts
 and notify them as they're published with their favorite RSS reader:</p>
 <div class="not-prose my-8">
@@ -217,7 +217,7 @@ and notify them as they're published with their favorite RSS reader:</p>
         <a class="ml-4 text-indigo-600 hover:text-indigo-800" href="https://servicestack.net/feed.xml">https://servicestack.net/feed.xml</a>
     </div>
 </div>
-<h3 id="meta-headers-support-for-twitter-cards-and-seo">Meta Headers support for Twitter cards and SEO<a class="header-anchor" href="javascript:;" onclick="location.hash='#meta-headers-support-for-twitter-cards-and-seo'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="meta-headers-support-for-twitter-cards-and-seo">Meta Headers support for Twitter cards and SEO<a class="header-anchor" href="#meta-headers-support-for-twitter-cards-and-seo" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Blog Posts and Pages now include additional <code>&lt;meta&gt;</code> HTML Headers to enable support for
 <a href="https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/abouts-cards">Twitter Cards</a> in both
 Twitter and Meta's new <a href="https://threads.net">threads.net</a>, e.g:</p>
@@ -228,19 +228,19 @@ Twitter and Meta's new <a href="https://threads.net">threads.net</a>, e.g:</p>
       </div>
    </a>
 </div>
-<h3 id="improved-discoverability">Improved Discoverability<a class="header-anchor" href="javascript:;" onclick="location.hash='#improved-discoverability'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="improved-discoverability">Improved Discoverability<a class="header-anchor" href="#improved-discoverability" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>To improve discoverability and increase site engagement, bottom of blog posts now include links to other posts by
 the same Blog Author, including links to connect to their preferred social networks and contact preferences:</p>
 <p><img src="https://servicestack.net/img/posts/razor-ssg/other-author-posts.png" alt="" /></p>
-<h3 id="posts-can-include-vue-components">Posts can include Vue Components<a class="header-anchor" href="javascript:;" onclick="location.hash='#posts-can-include-vue-components'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="posts-can-include-vue-components">Posts can include Vue Components<a class="header-anchor" href="#posts-can-include-vue-components" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Blog Posts can now embed any global Vue Components directly in its Markdown, e.g:</p>
 <pre><code class="language-html">&lt;getting-started template=&quot;razor-ssg&quot;&gt;&lt;/getting-started&gt;
 </code></pre>
-<h4 id="mjscomponentsgettingstarted.mjs"><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/mjs/components/GettingStarted.mjs">/mjs/components/GettingStarted.mjs</a><a class="header-anchor" href="javascript:;" onclick="location.hash='#mjscomponentsgettingstarted.mjs'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="mjscomponentsgettingstarted.mjs"><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/mjs/components/GettingStarted.mjs">/mjs/components/GettingStarted.mjs</a><a class="header-anchor" href="#mjscomponentsgettingstarted.mjs" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <div class="not-prose my-20 flex justify-center">
     <getting-started template="razor-ssg"></getting-started>
 </div>
-<h4 id="individual-blog-post-dependencies">Individual Blog Post dependencies<a class="header-anchor" href="javascript:;" onclick="location.hash='#individual-blog-post-dependencies'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="individual-blog-post-dependencies">Individual Blog Post dependencies<a class="header-anchor" href="#individual-blog-post-dependencies" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>Just like Pages and Docs they can also include specific JavaScript <strong>.mjs</strong> or <strong>.css</strong> in the <code>/wwwroot/posts</code> folder
 which will only be loaded for that post:</p>
 <p><file-layout :files="{
@@ -251,7 +251,7 @@ posts: { _: ['<slug>.mjs','<slug>.css'] },
 <p>Now posts that need it can dynamically load large libraries like <a href="https://www.chartjs.org">Chart.js</a> and use it
 inside a custom Vue component by creating a custom <code>/posts/&lt;slug&gt;.mjs</code> that exports what components and features
 your blog post needs, e.g:</p>
-<h4 id="postsnew-blog-features.mjs"><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/posts/new-blog-features.mjs">/posts/new-blog-features.mjs</a><a class="header-anchor" href="javascript:;" onclick="location.hash='#postsnew-blog-features.mjs'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="postsnew-blog-features.mjs"><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/posts/new-blog-features.mjs">/posts/new-blog-features.mjs</a><a class="header-anchor" href="#postsnew-blog-features.mjs" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-js">import ChartJs from './components/ChartJs.mjs'
 
 export default {
@@ -260,7 +260,7 @@ export default {
 </code></pre>
 <p>In this case it enables support for <a href="https://www.chartjs.org">Chart.js</a> by including a custom Vue component that makes it
 easy to create charts from Vue Components embedded in markdown:</p>
-<h4 id="postscomponentschartjs.mjs"><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/posts/components/ChartJs.mjs">/posts/components/ChartJs.mjs</a><a class="header-anchor" href="javascript:;" onclick="location.hash='#postscomponentschartjs.mjs'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="postscomponentschartjs.mjs"><a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/wwwroot/posts/components/ChartJs.mjs">/posts/components/ChartJs.mjs</a><a class="header-anchor" href="#postscomponentschartjs.mjs" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-js">import { ref, onMounted } from &quot;vue&quot;
 import { addScript } from &quot;@servicestack/client&quot;
 
@@ -353,7 +353,7 @@ data: [89.821, 835.181]
 }
 ]
 }"></chart-js></p>
-<h3 id="new-markdown-containers">New Markdown Containers<a class="header-anchor" href="javascript:;" onclick="location.hash='#new-markdown-containers'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="new-markdown-containers">New Markdown Containers<a class="header-anchor" href="#new-markdown-containers" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p><a href="https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/CustomContainerSpecs.md">Custom Containers</a>
 are a popular method for implementing Markdown Extensions for enabling rich, wrist-friendly consistent
 content in your Markdown documents.</p>
@@ -407,7 +407,7 @@ Copy Me!
             </div>
 <p>See Razor Press's <a href="https://razor-press.web-templates.io/containers">Markdown Containers docs</a> for the complete list of available containers and examples on how to
 implement your own <a href="https://razor-press.web-templates.io/containers#implementing-block-containers">Custom Markdown containers</a>.</p>
-<h3 id="support-for-includes">Support for Includes<a class="header-anchor" href="javascript:;" onclick="location.hash='#support-for-includes'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="support-for-includes">Support for Includes<a class="header-anchor" href="#support-for-includes" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Markdown fragments can be added to <code>_pages/_include</code> - a special folder rendered with
 <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Includes.cshtml">Pages/Includes.cshtml</a> using
 an <a href="https://github.com/NetCoreTemplates/razor-ssg/blob/main/MyApp/Pages/Shared/_LayoutEmpty.cshtml">Empty Layout</a>
@@ -416,11 +416,11 @@ which can be included in other Markdown and Razor Pages or fetched on demand wit
 <pre class="pre">
 ::include vue/formatters.md::</pre>
 <p>Where it will be replaced with the HTML rendered markdown contents of fragments maintained in <code>_pages/_include</code>.</p>
-<h3 id="include-markdown-in-razor-pages">Include Markdown in Razor Pages<a class="header-anchor" href="javascript:;" onclick="location.hash='#include-markdown-in-razor-pages'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="include-markdown-in-razor-pages">Include Markdown in Razor Pages<a class="header-anchor" href="#include-markdown-in-razor-pages" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Markdown Fragments can also be included in Razor Pages using the custom <code>MarkdownTagHelper.cs</code> <code>&lt;markdown/&gt;</code> tag:</p>
 <pre><code class="language-html">&lt;markdown include=&quot;vue/formatters.md&quot;&gt;&lt;/markdown&gt;
 </code></pre>
-<h3 id="inline-markdown-in-razor-pages">Inline Markdown in Razor Pages<a class="header-anchor" href="javascript:;" onclick="location.hash='#inline-markdown-in-razor-pages'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="inline-markdown-in-razor-pages">Inline Markdown in Razor Pages<a class="header-anchor" href="#inline-markdown-in-razor-pages" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Alternatively markdown can be rendered inline with:</p>
 <pre><code class="language-html">&lt;markdown&gt;
 ## Using Formatters
@@ -429,13 +429,13 @@ Your App and custom templates can also utilize @servicestack/vue's
 [built-in formatting functions](href=&quot;/vue/use-formatters).
 &lt;/markdown&gt;
 </code></pre>
-<h3 id="light-and-dark-mode-query-params">Light and Dark Mode Query Params<a class="header-anchor" href="javascript:;" onclick="location.hash='#light-and-dark-mode-query-params'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="light-and-dark-mode-query-params">Light and Dark Mode Query Params<a class="header-anchor" href="#light-and-dark-mode-query-params" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>You can link to Dark and Light modes of your Razor SSG website with the <code>?light</code> and <code>?dark</code> query string params:</p>
 <ul>
 <li><a href="https://razor-ssg.web-templates.io/?dark">https://razor-ssg.web-templates.io/?dark</a></li>
 <li><a href="https://razor-ssg.web-templates.io/?light">https://razor-ssg.web-templates.io/?light</a></li>
 </ul>
-<h3 id="blog-post-authors-threads.net-and-mastodon-links">Blog Post Authors threads.net and Mastodon links<a class="header-anchor" href="javascript:;" onclick="location.hash='#blog-post-authors-threads.net-and-mastodon-links'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="blog-post-authors-threads.net-and-mastodon-links">Blog Post Authors threads.net and Mastodon links<a class="header-anchor" href="#blog-post-authors-threads.net-and-mastodon-links" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The social links for Blog Post Authors can now include <a href="https://threads.net">threads.net</a> and <a href="https://mastodon.social">mastodon.social</a> links, e.g:</p>
 <pre><code class="language-json">{
   &quot;AppConfig&quot;: {
@@ -454,14 +454,14 @@ Your App and custom templates can also utilize @servicestack/vue's
   }
 }
 </code></pre>
-<h2 id="feature-requests-welcome">Feature Requests Welcome<a class="header-anchor" href="javascript:;" onclick="location.hash='#feature-requests-welcome'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="feature-requests-welcome">Feature Requests Welcome<a class="header-anchor" href="#feature-requests-welcome" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Most of Razor SSG's features are currently being driven by requirements from the new
 <a href="https://razor-ssg.web-templates.io/#showcase">Websites built with Razor SSG</a> and features we want available in our Blogs,
 we welcome any requests for missing features in other popular Blogging Platforms you'd like to see in Razor SSG to help
 make it a high quality blogging solution built with our preferred C#/.NET Technology Stack, by submitting them to:</p>
 <div class="text-indigo-600 text-3xl text-center"><p><a href="https://servicestack.net/ideas">https://servicestack.net/ideas</a></p>
 </div>
-<h3 id="ssg-or-dynamic-features">SSG or Dynamic Features<a class="header-anchor" href="javascript:;" onclick="location.hash='#ssg-or-dynamic-features'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="ssg-or-dynamic-features">SSG or Dynamic Features<a class="header-anchor" href="#ssg-or-dynamic-features" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Whilst statically generated websites and blogs are generally limited to features that can be generated at build time, we're able to
 add any dynamic features we need in <a href="https://servicestack.net/creatorkit/">CreatorKit</a> - a Free companion self-host .NET App Mailchimp and Disqus
 alternative which powers any dynamic functionality in Razor SSG Apps like the blogs comments and Mailing List features

@@ -193,12 +193,12 @@ via the <code>OpenApiFeature</code> plugin. While this provided a lot of functio
 it could be tricky to customize those API descriptions to the way some users wanted to.</p>
 <p>In this post we will look at how you can take advantage of the new OpenAPI v3 Swagger support using mapped Endpoints,
 customizing the generated specification, as well as touch on other related changes to ServiceStack v8.1.</p>
-<h2 id="apphost-initialization">AppHost Initialization<a class="header-anchor" href="javascript:;" onclick="location.hash='#apphost-initialization'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="apphost-initialization">AppHost Initialization<a class="header-anchor" href="#apphost-initialization" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>To use ServiceStack APIs as mapped Endpoints, the way ServiceStack is initialized in .
 To convert your App to use <a href="/posts/servicestack-endpoint-routing">Endpoint Routing and ASP.NET Core IOC</a> your ASPNET Core
 application needs to be updated to replace any usage of <code>Funq</code> IoC container to use ASP.NET Core's IOC.</p>
 <p>Previously, the following was used to initialize your ServiceStack <code>AppHost</code>:</p>
-<h4 id="program.cs">Program.cs<a class="header-anchor" href="javascript:;" onclick="location.hash='#program.cs'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="program.cs">Program.cs<a class="header-anchor" href="#program.cs" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-csharp">app.UseServiceStack(new AppHost());
 </code></pre>
 <p>The <code>app</code> in this example is a <code>WebApplication</code> resulting from an <code>IHostApplicationBuilder</code> calling <code>builder.Build()</code>.</p>
@@ -233,7 +233,7 @@ app.Run();
                     </div>
                 </div>
             </div>
-<h3 id="manually-configure-openapi-v3-and-swagger-ui">Manually Configure OpenAPI v3 and Swagger UI<a class="header-anchor" href="javascript:;" onclick="location.hash='#manually-configure-openapi-v3-and-swagger-ui'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="manually-configure-openapi-v3-and-swagger-ui">Manually Configure OpenAPI v3 and Swagger UI<a class="header-anchor" href="#manually-configure-openapi-v3-and-swagger-ui" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>This will install the required ASP.NET Core Microsoft, Swashbuckle and ServiceStack Open API NuGet packages:</p>
 <pre><code class="language-xml">&lt;PackageReference Include=&quot;Microsoft.AspNetCore.OpenApi&quot; Version=&quot;8.*&quot; /&gt;
 &lt;PackageReference Include=&quot;Swashbuckle.AspNetCore&quot; Version=&quot;6.*&quot; /&gt;
@@ -278,7 +278,7 @@ public class ConfigureOpenApi : IHostingStartup
 but for existing applications, you will need to do
 <a href="https://docs.servicestack.net/endpoints-migration">convert to use Endpoint Routing</a> to support this new way of running your
 ServiceStack applications.</p>
-<h2 id="more-control">More Control<a class="header-anchor" href="javascript:;" onclick="location.hash='#more-control'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="more-control">More Control<a class="header-anchor" href="#more-control" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>One point of friction with our previous <code>OpenApiFeature</code> plugin was the missing customization ability to the OpenAPI spec to somewhat disconnect from the defined ServiceStack service, and related C# Request and Response Data Transfer Objects (DTOs). Since the <code>OpenApiFeature</code> plugin used class and property attributes on your Request DTOs, making the <em>structure</em> of the OpenAPI schema mapping quite ridged, preventing the ability for certain customizations.</p>
 <p>For example, if we have an <code>UpdateTodo</code> Request DTO that looks like the following:</p>
 <pre><code class="language-csharp">[Route(&quot;/todos/{Id}&quot;, &quot;PUT&quot;)]
@@ -327,7 +327,7 @@ We can then add this to the <code>AddSwaggerGen</code> options in the <code>Prog
 <p><img src="https://servicestack.net/img/posts/openapi-v3/openapi-v3-customized-application-json.png" alt="" /></p>
 <p>This is just one simple example of how you can customize the OpenAPI spec generation, and <code>Swashbuckle</code> has some great documentation on the different ways you can customize the generated spec.
 And these customizations impact any of your ASP.NET Core Endpoints, not just your ServiceStack APIs.</p>
-<h2 id="closing">Closing<a class="header-anchor" href="javascript:;" onclick="location.hash='#closing'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="closing">Closing<a class="header-anchor" href="#closing" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Now that ServiceStack APIs can be mapped to standard ASP.NET Core Endpoints, it opens up a lot of possibilities for integrating your ServiceStack APIs into the larger ASP.NET Core ecosystem.
 The use of the <code>Swashbuckle</code> library via the <code>ServiceStack.AspNetCore.OpenApi</code> library is just one example of how you can take advantage of this new functionality.</p>
 

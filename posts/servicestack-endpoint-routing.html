@@ -200,21 +200,21 @@ all its newest .NET 8 templates to adopt <a href="https://docs.servicestack.net/
 <p>This is a departure from building upon our own platform-agnostic abstractions which allowed the same ServiceStack code-base
 to run on both .NET Core and .NET Framework. Our focus going forward will be to instead adopt De facto standards and conventions
 of the latest .NET platform which also means ServiceStack's new value-added features are only available in the latest <strong>.NET 8+</strong> release.</p>
-<h3 id="servicestack-middleware">ServiceStack Middleware<a class="header-anchor" href="javascript:;" onclick="location.hash='#servicestack-middleware'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="servicestack-middleware">ServiceStack Middleware<a class="header-anchor" href="#servicestack-middleware" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Whilst ServiceStack integrates into ASP.NET Core Apps as custom middleware into ASP.NET Core's HTTP Request Pipeline,
 it invokes its own black-box of functionality from there, implemented using its own suite of overlapping features.</p>
 <p>Whilst this allows ServiceStack to have full control over how to implement its features, it's not as integrated as it could be,
 with there being limits on what ServiceStack Functionality could be reused within external ASP .NET Core MVC Controllers, Razor Pages, etc.
 and inhibited the ability to apply application-wide authorization policies across an Application entire surface area,
 using and configuring different JSON Serialization implementations.</p>
-<h3 id="areas-for-tighter-integration">Areas for tighter integration<a class="header-anchor" href="javascript:;" onclick="location.hash='#areas-for-tighter-integration'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="areas-for-tighter-integration">Areas for tighter integration<a class="header-anchor" href="#areas-for-tighter-integration" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The major areas we've identified that would benefit from tighter integration with ASP.NET Core include:</p>
 <ul>
 <li><a href="https://docs.servicestack.net/ioc">Funq IOC Container</a></li>
 <li><a href="https://docs.servicestack.net/routing">ServiceStack Routing</a> and <a href="https://docs.servicestack.net/order-of-operations">Request Pipeline</a></li>
 <li><a href="https://docs.servicestack.net/json-format">ServiceStack.Text JSON Serializer</a></li>
 </ul>
-<h3 id="servicestack-v8.1-is-fully-integrated">ServiceStack v8.1 is fully integrated!<a class="header-anchor" href="javascript:;" onclick="location.hash='#servicestack-v8.1-is-fully-integrated'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="servicestack-v8.1-is-fully-integrated">ServiceStack v8.1 is fully integrated!<a class="header-anchor" href="#servicestack-v8.1-is-fully-integrated" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>We're happy to announce the latest release of ServiceStack v8.1 now supports utilizing the optimal ASP.NET Core's
 standardized features to reimplement all these key areas - fostering seamless integration and greater reuse which
 you can learn about below:</p>
@@ -228,11 +228,11 @@ you can learn about below:</p>
 <li><a href="https://docs.servicestack.net/releases/v8_01#jwt-identity-auth">JWT Identity Auth</a></li>
 </ul>
 <p>Better yet, this new behavior is enabled by default in all of ServiceStack's new ASP .NET Identity Auth .NET 8 templates!</p>
-<h3 id="migrating-to-asp.net-core-endpoints">Migrating to ASP.NET Core Endpoints<a class="header-anchor" href="javascript:;" onclick="location.hash='#migrating-to-asp.net-core-endpoints'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="migrating-to-asp.net-core-endpoints">Migrating to ASP.NET Core Endpoints<a class="header-anchor" href="#migrating-to-asp.net-core-endpoints" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>To assist ServiceStack users in upgrading their existing projects we've created a migration guide walking through
 the steps required to adopt these new defaults:</p>
 <lite-youtube class="w-full mx-4 my-4" width="560" height="315" videoid="RaDHkk4tfdU" playlabel="Upgrade your APIs to use ASP.NET Core Endpoints" style="background-image:url('https://img.youtube.com/vi/RaDHkk4tfdU/maxresdefault.jpg')"></lite-youtube>
-<h3 id="asp.net-core-ioc">ASP .NET Core IOC<a class="header-anchor" href="javascript:;" onclick="location.hash='#asp.net-core-ioc'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="asp.net-core-ioc">ASP .NET Core IOC<a class="header-anchor" href="#asp.net-core-ioc" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The primary limitation of ServiceStack using its own Funq IOC is that any dependencies registered in Funq are not injected
 into Razor Pages, Blazor Components, MVC Controllers, etc.</p>
 <p>That's why our <a href="https://docs.servicestack.net/modular-startup">Modular Startup</a> configurations recommend utilizing
@@ -256,7 +256,7 @@ public class ConfigureDb : IHostingStartup
 registered before AspNetCore's <code>WebApplication</code> was built and before ServiceStack's AppHost could be initialized,
 which prohibited being able to register any dependencies created by the AppHost including Services, AutoGen Services,
 Validators and internal functionality like App Settings, Virtual File System and Caching providers, etc.</p>
-<h2 id="switch-to-use-asp.net-core-ioc">Switch to use ASP .NET Core IOC<a class="header-anchor" href="javascript:;" onclick="location.hash='#switch-to-use-asp.net-core-ioc'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="switch-to-use-asp.net-core-ioc">Switch to use ASP .NET Core IOC<a class="header-anchor" href="#switch-to-use-asp.net-core-ioc" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>To enable ServiceStack to switch to using ASP .NET Core's IOC you'll need to move registration of all dependencies and
 Services to before the WebApplication is built by calling the <code>AddServiceStack()</code> extension method with the Assemblies
 where your ServiceStack Services are located, e.g:</p>
@@ -270,7 +270,7 @@ app.UseServiceStack(new AppHost());
 <p>Which now registers all ServiceStack dependencies in ASP .NET Core's IOC, including all ServiceStack Services prior to
 the AppHost being initialized which no longer needs to specify the Assemblies where ServiceStack Services are created
 and no longer needs to use Funq as all dependencies should now be registered in ASP .NET Core's IOC.</p>
-<h3 id="registering-dependencies-and-plugins">Registering Dependencies and Plugins<a class="header-anchor" href="javascript:;" onclick="location.hash='#registering-dependencies-and-plugins'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="registering-dependencies-and-plugins">Registering Dependencies and Plugins<a class="header-anchor" href="#registering-dependencies-and-plugins" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Additionally ASP.NET Core's IOC requirement for all dependencies needing to be registered before the WebApplication is
 built means you'll no longer be able to register any dependencies or plugins in ServiceStack's <code>AppHost.Configure()</code> method.</p>
 <pre><code class="language-csharp">public class AppHost() : AppHostBase(&quot;MyApp&quot;), IHostingStartup
@@ -326,7 +326,7 @@ built means you'll no longer be able to register any dependencies or plugins in 
 </code></pre>
 <p>The <code>ConfigureAppHost()</code> extension method can continue to be used to execute any startup logic that requires access to
 registered dependencies.</p>
-<h3 id="authoring-servicestack-plugins">Authoring ServiceStack Plugins<a class="header-anchor" href="javascript:;" onclick="location.hash='#authoring-servicestack-plugins'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="authoring-servicestack-plugins">Authoring ServiceStack Plugins<a class="header-anchor" href="#authoring-servicestack-plugins" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>To enable ServiceStack Plugins to support both Funq and ASP .NET Core IOC, any dependencies and Services a plugin needs
 should be registered in the <code>IConfigureServices.Configure(IServiceCollection)</code> method as seen in the refactored
 <a href="https://github.com/ServiceStack/ServiceStack/blob/main/ServiceStack/src/ServiceStack/ServerEventsFeature.cs">ServerEventsFeature.cs</a>
@@ -364,14 +364,14 @@ plugin, e.g:</p>
     }
 }
 </code></pre>
-<h4 id="all-plugins-refactored-to-support-asp.net-core-ioc">All Plugins refactored to support ASP .NET Core IOC<a class="header-anchor" href="javascript:;" onclick="location.hash='#all-plugins-refactored-to-support-asp.net-core-ioc'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="all-plugins-refactored-to-support-asp.net-core-ioc">All Plugins refactored to support ASP .NET Core IOC<a class="header-anchor" href="#all-plugins-refactored-to-support-asp.net-core-ioc" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>All of ServiceStack's Plugins have been refactored to make use of <code>IConfigureServices</code> which supports registering in both
 Funq and ASP.NET Core's IOC when enabled.</p>
-<h4 id="funq-ioc-implements-iservicecollection-and-iserviceprovider-interfaces">Funq IOC implements IServiceCollection and IServiceProvider interfaces<a class="header-anchor" href="javascript:;" onclick="location.hash='#funq-ioc-implements-iservicecollection-and-iserviceprovider-interfaces'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="funq-ioc-implements-iservicecollection-and-iserviceprovider-interfaces">Funq IOC implements IServiceCollection and IServiceProvider interfaces<a class="header-anchor" href="#funq-ioc-implements-iservicecollection-and-iserviceprovider-interfaces" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>To enable this Funq now implements both <code>IServiceCollection</code> and<code>IServiceProvider</code> interfaces to enable 100% source-code
 compatibility for registering and resolving dependencies with either IOC, which we now recommend using over Funq's
 native Registration and Resolution APIs to simplify migration efforts to ASP.NET Core's IOC in future.</p>
-<h2 id="dependency-injection">Dependency Injection<a class="header-anchor" href="javascript:;" onclick="location.hash='#dependency-injection'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="dependency-injection">Dependency Injection<a class="header-anchor" href="#dependency-injection" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>The primary difference between the IOC's is that ASP.NET Core's IOC does not support property injection by default,
 which will require you to refactor your ServiceStack Services to use constructor injection of dependencies, although
 this has become a lot more pleasant with C# 12's <a href="https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/primary-constructors">Primary Constructors</a>
@@ -403,7 +403,7 @@ ASP.NET Core's IOC where you can add the <code>[FromServices]</code> attribute t
 <div class="info custom-block">
             <p class="custom-block-title">NOTE</p><p><code>[FromServices]</code> is only supported in ServiceStack Services (i.e. not other dependencies)</p>
 </div>
-<h3 id="built-in-servicestack-dependencies">Built-in ServiceStack Dependencies<a class="header-anchor" href="javascript:;" onclick="location.hash='#built-in-servicestack-dependencies'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="built-in-servicestack-dependencies">Built-in ServiceStack Dependencies<a class="header-anchor" href="#built-in-servicestack-dependencies" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>This integration now makes it effortless to inject and utilize optional ServiceStack features like
 <a href="https://docs.servicestack.net/autoquery/">AutoQuery</a> and <a href="https://docs.servicestack.net/server-events">Server Events</a>
 in other parts of ASP.NET Core inc. Blazor Components, Razor Pages, MVC Controllers, Minimal APIs, etc.</p>
@@ -415,7 +415,7 @@ in other parts of ASP.NET Core inc. Blazor Components, Razor Pages, MVC Controll
 <li><code>IAppSettings</code> - Multiple <a href="https://docs.servicestack.net/appsettings">AppSettings</a> configuration sources</li>
 </ul>
 <p>With ASP.NET Core's IOC now deeply integrated we moved onto the next area of integration: API Integration and Endpoint Routing.</p>
-<h2 id="endpoint-routing">Endpoint Routing<a class="header-anchor" href="javascript:;" onclick="location.hash='#endpoint-routing'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="endpoint-routing">Endpoint Routing<a class="header-anchor" href="#endpoint-routing" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Whilst ASP.NET Core's middleware is a flexible way to compose and execute different middleware in a HTTP Request pipeline,
 each middleware is effectively their own island of functionality that's able to handle HTTP Requests in which ever way
 they see fit.</p>
@@ -431,11 +431,11 @@ enabled by calling the <code>MapEndpoints()</code> extension method when configu
 </code></pre>
 <p>Which configures ServiceStack APIs to be registered and executed along-side Minimal APIs, Razor Pages, SignalR, MVC
 and Web API Controllers, etc, utilizing the same routing, metadata and execution pipeline.</p>
-<h4 id="view-servicestack-apis-along-side-asp.net-core-apis">View ServiceStack APIs along-side ASP.NET Core APIs<a class="header-anchor" href="javascript:;" onclick="location.hash='#view-servicestack-apis-along-side-asp.net-core-apis'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="view-servicestack-apis-along-side-asp.net-core-apis">View ServiceStack APIs along-side ASP.NET Core APIs<a class="header-anchor" href="#view-servicestack-apis-along-side-asp.net-core-apis" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>Amongst other benefits, this integration is evident in endpoint metadata explorers like the <code>Swashbuckle</code> library
 which can now show ServiceStack APIs in its Swagger UI along-side other ASP.NET Core APIs in ServiceStack's new
 <a href="/posts/openapi-v3">Open API v3</a> support.</p>
-<h3 id="routing">Routing<a class="header-anchor" href="javascript:;" onclick="location.hash='#routing'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="routing">Routing<a class="header-anchor" href="#routing" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Using Endpoint Routing also means using ASP.NET Core's Routing System which now lets you use ASP.NET Core's
 <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/routing#route-constraints">Route constraints</a>
 for defining user-defined routes for your ServiceStack APIs, e.g:</p>
@@ -449,7 +449,7 @@ public class GetUser : IGet, IReturn&lt;User&gt;
 </code></pre>
 <p>For the most part ServiceStack Routing implements a subset of ASP.NET Core's Routing features so your existing user-defined
 routes should continue to work as expected.</p>
-<h3 id="wildcard-routes">Wildcard Routes<a class="header-anchor" href="javascript:;" onclick="location.hash='#wildcard-routes'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="wildcard-routes">Wildcard Routes<a class="header-anchor" href="#wildcard-routes" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The only incompatibility we found was when using wildcard paths which in ServiceStack Routing would use an '*' suffix, e.g:
 <code>[Route(&quot;/wildcard/{Path*}&quot;)]</code> which will need to change to use a ASP.NET Core's Routing prefix, e.g:</p>
 <pre><code class="language-csharp">[Route(&quot;/wildcard/{*Path}&quot;)]
@@ -459,7 +459,7 @@ public class GetFile : IGet, IReturn&lt;byte[]&gt;
     public string Path { get; set; }
 }
 </code></pre>
-<h4 id="servicestack-routing-compatibility">ServiceStack Routing Compatibility<a class="header-anchor" href="javascript:;" onclick="location.hash='#servicestack-routing-compatibility'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="servicestack-routing-compatibility">ServiceStack Routing Compatibility<a class="header-anchor" href="#servicestack-routing-compatibility" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>To improve compatibility with ASP.NET Core's Routing, ServiceStack's Routing (when not using Endpoint Routing) now
 supports parsing ASP.NET Core's Route Constraints but as they're inert you would need to continue to use
 <a href="https://docs.servicestack.net/routing#custom-rules">Custom Route Rules</a> to distinguish between different routes matching
@@ -481,7 +481,7 @@ public class GetFile : IGet, IReturn&lt;byte[]&gt;
     public string Path { get; set; }
 }
 </code></pre>
-<h3 id="primary-http-method">Primary HTTP Method<a class="header-anchor" href="javascript:;" onclick="location.hash='#primary-http-method'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="primary-http-method">Primary HTTP Method<a class="header-anchor" href="#primary-http-method" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Another difference is that an API will only register its Endpoint Route for its <a href="https://docs.servicestack.net/api-design#all-apis-have-a-preferred-default-method">primary HTTP Method</a>,
 if you want an API to be registered for multiple HTTP Methods you can specify them in the <code>Route</code> attribute, e.g:</p>
 <pre><code class="language-csharp">[Route(&quot;/users/{Id:int}&quot;, &quot;GET,POST&quot;)]
@@ -494,7 +494,7 @@ public class GetUser : IGet, IReturn&lt;User&gt;
 for an API. This isn't needed for <a href="https://docs.servicestack.net/autoquery/">AutoQuery Services</a> which are implicitly configured
 to use their optimal HTTP Method.</p>
 <p>If no HTTP Method is specified, the Primary HTTP Method defaults to HTTP <strong>POST</strong>.</p>
-<h3 id="authorization">Authorization<a class="header-anchor" href="javascript:;" onclick="location.hash='#authorization'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="authorization">Authorization<a class="header-anchor" href="#authorization" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Using Endpoint Routing also means ServiceStack's APIs are authorized the same way, where ServiceStack's
 <a href="https://docs.servicestack.net/auth/#declarative-validation-attributes">Declarative Validation attributes</a> are converted
 into ASP.NET Core's <code>[Authorize]</code> attribute to secure the endpoint:</p>
@@ -505,7 +505,7 @@ into ASP.NET Core's <code>[Authorize]</code> attribute to secure the endpoint:</
 [ValidateHasScope(scope)]
 public class Secured {}
 </code></pre>
-<h4 id="authorize-attribute-on-servicestack-apis">Authorize Attribute on ServiceStack APIs<a class="header-anchor" href="javascript:;" onclick="location.hash='#authorize-attribute-on-servicestack-apis'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="authorize-attribute-on-servicestack-apis">Authorize Attribute on ServiceStack APIs<a class="header-anchor" href="#authorize-attribute-on-servicestack-apis" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>Alternatively you can now use ASP.NET Core's <code>[Authorize]</code> attribute directly to secure ServiceStack APIs should
 you need more fine-grained Authorization:</p>
 <pre><code class="language-csharp">[Authorize(Roles = &quot;RequiredRole&quot;)]
@@ -513,7 +513,7 @@ you need more fine-grained Authorization:</p>
 [Authorize(AuthenticationSchemes = &quot;Identity.Application,Bearer&quot;)]
 public class Secured {}
 </code></pre>
-<h4 id="configuring-authentication-schemes">Configuring Authentication Schemes<a class="header-anchor" href="javascript:;" onclick="location.hash='#configuring-authentication-schemes'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="configuring-authentication-schemes">Configuring Authentication Schemes<a class="header-anchor" href="#configuring-authentication-schemes" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>ServiceStack will default to using the major Authentication Schemes configured for your App to secure the APIs endpoint with,
 this can be overridden to specify which Authentication Schemes to use to restrict ServiceStack APIs by default, e.g:</p>
 <pre><code class="language-csharp">app.UseServiceStack(new AppHost(), options =&gt; {
@@ -521,7 +521,7 @@ this can be overridden to specify which Authentication Schemes to use to restric
     options.MapEndpoints();
 });
 </code></pre>
-<h3 id="hidden-servicestack-endpoints">Hidden ServiceStack Endpoints<a class="header-anchor" href="javascript:;" onclick="location.hash='#hidden-servicestack-endpoints'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="hidden-servicestack-endpoints">Hidden ServiceStack Endpoints<a class="header-anchor" href="#hidden-servicestack-endpoints" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Whilst ServiceStack Requests are registered and executed as endpoints, most of them are marked with
 <code>builder.ExcludeFromDescription()</code> to hide them from polluting metadata and API Explorers like Swagger UI and
 <a href="https://docs.servicestack.net/api-explorer">API Explorer</a>.</p>
@@ -531,7 +531,7 @@ or use <code>[Exclude(Feature.ApiExplorer)]</code> to just hide them from API Ex
 [Exclude(Feature.ApiExplorer)]
 public class HiddenRequest {}
 </code></pre>
-<h3 id="content-negotiation">Content Negotiation<a class="header-anchor" href="javascript:;" onclick="location.hash='#content-negotiation'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="content-negotiation">Content Negotiation<a class="header-anchor" href="#content-negotiation" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>An example of these hidden routes is the support for invoking and returning ServiceStack APIs in different Content Types
 via hidden Endpoint Routes mapped with the format <code>/api/{Request}.{format}</code>, e.g:</p>
 <ul>
@@ -541,13 +541,13 @@ via hidden Endpoint Routes mapped with the format <code>/api/{Request}.{format}<
 <li><a href="https://blazor-vue.web-templates.io/api/QueryBookings.xml">/api/QueryBookings.xml</a></li>
 <li><a href="https://blazor-vue.web-templates.io/api/QueryBookings.html">/api/QueryBookings.html</a></li>
 </ul>
-<h4 id="query-string-format">Query String Format<a class="header-anchor" href="javascript:;" onclick="location.hash='#query-string-format'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="query-string-format">Query String Format<a class="header-anchor" href="#query-string-format" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <p>That continues to support specifying the Mime Type via the <code>?format</code> query string, e.g:</p>
 <ul>
 <li><a href="https://blazor-vue.web-templates.io/api/QueryBookings?format=jsonl">/api/QueryBookings?format=jsonl</a></li>
 <li><a href="https://blazor-vue.web-templates.io/api/QueryBookings?format=csv">/api/QueryBookings?format=csv</a></li>
 </ul>
-<h3 id="predefined-routes">Predefined Routes<a class="header-anchor" href="javascript:;" onclick="location.hash='#predefined-routes'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="predefined-routes">Predefined Routes<a class="header-anchor" href="#predefined-routes" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>Endpoints are only created for the newer <code>/api/{Request}</code> <a href="https://docs.servicestack.net/routing#pre-defined-routes">pre-defined routes</a>,
 which should be easier to use with less conflicts now that ServiceStack APIs are executed along-side other endpoint routes
 APIs which can share the same <code>/api</code> base path with non-conflicting routes, e.g: <code>app.MapGet(&quot;/api/minimal-api&quot;)</code>.</p>
@@ -567,39 +567,39 @@ var client = new JsonHttpClient(baseUri) {
 </code></pre>
 <p>To further solidify that <code>/api</code> as the preferred pre-defined route we've also <strong>updated all generic service clients</strong> of
 other languages to use <code>/api</code> base path by default:</p>
-<h4 id="javascripttypescript">JavaScript/TypeScript<a class="header-anchor" href="javascript:;" onclick="location.hash='#javascripttypescript'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="javascripttypescript">JavaScript/TypeScript<a class="header-anchor" href="#javascripttypescript" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-ts">const client = new JsonServiceClient(baseUrl)
 </code></pre>
-<h4 id="dart">Dart<a class="header-anchor" href="javascript:;" onclick="location.hash='#dart'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="dart">Dart<a class="header-anchor" href="#dart" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-dart">var client = ClientFactory.api(baseUrl);
 </code></pre>
-<h4 id="javakotlin">Java/Kotlin<a class="header-anchor" href="javascript:;" onclick="location.hash='#javakotlin'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="javakotlin">Java/Kotlin<a class="header-anchor" href="#javakotlin" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-java">JsonServiceClient client = new JsonServiceClient(baseUrl);
 </code></pre>
-<h4 id="python">Python<a class="header-anchor" href="javascript:;" onclick="location.hash='#python'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="python">Python<a class="header-anchor" href="#python" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-python">client = JsonServiceClient(baseUrl)
 </code></pre>
-<h4 id="php">PHP<a class="header-anchor" href="javascript:;" onclick="location.hash='#php'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="php">PHP<a class="header-anchor" href="#php" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-php">$client = new JsonServiceClient(baseUrl);
 </code></pre>
-<h3 id="revert-to-legacy-predefined-routes">Revert to Legacy Predefined Routes<a class="header-anchor" href="javascript:;" onclick="location.hash='#revert-to-legacy-predefined-routes'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="revert-to-legacy-predefined-routes">Revert to Legacy Predefined Routes<a class="header-anchor" href="#revert-to-legacy-predefined-routes" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>You can unset the base path to revert back to using the older <code>/json/reply/{Request}</code> pre-defined route, e.g:</p>
-<h4 id="javascripttypescript-1">JavaScript/TypeScript<a class="header-anchor" href="javascript:;" onclick="location.hash='#javascripttypescript-1'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="javascripttypescript-1">JavaScript/TypeScript<a class="header-anchor" href="#javascripttypescript-1" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-ts">client.basePath = null;
 </code></pre>
-<h4 id="dart-1">Dart<a class="header-anchor" href="javascript:;" onclick="location.hash='#dart-1'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="dart-1">Dart<a class="header-anchor" href="#dart-1" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-dart">var client = ClientFactory.create(baseUrl);
 </code></pre>
-<h4 id="javakotlin-1">Java/Kotlin<a class="header-anchor" href="javascript:;" onclick="location.hash='#javakotlin-1'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="javakotlin-1">Java/Kotlin<a class="header-anchor" href="#javakotlin-1" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-java">client.setBasePath();
 </code></pre>
-<h4 id="python-1">Python<a class="header-anchor" href="javascript:;" onclick="location.hash='#python-1'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="python-1">Python<a class="header-anchor" href="#python-1" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-python">client.set_base_path()
 </code></pre>
-<h4 id="php-1">PHP<a class="header-anchor" href="javascript:;" onclick="location.hash='#php-1'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="php-1">PHP<a class="header-anchor" href="#php-1" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-php">$client-&gt;setBasePath();
 </code></pre>
-<h3 id="customize-endpoint-mapping">Customize Endpoint Mapping<a class="header-anchor" href="javascript:;" onclick="location.hash='#customize-endpoint-mapping'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="customize-endpoint-mapping">Customize Endpoint Mapping<a class="header-anchor" href="#customize-endpoint-mapping" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>You can register a RouteHandlerBuilders to customize how ServiceStack APIs endpoints are registered which is also
 what ServiceStack uses to annotate its API endpoints to enable its new <a href="/posts/openapi-v3">Open API v3</a> support:</p>
 <pre><code class="language-csharp">options.RouteHandlerBuilders.Add((builder, operation, method, route) =&gt;
@@ -607,7 +607,7 @@ what ServiceStack uses to annotate its API endpoints to enable its new <a href="
     builder.WithOpenApi(op =&gt; { ... });
 });
 </code></pre>
-<h3 id="endpoint-routing-compatibility-levels">Endpoint Routing Compatibility Levels<a class="header-anchor" href="javascript:;" onclick="location.hash='#endpoint-routing-compatibility-levels'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="endpoint-routing-compatibility-levels">Endpoint Routing Compatibility Levels<a class="header-anchor" href="#endpoint-routing-compatibility-levels" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>The default behavior of <code>MapEndpoints()</code> is the strictest and recommended configuration that we want future ServiceStack Apps to use,
 however if you're migrating existing App's you may want to relax these defaults to improve compatibility with existing behavior.</p>
 <p>The configurable defaults for mapping endpoints are:</p>
@@ -630,7 +630,7 @@ multiple HTTP Methods, as only the primary HTTP Method is registered as an endpo
 <p><code>useSystemJson</code> is a new feature that lets you specify when to use <code>System.Text.Json</code> for JSON API Serialization, which
 is our next exciting feature to standardize on using<br />
 <a href="https://docs.servicestack.net/releases/v8_01#system.text.json">ASP.NET Core's fast async System.Text.Json</a> Serializer.</p>
-<h2 id="endpoint-routing-everywhere">Endpoint Routing Everywhere<a class="header-anchor" href="javascript:;" onclick="location.hash='#endpoint-routing-everywhere'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="endpoint-routing-everywhere">Endpoint Routing Everywhere<a class="header-anchor" href="#endpoint-routing-everywhere" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>Whilst the compatibility levels of Endpoint Routing can be relaxed, we recommend new projects use the strictest and most
 integrated defaults that's now configured on all <a href="/start">ASP.NET Core Identity Auth .NET 8 Projects</a>.</p>
 <p>For additional testing we've also upgraded many of our existing .NET Example Applications, which are now all running with

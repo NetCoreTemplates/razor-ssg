@@ -300,7 +300,7 @@ Creator Kit                                    </span>
 </ul>
 <p>The remaining <code>*.html</code> contains different type of emails you want to send, e.g. <strong>empty.html</strong> is a blank
 template you can use to send custom Markdown email content with the your preferred email layout.</p>
-<h2 id="template-variables">Template Variables<a class="header-anchor" href="javascript:;" onclick="location.hash='#template-variables'" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h2 id="template-variables">Template Variables<a class="header-anchor" href="#template-variables" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
 <p>All Branding Information referenced in the templates are maintained in the <code>/vars</code> folder:</p>
 <div class="language-files"><div class="ml-6">
   <div class="flex items-center text-base leading-8">
@@ -321,7 +321,7 @@ template you can use to send custom Markdown email content with the your preferr
 </div>
 </div>
 <p>At a minimum you'll want to replace all <strong>info.txt</strong> variables from ServiceStack's with your Organization's information:</p>
-<h4 id="info.txt">info.txt<a class="header-anchor" href="javascript:;" onclick="location.hash='#info.txt'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="info.txt">info.txt<a class="header-anchor" href="#info.txt" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-txt">Company           ServiceStack
 CompanyOfficial   ServiceStack, Inc.
 Domain            servicestack.net
@@ -341,7 +341,7 @@ SocialImages      website_24x24,twitter_24x24,youtube_24x24
 <p><code>{‎{info.Company}‎}</code></p>
 <p>The <strong>urls.txt</strong> contains all URLs embedded in emails that you'll want to replace with URLs on your website, with
 <code>/mail-preferences</code> and <code>/signup-confirmed</code> being integration pages covered in <a href="./integrations">Integrations</a>.</p>
-<h4 id="urls.txt">urls.txt<a class="header-anchor" href="javascript:;" onclick="location.hash='#urls.txt'" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<h4 id="urls.txt">urls.txt<a class="header-anchor" href="#urls.txt" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
 <pre><code class="language-txt">BaseUrl           {‎{BaseUrl}‎}
 PublicBaseUrl     {‎{PublicBaseUrl}‎}
 WebsiteBaseUrl    {‎{WebsiteBaseUrl}‎}
@@ -361,7 +361,7 @@ YouTube           https://www.youtube.com/channel/UC0kXKGVU4NHcwNdDdRiAJSA
 </ul>
 <p>The <strong>PublicAppBaseUrl</strong> is used to reference public images hosted on your deployed CreatorKit instance since most email
 clients wont render images hosted on <code>https://localhost</code>.</p>
-<h3 id="usage">Usage<a class="header-anchor" href="javascript:;" onclick="location.hash='#usage'" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<h3 id="usage">Usage<a class="header-anchor" href="#usage" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
 <p>You're free to add to these existing collections or create new variable collections which  are accessible from
 <code>{‎{info.*}‎}</code> and <code>{‎{urls.*}‎}</code> in your templates that's also available via dropdown in the Markdown Editor Variables
 dropdown:</p>
