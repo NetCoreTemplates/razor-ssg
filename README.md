@@ -1,6 +1,6 @@
 # razor-ssg
 
-.NET 6.0 razor-ssg Static Generated Razor Pages Project Template
+.NET 8.0 razor-ssg Static Generated Razor Pages Project Template
 
 [![](https://raw.githubusercontent.com/ServiceStack/Assets/master/csharp-templates/razor-ssg.png)](https://razor-ssg.web-templates.io)
 
