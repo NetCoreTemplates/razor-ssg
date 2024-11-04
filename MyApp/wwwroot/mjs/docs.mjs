@@ -1,4 +1,4 @@
-﻿import { $$, $1, on, leftPart, map, combinePaths } from "@servicestack/client"
+﻿import { $$, $1, on, leftPart, map } from "@servicestack/client"
 //change #hash on scroll
 const headings = $$('h2[id],h3[id]')
 
@@ -27,8 +27,8 @@ if (location.hash) {
 }
 // replace anchor links that don't include the path to page
 $$('.header-anchor').forEach(el => {
-    if (el.href?.startsWith('#') || el.href?.startsWith(combinePaths(document.baseURI,'#'))) {
-        el.href = combinePaths(location.pathname, el.getAttribute('href'))
+    if (el.href?.startsWith('#') || el.href?.startsWith(document.baseURI + '#')) {
+        el.href = location.pathname + el.getAttribute('href')
     }
 })
 
