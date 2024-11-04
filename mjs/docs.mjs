@@ -1,4 +1,4 @@
-﻿import { $$, $1, on, leftPart, map } from "@servicestack/client"
+﻿import { $$, $1, on, leftPart, map, combinePaths } from "@servicestack/client"
 //change #hash on scroll
 const headings = $$('h2[id],h3[id]')
 
@@ -25,6 +25,12 @@ on(document, {
 if (location.hash) {
     select(location.hash.substring(1))
 }
+// replace anchor links that don't include the path to page
+$$('.header-anchor').forEach(el => {
+    if (el.href?.startsWith('#') || el.href?.startsWith(combinePaths(document.baseURI,'#'))) {
+        el.href = combinePaths(location.pathname, el.getAttribute('href'))
+    }
+})
 
 //scroll menu item into view
 function isInView(el) {
