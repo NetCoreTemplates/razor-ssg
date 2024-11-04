@@ -957,17 +957,6 @@ public static class MarkdigExtensions
     public static MarkdownPipelineBuilder UseAutoLinkHeadings(this MarkdownPipelineBuilder pipeline, object input, string path)
     {
         var relativeHtmlPath = string.Empty;
-
-        if(input.GetType() == typeof(MarkdownBlog))
-        {
-            var post = ((MarkdownBlog)input).VisiblePosts.FirstOrDefault(x => path.Contains(x.FileName));
-
-            if(post != null)
-            {
-                relativeHtmlPath = $"/posts/{post.Slug}";
-            }
-        }
-
         pipeline.Extensions.AddIfNotAlready(new AutoLinkHeadingsExtension(relativeHtmlPath));
 
         return pipeline;
