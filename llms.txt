@@ -1,0 +1,42 @@
+# Razor SSG
+
+## Docs
+
+Blog posts:
+ - [Tailwind Typography](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2022-12-31_typography.md)
+ - [Develop using JetBrains Rider](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2023-01-11_rider.md)
+ - [Real-time search with Typesense](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2021-11-08_typesense.md)
+ - [Deployment with GitHub Actions](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2023-01-01_deploy.md)
+ - [OpenAPI v3 and Swagger UI](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2024-02-08_openapi-v3.md)
+ - [ServiceStack Endpoint Routing](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2024-02-07_servicestack-endpoint-routing.md)
+ - [Introducing Razor SSG](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2023-03-30_razor-ssg.md)
+ - [System.Text.Json ServiceStack APIs](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2024-02-09_system-text-json-apis.md)
+ - [Podcasts now in Razor SSG](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2024-10-02_razor-ssg-podcasts.md)
+ - [Built-In Identity Auth Admin UI](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2024-02-10_identity-auth-admin-ui.md)
+ - [In pursuit of the best value US cloud provider](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2022-09-06_hetzner-cloud.md)
+ - [Migrating from Jekyll to VitePress](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2021-11-01_jekyll-to-vitepress.md)
+ - [Simple, Modern JavaScript](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2023-02-01_javascript.md)
+ - [ASP.NET Core JWT Identity Auth](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2024-02-11_jwt-identity-auth.md)
+ - [Getting Started](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2023-01-21_start.md)
+ - [New Blogging features in Razor SSG](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2023-08-23_razor-ssg-new-blog-features.md)
+ - [Develop using Visual Studio](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2023-01-10_vs.md)
+
+Razor SSG
+ - [Speaking](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_pages/speaking.md)
+ - [Things I use &amp; love](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_pages/uses.md)
+ - [Creator Kit](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_pages/creatorkit/.md)
+ - [Community Rules](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_pages/community-rules.md)
+ - [Privacy](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_pages/privacy.md): Privacy Policy
+
+CreatorKit
+ - [About](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_pages/creatorkit/about.md)
+ - [Install](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_pages/creatorkit/install.md)
+ - [Customize](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_pages/creatorkit/customize.md)
+ - [Components](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_pages/creatorkit/components.md)
+ - [Integrations](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_pages/creatorkit/integrations.md)
+
+CreatorKit Portal
+ - [Portal Overview](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_pages/creatorkit/portal-overview.md): Overview
+ - [Portal Messages](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_pages/creatorkit/portal-messages.md): Messages
+ - [Portal Mail Runs](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_pages/creatorkit/portal-mailruns.md): Mail Runs
+ - [Portal Posts](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_pages/creatorkit/portal-posts.md): Posts
