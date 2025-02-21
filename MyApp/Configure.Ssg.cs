@@ -52,6 +52,7 @@ public class ConfigureSsg : IHostingStartup
                 videos.LoadFrom("_videos");
                 blogPosts.LoadFrom("_posts");
                 podcasts.LoadFrom("_podcasts");
+                AppConfig.Instance.Init(appHost.ContentRootDirectory);
             },
             afterAppHostInit: appHost =>
             {

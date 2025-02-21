@@ -13,13 +13,23 @@ public class AppHost() : AppHostBase("MyApp"), IHostingStartup
             context.Configuration.GetSection(nameof(AppConfig)).Bind(AppConfig.Instance);
             services.AddSingleton(AppConfig.Instance);
         });
+}
 
-    public override void Configure()
+public class AppConfig
+{
+    public static AppConfig Instance { get; } = new();
+    public string Title { get; set; }
+    public string LocalBaseUrl { get; set; }
+    public string PublicBaseUrl { get; set; }
+    public string? GitPagesBaseUrl { get; set; }
+    public string? GitPagesRawBaseUrl { get; set; }
+
+    public void Init(IVirtualDirectory contentDir)
     {
-        AppConfig.Instance.GitPagesBaseUrl ??= ResolveGitBlobBaseUrl(ContentRootDirectory);
+        ResolveGitBlobBaseUrls(contentDir);
     }
-    
-    private string? ResolveGitBlobBaseUrl(IVirtualDirectory contentDir)
+
+    public void ResolveGitBlobBaseUrls(IVirtualDirectory contentDir)
     {
         var srcDir = new DirectoryInfo(contentDir.RealPath);
         var gitConfig = new FileInfo(Path.Combine(srcDir.Parent!.FullName, ".git", "config"));
@@ -30,20 +40,11 @@ public class AppHost() : AppHostBase("MyApp"), IHostingStartup
             if (pos >= 0)
             {
                 var url = txt[(pos + "url = ".Length)..].LeftPart(".git").LeftPart('\n').Trim();
-                var gitBaseUrl = url.CombineWith($"blob/main/{srcDir.Name}");
-                return gitBaseUrl;
+                GitPagesBaseUrl = url.CombineWith($"blob/main/{srcDir.Name}");
+                GitPagesRawBaseUrl = url.Replace("github.com","raw.githubusercontent.com").CombineWith($"refs/heads/main/{srcDir.Name}");
             }
         }
-        return null;
     }
-}
-
-public class AppConfig
-{
-    public static AppConfig Instance { get; } = new();
-    public string LocalBaseUrl { get; set; }
-    public string PublicBaseUrl { get; set; }
-    public string? GitPagesBaseUrl { get; set; }
 }
 
 public static class HtmlHelpers
