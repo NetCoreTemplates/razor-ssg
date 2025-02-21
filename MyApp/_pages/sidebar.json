@@ -1,0 +1,27 @@
+[
+  {
+    "text": "Razor SSG",
+    "children": [
+      {
+        "text": "Speaking",
+        "link": "/speaking"
+      },
+      {
+        "text": "Things I use & love",
+        "link": "/uses"
+      },
+      {
+        "text": "Creator Kit",
+        "link": "/creatorkit/"
+      },
+      {
+        "text": "Community Rules",
+        "link": "/community-rules"
+      },
+      {
+        "text": "Privacy",
+        "link": "/privacy"
+      }
+    ]
+  }
+]

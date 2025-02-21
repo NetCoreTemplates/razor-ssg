@@ -1,0 +1,48 @@
+[
+  {
+    "text": "CreatorKit",
+    "children": [
+      {
+        "text": "About",
+        "link": "/creatorkit/about"
+      },
+      {
+        "text": "Install",
+        "link": "/creatorkit/install"
+      },
+      {
+        "text": "Customize",
+        "link": "/creatorkit/customize"
+      },
+      {
+        "text": "Components",
+        "link": "/creatorkit/components"
+      },
+      {
+        "text": "Integrations",
+        "link": "/creatorkit/integrations"
+      }
+    ]
+  },
+  {
+    "text": "CreatorKit Portal",
+    "children": [
+      {
+        "text": "Portal Overview",
+        "link": "/creatorkit/portal-overview"
+      },
+      {
+        "text": "Portal Messages",
+        "link": "/creatorkit/portal-messages"
+      },
+      {
+        "text": "Portal Mail Runs",
+        "link": "/creatorkit/portal-mailruns"
+      },
+      {
+        "text": "Portal Posts",
+        "link": "/creatorkit/portal-posts"
+      }
+    ]
+  }
+]
