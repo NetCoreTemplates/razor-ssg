@@ -1,5 +1,6 @@
 {
     "scripts": {
+        "postinstall": "node postinstall.js",
         "dtos": "x mjs",
         "dev": "dotnet watch",
         "serve": "npx http-server ./dist",
