@@ -1,6 +1,8 @@
 ﻿@inherits Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>
 @inject AppConfig AppConfig
 @inject MarkdownPodcasts Podcasts
+@using System.Text.Encodings.Web
+@using Microsoft.AspNetCore.Mvc.Razor
 <!doctype html>
 <html lang="en">
 <head>
@@ -35,67 +37,6 @@
 
 @{
     var r = new Random();
-    void AboutSection(string? cls = null)
-    {
-        <section class="@cls">
-            <h2 class="flex items-center font-mono text-sm font-medium leading-7 text-slate-900 dark:text-slate-50">
-                @{ TinyWaveFormIcon(["fill-violet-300", "fill-pink-300"], "h-2.5 w-2.5"); }
-                <span class="ml-2.5">About</span>
-            </h2>
-            <p class="mt-2 text-base leading-7 text-slate-700 dark:text-slate-200">
-                @Html.Raw(Podcasts.Config.About)
-            </p>
-        </section>
-    }
-
-    void TinyWaveFormIcon(string[] colors, string? cls = null)
-    {
-        <svg aria-hidden="true" viewBox="0 0 10 10" class="@cls">
-            <path d="M0 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5Z"
-                  class="@colors[0]" />
-            <path d="M6 1a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V1Z"
-                  class="@colors[1]" />
-        </svg>
-    }
-
-    void Waveform(string? cls = null)
-    {
-        var id = "waveform-" + r.Next(1000);
-        var total = 100;
-        var width = 2;
-        var gap = 2;
-        var minHeight = 40;
-        var maxHeight = 80;
-        <svg aria-hidden="true" class="@cls">
-            <defs>
-                <linearGradient id="@id-fade" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="40%" stop-color="white"></stop>
-                    <stop offset="100%" stop-color="black"></stop>
-                </linearGradient>
-                <linearGradient id="@id-gradient">
-                    <stop offset="0%" stop-color="#4989E8"></stop>
-                    <stop offset="50%" stop-color="#6159DA"></stop>
-                    <stop offset="100%" stop-color="#FF54AD"></stop>
-                </linearGradient>
-                <mask id="@id-mask">
-                    <rect width="100%" height="100%" fill="url(#@id-pattern)"></rect>
-                </mask>
-                <pattern id="@id-pattern"
-                         width="@(total * width + total * gap)"
-                         height="100%"
-                         patternUnits="userSpaceOnUse">
-                    @for (var i = 0; i < total; i++)
-                    {
-                    <rect width="@width"
-                          height="@r.Next(minHeight, maxHeight)"
-                          x="@(gap * (i + 1) + width * i)"
-                          fill="url(#@id-fade)"></rect>
-                    }
-                </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#@id-gradient)" mask="url(#@id-mask)" opacity="0.25"></rect>
-        </svg>
-    }
 }
 
 <div class="min-h-screen">
@@ -121,10 +62,28 @@
                             @Podcasts.Config.Description
                         </p>
                     </div>
-                    @{ AboutSection("mt-12 hidden lg:block"); }
+                    <section class="mt-12 hidden lg:block">
+                        <h2 class="flex items-center font-mono text-sm font-medium leading-7 text-slate-900 dark:text-slate-50">
+                            <svg aria-hidden="true" viewBox="0 0 10 10" class="h-2.5 w-2.5">
+                                <path d="M0 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5Z"
+                                      class="fill-violet-300" />
+                                <path d="M6 1a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V1Z"
+                                      class="fill-pink-300" />
+                            </svg>
+                            <span class="ml-2.5">About</span>
+                        </h2>
+                        <p class="mt-2 text-base leading-7 text-slate-700 dark:text-slate-200">
+                            @Html.Raw(Podcasts.Config.About)
+                        </p>
+                    </section>
                     <section class="mt-10 lg:mt-12">
                         <h2 class="sr-only flex items-center font-mono text-sm font-medium leading-7 text-slate-900 dark:text-slate-50 lg:not-sr-only">
-                            @{ TinyWaveFormIcon(["fill-indigo-300", "fill-blue-300"], "h-2.5 w-2.5"); }
+                            <svg aria-hidden="true" viewBox="0 0 10 10" class="h-2.5 w-2.5">
+                                <path d="M0 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5Z"
+                                      class="fill-indigo-300" />
+                                <path d="M6 1a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V1Z"
+                                      class="fill-blue-300" />
+                            </svg>
                             <span class="ml-2.5">Listen</span>
                         </h2>
                         <div class="h-px bg-gradient-to-r from-slate-200/0 via-slate-200 to-slate-200/0 lg:hidden"></div>
@@ -143,14 +102,63 @@
                 </div>
             </div>
             <div class="border-t border-slate-200 dark:border-slate-700 lg:relative lg:mb-28 lg:ml-112 lg:border-t-0 xl:ml-120">
-                @{ Waveform("absolute left-0 top-0 h-20 w-full"); }
+                @{
+                    var id = "waveform-" + r.Next(1000);
+                    var total = 100;
+                    var width = 2;
+                    var gap = 2;
+                    var minHeight = 40;
+                    var maxHeight = 80;
+                }
+                <svg aria-hidden="true" class="absolute left-0 top-0 h-20 w-full">
+                    <defs>
+                        <linearGradient id="@id-fade" x1="0" x2="0" y1="0" y2="1">
+                            <stop offset="40%" stop-color="white"></stop>
+                            <stop offset="100%" stop-color="black"></stop>
+                        </linearGradient>
+                        <linearGradient id="@id-gradient">
+                            <stop offset="0%" stop-color="#4989E8"></stop>
+                            <stop offset="50%" stop-color="#6159DA"></stop>
+                            <stop offset="100%" stop-color="#FF54AD"></stop>
+                        </linearGradient>
+                        <mask id="@id-mask">
+                            <rect width="100%" height="100%" fill="url(#@id-pattern)"></rect>
+                        </mask>
+                        <pattern id="@id-pattern"
+                                 width="@(total * width + total * gap)"
+                                 height="100%"
+                                 patternUnits="userSpaceOnUse">
+                            @for (var i = 0; i < total; i++)
+                            {
+                            <rect width="@width"
+                                  height="@r.Next(minHeight, maxHeight)"
+                                  x="@(gap * (i + 1) + width * i)"
+                                  fill="url(#@id-fade)"></rect>
+                            }
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#@id-gradient)" mask="url(#@id-mask)" opacity="0.25"></rect>
+                </svg>
                 <div class="relative">
                     @RenderBody()
                 </div>
             </div>
             <footer class="border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 py-10 pb-40 sm:py-16 sm:pb-32 lg:hidden">
                 <div class="mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4">
-                    @{ AboutSection("mt-12 hidden lg:block"); }
+                    <section class="mt-12 hidden lg:block">
+                        <h2 class="flex items-center font-mono text-sm font-medium leading-7 text-slate-900 dark:text-slate-50">
+                            <svg aria-hidden="true" viewBox="0 0 10 10" class="h-2.5 w-2.5">
+                                <path d="M0 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5Z"
+                                      class="fill-violet-300" />
+                                <path d="M6 1a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V1Z"
+                                      class="fill-pink-300" />
+                            </svg>
+                            <span class="ml-2.5">About</span>
+                        </h2>
+                        <p class="mt-2 text-base leading-7 text-slate-700 dark:text-slate-200">
+                            @Html.Raw(Podcasts.Config.About)
+                        </p>
+                    </section>
                 </div>
             </footer>
             <div class="fixed inset-x-0 bottom-0 z-10 lg:left-112 xl:left-120">
