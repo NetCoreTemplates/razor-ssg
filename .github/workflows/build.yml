@@ -22,7 +22,9 @@ jobs:
 
       - name: build
         working-directory: ./MyApp
-        run: dotnet build .
+        run: |
+          dotnet --info
+          dotnet build .
 
       - name: Assign default GitHub URL base path
         env:
