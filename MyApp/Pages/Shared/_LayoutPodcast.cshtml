@@ -33,7 +33,8 @@
 <body class="bg-white dark:bg-black dark:text-white">
 @await Html.PartialAsync("Header")
 
-@functions {    
+@{
+    var r = new Random();
     void AboutSection(string? cls = null)
     {
         <section class="@cls">
@@ -59,7 +60,6 @@
 
     void Waveform(string? cls = null)
     {
-        Random r = new();
         var id = "waveform-" + r.Next(1000);
         var total = 100;
         var width = 2;
