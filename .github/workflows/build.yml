@@ -18,7 +18,7 @@ jobs:
       - name: setup .net core
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: 8.0.120
+          dotnet-version: 8.0.x
 
       - name: build
         working-directory: ./MyApp
