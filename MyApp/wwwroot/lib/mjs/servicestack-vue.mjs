@@ -251,11 +251,11 @@ class Ot {
   }
   static forType(t, l) {
     let s = new Ot();
-    if (Q.config.apisResolver && t) {
-      const o = Q.config.apisResolver(t, l);
+    if (q.config.apisResolver && t) {
+      const o = q.config.apisResolver(t, l);
       o && (s.Query = o.Query, s.QueryInto = o.QueryInto, s.Create = o.Create, s.Update = o.Update, s.Patch = o.Patch, s.Delete = o.Delete);
     }
-    return t && (l ??= Q.metadata.value?.api, l?.operations.forEach((o) => {
+    return t && (l ??= q.metadata.value?.api, l?.operations.forEach((o) => {
       o.dataModel?.name == t && s.add(o);
     })), s;
   }
@@ -309,7 +309,9 @@ function xs(e) {
 function ks(e) {
   if (!e?.type) return !1;
   const t = bn(e);
-  return e.isValueType && t.indexOf("`") == -1 || e.isEnum || e.input?.type == "hidden" || e.input?.type == "file" || e.input?.type == "tag" || e.input?.type == "combobox" ? !0 : Il(e.type) != null;
+  if (e.isValueType && t.indexOf("`") == -1 || e.isEnum) return !0;
+  const l = e.input?.type;
+  return l && (l == "hidden" || l == "file" || l == "tag" || l == "combobox" || q.components?.[l]) ? !0 : Il(e.type) != null;
 }
 function sl(e, t) {
   let l = typeof e == "string" ? Dl(e) : e;
@@ -383,18 +385,18 @@ function wn(e) {
   return e?.api?.operations && e.api.operations.length > 0;
 }
 function Wa(e) {
-  if (!xn() && e?.assert && !Q.metadata.value)
+  if (!xn() && e?.assert && !q.metadata.value)
     throw new Error("useMetadata() not configured, see: https://docs.servicestack.net/vue/use-metadata");
-  return Q.metadata.value;
+  return q.metadata.value;
 }
 function al(e) {
-  return e && wn(e) ? (e.date = ha(/* @__PURE__ */ new Date()), Q.metadata.value = e, typeof localStorage < "u" && localStorage.setItem(Kt, JSON.stringify(e)), !0) : !1;
+  return e && wn(e) ? (e.date = ha(/* @__PURE__ */ new Date()), q.metadata.value = e, typeof localStorage < "u" && localStorage.setItem(Kt, JSON.stringify(e)), !0) : !1;
 }
 function Ga() {
-  Q.metadata.value = null, typeof localStorage < "u" && localStorage.removeItem(Kt);
+  q.metadata.value = null, typeof localStorage < "u" && localStorage.removeItem(Kt);
 }
 function xn() {
-  if (Q.metadata.value != null) return !0;
+  if (q.metadata.value != null) return !0;
   let e = globalThis.Server;
   if (wn(e))
     al(e);
@@ -407,7 +409,7 @@ function xn() {
         console.error(`Could not JSON.parse ${Kt} from localStorage`);
       }
   }
-  return Q.metadata.value != null;
+  return q.metadata.value != null;
 }
 async function Yn(e, t) {
   let l = t ? await t() : await fetch(e);
@@ -416,34 +418,34 @@ async function Yn(e, t) {
     al(JSON.parse(s));
   } else
     console.error(`Could not download ${t ? "AppMetadata" : e}: ${l.statusText}`);
-  wn(Q.metadata.value) || console.warn("AppMetadata is not available");
+  wn(q.metadata.value) || console.warn("AppMetadata is not available");
 }
 async function Ja(e) {
   const { olderThan: t, resolvePath: l, resolve: s } = e || {};
   let o = xn() && t !== 0;
   if (o && t) {
-    let r = gt(Q.metadata.value?.date);
+    let r = gt(q.metadata.value?.date);
     (!r || (/* @__PURE__ */ new Date()).getTime() - r.getTime() > t) && (o = !1);
   }
   if (!o) {
-    if ((l || s) && (await Yn(l || Kt, s), Q.metadata.value != null))
+    if ((l || s) && (await Yn(l || Kt, s), q.metadata.value != null))
       return;
     const r = ze("client");
     if (r != null) {
       const u = await r.api(new Ra());
       u.succeeded && al(u.response);
     }
-    if (Q.metadata.value != null) return;
+    if (q.metadata.value != null) return;
     await Yn(Kt);
   }
-  return Q.metadata.value;
+  return q.metadata.value;
 }
 function it(e, t) {
-  if (Q.config.typeResolver) {
-    let u = Q.config.typeResolver(e, t);
+  if (q.config.typeResolver) {
+    let u = q.config.typeResolver(e, t);
     if (u) return u;
   }
-  let l = Q.metadata.value?.api;
+  let l = q.metadata.value?.api;
   if (!l || !e) return null;
   let s = l.types.find((u) => u.name.toLowerCase() === e.toLowerCase() && (!t || u.namespace == t));
   if (s) return s;
@@ -453,15 +455,15 @@ function it(e, t) {
   return r ? r.response : null;
 }
 function Dl(e) {
-  if (Q.config.apiResolver) {
-    const s = Q.config.apiResolver(e);
+  if (q.config.apiResolver) {
+    const s = q.config.apiResolver(e);
     if (s) return s;
   }
-  let t = Q.metadata.value?.api;
+  let t = q.metadata.value?.api;
   return t ? t.operations.find((s) => s.request.name.toLowerCase() === e.toLowerCase()) : null;
 }
 function Xa({ dataModel: e }) {
-  const t = Q.metadata.value?.api;
+  const t = q.metadata.value?.api;
   if (!t) return [];
   let l = t.operations;
   if (e) {
@@ -540,7 +542,7 @@ function to(e) {
       if (!ks(r)) return;
       const u = eo(r, r.input);
       if (u.id = ya(u.id), u.type == "file" && r.uploadTo && !u.accept) {
-        const d = Q.metadata.value?.plugins.filesUpload?.locations.find((f) => f.name == r.uploadTo);
+        const d = q.metadata.value?.plugins.filesUpload?.locations.find((f) => f.name == r.uploadTo);
         d && !u.accept && d.allowExtensions && (u.accept = d.allowExtensions.map((f) => f.startsWith(".") ? f : `.${f}`).join(","));
       }
       if (o) {
@@ -553,7 +555,7 @@ function to(e) {
             input: u,
             $typeFields: l.map((v) => v.name),
             $dataModelFields: o ? Xe(o).map((v) => v.name) : [],
-            ...Q.config.scopeWhitelist
+            ...q.config.scopeWhitelist
           }, f = Hl(u.options, d);
           Object.keys(f).forEach((v) => {
             u[v] = f[v];
@@ -640,7 +642,7 @@ const so = [
   { name: "Not Exists", value: "%IsNull", valueType: "none" }
 ];
 function lt() {
-  const e = c(() => Q.metadata.value?.app || null), t = c(() => Q.metadata.value?.api || null), l = c(() => Q.metadata.value?.plugins?.autoQuery?.viewerConventions || so);
+  const e = c(() => q.metadata.value?.app || null), t = c(() => q.metadata.value?.api || null), l = c(() => q.metadata.value?.plugins?.autoQuery?.viewerConventions || so);
   return xn(), {
     loadMetadata: Ja,
     getMetadata: Wa,
@@ -1072,7 +1074,7 @@ class wo {
     return typeof localStorage > "u" ? null : localStorage.key(t);
   }
 }
-class Q {
+class q {
   static config = {
     redirectSignIn: "/signin",
     redirectSignOut: "/auth/logout",
@@ -1101,30 +1103,30 @@ class Q {
     RouterLink: ho
   };
   static component(t) {
-    const l = Q.components[t];
+    const l = q.components[t];
     if (l) return l;
-    const s = Wn(t), o = Object.keys(Q.components).find((r) => Wn(r) === s);
-    return o && Q.components[o] || null;
+    const s = Wn(t), o = Object.keys(q.components).find((r) => Wn(r) === s);
+    return o && q.components[o] || null;
   }
   static interceptors = new bo();
 }
 function xo(e) {
-  Q.config = Object.assign(Q.config, e);
+  q.config = Object.assign(q.config, e);
 }
 function ko(e) {
-  Q.autoQueryGridDefaults = Object.assign(Q.autoQueryGridDefaults, e);
+  q.autoQueryGridDefaults = Object.assign(q.autoQueryGridDefaults, e);
 }
 function Mn(e) {
-  return e && Q.config.assetsPathResolver ? Q.config.assetsPathResolver(e) : e;
+  return e && q.config.assetsPathResolver ? q.config.assetsPathResolver(e) : e;
 }
 function Co(e) {
-  return e && Q.config.fallbackPathResolver ? Q.config.fallbackPathResolver(e) : e;
+  return e && q.config.fallbackPathResolver ? q.config.fallbackPathResolver(e) : e;
 }
 function $o(e, t) {
-  Q.interceptors.register(e, t);
+  q.interceptors.register(e, t);
 }
 function Bt() {
-  const e = c(() => Q.config), t = c(() => Q.autoQueryGridDefaults), l = Q.events;
+  const e = c(() => q.config), t = c(() => q.autoQueryGridDefaults), l = q.events;
   return {
     config: e,
     setConfig: xo,
@@ -1150,7 +1152,7 @@ function Ks(e) {
   return e == null ? "" : Sa(e);
 }
 function sn(e, t) {
-  return Q.config.inputValue ? Q.config.inputValue(e, t) : e === "date" ? jl(t) : e === "datetime-local" ? Qs(t) : e === "time" ? Ks(t) : e === "number" || e === "range" ? Number(t) : t;
+  return q.config.inputValue ? q.config.inputValue(e, t) : e === "date" ? jl(t) : e === "datetime-local" ? Qs(t) : e === "time" ? Ks(t) : e === "number" || e === "range" ? t == null ? "" : Number(t) : t;
 }
 function Zs(e, t) {
   e.value = null, At(() => e.value = t);
@@ -1232,7 +1234,7 @@ function on(e) {
   typeof navigator < "u" && navigator.clipboard.writeText(e);
 }
 function Fn(e) {
-  const t = Q.config.storage.getItem(e);
+  const t = q.config.storage.getItem(e);
   return t ? JSON.parse(t) : null;
 }
 function Rl(e, t) {
@@ -1241,7 +1243,7 @@ function Rl(e, t) {
 function Vo(e) {
   if (e.request) {
     const t = Rl(e.request, e.args);
-    Q.config.storage.removeItem(t);
+    q.config.storage.removeItem(t);
   }
 }
 async function Ws(e, t, l, s, o) {
@@ -1251,7 +1253,7 @@ async function Ws(e, t, l, s, o) {
   if (u.succeeded && u.response) {
     u.response._date = (/* @__PURE__ */ new Date()).valueOf();
     const d = JSON.stringify(u.response);
-    Q.config.storage.setItem(r, d), l(u);
+    q.config.storage.setItem(r, d), l(u);
   }
   return u;
 }
@@ -1371,17 +1373,17 @@ function Ys(e) {
   return e && e.SessionId ? Ma(e) : e;
 }
 function Mo(e) {
-  Q.user.value = Ys(e), Q.events.publish("signIn", e);
+  q.user.value = Ys(e), q.events.publish("signIn", e);
 }
 function To() {
-  Q.user.value = null, Q.events.publish("signOut", null);
+  q.user.value = null, q.events.publish("signOut", null);
 }
 const An = (e) => e?.roles || [], In = (e) => e?.permissions || [];
 function ea(e) {
-  return An(Q.user.value).indexOf(e) >= 0;
+  return An(q.user.value).indexOf(e) >= 0;
 }
 function Fo(e) {
-  return In(Q.user.value).indexOf(e) >= 0;
+  return In(q.user.value).indexOf(e) >= 0;
 }
 function Dn() {
   return ea("Admin");
@@ -1390,7 +1392,7 @@ function nl(e) {
   if (!e) return !1;
   if (!e.requiresAuth)
     return !0;
-  const t = Q.user.value;
+  const t = q.user.value;
   if (!t)
     return !1;
   if (Dn())
@@ -1405,7 +1407,7 @@ function nl(e) {
 }
 function Ao(e) {
   if (!e || !e.requiresAuth) return null;
-  const t = Q.user.value;
+  const t = q.user.value;
   if (!t)
     return `<b>${e.request.name}</b> requires Authentication`;
   if (Dn())
@@ -1422,7 +1424,7 @@ function Ao(e) {
   return v.length > 0 ? `Requires ${v.map((y) => "<b>" + y + "</b>").join(", ")} Permission` + (v.length > 1 ? "s" : "") : u.length > 0 && !u.some((y) => l.indexOf(y) >= 0) ? `Requires any ${u.filter((y) => l.indexOf(y) < 0).map((y) => "<b>" + y + "</b>").join(", ")} Role` + (f.length > 1 ? "s" : "") : d.length > 0 && !d.every((y) => s.indexOf(y) >= 0) ? `Requires any ${d.filter((y) => s.indexOf(y) < 0).map((y) => "<b>" + y + "</b>").join(", ")} Permission` + (v.length > 1 ? "s" : "") : null;
 }
 function On() {
-  const e = c(() => Q.user.value || null), t = c(() => Q.user.value != null);
+  const e = c(() => q.user.value || null), t = c(() => q.user.value != null);
   return { signIn: Mo, signOut: To, user: e, toAuth: Ys, isAuthenticated: t, hasRole: ea, hasPermission: Fo, isAdmin: Dn, canAccess: nl, invalidAccessMessage: Ao };
 }
 function Ke(e, t) {
@@ -1519,7 +1521,7 @@ const Vl = {
 };
 function kt(e, t, l) {
   const s = e.filter((o) => o).join(" ");
-  return l ??= Q.config.filterInputClass == null ? void 0 : (o) => Q.config.filterInputClass(o, t), l ? l(s) : s;
+  return l ??= q.config.filterInputClass == null ? void 0 : (o) => q.config.filterInputClass(o, t), l ? l(s) : s;
 }
 const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
@@ -2186,7 +2188,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                 n("button", {
                   type: "button",
                   title: "Sort Ascending",
-                  onClick: V[0] || (V[0] = (q) => U("ASC")),
+                  onClick: V[0] || (V[0] = (_) => U("ASC")),
                   class: m(`${w.value.sort === "ASC" ? "bg-indigo-100 border-indigo-500" : "bg-white hover:bg-gray-50 border-gray-300"} mr-1 inline-flex items-center px-2.5 py-1.5 border shadow-sm text-sm font-medium rounded text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`)
                 }, [...V[6] || (V[6] = [
                   n("svg", {
@@ -2207,7 +2209,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                 n("button", {
                   type: "button",
                   title: "Sort Descending",
-                  onClick: V[1] || (V[1] = (q) => U("DESC")),
+                  onClick: V[1] || (V[1] = (_) => U("DESC")),
                   class: m(`${w.value.sort === "DESC" ? "bg-indigo-100 border-indigo-500" : "bg-white hover:bg-gray-50 border-gray-300"} ml-1 inline-flex items-center px-2.5 py-1.5 border shadow-sm text-sm font-medium rounded text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`)
                 }, [...V[7] || (V[7] = [
                   Sl('<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g fill="currentColor"><path d="M12.96 7H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V7z"></path><path fill-rule="evenodd" d="M10.082 12.629L9.664 14H8.598l1.789-5.332h1.234L13.402 14h-1.12l-.419-1.371h-1.781zm1.57-.785L11 9.688h-.047l-.652 2.156h1.351z"></path><path d="M4.5 2.5a.5.5 0 0 0-1 0v9.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999l.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L4.5 12.293V2.5z"></path></g></svg><span>DESC</span>', 2)
@@ -2215,28 +2217,28 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
               ]),
               V[11] || (V[11] = n("h3", { class: "text-base font-medium mt-4 mb-2" }, " Filter ", -1)),
               f.value ? (a(), i("div", Ri, [
-                (a(!0), i($e, null, Se(y.value, (q) => (a(), i("div", {
-                  key: q.key,
+                (a(!0), i($e, null, Se(y.value, (_) => (a(), i("div", {
+                  key: _.key,
                   class: "flex items-center"
                 }, [
                   It(n("input", {
                     type: "checkbox",
-                    id: q.key,
-                    value: q.key,
+                    id: _.key,
+                    value: _.key,
                     "onUpdate:modelValue": V[2] || (V[2] = (ne) => d.value = ne),
                     class: "h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
                   }, null, 8, Ei), [
                     [dn, d.value]
                   ]),
                   n("label", {
-                    for: q.key,
+                    for: _.key,
                     class: "ml-3"
-                  }, M(q.value), 9, Ni)
+                  }, M(_.value), 9, Ni)
                 ]))), 128))
               ])) : (a(), i("div", zi, [
-                (a(!0), i($e, null, Se(g.value, (q, ne) => (a(), i("div", Ui, [
+                (a(!0), i($e, null, Se(g.value, (_, ne) => (a(), i("div", Ui, [
                   n("span", qi, [
-                    we(M(e.column.name) + " " + M(q.name) + " " + M(le(q)) + " ", 1),
+                    we(M(e.column.name) + " " + M(_.name) + " " + M(le(_)) + " ", 1),
                     n("button", {
                       type: "button",
                       onClick: (F) => B(ne),
@@ -2262,7 +2264,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                     id: "filterRule",
                     class: "w-32 mr-1",
                     modelValue: r.value,
-                    "onUpdate:modelValue": V[3] || (V[3] = (q) => r.value = q),
+                    "onUpdate:modelValue": V[3] || (V[3] = (_) => r.value = _),
                     entries: L.value,
                     label: "",
                     placeholder: ""
@@ -2275,7 +2277,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                     class: "w-32 mr-1",
                     type: "text",
                     modelValue: u.value,
-                    "onUpdate:modelValue": V[4] || (V[4] = (q) => u.value = q),
+                    "onUpdate:modelValue": V[4] || (V[4] = (_) => u.value = _),
                     onKeyup: as(A, ["enter"]),
                     label: "",
                     placeholder: ""
@@ -2660,13 +2662,13 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       const me = !!ye.value.AnyUpdate, Ae = (ce.value?.name ? be(D, ce.value.name) : null) == te.value;
       return ge.getTableRowClass(d.tableStyle, $, Ae, me);
     }
-    const O = Ml(), Z = c(() => Ul(ye.value.AnyQuery.viewModel?.name || ye.value.AnyQuery.dataModel.name)), q = c(() => {
+    const O = Ml(), Z = c(() => Ul(ye.value.AnyQuery.viewModel?.name || ye.value.AnyQuery.dataModel.name)), _ = c(() => {
       const D = Object.keys(O).map(($) => $.toLowerCase());
       return Xe(Z.value).filter(($) => D.includes($.name.toLowerCase()) || D.includes($.name.toLowerCase() + "-header")).map(($) => $.name);
     });
     function ne() {
       let D = Tt(d.selectedColumns);
-      return D.length > 0 ? D : q.value.length > 0 ? q.value : [];
+      return D.length > 0 ? D : _.value.length > 0 ? _.value : [];
     }
     const F = c(() => {
       let $ = ne().map((ae) => ae.toLowerCase());
@@ -2675,7 +2677,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     }), J = c(() => {
       let D = F.value.map((me) => me.name), $ = Tt(fe.value.selectedColumns).map((me) => me.toLowerCase());
       return $.length > 0 ? D.filter((me) => $.includes(me.toLowerCase())) : D;
-    }), C = T([]), P = T(new We()), _ = T(new We()), k = T(), p = T(!1), te = T(), Y = T(), oe = T(!1), N = T(), j = T(d.skip), ue = T(!1), fe = T({ take: yl }), se = T(!1), ve = c(() => C.value.some((D) => D.settings.filters.length > 0 || !!D.settings.sort) || fe.value.selectedColumns), pe = c(() => C.value.map((D) => D.settings.filters.length).reduce((D, $) => D + $, 0)), de = c(() => Xe(Ul(Et.value || ye.value.AnyQuery?.dataModel.name))), ce = c(() => Wt(Ul(Et.value || ye.value.AnyQuery?.dataModel.name))), Le = c(() => fe.value.take ?? yl), Ie = c(() => (P.value.response ? be(P.value.response, "results") : null) ?? []), Ce = c(() => (P.value.response?.total || Ie.value.length) ?? 0), Me = c(() => j.value > 0), Te = c(() => j.value > 0), qe = c(() => Ie.value.length >= Le.value), nt = c(() => Ie.value.length >= Le.value), et = T(), rt = T(), ut = {
+    }), C = T([]), P = T(new We()), Q = T(new We()), k = T(), p = T(!1), te = T(), Y = T(), oe = T(!1), N = T(), j = T(d.skip), ue = T(!1), fe = T({ take: yl }), se = T(!1), ve = c(() => C.value.some((D) => D.settings.filters.length > 0 || !!D.settings.sort) || fe.value.selectedColumns), pe = c(() => C.value.map((D) => D.settings.filters.length).reduce((D, $) => D + $, 0)), de = c(() => Xe(Ul(Et.value || ye.value.AnyQuery?.dataModel.name))), ce = c(() => Wt(Ul(Et.value || ye.value.AnyQuery?.dataModel.name))), Le = c(() => fe.value.take ?? yl), Ie = c(() => (P.value.response ? be(P.value.response, "results") : null) ?? []), Ce = c(() => (P.value.response?.total || Ie.value.length) ?? 0), Me = c(() => j.value > 0), Te = c(() => j.value > 0), qe = c(() => Ie.value.length >= Le.value), nt = c(() => Ie.value.length >= Le.value), et = T(), rt = T(), ut = {
       NoQuery: "No Query API was found"
     };
     t({
@@ -2697,7 +2699,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       skip: j,
       take: Le,
       total: Ce
-    }), Q.interceptors.has("AutoQueryGrid.new") && Q.interceptors.invoke("AutoQueryGrid.new", { props: d });
+    }), q.interceptors.has("AutoQueryGrid.new") && q.interceptors.invoke("AutoQueryGrid.new", { props: d });
     function vt(D) {
       if (D) {
         if (d.canFilter)
@@ -2873,7 +2875,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       await Ve(), Yt();
     }
     function Kn() {
-      P.value = new We(), _.value = new We(), p.value = !1, te.value = null, Y.value = null, oe.value = !1, N.value = null, j.value = d.skip, ue.value = !1, fe.value = { take: yl }, se.value = !1;
+      P.value = new We(), Q.value = new We(), p.value = !1, te.value = null, Y.value = null, oe.value = !1, N.value = null, j.value = d.skip, ue.value = !1, fe.value = { take: yl }, se.value = !1;
       const D = d.prefs || Ll(u.getItem(zl()));
       D && (fe.value = D), C.value = F.value.map((me) => ({
         name: me.name,
@@ -3293,9 +3295,9 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
           onDone: $[8] || ($[8] = (Ue) => k.value = null),
           onChange: De
         }, null, 8, ["definitions", "columns"])) : x("", !0),
-        _.value.error ?? P.value.error ? (a(), X(zt, {
+        Q.value.error ?? P.value.error ? (a(), X(zt, {
           key: 6,
-          status: _.value.error ?? P.value.error
+          status: Q.value.error ?? P.value.error
         }, null, 8, ["status"])) : se.value ? (a(), X(Zn, {
           key: 7,
           class: "p-2"
@@ -3797,7 +3799,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
             const P = f.value.indexOf(u.value);
             u.value = P + 1 < f.value.length ? f.value[P + 1] : f.value[0];
           }
-          q();
+          _();
         } else if (C.code == "ArrowUp") {
           if (!u.value)
             u.value = f.value[f.value.length - 1];
@@ -3805,7 +3807,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
             const P = f.value.indexOf(u.value);
             u.value = P - 1 >= 0 ? f.value[P - 1] : f.value[f.value.length - 1];
           }
-          q();
+          _();
         } else C.code == "Enter" ? u.value && d.value ? (ne(u.value), C.preventDefault()) : d.value = !1 : d.value = f.value.length > 0;
     }
     function ee() {
@@ -3816,8 +3818,8 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     function re(C) {
       const P = ee();
       if (P.length > 0) {
-        const _ = l.delimiters.some((p) => p == C.key);
-        if (_ && C.preventDefault(), C.key == "Enter" || C.key == "NumpadEnter" || C.key.length == 1 && _) {
+        const Q = l.delimiters.some((p) => p == C.key);
+        if (Q && C.preventDefault(), C.key == "Enter" || C.key == "NumpadEnter" || C.key.length == 1 && Q) {
           ne(P);
           return;
         }
@@ -3830,7 +3832,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
         C && C.scrollIntoView(O);
       }, 0);
     }
-    function q() {
+    function _() {
       setTimeout(() => {
         let C = $l(`#${l.id}-tag li.active`);
         C && ("scrollIntoViewIfNeeded" in C ? C.scrollIntoViewIfNeeded(O) : C.scrollIntoView(O));
@@ -3847,10 +3849,10 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     }
     function J(C) {
       if (!C) return;
-      const P = new RegExp(`\\n|\\t|${l.delimiters.join("|")}`), _ = Array.from(r.value);
+      const P = new RegExp(`\\n|\\t|${l.delimiters.join("|")}`), Q = Array.from(r.value);
       C.split(P).map((p) => p.trim()).forEach((p) => {
-        _.indexOf(p) == -1 && _.push(p);
-      }), S(_), L.value = "";
+        Q.indexOf(p) == -1 && Q.push(p);
+      }), S(Q), L.value = "";
     }
     return (C, P) => (a(), i("div", {
       class: m([C.$attrs.class]),
@@ -3872,16 +3874,16 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
         n("button", {
           class: m(A.value),
           onClick: He(le, ["prevent"]),
-          onFocus: P[2] || (P[2] = (_) => d.value = !0),
+          onFocus: P[2] || (P[2] = (Q) => d.value = !0),
           tabindex: "-1"
         }, [
           n("div", Qu, [
-            (a(!0), i($e, null, Se(r.value, (_) => (a(), i("div", Ku, [
+            (a(!0), i($e, null, Se(r.value, (Q) => (a(), i("div", Ku, [
               n("span", Zu, [
-                we(M(_) + " ", 1),
+                we(M(Q) + " ", 1),
                 n("button", {
                   type: "button",
-                  onClick: (k) => B(_),
+                  onClick: (k) => B(Q),
                   class: "flex-shrink-0 ml-1 h-4 w-4 rounded-full inline-flex items-center justify-center text-indigo-400 dark:text-indigo-500 hover:bg-indigo-200 dark:hover:bg-indigo-800 hover:text-indigo-500 dark:hover:text-indigo-400 focus:outline-none focus:bg-indigo-500 focus:text-white dark:focus:text-black"
                 }, [...P[3] || (P[3] = [
                   n("svg", {
@@ -3913,7 +3915,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                 id: `${e.id}-txt`,
                 class: "p-0 dark:bg-transparent rounded-md border-none focus:!border-none focus:!outline-none",
                 style: `box-shadow:none !important;width:${L.value.length + 1}ch`,
-                "onUpdate:modelValue": P[0] || (P[0] = (_) => L.value = _),
+                "onUpdate:modelValue": P[0] || (P[0] = (Q) => L.value = Q),
                 "aria-invalid": b.value != null,
                 "aria-describedby": `${e.id}-error`,
                 onKeydown: V,
@@ -3921,7 +3923,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                 onPaste: He(F, ["prevent", "stop"]),
                 onFocus: K,
                 onBlur: U,
-                onClick: P[1] || (P[1] = (_) => d.value = !0)
+                onClick: P[1] || (P[1] = (Q) => d.value = !0)
               }, W(ft)(C.$attrs, ["class", "required"])), null, 16, Ju), [
                 [ma, L.value]
               ])
@@ -3935,14 +3937,14 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
           id: `${e.id}-options`,
           role: "listbox"
         }, [
-          (a(!0), i($e, null, Se(f.value.slice(0, e.maxVisibleItems), (_) => (a(), i("li", {
-            class: m([_ === u.value ? "active bg-indigo-600 text-white" : "text-gray-900 dark:text-gray-100", "relative cursor-default select-none py-2 pl-3 pr-9"]),
-            onMouseover: (k) => v(_),
-            onClick: (k) => ne(_),
+          (a(!0), i($e, null, Se(f.value.slice(0, e.maxVisibleItems), (Q) => (a(), i("li", {
+            class: m([Q === u.value ? "active bg-indigo-600 text-white" : "text-gray-900 dark:text-gray-100", "relative cursor-default select-none py-2 pl-3 pr-9"]),
+            onMouseover: (k) => v(Q),
+            onClick: (k) => ne(Q),
             role: "option",
             tabindex: "-1"
           }, [
-            n("span", ed, M(_), 1)
+            n("span", ed, M(Q), 1)
           ], 42, Yu))), 256))
         ], 40, Xu)) : x("", !0),
         b.value ? (a(), i("div", td, [...P[4] || (P[4] = [
@@ -4169,13 +4171,13 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       const J = E.some((C) => F.includes(C));
       if (!o.multiple || !J) {
         const C = o.options.filter((P) => o.match(P, F));
-        C.length == 1 && (q(C[0]), s.value = !1, xl());
+        C.length == 1 && (_(C[0]), s.value = !1, xl());
       } else if (J) {
-        const C = new RegExp("\\r|\\n|\\t|,"), _ = F.split(C).filter((k) => k.trim()).map((k) => o.options.find((p) => o.match(p, k))).filter((k) => !!k);
-        if (_.length > 0) {
+        const C = new RegExp("\\r|\\n|\\t|,"), Q = F.split(C).filter((k) => k.trim()).map((k) => o.options.find((p) => o.match(p, k))).filter((k) => !!k);
+        if (Q.length > 0) {
           w.value = "", s.value = !1, g.value = null;
           let k = Array.from(o.modelValue || []);
-          _.forEach((p) => {
+          Q.forEach((p) => {
             u(p) ? k = k.filter((te) => te != p) : k.push(p);
           }), r("update:modelValue", k), xl();
         }
@@ -4214,7 +4216,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
             g.value = J - 1 >= 0 ? b.value[J - 1] : b.value[b.value.length - 1];
           }
           re();
-        } else F.code == "Enter" && (g.value ? (q(g.value), o.multiple || (F.preventDefault(), xl())) : s.value = !1);
+        } else F.code == "Enter" && (g.value ? (_(g.value), o.multiple || (F.preventDefault(), xl())) : s.value = !1);
       }
     }
     const V = { behavior: "smooth", block: "nearest", inline: "nearest", scrollMode: "if-needed" };
@@ -4236,7 +4238,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     function Z() {
       s.value = !0, ne();
     }
-    function q(F) {
+    function _(F) {
       if (w.value = "", s.value = !1, o.multiple) {
         let J = Array.from(o.modelValue || []);
         u(F) ? J = J.filter((C) => C != F) : J.push(F), g.value = null, r("update:modelValue", J);
@@ -4309,7 +4311,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
           (a(!0), i($e, null, Se(b.value, (C) => (a(), i("li", {
             class: m([C === g.value ? "active bg-indigo-600 text-white" : "text-gray-900 dark:text-gray-100", "relative cursor-default select-none py-2 pl-3 pr-9"]),
             onMouseover: (P) => le(C),
-            onClick: (P) => q(C),
+            onClick: (P) => _(C),
             role: "option",
             tabindex: "-1"
           }, [
@@ -4465,7 +4467,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     });
     return (v, y) => {
       const L = z("SelectInput"), w = z("CheckboxInput"), g = z("TagInput"), h = z("Combobox"), b = z("FileInput"), A = z("TextareaInput"), B = z("MarkdownInput"), le = z("TextInput");
-      return W(Q).component(o.value) ? (a(), X(is(W(Q).component(o.value)), ke({
+      return W(q).component(o.value) ? (a(), X(is(W(q).component(o.value)), ke({
         key: 0,
         id: e.input.id,
         modelValue: d.value,
@@ -4578,7 +4580,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       return K ? o.input.options ? Object.assign({}, K, Hl(o.input.options, {
         input: o.input,
         $typeFields: Xe(o.metadataType).map((U) => U.name),
-        ...Q.config.scopeWhitelist
+        ...q.config.scopeWhitelist
       })) : K : null;
     }
     const B = c(() => A(h.value?.ref ?? (o.input.type == "lookup" ? {
@@ -4626,7 +4628,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
         if (L.value = `${O}`, w.value = U.name, S.refLabel != null) {
           const Z = Xe(o.metadataType).filter((F) => F.type == S.model);
           Z.length || console.warn(`Could not find ${S.model} Property on ${o.metadataType.name}`);
-          const q = Z.map((F) => be(K, F.name)).filter((F) => !!F), ne = q.length <= 1 ? q[0] : q.find((F) => F[S.refId ?? "id"] == V);
+          const _ = Z.map((F) => be(K, F.name)).filter((F) => !!F), ne = _.length <= 1 ? _[0] : _.find((F) => F[S.refId ?? "id"] == V);
           if (ne != null) {
             let F = be(ne, S.refLabel);
             F && (L.value = `${F}`, Ze.setValue(S.model, V, S.refLabel, F));
@@ -4768,9 +4770,9 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       }
       const I = Xe(E), K = A.value, U = s.formLayout ? Array.from(s.formLayout) : w(E), S = [], V = v(E.name);
       return U.forEach((ee) => {
-        const re = I.find((q) => q.name == ee.name);
+        const re = I.find((_) => _.name == ee.name);
         if (ee.ignore) return;
-        const O = K?.properties?.find((q) => q.name.toLowerCase() == ee.name?.toLowerCase()) ?? re, Z = Object.assign({ prop: O, op: V }, ee);
+        const O = K?.properties?.find((_) => _.name.toLowerCase() == ee.name?.toLowerCase()) ?? re, Z = Object.assign({ prop: O, op: V }, ee);
         s.configureField && s.configureField(Z), S.push(Z);
       }), s.configureFormLayout && s.configureFormLayout(S), S;
     }
@@ -4859,10 +4861,10 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   setup(e, { expose: t, emit: l }) {
     const s = e, o = l, r = T(), u = T(1), d = T();
     function f() {
-      u.value++, q.value = Z(), Oe()?.proxy?.$forceUpdate();
+      u.value++, _.value = Z(), Oe()?.proxy?.$forceUpdate();
     }
     async function v(j) {
-      Object.assign(q.value, j), f(), await At(() => null);
+      Object.assign(_.value, j), f(), await At(() => null);
     }
     rl("ModalProvider", {
       openModal: g
@@ -4874,8 +4876,8 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     async function h(j) {
       w.value && w.value(j), L.value = void 0, w.value = void 0;
     }
-    const b = cl(), { getTypeName: A } = Xs(), { typeOf: B, Crud: le, createDto: E } = lt(), I = T(new We()), K = c(() => s.panelClass || Be.panelClass(s.formStyle)), U = c(() => s.formClass || s.formStyle == "card" ? "shadow sm:rounded-md" : qt.formClass), S = c(() => s.headingClass || Be.headingClass(s.formStyle)), V = c(() => s.subHeadingClass || Be.subHeadingClass(s.formStyle)), ee = c(() => typeof s.buttonsClass == "string" ? s.buttonsClass : Be.buttonsClass), re = c(() => s.type ? A(s.type) : s.modelValue?.getTypeName ? s.modelValue.getTypeName() : null), O = c(() => s.metaType ?? B(re.value)), Z = () => s.modelValue || J(), q = T(Z()), ne = c(() => b.loading.value), F = c(() => s.heading != null ? s.heading : O.value?.description || Pe(re.value));
-    t({ forceUpdate: f, props: s, setModel: v, formFields: r, submit: P, close: oe, model: q });
+    const b = cl(), { getTypeName: A } = Xs(), { typeOf: B, Crud: le, createDto: E } = lt(), I = T(new We()), K = c(() => s.panelClass || Be.panelClass(s.formStyle)), U = c(() => s.formClass || s.formStyle == "card" ? "shadow sm:rounded-md" : qt.formClass), S = c(() => s.headingClass || Be.headingClass(s.formStyle)), V = c(() => s.subHeadingClass || Be.subHeadingClass(s.formStyle)), ee = c(() => typeof s.buttonsClass == "string" ? s.buttonsClass : Be.buttonsClass), re = c(() => s.type ? A(s.type) : s.modelValue?.getTypeName ? s.modelValue.getTypeName() : null), O = c(() => s.metaType ?? B(re.value)), Z = () => s.modelValue || J(), _ = T(Z()), ne = c(() => b.loading.value), F = c(() => s.heading != null ? s.heading : O.value?.description || Pe(re.value));
+    t({ forceUpdate: f, props: s, setModel: v, formFields: r, submit: P, close: oe, model: _ });
     function J() {
       return typeof s.type == "string" ? E(s.type) : s.type ? new s.type() : s.modelValue;
     }
@@ -4891,7 +4893,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
         let pe = new ue.constructor(), de = new FormData(j);
         se ? I.value = await b.apiFormVoid(pe, de, { jsconfig: ve }) : I.value = await b.apiForm(pe, de, { jsconfig: ve });
       } else {
-        let pe = new ue.constructor(Ia(q.value));
+        let pe = new ue.constructor(Ia(_.value));
         console.debug("AutoForm.submit", pe), se ? I.value = await b.apiVoid(pe, { jsconfig: ve }) : I.value = await b.api(pe, { jsconfig: ve });
       }
       I.value.succeeded ? (o("success", I.value.response), oe()) : o("error", I.value.error);
@@ -4899,7 +4901,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     async function P() {
       C(d.value);
     }
-    function _(j) {
+    function Q(j) {
       o("update:modelValue", j);
     }
     function k() {
@@ -4957,7 +4959,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
               ], 2),
               H(j.$slots, "header", {
                 instance: Oe()?.exposed,
-                model: q.value
+                model: _.value
               }),
               ue[5] || (ue[5] = n("input", {
                 type: "submit",
@@ -4968,15 +4970,15 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                 ref: r,
                 key: u.value,
                 type: e.type,
-                modelValue: q.value,
-                "onUpdate:modelValue": _,
+                modelValue: _.value,
+                "onUpdate:modelValue": Q,
                 api: I.value,
                 configureField: e.configureField,
                 configureFormLayout: e.configureFormLayout
               }, null, 8, ["type", "modelValue", "api", "configureField", "configureFormLayout"])),
               H(j.$slots, "footer", {
                 instance: Oe()?.exposed,
-                model: q.value
+                model: _.value
               })
             ], 2),
             H(j.$slots, "buttons", {}, () => [
@@ -4986,7 +4988,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                 n("div", null, [
                   H(j.$slots, "leftbuttons", {
                     instance: Oe()?.exposed,
-                    model: q.value
+                    model: _.value
                   })
                 ]),
                 n("div", null, [
@@ -4995,7 +4997,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                 n("div", ac, [
                   ue[6] || (ue[6] = n("div", null, null, -1)),
                   he(ve, {
-                    disabled: ne.value || (e.allowSubmit ? !e.allowSubmit(q.value) : !1)
+                    disabled: ne.value || (e.allowSubmit ? !e.allowSubmit(_.value) : !1)
                   }, {
                     default: xe(() => [
                       we(M(e.submitLabel), 1)
@@ -5004,7 +5006,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                   }, 8, ["disabled"]),
                   H(j.$slots, "rightbuttons", {
                     instance: Oe()?.exposed,
-                    model: q.value
+                    model: _.value
                   })
                 ])
               ], 2)
@@ -5063,22 +5065,22 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                         ]),
                         H(j.$slots, "header", {
                           instance: Oe()?.exposed,
-                          model: q.value
+                          model: _.value
                         }),
                         (a(), X(fe, {
                           ref_key: "formFields",
                           ref: r,
                           key: u.value,
                           type: e.type,
-                          modelValue: q.value,
-                          "onUpdate:modelValue": _,
+                          modelValue: _.value,
+                          "onUpdate:modelValue": Q,
                           api: I.value,
                           configureField: e.configureField,
                           configureFormLayout: e.configureFormLayout
                         }, null, 8, ["type", "modelValue", "api", "configureField", "configureFormLayout"])),
                         H(j.$slots, "footer", {
                           instance: Oe()?.exposed,
-                          model: q.value
+                          model: _.value
                         })
                       ])
                     ]),
@@ -5088,7 +5090,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                       n("div", null, [
                         H(j.$slots, "leftbuttons", {
                           instance: Oe()?.exposed,
-                          model: q.value
+                          model: _.value
                         })
                       ]),
                       n("div", null, [
@@ -5106,7 +5108,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                         }, 8, ["disabled"]),
                         he(ve, {
                           class: "ml-4",
-                          disabled: ne.value || (e.allowSubmit ? !e.allowSubmit(q.value) : !1)
+                          disabled: ne.value || (e.allowSubmit ? !e.allowSubmit(_.value) : !1)
                         }, {
                           default: xe(() => [
                             we(M(e.submitLabel), 1)
@@ -5115,7 +5117,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                         }, 8, ["disabled"]),
                         H(j.$slots, "rightbuttons", {
                           instance: Oe()?.exposed,
-                          model: q.value
+                          model: _.value
                         })
                       ])
                     ], 2)
@@ -5187,9 +5189,9 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     }
     const { typeOf: b, typeProperties: A, Crud: B, createDto: le, formValues: E } = lt(), I = c(() => Ht(s.type)), K = c(() => b(I.value)), S = T(typeof s.type == "string" ? le(s.type) : s.type ? new s.type() : null);
     t({ forceUpdate: d, props: s, setModel: f, formFields: r, model: S });
-    const V = c(() => s.panelClass || Be.panelClass(s.formStyle)), ee = c(() => s.formClass || Be.formClass(s.formStyle)), re = c(() => s.headingClass || Be.headingClass(s.formStyle)), O = c(() => s.subHeadingClass || Be.subHeadingClass(s.formStyle)), Z = c(() => s.buttonsClass || Be.buttonsClass), q = c(() => B.model(K.value)), ne = c(() => s.heading || b(I.value)?.description || (q.value ? `New ${Pe(q.value)}` : Pe(I.value))), F = T(new We());
+    const V = c(() => s.panelClass || Be.panelClass(s.formStyle)), ee = c(() => s.formClass || Be.formClass(s.formStyle)), re = c(() => s.headingClass || Be.headingClass(s.formStyle)), O = c(() => s.subHeadingClass || Be.subHeadingClass(s.formStyle)), Z = c(() => s.buttonsClass || Be.buttonsClass), _ = c(() => B.model(K.value)), ne = c(() => s.heading || b(I.value)?.description || (_.value ? `New ${Pe(_.value)}` : Pe(I.value))), F = T(new We());
     let J = cl(), C = c(() => J.loading.value);
-    Q.interceptors.has("AutoCreateForm.new") && Q.interceptors.invoke("AutoCreateForm.new", { props: s, model: S });
+    q.interceptors.has("AutoCreateForm.new") && q.interceptors.invoke("AutoCreateForm.new", { props: s, model: S });
     async function P(N) {
       let j = N.target;
       if (!s.autosave) {
@@ -5206,7 +5208,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       }
       F.value.succeeded ? (j.reset(), o("save", F.value.response)) : o("error", F.value.error);
     }
-    function _() {
+    function Q() {
       o("done");
     }
     const k = T(!1), p = T(""), te = {
@@ -5214,10 +5216,10 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       leaving: { cls: "transform transition ease-in-out duration-500 sm:duration-700", from: "translate-x-0", to: "translate-x-full" }
     };
     xt(k, () => {
-      wt(te, p, k.value), k.value || setTimeout(_, 700);
+      wt(te, p, k.value), k.value || setTimeout(Q, 700);
     }), k.value = !0;
     function Y() {
-      s.formStyle == "slideOver" ? k.value = !1 : _();
+      s.formStyle == "slideOver" ? k.value = !1 : Q();
     }
     const oe = (N) => {
       N.key === "Escape" && Y();
@@ -5470,9 +5472,9 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     }
     const { typeOf: b, apiOf: A, typeProperties: B, createFormLayout: le, getPrimaryKey: E, Crud: I, createDto: K, formValues: U } = lt(), S = c(() => Ht(s.type)), V = c(() => b(S.value)), ee = () => typeof s.type == "string" ? K(s.type, ll(s.modelValue)) : s.type ? new s.type(ll(s.modelValue)) : null, re = T(ee());
     t({ forceUpdate: d, props: s, setModel: f, formFields: r, model: re });
-    const O = c(() => s.panelClass || Be.panelClass(s.formStyle)), Z = c(() => s.formClass || Be.formClass(s.formStyle)), q = c(() => s.headingClass || Be.headingClass(s.formStyle)), ne = c(() => s.subHeadingClass || Be.subHeadingClass(s.formStyle)), F = c(() => s.buttonsClass || Be.buttonsClass), J = c(() => I.model(V.value)), C = c(() => s.heading || b(S.value)?.description || (J.value ? `Update ${Pe(J.value)}` : Pe(S.value))), P = T(new We());
-    let _ = Object.assign({}, ll(s.modelValue));
-    Q.interceptors.has("AutoEditForm.new") && Q.interceptors.invoke("AutoEditForm.new", { props: s, model: re, origModel: _ });
+    const O = c(() => s.panelClass || Be.panelClass(s.formStyle)), Z = c(() => s.formClass || Be.formClass(s.formStyle)), _ = c(() => s.headingClass || Be.headingClass(s.formStyle)), ne = c(() => s.subHeadingClass || Be.subHeadingClass(s.formStyle)), F = c(() => s.buttonsClass || Be.buttonsClass), J = c(() => I.model(V.value)), C = c(() => s.heading || b(S.value)?.description || (J.value ? `Update ${Pe(J.value)}` : Pe(S.value))), P = T(new We());
+    let Q = Object.assign({}, ll(s.modelValue));
+    q.interceptors.has("AutoEditForm.new") && q.interceptors.invoke("AutoEditForm.new", { props: s, model: re, origModel: Q });
     let k = cl(), p = c(() => k.loading.value);
     const te = () => Ne(b(I.model(V.value)), (de) => E(de));
     function Y(de) {
@@ -5494,14 +5496,14 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
         if (et && I.isPatch(et)) {
           let ut = le(V.value), vt = {};
           if (Ce && (vt[Ce.name] = Te), ut.forEach((Re) => {
-            let st = Re.id, yt = be(_, st);
+            let st = Re.id, yt = be(Q, st);
             if (Ce && Ce.name.toLowerCase() === st.toLowerCase())
               return;
             let G = qe.get(st);
-            Q.interceptors.has("AutoEditForm.save.formLayout") && Q.interceptors.invoke("AutoEditForm.save.formLayout", { origValue: yt, formLayout: ut, input: Re, newValue: G });
+            q.interceptors.has("AutoEditForm.save.formLayout") && q.interceptors.invoke("AutoEditForm.save.formLayout", { origValue: yt, formLayout: ut, input: Re, newValue: G });
             let R = G != null, Fe = Re.type === "checkbox" ? R !== !!yt : Re.type === "file" ? R : G != yt;
             !G && !yt && (Fe = !1), Fe && (G ? vt[st] = G : Re.type !== "file" && nt.push(st));
-          }), Q.interceptors.has("AutoEditForm.save") && Q.interceptors.invoke("AutoEditForm.save", { origModel: _, formLayout: ut, dirtyValues: vt }), Array.from(qe.keys()).filter((Re) => !vt[Re]).forEach((Re) => qe.delete(Re)), Array.from(qe.keys()).filter((Re) => Re.toLowerCase() != Ce.name.toLowerCase()).length == 0 && nt.length == 0) {
+          }), q.interceptors.has("AutoEditForm.save") && q.interceptors.invoke("AutoEditForm.save", { origModel: Q, formLayout: ut, dirtyValues: vt }), Array.from(qe.keys()).filter((Re) => !vt[Re]).forEach((Re) => qe.delete(Re)), Array.from(qe.keys()).filter((Re) => Re.toLowerCase() != Ce.name.toLowerCase()).length == 0 && nt.length == 0) {
             ve();
             return;
           }
@@ -5560,7 +5562,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                   H(de.$slots, "heading")
                 ])) : (a(), i("h3", {
                   key: 1,
-                  class: m(q.value)
+                  class: m(_.value)
                 }, M(C.value), 3)),
                 de.$slots.subheading ? (a(), i("div", Nc, [
                   H(de.$slots, "subheading")
@@ -5656,7 +5658,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                                 H(de.$slots, "heading")
                               ])) : (a(), i("h3", {
                                 key: 1,
-                                class: m(q.value)
+                                class: m(_.value)
                               }, M(C.value), 3)),
                               de.$slots.subheading ? (a(), i("div", Xc, [
                                 H(de.$slots, "subheading")
@@ -5779,17 +5781,17 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   emits: ["done", "save", "delete", "error"],
   setup(e, { emit: t }) {
     const l = e, s = t, { typeOf: o, getPrimaryKey: r, Crud: u, createDto: d } = lt(), f = c(() => l.typeName ?? l.apis.dataModel.name), v = c(() => o(f.value)), y = c(() => l.panelClass || Be.panelClass(l.formStyle)), L = c(() => l.formClass || Be.formClass(l.formStyle)), w = c(() => l.headingClass || Be.headingClass(l.formStyle)), g = c(() => l.subHeadingClass || Be.subHeadingClass(l.formStyle)), h = c(() => l.heading || o(f.value)?.description || (l.model?.id ? `${Pe(f.value)} ${l.model.id}` : "View " + Pe(f.value))), b = T(new We());
-    Object.assign({}, ll(l.model)), Q.interceptors.has("AutoViewForm.new") && Q.interceptors.invoke("AutoViewForm.new", { props: l });
+    Object.assign({}, ll(l.model)), q.interceptors.has("AutoViewForm.new") && q.interceptors.invoke("AutoViewForm.new", { props: l });
     let A = cl(), B = c(() => A.loading.value);
     const le = () => Ne(v.value, (O) => r(O)), E = c(() => v.value);
     async function I(O) {
       let Z = le();
-      const q = Z ? be(l.model, Z.name) : null;
-      if (!q) {
+      const _ = Z ? be(l.model, Z.name) : null;
+      if (!_) {
         console.error(`Could not find Primary Key for Type ${f.value} (${E.value})`);
         return;
       }
-      const ne = { [Z.name]: q }, F = typeof l.deleteType == "string" ? d(l.deleteType, ne) : l.deleteType ? new l.deleteType(ne) : null;
+      const ne = { [Z.name]: _ }, F = typeof l.deleteType == "string" ? d(l.deleteType, ne) : l.deleteType ? new l.deleteType(ne) : null;
       Ne(F.createResponse, (C) => typeof C == "function" ? C() : null) == null ? b.value = await A.apiVoid(F) : b.value = await A.api(F), b.value.succeeded ? s("delete", b.value.response) : s("error", b.value.error);
     }
     function K() {
@@ -5809,7 +5811,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       O.key === "Escape" && ee();
     };
     return Ye(() => window.addEventListener("keydown", re)), jt(() => window.removeEventListener("keydown", re)), (O, Z) => {
-      const q = z("MarkupModel"), ne = z("CloseButton"), F = z("ConfirmDelete"), J = z("FormLoading");
+      const _ = z("MarkupModel"), ne = z("CloseButton"), F = z("ConfirmDelete"), J = z("FormLoading");
       return a(), i("div", null, [
         f.value ? e.formStyle == "card" ? (a(), i("div", {
           key: 1,
@@ -5836,7 +5838,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                 innerHTML: v.value?.notes
               }, null, 10, i0)) : x("", !0)
             ]),
-            he(q, { value: e.model }, null, 8, ["value"])
+            he(_, { value: e.model }, null, 8, ["value"])
           ], 2)
         ], 2)) : (a(), i("div", r0, [
           Z[4] || (Z[4] = n("div", { class: "fixed inset-0" }, null, -1)),
@@ -5886,7 +5888,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                             ])
                           ])
                         ]),
-                        he(q, { value: e.model }, null, 8, ["value"])
+                        he(_, { value: e.model }, null, 8, ["value"])
                       ])
                     ]),
                     n("div", {
@@ -6006,17 +6008,17 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   },
   emits: ["headerSelected", "rowSelected"],
   setup(e, { emit: t }) {
-    const l = e, s = t, o = T(), r = T(null), u = (_) => r.value === _, d = Ml(), f = (_) => Object.keys(d).find((k) => k.toLowerCase() == _.toLowerCase() + "-header"), v = (_) => Object.keys(d).find((k) => k.toLowerCase() == _.toLowerCase()), y = c(() => Xl(l.items).filter((_) => !!(d[_] || d[_ + "-header"]))), { typeOf: L, typeProperties: w } = lt(), g = c(() => Ht(l.type)), h = c(() => L(g.value)), b = c(() => w(h.value));
-    function A(_) {
-      const k = l.headerTitles && be(l.headerTitles, _) || _;
+    const l = e, s = t, o = T(), r = T(null), u = (Q) => r.value === Q, d = Ml(), f = (Q) => Object.keys(d).find((k) => k.toLowerCase() == Q.toLowerCase() + "-header"), v = (Q) => Object.keys(d).find((k) => k.toLowerCase() == Q.toLowerCase()), y = c(() => Xl(l.items).filter((Q) => !!(d[Q] || d[Q + "-header"]))), { typeOf: L, typeProperties: w } = lt(), g = c(() => Ht(l.type)), h = c(() => L(g.value)), b = c(() => w(h.value));
+    function A(Q) {
+      const k = l.headerTitles && be(l.headerTitles, Q) || Q;
       return l.headerTitle ? l.headerTitle(k) : cs(k);
     }
-    function B(_) {
-      const k = _.toLowerCase();
+    function B(Q) {
+      const k = Q.toLowerCase();
       return b.value.find((p) => p.name.toLowerCase() == k);
     }
-    function le(_) {
-      const k = B(_);
+    function le(Q) {
+      const k = B(Q);
       return k?.format ? k.format : k?.type == "TimeSpan" || k?.type == "TimeOnly" ? { method: "time" } : null;
     }
     const E = {
@@ -6028,28 +6030,28 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       "2xl": "2xl:table-cell",
       never: ""
     };
-    function I(_) {
-      const k = l.visibleFrom && be(l.visibleFrom, _);
+    function I(Q) {
+      const k = l.visibleFrom && be(l.visibleFrom, Q);
       return k && Ne(E[k], (p) => `hidden ${p}`);
     }
-    const K = c(() => l.gridClass ?? ge.getGridClass(l.tableStyle)), U = c(() => l.grid2Class ?? ge.getGrid2Class(l.tableStyle)), S = c(() => l.grid3Class ?? ge.getGrid3Class(l.tableStyle)), V = c(() => l.grid4Class ?? ge.getGrid4Class(l.tableStyle)), ee = c(() => l.tableClass ?? ge.getTableClass(l.tableStyle)), re = c(() => l.tbodyClass ?? ge.getTbodyClass(l.tbodyClass)), O = c(() => l.theadClass ?? ge.getTheadClass(l.tableStyle)), Z = c(() => l.theadRowClass ?? ge.getTheadRowClass(l.tableStyle)), q = c(() => l.theadCellClass ?? ge.getTheadCellClass(l.tableStyle));
-    function ne(_, k) {
-      return l.rowClass ? l.rowClass(_, k) : ge.getTableRowClass(l.tableStyle, k, !!(l.isSelected && l.isSelected(_)), l.isSelected != null);
+    const K = c(() => l.gridClass ?? ge.getGridClass(l.tableStyle)), U = c(() => l.grid2Class ?? ge.getGrid2Class(l.tableStyle)), S = c(() => l.grid3Class ?? ge.getGrid3Class(l.tableStyle)), V = c(() => l.grid4Class ?? ge.getGrid4Class(l.tableStyle)), ee = c(() => l.tableClass ?? ge.getTableClass(l.tableStyle)), re = c(() => l.tbodyClass ?? ge.getTbodyClass(l.tbodyClass)), O = c(() => l.theadClass ?? ge.getTheadClass(l.tableStyle)), Z = c(() => l.theadRowClass ?? ge.getTheadRowClass(l.tableStyle)), _ = c(() => l.theadCellClass ?? ge.getTheadCellClass(l.tableStyle));
+    function ne(Q, k) {
+      return l.rowClass ? l.rowClass(Q, k) : ge.getTableRowClass(l.tableStyle, k, !!(l.isSelected && l.isSelected(Q)), l.isSelected != null);
     }
-    function F(_, k) {
-      return l.rowStyle ? l.rowStyle(_, k) : void 0;
+    function F(Q, k) {
+      return l.rowStyle ? l.rowStyle(Q, k) : void 0;
     }
     const J = c(() => {
-      const _ = (typeof l.selectedColumns == "string" ? l.selectedColumns.split(",") : l.selectedColumns) || (y.value.length > 0 ? y.value : Xl(l.items)), k = b.value.reduce((p, te) => (p[te.name.toLowerCase()] = te.format, p), {});
-      return _.filter((p) => k[p.toLowerCase()]?.method != "hidden");
+      const Q = (typeof l.selectedColumns == "string" ? l.selectedColumns.split(",") : l.selectedColumns) || (y.value.length > 0 ? y.value : Xl(l.items)), k = b.value.reduce((p, te) => (p[te.name.toLowerCase()] = te.format, p), {});
+      return Q.filter((p) => k[p.toLowerCase()]?.method != "hidden");
     });
-    function C(_, k) {
-      s("headerSelected", k, _);
+    function C(Q, k) {
+      s("headerSelected", k, Q);
     }
-    function P(_, k, p) {
-      s("rowSelected", p, _);
+    function P(Q, k, p) {
+      s("rowSelected", p, Q);
     }
-    return (_, k) => {
+    return (Q, k) => {
       const p = z("CellFormat"), te = z("PreviewFormat");
       return e.items.length ? (a(), i("div", {
         key: 0,
@@ -6076,18 +6078,18 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                     class: m(Z.value)
                   }, [
                     (a(!0), i($e, null, Se(J.value, (Y) => (a(), i("td", {
-                      class: m([I(Y), q.value, u(Y) ? "text-gray-900 dark:text-gray-50" : "text-gray-500 dark:text-gray-400"])
+                      class: m([I(Y), _.value, u(Y) ? "text-gray-900 dark:text-gray-50" : "text-gray-500 dark:text-gray-400"])
                     }, [
                       n("div", {
                         onClick: (oe) => C(oe, Y)
                       }, [
-                        W(d)[Y + "-header"] ? H(_.$slots, Y + "-header", {
+                        W(d)[Y + "-header"] ? H(Q.$slots, Y + "-header", {
                           key: 0,
                           column: Y
-                        }) : f(Y) ? H(_.$slots, f(Y), {
+                        }) : f(Y) ? H(Q.$slots, f(Y), {
                           key: 1,
                           column: Y
-                        }) : W(d).header ? H(_.$slots, "header", {
+                        }) : W(d).header ? H(Q.$slots, "header", {
                           key: 2,
                           column: Y,
                           label: A(Y)
@@ -6109,10 +6111,10 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                     (a(!0), i($e, null, Se(J.value, (N) => (a(), i("td", {
                       class: m([I(N), W(ge).tableCellClass])
                     }, [
-                      W(d)[N] ? H(_.$slots, N, ke({
+                      W(d)[N] ? H(Q.$slots, N, ke({
                         key: 0,
                         ref_for: !0
-                      }, Y)) : v(N) ? H(_.$slots, v(N), ke({
+                      }, Y)) : v(N) ? H(Q.$slots, v(N), ke({
                         key: 1,
                         ref_for: !0
                       }, Y)) : B(N) ? (a(), X(p, {
@@ -6662,7 +6664,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     }), U = c(() => {
       let G = K.value.map((Fe) => Fe.name), R = B(w.value.selectedColumns).map((Fe) => Fe.toLowerCase());
       return R.length > 0 ? G.filter((Fe) => R.includes(Fe.toLowerCase())) : G;
-    }), S = c(() => w.value.take ?? ns), V = c(() => (g.value.response ? be(g.value.response, "results") : null) ?? []), ee = c(() => g.value.response?.total ?? V.value.length ?? 0), re = c(() => h.value > 0), O = c(() => h.value > 0), Z = c(() => V.value.length >= S.value), q = c(() => V.value.length >= S.value), ne = T([]), F = c(() => ne.value.some((G) => G.settings.filters.length > 0 || !!G.settings.sort)), J = c(() => ne.value.map((G) => G.settings.filters.length).reduce((G, R) => G + R, 0)), C = c(() => Wt(I.value)), P = c(() => u.value?.operations.find((G) => G.dataModel?.name == l.refInfo.model && Ee.isAnyQuery(G))), _ = T(), k = T(!1), p = T(), te = c(() => Ht(l.refInfo.model)), Y = c(() => Ot.forType(te.value, u.value)), oe = c(() => te.value || P.value?.dataModel.name), N = c(() => l.modelTitle || oe.value), j = c(() => l.newButtonLabel || `New ${N.value}`), ue = c(() => nl(Y.value.Create)), fe = T(), se = T(!1);
+    }), S = c(() => w.value.take ?? ns), V = c(() => (g.value.response ? be(g.value.response, "results") : null) ?? []), ee = c(() => g.value.response?.total ?? V.value.length ?? 0), re = c(() => h.value > 0), O = c(() => h.value > 0), Z = c(() => V.value.length >= S.value), _ = c(() => V.value.length >= S.value), ne = T([]), F = c(() => ne.value.some((G) => G.settings.filters.length > 0 || !!G.settings.sort)), J = c(() => ne.value.map((G) => G.settings.filters.length).reduce((G, R) => G + R, 0)), C = c(() => Wt(I.value)), P = c(() => u.value?.operations.find((G) => G.dataModel?.name == l.refInfo.model && Ee.isAnyQuery(G))), Q = T(), k = T(!1), p = T(), te = c(() => Ht(l.refInfo.model)), Y = c(() => Ot.forType(te.value, u.value)), oe = c(() => te.value || P.value?.dataModel.name), N = c(() => l.modelTitle || oe.value), j = c(() => l.newButtonLabel || `New ${N.value}`), ue = c(() => nl(Y.value.Create)), fe = T(), se = T(!1);
     function ve() {
       se.value = !0;
     }
@@ -6776,7 +6778,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
         e.refInfo ? (a(), X(Ct, {
           key: 0,
           ref_key: "modalDialog",
-          ref: _,
+          ref: Q,
           id: e.id,
           onDone: qe
         }, {
@@ -6871,9 +6873,9 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                   e.showPagingNav ? (a(), i("button", {
                     key: 4,
                     type: "button",
-                    class: m(["pl-2", q.value ? "text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400" : "text-gray-400 dark:text-gray-500"]),
+                    class: m(["pl-2", _.value ? "text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400" : "text-gray-400 dark:text-gray-500"]),
                     title: "Last page",
-                    disabled: !q.value,
+                    disabled: !_.value,
                     onClick: R[4] || (R[4] = (Ve) => Me(ee.value))
                   }, [...R[14] || (R[14] = [
                     n("svg", {
@@ -7237,10 +7239,10 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       css: Object.assign({ field: "col-span-12" }, O.css)
     }))), S = c(() => I(l.oauth) ? [] : y?.authProviders.filter((O) => O.type === "oauth") || []), V = c(() => {
       let O = Da(
-        y?.authProviders.filter((q) => q.formLayout && q.formLayout.length > 0),
-        (q, ne) => {
+        y?.authProviders.filter((_) => _.formLayout && _.formLayout.length > 0),
+        (_, ne) => {
           let F = K(ne) || ot(ne.name);
-          q[F] = ne.name === B.value.name ? "" : ne.name;
+          _[F] = ne.name === B.value.name ? "" : ne.name;
         }
       );
       const Z = E.value;
@@ -7256,13 +7258,13 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       }
     }
     return (O, Z) => {
-      const q = z("ErrorSummary"), ne = z("AutoFormFields"), F = z("PrimaryButton"), J = z("Icon"), C = pa("href");
+      const _ = z("ErrorSummary"), ne = z("AutoFormFields"), F = z("PrimaryButton"), J = z("Icon"), C = pa("href");
       return W(y) ? (a(), i("div", dv, [
         n("div", cv, [
           n("h2", fv, M(e.title), 1),
           Object.keys(V.value).length > 1 ? (a(), i("p", vv, [
             n("span", mv, [
-              (a(!0), i($e, null, Se(V.value, (P, _) => It((a(), i("a", {
+              (a(!0), i($e, null, Se(V.value, (P, Q) => It((a(), i("a", {
                 onClick: (k) => b.value = P,
                 class: m([
                   P === "" || P === le.value.name ? "rounded-l-md" : P === le.value.name ? "rounded-r-md -ml-px" : "-ml-px",
@@ -7270,7 +7272,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
                   "cursor-pointer relative inline-flex items-center px-4 py-1 border border-gray-300 dark:border-gray-600 bg-white dark:bg-black text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-900"
                 ])
               }, [
-                we(M(_), 1)
+                we(M(Q), 1)
               ], 10, gv)), [
                 [C, { provider: P }]
               ])), 256))
@@ -7278,7 +7280,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
           ])) : x("", !0)
         ]),
         n("div", pv, [
-          ee.value ? (a(), X(q, {
+          ee.value ? (a(), X(_, {
             key: 0,
             class: "mb-3",
             errorSummary: ee.value
@@ -7339,7 +7341,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   }
 }), $v = ["for"], Lv = {
   key: 1,
-  class: "border border-gray-200 flex justify-between"
+  class: "border border-gray-200 flex justify-between shadow-sm"
 }, Vv = { class: "p-2 flex flex-wrap gap-x-4" }, Sv = {
   key: 0,
   class: "p-2 flex flex-wrap gap-x-4"
@@ -7475,7 +7477,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
  1. `, `
 `, "List Item", { offsetStart: -10, offsetEnd: 9 });
     }
-    function q() {
+    function _() {
       if (A()) {
         let { sel: k, selPos: p, beforeSel: te, afterSel: Y, prevCRPos: oe, beforeCR: N, afterCR: j } = le();
         k.indexOf(`
@@ -7546,7 +7548,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       const k = h.value, p = u.pop();
       return r.push({ value: k.value, selectionStart: k.selectionStart, selectionEnd: k.selectionEnd }), E(p), !0;
     }
-    const _ = () => null;
+    const Q = () => null;
     return Ye(() => {
       r = [], u = [];
       const k = h.value;
@@ -7572,7 +7574,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
           },
           filterSelection: (oe) => oe.replace(/\t/g, "    ").replace(/^ ? ? ? ?/g, "").replace(/\n    /g, `
 `)
-        }), p.preventDefault()) : p.ctrlKey ? te === "z" ? p.shiftKey ? P() && p.preventDefault() : C() && p.preventDefault() : te === "b" && !p.shiftKey ? (K(), p.preventDefault()) : te === "h" && !p.shiftKey ? (ne(), p.preventDefault()) : te === "i" && !p.shiftKey ? (U(), p.preventDefault()) : te === "q" && !p.shiftKey ? (ee(), p.preventDefault()) : te === "k" ? p.shiftKey ? (re(), p.preventDefault()) : (V(), p.preventDefault()) : te === "," || p.key === "<" || p.key === ">" || p.keyCode === 188 ? (O(p), p.preventDefault()) : te === "/" || p.key === "/" ? (F(), p.preventDefault()) : (te === "?" || p.key === "?") && p.shiftKey && (J(), p.preventDefault()) : p.altKey && (p.key === "1" || p.key === "0" ? (Z(), p.preventDefault()) : p.key === "-" ? (q(), p.preventDefault()) : p.key === "s" && (S(), p.preventDefault()));
+        }), p.preventDefault()) : p.ctrlKey ? te === "z" ? p.shiftKey ? P() && p.preventDefault() : C() && p.preventDefault() : te === "b" && !p.shiftKey ? (K(), p.preventDefault()) : te === "h" && !p.shiftKey ? (ne(), p.preventDefault()) : te === "i" && !p.shiftKey ? (U(), p.preventDefault()) : te === "q" && !p.shiftKey ? (ee(), p.preventDefault()) : te === "k" ? p.shiftKey ? (re(), p.preventDefault()) : (V(), p.preventDefault()) : te === "," || p.key === "<" || p.key === ">" || p.keyCode === 188 ? (O(p), p.preventDefault()) : te === "/" || p.key === "/" ? (F(), p.preventDefault()) : (te === "?" || p.key === "?") && p.shiftKey && (J(), p.preventDefault()) : p.altKey && (p.key === "1" || p.key === "0" ? (Z(), p.preventDefault()) : p.key === "-" ? (_(), p.preventDefault()) : p.key === "s" && (S(), p.preventDefault()));
       };
     }), (k, p) => (a(), i("div", null, [
       H(k.$slots, "header", ke({
@@ -7712,7 +7714,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
           w("unorderedList") ? (a(), i("svg", {
             key: 8,
             class: m(Je),
-            onClick: q,
+            onClick: _,
             xmlns: "http://www.w3.org/2000/svg",
             width: "24",
             height: "24",
@@ -7807,7 +7809,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
           rows: e.rows || 6,
           disabled: e.disabled,
           onInput: p[0] || (p[0] = (te) => b(te.target?.value || "")),
-          onKeydown: as(_, ["tab"])
+          onKeydown: as(Q, ["tab"])
         }, null, 42, Fv)
       ]),
       f.value ? (a(), i("p", {
@@ -7997,7 +7999,7 @@ const qm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     });
   },
   component(e, t) {
-    return e ? t ? Q.components[e] = t : Q.components[e] || Wl[e] || null : null;
+    return e ? t ? q.components[e] = t : q.components[e] || Wl[e] || null : null;
   }
 };
 export {
