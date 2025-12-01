@@ -6,15 +6,13 @@
 
 > Browse [source code](https://github.com/NetCoreTemplates/razor-ssg), view live demo [razor-ssg.web-templates.io](https://razor-ssg.web-templates.io):
 
-    $ dotnet tool install -g x
+```bash
+npx create-net razor-ssg ProjectName
+```
 
-    $ x new razor-ssg ProjectName
+## Jumpstart with Copilot
 
-Alternatively write new project files directly into an razor-ssg repository, using the Directory Name as the ProjectName:
-
-    $ git clone https://github.com/<User>/<ProjectName>.git
-    $ cd <ProjectName>
-    $ x new razor-ssg
+Instantly [scaffold a new App with this template](https://github.com/new?template_name=razor-ssg&template_owner=NetCoreTemplates) using GitHub Copilot, just describe the features you want and watch Copilot build it!
 
 ## Documentation
 
