@@ -1,10 +1,10 @@
 # razor-ssg
 
-.NET 8.0 razor-ssg Static Generated Razor Pages Project Template
+.NET 10.0 razor-ssg Static Generated Razor Pages Project Template
 
 [![](https://raw.githubusercontent.com/ServiceStack/Assets/master/csharp-templates/razor-ssg.png)](https://razor-ssg.web-templates.io)
 
-> Browse [source code](https://github.com/NetCoreTemplates/razor-ssg), view live demo [razor-ssg.web-templates.io](https://razor-ssg.web-templates.io) and install with [dotnet-new](https://docs.servicestack.net/dotnet-new):
+> Browse [source code](https://github.com/NetCoreTemplates/razor-ssg), view live demo [razor-ssg.web-templates.io](https://razor-ssg.web-templates.io):
 
     $ dotnet tool install -g x
 
