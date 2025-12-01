@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg" href="img/logo.svg">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://razor-ssg.web-templates.io/feed.xml" />
+    <title>OrmLite new Configuration Model and Defaults</title>
+    <base href="/" />
+    <script>
+    if (location.search === "?dark") localStorage.setItem('color-scheme','dark') 
+    if (location.search === "?light") localStorage.removeItem('color-scheme') 
+    const cls = document.querySelector('html').classList
+    if (localStorage.getItem('color-scheme') === 'dark')
+        cls.add('dark')
+    else
+        cls.remove('dark')
+    </script>
+    <link rel="stylesheet" href="css/app.css">
+    <style>html { scroll-padding-top: 5rem }</style>
+
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+{
+    "imports": {
+        "app.mjs": "./mjs/app.mjs",
+        "vue": "./lib/mjs/vue.min.mjs",
+        "@servicestack/client": "./lib/mjs/servicestack-client.min.mjs",
+        "@servicestack/vue": "./lib/mjs/servicestack-vue.min.mjs"
+    }
+}
+</script>
+    
+    <meta name="twitter:site" content="@RazorSsg" />
+    <meta name="twitter:card" content="summary" />
+    <meta property="og:description" content="Learn about OrmLite&#x27;s new fluent Configuration Model, new defaults &amp; features" />
+    <meta property="og:url" content="https://razor-ssg.web-templates.io/posts/ormlite-new-configuration" />
+    <meta property="og:title" content="OrmLite new Configuration Model and Defaults" />
+    <meta property="og:image" content="https://servicestack.net/img/posts/ormlite-new-configuration/bg.webp" />
+
+
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+<header class="top-0 fixed z-50 h-14 bg-white dark:bg-black opacity-90 w-full shadow pr-3">
+    <div class="flex flex-wrap items-center">
+        <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
+            <div class="cursor-pointer">
+                <a class="navbar-brand flex items-center" href="./">
+                    <svg class="w-8 h-8 sm:ml-2 sm:w-12 sm:h-12" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="currentColor" d="M10 6c1.544 1.76 2.276 4.15 2.217 6.61c3.968 1.67 9.924 6.12 11.181 12.39H28C26.051 14.31 14.918 6.77 10 6zm-2 7c4.67 4.913.81 11.582-4 12h18.97C21.5 18.289 11.95 13.533 8 13z"/></svg>
+                    <span class="hidden sm:block text-2xl font-semibold">MyApp</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-grow flex-shrink flex-nowrap justify-end items-center">
+            <nav class="relative flex flex-grow leading-6 font-semibold text-slate-700 dark:text-slate-200">
+                <ul class="flex flex-wrap items-center justify-end w-full m-0 pb-2 sm:pb-0">
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="whatsnew" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    What's New
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="blog" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Blog
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="podcasts" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Podcasts
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="videos" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Videos
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="creatorkit/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Creator Kit
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="posts/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Archive
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="speaking" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Speaking
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="uses" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Uses
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="about" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    About
+                                </a>
+                            </li>
+                    <li class="relative flex flex-wrap just-fu-start m-0">
+                        <div data-component="DarkModeToggle" class="ml-2 w-10"></div>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</header>
+<script type="module">
+import { mountAll } from "app.mjs"
+mountAll()
+</script>
+
+
+<div class="min-h-screen">
+    <main role="main" class="pt-14 pb-3">
+        
+
+
+
+<link rel="stylesheet" href="css/typography.css">
+<link rel="stylesheet" href="css/lite-yt-embed.css">
+
+<div class="container px-5 mb-32 mx-auto">
+        <article class="mt-20">
+            <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
+                OrmLite new Configuration Model and Defaults
+            </h1>
+            <div class="flex justify-between">
+                <div class="md:mb-12 flex items-center">
+                        <img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="data:image/svg&#x2B;xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; fill=&#x27;none&#x27; viewBox=&#x27;0 0 24 24&#x27; stroke=&#x27;none&#x27; aria-hidden=&#x27;true&#x27;%3E%3Cpath fill=&#x27;%230891b2&#x27; d=&#x27;M12 2a5 5 0 1 0 5 5a5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3a3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z&#x27;/%3E%3C/svg%3E">
+                    <div class="flex flex-col">
+                    </div>
+                </div>
+                <div class="mb-4 max-w-sm" data-mail="JoinMailingList" data-props="{ submitLabel:'Join our newsletter' }"></div>
+            </div>
+            <div class="mb-8 md:mb-16 sm:mx-0">
+                <div class="sm:mx-0">
+                    <img src="https://servicestack.net/img/posts/ormlite-new-configuration/bg.webp" alt="OrmLite new Configuration Model and Defaults Background" class="shadow-small">
+                </div>
+            </div>
+            <div class="flex max-w-7xl mx-auto justify-between" style="width:100%;">
+                <div>
+                    <div class="mb-4 flex flex-wrap">
+                            <a href="posts/tagged/db" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">db</a>
+                            <a href="posts/tagged/ormlite" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">ormlite</a>
+                    </div>
+                        <div class="max-w-3xl mx-auto">
+                            <div class="mb-6 text-lg text-gray-500">
+                                <time datetime="2025-10-15T00:00:00.0000000">October 15, 2025</time>
+                                <span aria-hidden="true">&middot;</span>
+                                <span>11 min read</span>
+                            </div>
+                        </div>
+                </div>
+                <div class="flex flex-grow-0">
+                    <div data-post="PostVotes"></div>
+                    <a href="javascript:;" onclick="document.location.hash='comments'" class="cursor-pointer" title="Jump to comments">
+                        <svg class="ml-4 text-gray-700 mt-1 w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M3 11.2c0 .1 0 .1 0 0c0 .1 0 .1 0 0zM8.3 1C3.9 1 0 3.6 0 6.6c0 2 1.1 3.7 3 4.7s0 .1 0 .1c-.1 1.3-.9 1.7-.9 1.7L.3 14h2c2.5 0 4.3-1.1 5.1-1.9h.8c4.3 0 7.8-2.5 7.8-5.6S12.6 1 8.3 1zm-.1 10.1H7l-.2.2c-.5.5-1.6 1.4-3.3 1.7c.3-.5.5-1.1.5-2v-.3l-.3-.1C1.9 9.7 1 8.3 1 6.6C1 4.2 4.5 2 8.3 2C12 2 15 4 15 6.6c0 2.4-3.1 4.5-6.8 4.5z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="max-w-3xl mx-auto">
+                <div id="post" class="prose lg:prose-xl max-w-none mb-32">
+                    <h2 id="new-configuration-model-and-defaults">New Configuration Model and Defaults<a class="header-anchor" href="#new-configuration-model-and-defaults" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>In continuing with ServiceStack's <a href="https://docs.servicestack.net/releases/v8_01">seamless integration with the ASP.NET Framework</a>,
+providing a familiar development experience that follows .NET configuration model and Entity Framework conventions
+has become a priority.</p>
+<p>Implementing a new configuration model also gives us the freedom to change OrmLite's defaults which wasn't possible before
+given the paramount importance of maintaining backwards compatibility in a data access library that accesses existing
+Customer data.</p>
+<h4 id="json-used-for-complex-types">JSON used for Complex Types<a class="header-anchor" href="#json-used-for-complex-types" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>The biggest change that applies to all RDBMS providers is replacing the JSV serialization used for serializing Complex Types
+with JSON now that most RDBMS have native support for JSON.</p>
+<h4 id="postgresql-uses-default-naming-strategy">PostgreSQL uses default Naming Strategy<a class="header-anchor" href="#postgresql-uses-default-naming-strategy" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>The biggest change to PostgreSQL is using the same default naming strategy as other RDBMS which matches EF's convention
+that's used for ASP .NET's Identity Auth tables.</p>
+<h4 id="sql-server-uses-latest-2022-dialect">SQL Server uses latest 2022 Dialect<a class="header-anchor" href="#sql-server-uses-latest-2022-dialect" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>SQL Server now defaults to the latest SqlServer 2022 dialect which is also compatible with SQL Server 2016 and up.</p>
+<h2 id="new-configuration-model">New Configuration Model<a class="header-anchor" href="#new-configuration-model" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>OrmLite new modern, fluent configuration API aligns with ASP.NET Core's familiar <code>services.Add*()</code> pattern.
+This new approach provides a more intuitive and discoverable way to configure your database connections, with strongly-typed
+options for each RDBMS provider.</p>
+<p>The new configuration model starts with the <code>AddOrmLite()</code> extension method to configure its <code>IDbConnectionFactory</code> dependency
+by combining it with RDBMS provider-specific methods for the RDBMS you wish to use:</p>
+<ul>
+<li><code>UseSqlite()</code> in <strong>ServiceStack.OrmLite.Sqlite.Data</strong></li>
+<li><code>UsePostgres()</code> in <strong>ServiceStack.OrmLite.PostgreSQL</strong></li>
+<li><code>UseSqlServer()</code> in <strong>ServiceStack.OrmLite.SqlServer.Data</strong></li>
+<li><code>UseMySql()</code>  in <strong>ServiceStack.OrmLite.MySql</strong></li>
+<li><code>UseMySqlConnector()</code>  in <strong>ServiceStack.OrmLite.MySqlConnector</strong></li>
+<li><code>UseOracle()</code>  in <strong>ServiceStack.OrmLite.Oracle</strong> (community supported)</li>
+<li><code>UseFirebird()</code>  in <strong>ServiceStack.OrmLite.Firebird</strong> (community supported)</li>
+</ul>
+<p>Each provider method accepts a connection string and an optional configuration callback that lets you customize the dialect's
+behavior with IntelliSense support.</p>
+<p>It's an alternative approach to manually instantiating <code>OrmLiteConnectionFactory</code> with specific dialect providers,
+offering better discoverability and a more consistent experience across different database providers.</p>
+<h3 id="sqlite">SQLite<a class="header-anchor" href="#sqlite" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<pre><code class="language-csharp">services.AddOrmLite(options =&gt; options.UseSqlite(connectionString));
+</code></pre>
+<p>Each RDBMS provider can be further customized to change its defaults with:</p>
+<pre><code class="language-csharp">services.AddOrmLite(options =&gt; options.UseSqlite(connectionString, dialect =&gt; {
+        // Default SQLite Configuration:
+        dialect.UseJson = true;
+        dialect.UseUtc = true;
+        dialect.EnableWal = true;
+        dialect.EnableForeignKeys = true;
+        dialect.BusyTimeout = TimeSpan.FromSeconds(30);
+    })
+);
+</code></pre>
+<h3 id="postgresql">PostgreSQL<a class="header-anchor" href="#postgresql" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<pre><code class="language-csharp">services.AddOrmLite(options =&gt; options.UsePostgres(connectionString));
+</code></pre>
+<p>With Dialect Configuration:</p>
+<pre><code class="language-csharp">services.AddOrmLite(options =&gt; options.UsePostgres(connString, dialect =&gt; {
+        // Default PostgreSQL Configuration:
+        dialect.UseJson = true;
+        dialect.NamingStrategy = new OrmLiteNamingStrategyBase();
+    })
+);
+</code></pre>
+<h3 id="removed-snake_case-naming-strategy">Removed snake_case naming strategy<a class="header-anchor" href="#removed-snake_case-naming-strategy" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<div class="float-right -mt-24! -mr-32! max-w-xs pl-4"><p><img src="https://servicestack.net/img/posts/ormlite-new-configuration/postgres-naming-strategy.webp" alt="" /></p>
+</div>
+<p>PostgreSQL now defaults to using the same naming strategy as other RDBMS, i.e. no naming strategy, and uses the
+PascalCase naming of C# classes as-is.</p>
+<p>With this change OrmLite's table and columns now follow EF's convention which is used for ASP.NET's Identity Auth tables.</p>
+<p>This is more fragile in PostgreSQL as it forces needing to use quoted table and column names for all queries, e.g.</p>
+<pre><code class="language-sql">SELECT &quot;MyColumn&quot; FROM &quot;MyTable&quot;
+</code></pre>
+<p>This is required as PostgreSQL isn't case-insensitive and lowercases all unquoted symbols, e.g:</p>
+<pre><code class="language-sql">SELECT MyColumn FROM MyTable
+-- Translates to:
+SELECT mycolumn FROM mytable
+</code></pre>
+<p>This is already done by OrmLite, but any custom queries also need to use quoted symbols.</p>
+<h3 id="sql-server">SQL Server<a class="header-anchor" href="#sql-server" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<pre><code class="language-csharp">services.AddOrmLite(options =&gt; options.UseSqlServer(connectionString));
+</code></pre>
+<p>With Dialect Configuration:</p>
+<pre><code class="language-csharp">services.AddOrmLite(options =&gt; options.UseSqlServer(connString, dialect =&gt; {
+        // Default SQL Server Configuration:
+        dialect.UseJson = true;
+    })
+);
+</code></pre>
+<h3 id="uses-latest-sql-server-at-each.net-lts-release">Uses Latest SQL Server at each .NET LTS Release<a class="header-anchor" href="#uses-latest-sql-server-at-each.net-lts-release" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>To keep it modern and predictable, this will use the latest SQL Server Dialect that was released at the time of each
+major .NET LTS versions, currently <code>SqlServer2022OrmLiteDialectProvider</code>, which we'll keep until the next .NET LTS release.
+Although the <strong>2022</strong> dialect is also compatible with every SQL Server version from <strong>2016+</strong>.</p>
+<p>To use an explicit version of SQL Server you can use the generic overload that best matches your SQL Server version:</p>
+<pre><code class="language-csharp">services.AddOrmLite(options =&gt; 
+    options.UseSqlServer&lt;SqlServer2014OrmLiteDialectProvider&gt;(connString));
+</code></pre>
+<h3 id="mysql">MySQL<a class="header-anchor" href="#mysql" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<pre><code class="language-csharp">services.AddOrmLite(options =&gt; options.UseMySql(connectionString));
+</code></pre>
+<p>With Dialect Configuration:</p>
+<pre><code class="language-csharp">services.AddOrmLite(options =&gt; options.UseMySql(connectionString, dialect =&gt; {
+        // Default MySql Configuration:
+        dialect.UseJson = true;
+    })
+);
+</code></pre>
+<p>For MySqlConnector use:</p>
+<pre><code class="language-csharp">services.AddOrmLite(options =&gt; options.AddMySqlConnector(connectionString));
+</code></pre>
+<h3 id="named-connections">Named Connections<a class="header-anchor" href="#named-connections" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>The new OrmLite configuration model also streamlines support for named connections, allowing you to register
+multiple database connections with unique identifiers in a single fluent configuration chain, e.g:</p>
+<pre><code class="language-csharp">services.AddOrmLite(options =&gt; {
+        options.UseSqlite(&quot;:memory:&quot;)
+            .ConfigureJson(json =&gt; {
+                json.DefaultSerializer = JsonSerializerType.ServiceStackJson;
+            });
+    })
+    .AddSqlite(&quot;db1&quot;, &quot;db1.sqlite&quot;)
+    .AddSqlite(&quot;db2&quot;, &quot;db2.sqlite&quot;)
+    .AddPostgres(&quot;reporting&quot;, PostgreSqlDb.Connection)
+    .AddSqlServer(&quot;analytics&quot;, SqlServerDb.Connection)
+    .AddSqlServer&lt;SqlServer2014OrmLiteDialectProvider&gt;(
+        &quot;legacy-analytics&quot;, SqlServerDb.Connection)
+    .AddMySql(&quot;wordpress&quot;, MySqlDb.Connection)
+    .AddMySqlConnector(&quot;drupal&quot;, MySqlDb.Connection)
+    .AddOracle(&quot;enterprise&quot;, OracleDb.Connection)
+    .AddFirebird(&quot;firebird&quot;, FirebirdDb.Connection);
+</code></pre>
+<h3 id="complex-type-json-serialization">Complex Type JSON Serialization<a class="header-anchor" href="#complex-type-json-serialization" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Previously OrmLite only supported serializing Complex Types with a <a href="https://docs.servicestack.net/ormlite/complex-type-serializers">single Complex Type Serializer</a>
+but the new configuration model now uses a more configurable <code>JsonComplexTypeSerializer</code> where you can change the default
+JSON Serializer OrmLite should use for serializing Complex Types as well as fine-grain control over which types should
+be serialized with which serializer by using the <code>.ConfigureJson()</code> extension method for each provider.</p>
+<pre><code class="language-csharp">services.AddOrmLite(options =&gt; {
+        options.UsePostgres(connectionString)
+            .ConfigureJson(json =&gt; {
+                // Default JSON Complex Type Serializer Configuration
+                json.DefaultSerializer = JsonSerializerType.ServiceStackJson;
+                json.JsonObjectTypes = [
+                    typeof(object),
+                    typeof(List&lt;object&gt;),
+                    typeof(Dictionary&lt;string, object?&gt;),
+                ];
+                json.SystemJsonTypes = [];
+                json.ServiceStackJsonTypes = [];
+            });
+    })
+</code></pre>
+<p>By default OrmLite uses ServiceStack.Text JSON Serializer which is less strict and more resilient than System.Text.Json
+for handling versioning of Types that change over time, e.g. an <code>int</code> Property that's later changed to a <code>string</code>.</p>
+<p>In addition to configuring a default you can also configure which types should be serialized with which serializer.
+So we could change OrmLite to use System.Text.Json for all types except for <code>ChatCompletion</code> which we want to use
+ServiceStack.Text JSON for:</p>
+<pre><code class="language-csharp">services.AddOrmLite(options =&gt; {
+        options.UsePostgres(connectionString)
+            .ConfigureJson(json =&gt; {
+                json.DefaultSerializer = JsonSerializerType.SystemJson;
+                json.ServiceStackJsonTypes = [
+                    typeof(ChatCompletion)
+                ];
+            });
+    })
+</code></pre>
+<h4 id="unstructured-json-with-json-object">Unstructured JSON with JSON Object<a class="header-anchor" href="#unstructured-json-with-json-object" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>The default Exception to this is for serialization of <code>object</code>, <code>List&lt;object&gt;</code> and <code>Dictionary&lt;string,object&gt;</code> types which is
+better handled by <a href="https://docs.servicestack.net/js-utils">#Script's JSON Parser</a>
+which is able to parse any valid adhoc JSON into untyped .NET generic collections, which is both mutable and able to
+<a href="https://docs.servicestack.net/js-utils#getting-the-client_id-in-a-comfyui-output">utilize C# pattern matching</a>
+for easy introspection.</p>
+<p>The new <code>TryGetValue&lt;T&gt;</code> extension method on <code>Dictionary&lt;string,object?&gt;</code> makes it even more convenient for parsing
+adhoc JSON which can use the <code>out</code> Type parameter to reduce unnecessary type checking, e.g. here's a simple example
+of parsing a ComfyUI Output for the client_id used in a generation:</p>
+<pre><code class="language-csharp">var comfyOutput = JSON.ParseObject(json);
+var prompt = (Dictionary&lt;string, object?&gt;)result.Values.First()!;
+if (prompt.TryGetValue(&quot;prompt&quot;, out List&lt;object&gt; tuple) &amp;&amp; tuple.Count &gt; 3)
+{
+    if (tuple[3] is Dictionary&lt;string, object?&gt; extraData
+        &amp;&amp; extraData.TryGetValue(&quot;client_id&quot;, out string clientId))
+    {
+        Console.WriteLine(clientId);
+    }
+}
+</code></pre>
+<p>Where as an Equivalent implementation using System.Text.Json <code>JsonDocument</code> would look like:</p>
+<pre><code class="language-csharp">using System.Text.Json;
+
+var jsonDocument = JsonDocument.Parse(json);
+var root = jsonDocument.RootElement;
+
+// Get the first property value (equivalent to result.Values.First())
+var firstProperty = root.EnumerateObject().FirstOrDefault();
+if (firstProperty.Value.ValueKind == JsonValueKind.Object)
+{
+    var prompt = firstProperty.Value;
+
+    if (prompt.TryGetProperty(&quot;prompt&quot;, out var promptElement)
+        &amp;&amp; promptElement.ValueKind == JsonValueKind.Array)
+    {
+        var promptArray = promptElement.EnumerateArray().ToArray();
+        if (promptArray.Length &gt; 3)
+        {
+            var extraDataElement = promptArray[3];
+            if (extraDataElement.ValueKind == JsonValueKind.Object
+                &amp;&amp; extraDataElement.TryGetProperty(&quot;client_id&quot;, out var clientIdElement)
+                &amp;&amp; clientIdElement.ValueKind == JsonValueKind.String)
+            {
+                var clientId = clientIdElement.GetString();
+                Console.WriteLine(clientId);
+            }
+        }
+    }
+}
+</code></pre>
+<h3 id="table-aliases">Table Aliases<a class="header-anchor" href="#table-aliases" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>One potential breaking change is that table aliases are used verbatim and no longer uses a naming strategy for transforming
+its name which potentially affects PostgreSQL when an Alias is used that doesn't match the name of the table, e.g:</p>
+<pre><code class="language-csharp">[Alias(&quot;MyTable&quot;)] //= &quot;MyTable&quot; 
+public class NewMyTable { ... }
+
+[Alias(&quot;MyTable&quot;)] //= my_table 
+public class OldMyTable { ... }
+</code></pre>
+<p>Aliases should either be changed to the Table name you want to use or you can use the Naming Strategy Alias dictionaries
+for finer-grain control over what Schema, Table, Column Names and Aliases should be used:</p>
+<pre><code class="language-csharp">services.AddOrmLite(options =&gt; options.UsePostgres(connString, dialect =&gt; {
+    dialect.NamingStrategy.TableAliases[&quot;MyTable&quot;] = &quot;my_table&quot;;
+    dialect.NamingStrategy.SchemaAliases[&quot;MySchema&quot;] = &quot;my_schema&quot;;
+    dialect.NamingStrategy.ColumnAliases[&quot;MyColumn&quot;] = &quot;my_columnt&quot;;
+}));
+</code></pre>
+<h3 id="table-refs">Table Refs<a class="header-anchor" href="#table-refs" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>A significant internal refactor of OrmLite was done to encapsulate different ways of referring to a table in a single
+<code>TableRef</code> struct, which is now used in all APIs that need a table reference.</p>
+<p>The new <code>TableRef</code> struct allows for unified APIs that encapsulates different ways of referencing a table:</p>
+<ul>
+<li>Type <code>new TableRef(typeof(MyTable))</code></li>
+<li>Model Definition <code>new TableRef(ModelDefinition&lt;MyTable&gt;.Definition)</code></li>
+<li>Table Name <code>new TableRef(&quot;MySchema&quot;)</code></li>
+<li>Schema and Table Name <code>new TableRef(&quot;MySchema&quot;, &quot;MyTable&quot;))</code></li>
+<li>Quoted Name (use verbatim) <code>TableRef.Literal(&quot;\&quot;MyTable\&quot;&quot;)</code></li>
+<li>Implicitly casts to a string as <code>new TableRef(&quot;MySchema&quot;)</code>.</li>
+</ul>
+<p>OrmLite handles differences between different RDBMS Providers via its <code>IOrmLiteDialectProvider</code> interface.
+Previously OrmLite used to maintain multiple overloads for handling some of these differences in referencing a
+table but they've now all been consolidated into use a single <code>TableRef</code> parameter:</p>
+<pre><code class="language-csharp">public interface IOrmLiteDialectProvider
+{
+    bool DoesTableExist(IDbConnection db, TableRef tableRef);
+    string GetTableNameOnly(TableRef tableRef);
+    string UnquotedTable(TableRef tableRef);
+    string GetSchemaName(TableRef tableRef);
+    string QuoteTable(TableRef tableRef);
+    bool DoesTableExist(IDbConnection db, TableRef tableRef);
+    bool DoesColumnExist(IDbConnection db, string columnName, TableRef tableRef);
+    string ToAddColumnStatement(TableRef tableRef, FieldDefinition fieldDef);
+    string ToAlterColumnStatement(TableRef tableRef, FieldDefinition fieldDef);
+    string ToChangeColumnNameStatement(TableRef tableRef, FieldDefinition fieldDef, string oldColumn);
+    string ToRenameColumnStatement(TableRef tableRef, string oldColumn, string newColumn);
+    string ToDropColumnStatement(TableRef tableRef, string column);
+    string ToDropConstraintStatement(TableRef tableRef, string constraint);
+    string ToDropForeignKeyStatement(TableRef tableRef, string foreignKeyName);
+}
+</code></pre>
+<p>For example the <code>QuoteTable(TableRef)</code> method can be used to quote a table. Assuming our dialect was configured
+with the <code>my_table</code> Table Aliases, these are the results for the different ways of referencing <code>MyTable</code>:</p>
+<pre><code class="language-csharp">dialect.QuoteTable(&quot;MyTable&quot;)                       //= &quot;my_table&quot; (implicit)
+dialect.QuoteTable(new(&quot;MyTable&quot;))                  //= &quot;my_table&quot;
+dialect.QuoteTable(new(&quot;MySchema&quot;,&quot;MyTable&quot;))       //= &quot;my_schema&quot;.&quot;my_table&quot;
+dialect.QuoteTable(TableRef.Literal(&quot;\&quot;MyTable\&quot;&quot;)) //= &quot;MyTable&quot; (verbatim)
+dialect.QuoteTable(new(typeof(MyTable)))            //= &quot;my_table&quot;
+dialect.QuoteTable(new(ModelDefinition&lt;MyTable&gt;.Definition)) //= &quot;my_table&quot;
+</code></pre>
+<h3 id="improved-observability">Improved Observability<a class="header-anchor" href="#improved-observability" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Significant effort was put into improving OrmLite's Observability where OrmLite's DB Connections can now be tagged
+to make them easier to track in hooks, logs and traces.</p>
+<p>To achieve this a new <code>Action&lt;IDbConnection&gt;</code> configuration callbacks were added to OrmLite Open Connection APIs
+which is invoked before a DB Connection is opened, e.g:</p>
+<pre><code class="language-csharp">using var db = dbFactory.Open(configure: db =&gt; db.WithTag(&quot;MyTag&quot;));
+using var db = dbFactory.Open(namedConnection, 
+    configure: db =&gt; db.WithTag(&quot;MyTag&quot;));
+
+using var db = HostContext.AppHost.GetDbConnection(req, 
+    configure: db =&gt; db.WithTag(&quot;MyTag&quot;));
+</code></pre>
+<p>Which ServiceStack uses internally to tag DB Connections with the feature executing it, or for <code>Db</code> connections used in
+Services it will tag it with the Request DTO Name.</p>
+<div class="wideshot"><p><img src="https://servicestack.net/img/posts/ormlite-new-configuration/ormlite-tags.webp" alt="" /></p>
+</div>
+<p>If a tag is configured, it's also included in OrmLite's Debug Logging output, e.g:</p>
+<pre><code class="language-txt">dbug: ServiceStack.OrmLiteLog[0]
+      [PostgresDbJobsProvider] SQL: SELECT &quot;Id&quot;, &quot;ParentId&quot;, &quot;RefId&quot;, &quot;Worker&quot;, &quot;Tag&quot;, &quot;BatchId&quot;, &quot;Callback&quot;, &quot;DependsOn&quot;, &quot;RunAfter&quot;, &quot;CreatedDate&quot;, &quot;CreatedBy&quot;, &quot;RequestId&quot;, &quot;RequestType&quot;, &quot;Command&quot;, &quot;Request&quot;, &quot;RequestBody&quot;, &quot;UserId&quot;, &quot;Response&quot;, &quot;ResponseBody&quot;, &quot;State&quot;, &quot;StartedDate&quot;, &quot;CompletedDate&quot;, &quot;NotifiedDate&quot;, &quot;RetryLimit&quot;, &quot;Attempts&quot;, &quot;DurationMs&quot;, &quot;TimeoutSecs&quot;, &quot;Progress&quot;, &quot;Status&quot;, &quot;Logs&quot;, &quot;LastActivityDate&quot;, &quot;ReplyTo&quot;, &quot;ErrorCode&quot;, &quot;Error&quot;, &quot;Args&quot;, &quot;Meta&quot; 
+      FROM &quot;BackgroundJob&quot;
+      WHERE (&quot;State&quot; = :0)
+      PARAMS: :0=Cancelled
+dbug: ServiceStack.OrmLiteLog[0]
+      TIME: 1.818m
+</code></pre>
+<h4 id="db-command-execution-timing">DB Command Execution Timing<a class="header-anchor" href="#db-command-execution-timing" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>OrmLite's debug logging now also includes the elapsed time it took to execute the command which is also available on the
+<code>IDbCommand</code> <code>GetTag()</code> and <code>GetElapsedTime()</code> APIs, e.g:</p>
+<pre><code class="language-csharp">OrmLiteConfig.AfterExecFilter = cmd =&gt;
+{
+    Console.WriteLine($&quot;[{cmd.GetTag()}] {cmd.GetElapsedTime()}&quot;);
+};
+</code></pre>
+<h3 id="existsbyid-apis">ExistsById APIs<a class="header-anchor" href="#existsbyid-apis" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>New <code>ExistsById</code> APIs for checking if a row exists for a given Id:</p>
+<pre><code class="language-csharp">db.ExistsById&lt;Person&gt;(1);
+await db.ExistsByIdAsync&lt;Person&gt;(1);
+
+// Alternative to:
+db.Exists&lt;Person&gt;(x =&gt; x.Id == 1);
+await db.ExistsAsync&lt;Person&gt;(x =&gt; x.Id == 1);
+</code></pre>
+<h3 id="resetsequence-for-postgresql">ResetSequence for PostgreSQL<a class="header-anchor" href="#resetsequence-for-postgresql" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>The <code>ResetSequence</code> API is available to reset a Table's Id sequence in Postgres:</p>
+<pre><code class="language-csharp">db.ResetSequence&lt;MyTable&gt;(x =&gt; x.Id);
+</code></pre>
+<h4 id="data-import-example-using-bulkinsert">Data Import example using BulkInsert<a class="header-anchor" href="#data-import-example-using-bulkinsert" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>This is useful to reset a PostgreSQL Table's auto-incrementing sequence when re-importing a dataset from a
+different database, e.g:</p>
+<pre><code class="language-csharp">db.DeleteAll&lt;Tag&gt;();
+db.ResetSequence&lt;Tag&gt;(x =&gt; x.Id);
+db.DeleteAll&lt;Category&gt;();
+db.ResetSequence&lt;Category&gt;(x =&gt; x.Id);
+        
+var config = new BulkInsertConfig { Mode = BulkInsertMode.Sql };
+db.BulkInsert(dbSqlite.Select&lt;Tag&gt;().OrderBy(x =&gt; x.Id), config);
+db.BulkInsert(dbSqlite.Select&lt;Category&gt;().OrderBy(x =&gt; x.Id), config);
+</code></pre>
+<h3 id="new-sqldateformat-and-sqlchar-dialect-apis">New SqlDateFormat and SqlChar Dialect APIs<a class="header-anchor" href="#new-sqldateformat-and-sqlchar-dialect-apis" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>The SQL Dialect functions provide an RDBMS agnostic way to call SQL functions that differs among different RDBMS's.</p>
+<p>The <code>DateFormat</code> accepts <a href="https://www.w3resource.com/sqlite/sqlite-strftime.php">SQLite strftime() function</a> date and
+time modifiers in its format string whilst the <code>Char</code> accepts a character code, e.g:</p>
+<pre><code class="language-csharp">var q = db.From&lt;MyTable&gt;();
+var createdDate = q.Column&lt;MyTable&gt;(c =&gt; c.CreatedDate);
+var months = db.SqlList&lt;(string month, string log)&gt;(q
+    .Select(x =&gt; new {
+        Month = q.sql.DateFormat(createdDate, &quot;%Y-%m&quot;),
+        Log = q.sql.Concat(new[]{ &quot;'Prefix'&quot;, q.sql.Char(10), createdDate })
+    }));
+</code></pre>
+<p>When executed in PostgreSQL it would generate:</p>
+<pre><code class="language-sql">SELECT TO_CHAR(&quot;CreatedDate&quot;, 'YYYY-MM'), 'Prefix' || CHR(10) || &quot;CreatedDate&quot; 
+FROM &quot;CompletedJob&quot;
+</code></pre>
+<hr />
+<div class="float-right"><p><a href="/posts/ormlite-async-task-builder">OrmLite's Async Task Builder</a> 👉</p>
+</div>
+
+                </div>
+            </div>
+        </article>
+</div>
+
+<div id="comments" data-post="PostComments" class="my-48"></div>
+
+
+<script type="module">
+import { init } from "app.mjs"
+init()
+</script>
+
+<link rel="stylesheet" href="css/highlight.css">
+<script src="lib/js/highlight.js"></script>
+<script>hljs.highlightAll()</script>
+<script src="lib/js/lite-yt-embed.js"></script>
+<script src="mjs/docs.mjs" type="module"></script>
+
+<script type="module">
+import { mount } from "app.mjs"
+
+    const App = {
+        setup() {
+            function nav(url) {
+                window.open(url)
+            }
+            return { nav }
+        }
+    }
+    mount('#post', App)
+</script>
+
+    </main>
+</div>
+
+<footer class="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+  <div class="mx-auto max-w-7xl overflow-hidden py-20 px-6 sm:py-24 lg:px-8">
+    <nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
+      <div class="pb-6">
+        <a href="whatsnew" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">What's New</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="blog" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Blog</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="posts" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Archive</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="speaking" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Speaking</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="uses" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Uses</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="about" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">About</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="privacy" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Privacy</a>
+      </div>
+    </nav>
+    <div class="mt-10 flex justify-center space-x-10">
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Facebook</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Instagram</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Twitter</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">GitHub</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">YouTube</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+    </div>
+    <p class="mt-10 text-center text-xs leading-5 text-gray-500">
+      <a href="https://github.com/NetCoreTemplates/razor-ssg">powered by razor</a>
+    </p>
+  </div>
+</footer>
+
+<script type="module">
+//TODO: Replace with local and production URLs of CreatorKit .NET App or Remove if not using CreatorKit
+import { mail } from 'https://creatorkit.netcore.io/mjs/components/mail.mjs'
+import { post } from 'https://creatorkit.netcore.io/mjs/components/post.mjs'
+
+mail('[data-mail]', { 
+    mailingLists: ['MonthlyNewsletter'] 
+})
+
+post('[data-post]', {
+    commentLink: { 
+        href: '/community-rules',
+        label: 'read the community rules'
+    } 
+})
+</script>
+
+
+<script type="module">
+import { init } from "app.mjs"
+init()
+</script>
+
+
+
+</body>
+</html>

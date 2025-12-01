@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg" href="img/logo.svg">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://razor-ssg.web-templates.io/feed.xml" />
+    <title>In Depth Interactive API Analytics for PostgreSQL, SQL Server &amp; MySQL</title>
+    <base href="/" />
+    <script>
+    if (location.search === "?dark") localStorage.setItem('color-scheme','dark') 
+    if (location.search === "?light") localStorage.removeItem('color-scheme') 
+    const cls = document.querySelector('html').classList
+    if (localStorage.getItem('color-scheme') === 'dark')
+        cls.add('dark')
+    else
+        cls.remove('dark')
+    </script>
+    <link rel="stylesheet" href="css/app.css">
+    <style>html { scroll-padding-top: 5rem }</style>
+
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+{
+    "imports": {
+        "app.mjs": "./mjs/app.mjs",
+        "vue": "./lib/mjs/vue.min.mjs",
+        "@servicestack/client": "./lib/mjs/servicestack-client.min.mjs",
+        "@servicestack/vue": "./lib/mjs/servicestack-vue.min.mjs"
+    }
+}
+</script>
+    
+    <meta name="twitter:site" content="@RazorSsg" />
+    <meta name="twitter:card" content="summary" />
+    <meta property="og:description" content="Comprehensive and Interactive RDBMS API Analytics in Admin UI, deep insights into API usage, performance, users, API Keys &amp; IPs" />
+    <meta property="og:url" content="https://razor-ssg.web-templates.io/posts/rdbms_analytics" />
+    <meta property="og:title" content="In Depth Interactive API Analytics for PostgreSQL, SQL Server &amp; MySQL" />
+    <meta property="og:image" content="https://servicestack.net/img/posts/analytics/bg.webp" />
+
+
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+<header class="top-0 fixed z-50 h-14 bg-white dark:bg-black opacity-90 w-full shadow pr-3">
+    <div class="flex flex-wrap items-center">
+        <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
+            <div class="cursor-pointer">
+                <a class="navbar-brand flex items-center" href="./">
+                    <svg class="w-8 h-8 sm:ml-2 sm:w-12 sm:h-12" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="currentColor" d="M10 6c1.544 1.76 2.276 4.15 2.217 6.61c3.968 1.67 9.924 6.12 11.181 12.39H28C26.051 14.31 14.918 6.77 10 6zm-2 7c4.67 4.913.81 11.582-4 12h18.97C21.5 18.289 11.95 13.533 8 13z"/></svg>
+                    <span class="hidden sm:block text-2xl font-semibold">MyApp</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-grow flex-shrink flex-nowrap justify-end items-center">
+            <nav class="relative flex flex-grow leading-6 font-semibold text-slate-700 dark:text-slate-200">
+                <ul class="flex flex-wrap items-center justify-end w-full m-0 pb-2 sm:pb-0">
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="whatsnew" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    What's New
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="blog" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Blog
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="podcasts" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Podcasts
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="videos" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Videos
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="creatorkit/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Creator Kit
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="posts/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Archive
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="speaking" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Speaking
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="uses" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Uses
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="about" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    About
+                                </a>
+                            </li>
+                    <li class="relative flex flex-wrap just-fu-start m-0">
+                        <div data-component="DarkModeToggle" class="ml-2 w-10"></div>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</header>
+<script type="module">
+import { mountAll } from "app.mjs"
+mountAll()
+</script>
+
+
+<div class="min-h-screen">
+    <main role="main" class="pt-14 pb-3">
+        
+
+
+
+<link rel="stylesheet" href="css/typography.css">
+<link rel="stylesheet" href="css/lite-yt-embed.css">
+
+<div class="container px-5 mb-32 mx-auto">
+        <article class="mt-20">
+            <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
+                In Depth Interactive API Analytics for PostgreSQL, SQL Server &amp; MySQL
+            </h1>
+            <div class="flex justify-between">
+                <div class="md:mb-12 flex items-center">
+                        <img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="data:image/svg&#x2B;xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; fill=&#x27;none&#x27; viewBox=&#x27;0 0 24 24&#x27; stroke=&#x27;none&#x27; aria-hidden=&#x27;true&#x27;%3E%3Cpath fill=&#x27;%230891b2&#x27; d=&#x27;M12 2a5 5 0 1 0 5 5a5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3a3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z&#x27;/%3E%3C/svg%3E">
+                    <div class="flex flex-col">
+                    </div>
+                </div>
+                <div class="mb-4 max-w-sm" data-mail="JoinMailingList" data-props="{ submitLabel:'Join our newsletter' }"></div>
+            </div>
+            <div class="mb-8 md:mb-16 sm:mx-0">
+                <div class="sm:mx-0">
+                    <img src="https://servicestack.net/img/posts/analytics/bg.webp" alt="In Depth Interactive API Analytics for PostgreSQL, SQL Server &amp; MySQL Background" class="shadow-small">
+                </div>
+            </div>
+            <div class="flex max-w-7xl mx-auto justify-between" style="width:100%;">
+                <div>
+                    <div class="mb-4 flex flex-wrap">
+                            <a href="posts/tagged/analytics" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">analytics</a>
+                            <a href="posts/tagged/admin-ui" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">admin-ui</a>
+                            <a href="posts/tagged/apis" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">apis</a>
+                            <a href="posts/tagged/postgresql" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">postgresql</a>
+                            <a href="posts/tagged/sqlserver" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">sqlserver</a>
+                            <a href="posts/tagged/mysql" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">mysql</a>
+                    </div>
+                        <div class="max-w-3xl mx-auto">
+                            <div class="mb-6 text-lg text-gray-500">
+                                <time datetime="2025-10-21T00:00:00.0000000">October 21, 2025</time>
+                                <span aria-hidden="true">&middot;</span>
+                                <span>9 min read</span>
+                            </div>
+                        </div>
+                </div>
+                <div class="flex flex-grow-0">
+                    <div data-post="PostVotes"></div>
+                    <a href="javascript:;" onclick="document.location.hash='comments'" class="cursor-pointer" title="Jump to comments">
+                        <svg class="ml-4 text-gray-700 mt-1 w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M3 11.2c0 .1 0 .1 0 0c0 .1 0 .1 0 0zM8.3 1C3.9 1 0 3.6 0 6.6c0 2 1.1 3.7 3 4.7s0 .1 0 .1c-.1 1.3-.9 1.7-.9 1.7L.3 14h2c2.5 0 4.3-1.1 5.1-1.9h.8c4.3 0 7.8-2.5 7.8-5.6S12.6 1 8.3 1zm-.1 10.1H7l-.2.2c-.5.5-1.6 1.4-3.3 1.7c.3-.5.5-1.1.5-2v-.3l-.3-.1C1.9 9.7 1 8.3 1 6.6C1 4.2 4.5 2 8.3 2C12 2 15 4 15 6.6c0 2.4-3.1 4.5-6.8 4.5z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="max-w-3xl mx-auto">
+                <div id="post" class="prose lg:prose-xl max-w-none mb-32">
+                    <p>ServiceStack v8.9 restores parity to <strong>PostgreSQL</strong>, <strong>SQL Server</strong> &amp; <strong>MySQL</strong> RDBMS's for our previous
+SQLite-only features with the new <code>DbRequestLogger</code> which is a drop-in replacement for
+<a href="https://docs.servicestack.net/sqlite-request-logs">SQLite Request Logging</a> for persisting API Request Logs to a RDBMS.</p>
+<p>Whilst maintaining an archive of API Requests is nice, the real value of DB Request Logging is that it unlocks the
+comprehensive API Analytics and querying Logging available that was previously limited to SQLite Request Logs.</p>
+<lite-youtube class="w-full mx-4 my-4" width="560" height="315" videoid="kjLcm1llC5Y" playlabel="In Depth and Interactive API Analytics available to all ASP .NET Core ServiceStack Apps!" style="background-image:url('https://img.youtube.com/vi/kjLcm1llC5Y/maxresdefault.jpg')"></lite-youtube>
+<h3 id="benefits-of-api-analytics">Benefits of API Analytics<a class="header-anchor" href="#benefits-of-api-analytics" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>They provide deep and invaluable insight into your System API Usage, device distribution, its Users, API Keys and the
+IPs where most traffic generates:</p>
+<ul>
+<li><strong>Visibility:</strong> Provides a clear, visual summary of complex log data, making it easier to understand API usage and performance at a glance.</li>
+<li><strong>Performance Monitoring:</strong> Helps track key metrics like request volume and response times to ensure APIs are meeting performance expectations.</li>
+<li><strong>User Understanding:</strong> Offers insights into how users (and bots) are interacting with the APIs (devices, browsers).</li>
+<li><strong>Troubleshooting:</strong> Aids in quickly identifying trends, anomalies, or specific endpoints related to issues.</li>
+<li><strong>Resource Planning:</strong> Understanding usage patterns helps in scaling infrastructure appropriately.</li>
+<li><strong>Security Insight:</strong> Identifying bot traffic and unusual request patterns can be an early indicator of security concerns.</li>
+</ul>
+<h3 id="interactive-analytics">Interactive Analytics<a class="header-anchor" href="#interactive-analytics" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Analytics are also interactive where you're able to drill down to monitor the activity of individual APIs, Users, API Keys
+and IPs which have further links back to the request logs which the summary analytics are derived from.</p>
+<p>As they offer significant and valuable insights the <code>SqliteRequestLogger</code> is built into all ASP.NET Core
+IdentityAuth templates, to switch it over to use a RDBMS we recommend installing <code>db-identity</code> mix gist to
+also replace SQLite BackgroundJobs with the RDBMS <code>DatabaseJobFeature</code>:</p>
+<div class="not-prose sh-copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-800">
+                    <div class="pl-4 py-1 pb-1.5 align-middle whitespace-pre text-base text-gray-100"><p>x mix db-identity</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-green-600 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<p>Or if you just want to replace SQLite Request Logs with a RDBMS use:</p>
+<div class="not-prose sh-copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-800">
+                    <div class="pl-4 py-1 pb-1.5 align-middle whitespace-pre text-base text-gray-100"><p>x mix db-requestlogs</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-green-600 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<p>Or you can copy the <a href="https://docs.servicestack.net/modular-startup">Modular Startup</a> script below:</p>
+<pre><code class="language-csharp">[assembly: HostingStartup(typeof(MyApp.ConfigureRequestLogs))]
+
+namespace MyApp;
+
+public class ConfigureRequestLogs : IHostingStartup
+{
+    public void Configure(IWebHostBuilder builder) =&gt; builder
+        .ConfigureServices((context, services) =&gt; {
+
+            services.AddPlugin(new RequestLogsFeature {
+                RequestLogger = new DbRequestLogger {
+                    // NamedConnection = &quot;&lt;alternative db&gt;&quot;
+                },
+                EnableResponseTracking = true,
+                EnableRequestBodyTracking = true,
+                EnableErrorTracking = true
+            });
+            services.AddHostedService&lt;RequestLogsHostedService&gt;();
+
+            if (context.HostingEnvironment.IsDevelopment())
+            {
+                services.AddPlugin(new ProfilingFeature());
+            }
+        });
+}
+
+public class RequestLogsHostedService(ILogger&lt;RequestLogsHostedService&gt; log, IRequestLogger requestLogger) : BackgroundService
+{
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        using var timer = new PeriodicTimer(TimeSpan.FromSeconds(3));
+        if (requestLogger is IRequireAnalytics logger)
+        {
+            while (!stoppingToken.IsCancellationRequested &amp;&amp; await timer.WaitForNextTickAsync(stoppingToken))
+            {
+                await logger.TickAsync(log, stoppingToken);
+            }
+        }
+    }
+}
+</code></pre>
+<h3 id="rdbms-provider">RDBMS Provider<a class="header-anchor" href="#rdbms-provider" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>When using a remote RDBMS, network latency becomes a primary concern that any solution needs to be designed around,
+as such the API Request Logs are initially maintained in an in memory collection before being flushed to the database
+<strong>every 3 seconds</strong> — configurable in the <code>PeriodicTimer</code> interval above.</p>
+<p>To reduce the number of round-trips to the database, the <code>DbRequestLogger</code> batches all pending logs into a single
+request using <a href="https://docs.servicestack.net/ormlite/bulk-inserts">OrmLite's Bulk Inserts</a> which is supported by all
+major RDBMS's.</p>
+<h3 id="postgresql-table-partitioning">PostgreSQL Table Partitioning<a class="header-anchor" href="#postgresql-table-partitioning" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>PostgreSQL provides native support for table partitioning, allowing us to automatically create monthly partitions using
+<code>PARTITION BY RANGE</code> on the <code>CreatedDate</code> column. The <code>DbRequestLogger</code> automatically creates new monthly partitions
+as needed, maintaining the same logical separation as SQLite's monthly .db's while keeping everything within a single
+Postgres DB:</p>
+<pre><code class="language-sql">CREATE TABLE &quot;RequestLog&quot; (
+    -- columns...
+    &quot;CreatedDate&quot; TIMESTAMP NOT NULL,
+    PRIMARY KEY (&quot;Id&quot;,&quot;CreatedDate&quot;)
+) PARTITION BY RANGE (&quot;CreatedDate&quot;);
+
+-- Monthly partitions are automatically created, e.g.:
+CREATE TABLE &quot;RequestLog_2025_01&quot; PARTITION OF &quot;RequestLog&quot;
+    FOR VALUES FROM ('2025-01-01') TO ('2025-02-01');
+</code></pre>
+<h3 id="sqlserver-mysql-manual-partition-management">SQLServer / MySQL - Manual Partition Management<a class="header-anchor" href="#sqlserver-mysql-manual-partition-management" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>For <strong>SQL Server</strong> and <strong>MySQL</strong>, monthly partitioned tables need to be created <strong>out-of-band</strong>
+(either manually or via cronjob scripts) since they don't support the same level of automatic
+partition management as PostgreSQL. However, this still works well in practice as because <code>RequestLog</code> is an
+<strong>Append Only</strong> table with all querying from the Admin UIs being filtered by its indexed <code>CreatedDate</code>
+in monthly viewable snapshots like it was with SQLite.</p>
+<h3 id="separate-requestlog-database">Separate RequestLog Database<a class="header-anchor" href="#separate-requestlog-database" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Or if preferred, you can maintain request logs in a <strong>separate database</strong> from your main application database.
+This separation keeps the write-heavy logging load off your primary database, allowing you to optimize
+each database independently for its specific workload patterns like maintaining different backup strategies
+for your critical application data vs. log history.</p>
+<pre><code class="language-csharp">// Configure.Db.cs
+services.AddOrmLite(options =&gt; options.UsePostgres(connectionString))
+        .AddPostgres(&quot;logs&quot;, logsConnectionString);
+
+// Configure.RequestLogs.cs
+services.AddPlugin(new RequestLogsFeature {
+    RequestLogger = new DbRequestLogger {
+        NamedConnection = &quot;logs&quot;
+    },
+    //...
+});
+</code></pre>
+<h2 id="queryable-admin-logging-ui">Queryable Admin Logging UI<a class="header-anchor" href="#queryable-admin-logging-ui" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>This will enable a more feature rich Request Logging Admin UI which utilizes the full queryability of the
+<a href="https://docs.servicestack.net/vue/autoquerygrid">AutoQueryGrid</a> component to filter, sort and export Request Logs.</p>
+<p><a href="https://servicestack.net/img/posts/analytics/sqlitelogs.webp"><img src="https://servicestack.net/img/posts/analytics/sqlitelogs.webp" alt="" /></a></p>
+<h2 id="analytics-overview">Analytics Overview<a class="header-anchor" href="#analytics-overview" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>Utilizing an <code>DbRequestLogger</code> also enables the <strong>Analytics</strong> Admin UI in the sidebar which initially
+displays the API Analytics Dashboard:</p>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/analytics/analytics-apis1.webp"><img src="https://servicestack.net/img/posts/analytics/analytics-apis1.webp" alt="" /></a></p>
+</div>
+<h3 id="distribution-pie-charts">Distribution Pie Charts<a class="header-anchor" href="#distribution-pie-charts" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Lets you quickly understand the composition of your user base and traffic sources and the
+distribution of users across different web browsers, device types, and to identify the proportion of traffic coming from automated bots.</p>
+<h3 id="requests-per-day-line-chart">Requests per day Line Chart<a class="header-anchor" href="#requests-per-day-line-chart" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Lets you monitor API usage trends and performance over time. It tracks the total number of API requests and the average response
+time day-by-day. You can easily spot trends like peak usage hours/days, identify sudden spikes or drops in traffic,
+and correlate request volume with API performance which is crucial for capacity planning and performance troubleshooting.</p>
+<h3 id="api-tag-groups-pie-chart">API tag groups Pie Chart<a class="header-anchor" href="#api-tag-groups-pie-chart" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Lets you understand the usage patterns across different functional categories of your APIs.
+By grouping API requests based on assigned tags (like Security, Authentication, User Management, Tech, etc.), you get a
+high-level view of which <em>types</em> of functionalities are most frequently used or are generating the most load.</p>
+<h3 id="api-requests-bar-chart">API Requests Bar Chart<a class="header-anchor" href="#api-requests-bar-chart" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Lets you identify the most and least frequently used specific API endpoints which ranks individual API endpoints by
+the number of requests they receive. This helps pinpoint:</p>
+<ul>
+<li><strong>Critical Endpoints:</strong> The most heavily used APIs that require robust performance and monitoring.</li>
+<li><strong>Optimization Targets:</strong> High-traffic endpoints that could benefit from performance optimization.</li>
+<li><strong>Underutilized Endpoints:</strong> APIs that might be candidates for deprecation or require promotion.</li>
+<li><strong>Troubleshooting:</strong> If performance issues arise (seen in the line chart), this helps narrow down which specific endpoint might be responsible.</li>
+</ul>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/analytics/analytics-apis2.webp"><img src="https://servicestack.net/img/posts/analytics/analytics-apis2.webp" alt="" /></a></p>
+</div>
+<h3 id="total-duration-bar-chart">Total Duration Bar Chart<a class="header-anchor" href="#total-duration-bar-chart" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Identifies which API endpoints consume the most <em>cumulative processing time</em> over the selected period.
+Even if an API endpoint is relatively fast per call, if it's called extremely frequently, it can contribute significantly to overall server load.
+Optimizing these can lead to significant savings in server resources (CPU, memory).</p>
+<h3 id="average-duration-bar-chart">Average Duration Bar Chart<a class="header-anchor" href="#average-duration-bar-chart" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Pinpoints which API endpoints are the slowest on a <em>per-request</em> basis. APIs at the top of this list are prime candidates
+for performance investigation and optimization, as they represent potential user-facing slowness or system bottlenecks.</p>
+<h3 id="requests-by-duration-ranges-histogram">Requests by Duration Ranges Histogram<a class="header-anchor" href="#requests-by-duration-ranges-histogram" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Provides an overview of the performance distribution for <em>all</em> API requests.
+This chart shows how many requests fall into different speed buckets and helps you understand the overall responsiveness of your API system at a glance.</p>
+<h2 id="individual-api-analytics">Individual API Analytics<a class="header-anchor" href="#individual-api-analytics" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>Clicking on an API's bar chart displays a dedicated, detailed view of a single API endpoint's behavior, isolating its performance
+and usage patterns from the overall system metrics offering immediate insight into the endpoint's traffic volume and reliability.</p>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/analytics/analytics-api.webp"><img src="https://servicestack.net/img/posts/analytics/analytics-api.webp" alt="" /></a></p>
+</div>
+<h3 id="total-requests">Total Requests<a class="header-anchor" href="#total-requests" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Displays the total requests for an API during the selected month. It includes HTTP Status Breakdown which
+provide <strong>direct access to the filtered request logs</strong>. This is a major benefit for <strong>rapid troubleshooting</strong>, allowing
+you to instantly view the specific log entries corresponding to successful requests or particular error codes for this API.</p>
+<h3 id="last-request-information">Last Request Information<a class="header-anchor" href="#last-request-information" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Provides immediate context on the most recent activity for this endpoint with <em>when</em> the last request occurred,
+the source <strong>IP address</strong> and device information to help understand recent usage and check if the endpoint is still active,
+or quickly investigate the very last interaction if needed.</p>
+<h3 id="duration-summary-table-total-min-max">Duration Summary Table (Total, Min, Max)<a class="header-anchor" href="#duration-summary-table-total-min-max" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Quantifies the performance characteristics specifically for this endpoint with the cumulative (Total) processing load,
+the best-case performance (Min), and the worst-case performance (Max) which is useful for identifying performance outliers.</p>
+<h3 id="duration-requests-histogram">Duration Requests Histogram<a class="header-anchor" href="#duration-requests-histogram" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Visualizes the performance distribution for this API.</p>
+<h3 id="top-users-bar-chart">Top Users Bar Chart<a class="header-anchor" href="#top-users-bar-chart" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Identifies which authenticated users are most frequently calling this API and relies on this endpoint the most.
+This can be useful for identifying power users, potential API abuse by a specific user account, or understanding the impact of changes to this API on key users.</p>
+<h3 id="top-ip-addresses-bar-chart">Top IP Addresses Bar Chart<a class="header-anchor" href="#top-ip-addresses-bar-chart" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Shows which source IP addresses are generating the most traffic for this API.
+Useful for identifying high-volume clients, specific servers interacting with this endpoint, or potentially malicious IPs.</p>
+<h2 id="users">Users<a class="header-anchor" href="#users" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>The <strong>Users</strong> tab will display the top 100 Users who make the most API Requests and lets you click on a Users bar chart
+to view their individual User analytics.</p>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/analytics/analytics-users.webp"><img src="https://servicestack.net/img/posts/analytics/analytics-users.webp" alt="" /></a></p>
+</div>
+<h3 id="individual-user-analytics">Individual User Analytics<a class="header-anchor" href="#individual-user-analytics" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Provides a comprehensive view of a single user's complete interaction history and behavior across all APIs they've accessed,
+shifting the focus from API performance to user experience and activity.</p>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/analytics/analytics-user.webp"><img src="https://servicestack.net/img/posts/analytics/analytics-user.webp" alt="" /></a></p>
+</div>
+<h3 id="user-info-total-requests">User Info &amp; Total Requests<a class="header-anchor" href="#user-info-total-requests" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Identifies the user and quantifies their overall activity level. Clicking on their ID or Name will navigate to the Users Admin UI.
+It also shows their success/error rate via the clickable status code links. This helps gauge user engagement and baseline activity.</p>
+<h3 id="last-request-information-1">Last Request Information<a class="header-anchor" href="#last-request-information-1" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Offers a snapshot of the user's most recent interaction for immediate context.
+Knowing <strong>when</strong>, <strong>what</strong> API they called, from which <strong>IP address</strong>, using which <strong>client</strong> &amp; <strong>device</strong> is valuable
+for support, identifying their last action or checking recent activity.</p>
+<h3 id="http-status-pie-chart">HTTP Status Pie Chart<a class="header-anchor" href="#http-status-pie-chart" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Visualizes the overall success and error rate specifically for this user's API requests.</p>
+<h3 id="performance-request-body-summary-table">Performance &amp; Request Body Summary Table<a class="header-anchor" href="#performance-request-body-summary-table" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Quantifies the performance experienced by this user and the data they typically send.</p>
+<h3 id="duration-requests-histogram-1">Duration Requests Histogram<a class="header-anchor" href="#duration-requests-histogram-1" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Shows the distribution of response times for requests made by this user to help understand the typical performance this user experiences.</p>
+<h3 id="top-apis-bar-chart">Top APIs Bar Chart<a class="header-anchor" href="#top-apis-bar-chart" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Reveals which API endpoints this user interacts with most frequently and help understanding user behavior and which features they use most.</p>
+<h3 id="top-ip-addresses-bar-chart-1">Top IP Addresses Bar Chart<a class="header-anchor" href="#top-ip-addresses-bar-chart-1" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Identifies the primary network locations or devices the user connects from.</p>
+<h3 id="user-admin-ui-analytics">User Admin UI Analytics<a class="header-anchor" href="#user-admin-ui-analytics" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>To assist in discoverability a snapshot of a Users Analytics is also visible in the Users Admin UI:</p>
+<p><a href="https://servicestack.net/img/posts/analytics/analytics-user-adminui.webp"><img src="https://servicestack.net/img/posts/analytics/analytics-user-adminui.webp" alt="" /></a></p>
+<p>Clicking on <strong>View User Analytics</strong> takes you to the Users Analytics page to access to the full Analytics features and navigation.</p>
+<h2 id="api-keys">API Keys<a class="header-anchor" href="#api-keys" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>The <strong>API Keys</strong> tab will display the top 100 API Keys who make the most API Requests and lets you click on an API Key
+bar chart to view its individual API Key analytics.</p>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/analytics/analytics-apikeys.webp"><img src="https://servicestack.net/img/posts/analytics/analytics-apikeys.webp" alt="" /></a></p>
+</div>
+<h3 id="individual-api-key-analytics">Individual API Key Analytics<a class="header-anchor" href="#individual-api-key-analytics" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Provides comprehensive API Key analytics Similar to User Analytics but limited to the API Usage of a single API Key:</p>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/analytics/analytics-apikey.webp"><img src="https://servicestack.net/img/posts/analytics/analytics-apikey.webp" alt="" /></a></p>
+</div>
+<h2 id="ips">IPs<a class="header-anchor" href="#ips" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>The <strong>IP Addresses</strong> tab will display the top 100 IPs that make the most API Requests. Click on an IP's
+bar chart to view its individual analytics made from that IP Address.</p>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/analytics/analytics-ips.webp"><img src="https://servicestack.net/img/posts/analytics/analytics-ips.webp" alt="" /></a></p>
+</div>
+<h3 id="individual-ip-analytics">Individual IP Analytics<a class="header-anchor" href="#individual-ip-analytics" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Provides comprehensive IP Address analytics Similar to User Analytics but limited to the API Usage from a single IP Address:</p>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/analytics/analytics-ip.webp"><img src="https://servicestack.net/img/posts/analytics/analytics-ip.webp" alt="" /></a></p>
+</div>
+
+                </div>
+            </div>
+        </article>
+</div>
+
+<div id="comments" data-post="PostComments" class="my-48"></div>
+
+
+<script type="module">
+import { init } from "app.mjs"
+init()
+</script>
+
+<link rel="stylesheet" href="css/highlight.css">
+<script src="lib/js/highlight.js"></script>
+<script>hljs.highlightAll()</script>
+<script src="lib/js/lite-yt-embed.js"></script>
+<script src="mjs/docs.mjs" type="module"></script>
+
+<script type="module">
+import { mount } from "app.mjs"
+
+    const App = {
+        setup() {
+            function nav(url) {
+                window.open(url)
+            }
+            return { nav }
+        }
+    }
+    mount('#post', App)
+</script>
+
+    </main>
+</div>
+
+<footer class="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+  <div class="mx-auto max-w-7xl overflow-hidden py-20 px-6 sm:py-24 lg:px-8">
+    <nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
+      <div class="pb-6">
+        <a href="whatsnew" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">What's New</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="blog" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Blog</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="posts" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Archive</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="speaking" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Speaking</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="uses" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Uses</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="about" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">About</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="privacy" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Privacy</a>
+      </div>
+    </nav>
+    <div class="mt-10 flex justify-center space-x-10">
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Facebook</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Instagram</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Twitter</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">GitHub</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">YouTube</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+    </div>
+    <p class="mt-10 text-center text-xs leading-5 text-gray-500">
+      <a href="https://github.com/NetCoreTemplates/razor-ssg">powered by razor</a>
+    </p>
+  </div>
+</footer>
+
+<script type="module">
+//TODO: Replace with local and production URLs of CreatorKit .NET App or Remove if not using CreatorKit
+import { mail } from 'https://creatorkit.netcore.io/mjs/components/mail.mjs'
+import { post } from 'https://creatorkit.netcore.io/mjs/components/post.mjs'
+
+mail('[data-mail]', { 
+    mailingLists: ['MonthlyNewsletter'] 
+})
+
+post('[data-post]', {
+    commentLink: { 
+        href: '/community-rules',
+        label: 'read the community rules'
+    } 
+})
+</script>
+
+
+<script type="module">
+import { init } from "app.mjs"
+init()
+</script>
+
+
+
+</body>
+</html>

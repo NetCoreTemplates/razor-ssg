@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg" href="img/logo.svg">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://razor-ssg.web-templates.io/feed.xml" />
+    <title>Creating a custom Explorer UI for OpenAIs Chat API</title>
+    <base href="/" />
+    <script>
+    if (location.search === "?dark") localStorage.setItem('color-scheme','dark') 
+    if (location.search === "?light") localStorage.removeItem('color-scheme') 
+    const cls = document.querySelector('html').classList
+    if (localStorage.getItem('color-scheme') === 'dark')
+        cls.add('dark')
+    else
+        cls.remove('dark')
+    </script>
+    <link rel="stylesheet" href="css/app.css">
+    <style>html { scroll-padding-top: 5rem }</style>
+
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+{
+    "imports": {
+        "app.mjs": "./mjs/app.mjs",
+        "vue": "./lib/mjs/vue.min.mjs",
+        "@servicestack/client": "./lib/mjs/servicestack-client.min.mjs",
+        "@servicestack/vue": "./lib/mjs/servicestack-vue.min.mjs"
+    }
+}
+</script>
+    
+    <meta name="twitter:site" content="@RazorSsg" />
+    <meta name="twitter:card" content="summary" />
+    <meta property="og:description" content="Learning how to create a customized API Explorer API UIs like ChatCompletion&#x27;s UI" />
+    <meta property="og:url" content="https://razor-ssg.web-templates.io/posts/ai-chat-explorer" />
+    <meta property="og:title" content="Creating a custom Explorer UI for OpenAIs Chat API" />
+    <meta property="og:image" content="https://servicestack.net/img/posts/ai-chat-explorer/bg.webp" />
+
+
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+<header class="top-0 fixed z-50 h-14 bg-white dark:bg-black opacity-90 w-full shadow pr-3">
+    <div class="flex flex-wrap items-center">
+        <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
+            <div class="cursor-pointer">
+                <a class="navbar-brand flex items-center" href="./">
+                    <svg class="w-8 h-8 sm:ml-2 sm:w-12 sm:h-12" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="currentColor" d="M10 6c1.544 1.76 2.276 4.15 2.217 6.61c3.968 1.67 9.924 6.12 11.181 12.39H28C26.051 14.31 14.918 6.77 10 6zm-2 7c4.67 4.913.81 11.582-4 12h18.97C21.5 18.289 11.95 13.533 8 13z"/></svg>
+                    <span class="hidden sm:block text-2xl font-semibold">MyApp</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-grow flex-shrink flex-nowrap justify-end items-center">
+            <nav class="relative flex flex-grow leading-6 font-semibold text-slate-700 dark:text-slate-200">
+                <ul class="flex flex-wrap items-center justify-end w-full m-0 pb-2 sm:pb-0">
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="whatsnew" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    What's New
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="blog" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Blog
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="podcasts" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Podcasts
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="videos" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Videos
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="creatorkit/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Creator Kit
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="posts/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Archive
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="speaking" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Speaking
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="uses" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Uses
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="about" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    About
+                                </a>
+                            </li>
+                    <li class="relative flex flex-wrap just-fu-start m-0">
+                        <div data-component="DarkModeToggle" class="ml-2 w-10"></div>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</header>
+<script type="module">
+import { mountAll } from "app.mjs"
+mountAll()
+</script>
+
+
+<div class="min-h-screen">
+    <main role="main" class="pt-14 pb-3">
+        
+
+
+
+<link rel="stylesheet" href="css/typography.css">
+<link rel="stylesheet" href="css/lite-yt-embed.css">
+
+<div class="container px-5 mb-32 mx-auto">
+        <article class="mt-20">
+            <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
+                Creating a custom Explorer UI for OpenAIs Chat API
+            </h1>
+            <div class="flex justify-between">
+                <div class="md:mb-12 flex items-center">
+                        <img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="data:image/svg&#x2B;xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; fill=&#x27;none&#x27; viewBox=&#x27;0 0 24 24&#x27; stroke=&#x27;none&#x27; aria-hidden=&#x27;true&#x27;%3E%3Cpath fill=&#x27;%230891b2&#x27; d=&#x27;M12 2a5 5 0 1 0 5 5a5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3a3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z&#x27;/%3E%3C/svg%3E">
+                    <div class="flex flex-col">
+                    </div>
+                </div>
+                <div class="mb-4 max-w-sm" data-mail="JoinMailingList" data-props="{ submitLabel:'Join our newsletter' }"></div>
+            </div>
+            <div class="mb-8 md:mb-16 sm:mx-0">
+                <div class="sm:mx-0">
+                    <img src="https://servicestack.net/img/posts/ai-chat-explorer/bg.webp" alt="Creating a custom Explorer UI for OpenAIs Chat API Background" class="shadow-small">
+                </div>
+            </div>
+            <div class="flex max-w-7xl mx-auto justify-between" style="width:100%;">
+                <div>
+                    <div class="mb-4 flex flex-wrap">
+                            <a href="posts/tagged/llms" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">llms</a>
+                            <a href="posts/tagged/ai" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">ai</a>
+                            <a href="posts/tagged/openai" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">openai</a>
+                            <a href="posts/tagged/chat" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">chat</a>
+                    </div>
+                        <div class="max-w-3xl mx-auto">
+                            <div class="mb-6 text-lg text-gray-500">
+                                <time datetime="2025-11-25T00:00:00.0000000">November 25, 2025</time>
+                                <span aria-hidden="true">&middot;</span>
+                                <span>9 min read</span>
+                            </div>
+                        </div>
+                </div>
+                <div class="flex flex-grow-0">
+                    <div data-post="PostVotes"></div>
+                    <a href="javascript:;" onclick="document.location.hash='comments'" class="cursor-pointer" title="Jump to comments">
+                        <svg class="ml-4 text-gray-700 mt-1 w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M3 11.2c0 .1 0 .1 0 0c0 .1 0 .1 0 0zM8.3 1C3.9 1 0 3.6 0 6.6c0 2 1.1 3.7 3 4.7s0 .1 0 .1c-.1 1.3-.9 1.7-.9 1.7L.3 14h2c2.5 0 4.3-1.1 5.1-1.9h.8c4.3 0 7.8-2.5 7.8-5.6S12.6 1 8.3 1zm-.1 10.1H7l-.2.2c-.5.5-1.6 1.4-3.3 1.7c.3-.5.5-1.1.5-2v-.3l-.3-.1C1.9 9.7 1 8.3 1 6.6C1 4.2 4.5 2 8.3 2C12 2 15 4 15 6.6c0 2.4-3.1 4.5-6.8 4.5z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="max-w-3xl mx-auto">
+                <div id="post" class="prose lg:prose-xl max-w-none mb-32">
+                    <p>Anyone who's used ServiceStack's built-in <a href="https://docs.servicestack.net/api-explorer">API Explorer</a> or
+<a href="https://docs.servicestack.net/auto-html-api">Auto HTML API</a> UIs know that not all API Explorer UIs are created equal.</p>
+<p>The differences are more pronounced as APIs get larger and more complex which we can see by comparing it with
+Swagger UI for rendering <a href="/posts/ai-chat">AI Chat's</a> <code>ChatCompletion</code> API:</p>
+<p><a href="https://servicestack.net/img/posts/ai-chat-explorer/ai-chat-swagger-form.webp"><img src="https://servicestack.net/img/posts/ai-chat-explorer/ai-chat-swagger-form.webp" alt="" /></a></p>
+<p>This is just the tip of the iceberg, the <a href="https://servicestack.net/img/posts/ai-chat-explorer/ai-chat-swagger-long.webp">full-length Swagger UI Screenshot</a>
+is absurdly long, past the point of being usable.</p>
+<p>As expected from a generic UI we get very little assistance from the UI on what values are allowed, the numeric fields
+aren't number inputs and the only dropdowns we see are for <code>bool</code> properties to select from their <code>true</code> and <code>false</code> values.
+There's not going to be any chance for it to be able to show App-specific options like which models are currently enabled.</p>
+<h2 id="api-explorer-ui">API Explorer UI<a class="header-anchor" href="#api-explorer-ui" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>By contrast here is the same API rendered with ServiceStack's <a href="https://docs.servicestack.net/api-explorer">API Explorer</a>:</p>
+<p><a href="https://servicestack.net/img/posts/ai-chat-explorer/ai-chat-form.webp"><img src="https://servicestack.net/img/posts/ai-chat-explorer/ai-chat-form.webp" alt="" /></a></p>
+<p>This is much closer to what you'd expect from a hand-crafted Application UI and far more usable.</p>
+<h4 id="properties-use-optimized-ui-components">Properties use optimized UI Components<a class="header-anchor" href="#properties-use-optimized-ui-components" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>It renders an optimized UI for each property, with the <strong>Model</strong>, <strong>Reasoning Effort</strong>, <strong>Service Tier</strong> and <strong>Verbosity</strong>
+properties all using a <a href="https://docs.servicestack.net/vue/combobox">Combobox</a> component for quickly searching through a
+list of supported options, or they can choose to enter a custom value.</p>
+<p><strong>Bool</strong> properties use Checkboxes whilst Numeric fields use <strong>number</strong> inputs, with integer properties only allowing
+integer values and floating point properties being able to step through fractional values.</p>
+<h4 id="ui-specific-text-hints">UI-specific text hints<a class="header-anchor" href="#ui-specific-text-hints" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>Each property also contains <strong>placeholder</strong> text and <strong>help</strong> text hints that's more focused and concise than the
+verbose API documentation.</p>
+<h4 id="html-client-side-validation">HTML client-side validation<a class="header-anchor" href="#html-client-side-validation" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>Client-side HTML validation ensure properties are valid and within any configured min/max values before any request is sent.</p>
+<p><a href="https://servicestack.net/img/posts/ai-chat-explorer/ai-chat-form-completed.webp"><img src="https://servicestack.net/img/posts/ai-chat-explorer/ai-chat-form-completed.webp" alt="" /></a></p>
+<h3 id="custom-components-for-complex-properties">Custom Components for Complex Properties<a class="header-anchor" href="#custom-components-for-complex-properties" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>The only property that doesn't use a built-in component is <code>Messages</code> which is rendered with a custom
+<code>ChatMessages</code> component purpose-built to populate the <code>List&lt;AiMessage&gt; Messages</code> property. It uses a <strong>Markdown Editor</strong>
+for the UserPrompt, a collapsible Textarea for any System Prompt and the ability to attach <strong>image</strong>, <strong>audio</strong> &amp; <strong>file</strong>
+document attachments to the API request.</p>
+<h2 id="how-is-it-done">How is it done?<a class="header-anchor" href="#how-is-it-done" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>The entire UI is driven by these <a href="https://docs.servicestack.net/locode/declarative">declarative annotations</a> added on the
+<a href="https://github.com/ServiceStack/ServiceStack/blob/main/ServiceStack/src/ServiceStack.AI.Chat/ChatCompletion.cs">ChatCompletion</a>
+Request DTO:</p>
+<pre><code class="language-csharp">[Description(&quot;Chat Completions API (OpenAI-Compatible)&quot;)]
+[Notes(&quot;The industry-standard, message-based interface for interfacing with Large Language Models.&quot;)]
+public class ChatCompletion : IPost, IReturn&lt;ChatResponse&gt;
+{
+    [DataMember(Name = &quot;messages&quot;)]
+    [Input(Type = &quot;ChatMessages&quot;, Label=&quot;&quot;), FieldCss(Field = &quot;col-span-12&quot;)]
+    public List&lt;AiMessage&gt; Messages { get; set; } = [];
+    
+    [DataMember(Name = &quot;model&quot;)]
+    [Input(Type = &quot;combobox&quot;, EvalAllowableValues = &quot;Chat.Models&quot;, Placeholder = &quot;e.g. glm-4.6&quot;, Help = &quot;ID of the model to use&quot;)]
+    public string Model { get; set; }
+
+    [DataMember(Name = &quot;reasoning_effort&quot;)]
+    [Input(Type=&quot;combobox&quot;, EvalAllowableValues = &quot;['low','medium','high','none','default']&quot;, Help = &quot;Constrains effort on reasoning for reasoning models&quot;)]
+    public string? ReasoningEffort { get; set; }
+
+    [DataMember(Name = &quot;service_tier&quot;)]
+    [Input(Type = &quot;combobox&quot;, EvalAllowableValues = &quot;['auto','default']&quot;, Help = &quot;Processing type for serving the request&quot;)]
+    public string? ServiceTier { get; set; }
+    
+    [DataMember(Name = &quot;safety_identifier&quot;)]
+    [Input(Type = &quot;text&quot;, Placeholder = &quot;e.g. user-id&quot;, Help = &quot;Stable identifier to help detect policy violations&quot;)]
+    public string? SafetyIdentifier { get; set; }
+    
+    [DataMember(Name = &quot;stop&quot;)]
+    [Input(Type = &quot;tag&quot;, Max = &quot;4&quot;, Help = &quot;Up to 4 sequences for the API to stop generating tokens&quot;)]
+    public List&lt;string&gt;? Stop { get; set; }
+    
+    [DataMember(Name = &quot;modalities&quot;)]
+    [Input(Type = &quot;tag&quot;, Max = &quot;3&quot;, Help = &quot;The output types you would like the model to generate&quot;)]
+    public List&lt;string&gt;? Modalities { get; set; }
+    
+    [DataMember(Name = &quot;prompt_cache_key&quot;)]
+    [Input(Type = &quot;text&quot;, Placeholder = &quot;e.g. my-cache-key&quot;, Help = &quot;Used by OpenAI to cache responses for similar requests&quot;)]
+    public string? PromptCacheKey { get; set; }
+    
+    [DataMember(Name = &quot;tools&quot;)]
+    public List&lt;Tool&gt;? Tools { get; set; }
+    
+    [DataMember(Name = &quot;verbosity&quot;)]
+    [Input(Type = &quot;combobox&quot;, EvalAllowableValues = &quot;['low','medium','high']&quot;, Placeholder = &quot;e.g. low&quot;, Help = &quot;Constrains verbosity of model's response&quot;)]
+    public string? Verbosity { get; set; }
+    
+    [DataMember(Name = &quot;temperature&quot;)]
+    [Input(Type = &quot;number&quot;, Step = &quot;0.1&quot;, Min = &quot;0&quot;, Max = &quot;2&quot;, Placeholder = &quot;e.g. 0.7&quot;, Help = &quot;Higher values more random, lower for more focus&quot;)]
+    public double? Temperature { get; set; }
+
+    [DataMember(Name = &quot;max_completion_tokens&quot;)]
+    [Input(Type = &quot;number&quot;, Value = &quot;2048&quot;, Step = &quot;1&quot;, Min = &quot;1&quot;, Placeholder = &quot;e.g. 2048&quot;, Help = &quot;Max tokens for completion (inc. reasoning tokens)&quot;)]
+    public int? MaxCompletionTokens { get; set; }
+
+    [DataMember(Name = &quot;top_logprobs&quot;)]
+    [Input(Type = &quot;number&quot;, Step = &quot;1&quot;, Min = &quot;0&quot;, Max = &quot;20&quot;, Placeholder = &quot;e.g. 5&quot;, Help = &quot;Number of most likely tokens to return with log probs&quot;)]
+    public int? TopLogprobs { get; set; }
+    
+    [DataMember(Name = &quot;top_p&quot;)]
+    [Input(Type = &quot;number&quot;, Step = &quot;0.1&quot;, Min = &quot;0&quot;, Max = &quot;1&quot;, Placeholder = &quot;e.g. 0.5&quot;, Help = &quot;Nucleus sampling - alternative to temperature&quot;)]
+    public double? TopP { get; set; }
+
+    [DataMember(Name = &quot;frequency_penalty&quot;)]
+    [Input(Type = &quot;number&quot;, Step = &quot;0.1&quot;, Min = &quot;0&quot;, Max = &quot;2&quot;, Placeholder = &quot;e.g. 0.5&quot;, Help = &quot;Penalize tokens based on frequency in text&quot;)]
+    public double? FrequencyPenalty { get; set; }
+    
+    [DataMember(Name = &quot;presence_penalty&quot;)]
+    [Input(Type = &quot;number&quot;, Step = &quot;0.1&quot;, Min = &quot;0&quot;, Max = &quot;2&quot;, Placeholder = &quot;e.g. 0.5&quot;, Help = &quot;Penalize tokens based on presence in text&quot;)]
+    public double? PresencePenalty { get; set; }
+    
+    [DataMember(Name = &quot;seed&quot;)]
+    [Input(Type = &quot;number&quot;, Placeholder = &quot;e.g. 42&quot;, Help = &quot;For deterministic sampling&quot;)]
+    public int? Seed { get; set; }
+    
+    [DataMember(Name = &quot;n&quot;)]
+    [Input(Type = &quot;number&quot;, Placeholder = &quot;e.g. 1&quot;, Help = &quot;How many chat choices to generate for each input message&quot;)]
+    public int? N { get; set; }
+    
+    [Input(Type = &quot;checkbox&quot;, Help = &quot;Whether or not to store the output of this chat request&quot;)]
+    [DataMember(Name = &quot;store&quot;)]
+    public bool? Store { get; set; }
+    
+    [DataMember(Name = &quot;logprobs&quot;)]
+    [Input(Type = &quot;checkbox&quot;, Help = &quot;Whether to return log probabilities of the output tokens&quot;)]
+    public bool? Logprobs { get; set; }
+    
+    [DataMember(Name = &quot;parallel_tool_calls&quot;)]
+    [Input(Type = &quot;checkbox&quot;, Help = &quot;Enable parallel function calling during tool use&quot;)]
+    public bool? ParallelToolCalls { get; set; }
+    
+    [DataMember(Name = &quot;enable_thinking&quot;)]
+    [Input(Type = &quot;checkbox&quot;, Help = &quot;Enable thinking mode for some Qwen providers&quot;)]
+    public bool? EnableThinking { get; set; }
+    
+    [DataMember(Name = &quot;stream&quot;)]
+    [Input(Type = &quot;hidden&quot;)]
+    public bool? Stream { get; set; }
+}
+</code></pre>
+<p>Which uses the <a href="https://docs.servicestack.net/locode/declarative#custom-fields-and-inputs">[Input] attribute</a>
+to control the HTML Input rendered for each property whose <code>Type</code> can reference any
+HTML Input or any <a href="https://docs.servicestack.net/vue/form-inputs">ServiceStack Vue Component</a> that's either built-in
+or registered with the Component library.</p>
+<p>In addition, you also have control to the css of the containing <strong>Field</strong>, <strong>Input</strong> and <strong>Label</strong> elements with the
+<a href="https://docs.servicestack.net/locode/declarative#field">[FieldCss] attribute</a>
+which uses <code>[FieldCss(Field=&quot;col-span-12&quot;)]</code> to render the field to span the full width of the form.</p>
+<p>The <code>[Input(Type=&quot;hidden&quot;)]</code> is used to hide the <code>Stream</code> property from the UI since it is invalid from an API Explorer UI.</p>
+<h3 id="combobox-values">Combobox Values<a class="header-anchor" href="#combobox-values" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>The Combobox <code>EvalAllowableValues</code> can reference any JavaScript expression which is evaluated with
+<a href="https://sharpscript.net">#Script</a> with the results embedded in the API Metadata that API Explorer uses to render its UI.</p>
+<p>All combo boxes references a static JS Array except for <code>Model</code> which uses <code>EvalAllowableValues = &quot;Chat.Models&quot;</code> to
+invoke the registered <code>Chat</code> instance <code>Models</code> property which returns an ordered list of all available models from all enabled providers:</p>
+<pre><code class="language-csharp">appHost.ScriptContext.Args[nameof(Chat)] = new Chat(this);
+
+public class Chat(ChatFeature feature)
+{
+    public List&lt;string&gt; Models =&gt; feature.Providers.Values
+        .SelectMany(x =&gt; x.Models.Keys)
+        .Distinct()
+        .OrderBy(x =&gt; x)
+        .ToList();
+}
+</code></pre>
+<h3 id="custom-chatmessages-component">Custom ChatMessages Component<a class="header-anchor" href="#custom-chatmessages-component" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>The only property that doesn't use a built-in component is:</p>
+<pre><code class="language-csharp">[Input(Type = &quot;ChatMessages&quot;, Label=&quot;&quot;), FieldCss(Field = &quot;col-span-12&quot;)]
+public List&lt;AiMessage&gt; Messages { get; set; } = [];
+</code></pre>
+<p>Which makes use of a custom <code>ChatMessages</code> component in
+<a href="https://github.com/ServiceStack/ServiceStack/blob/main/ServiceStack/src/ServiceStack.AI.Chat/modules/ui/components/ChatMessages.mjs">/modules/ui/components/ChatMessages.mjs</a>.</p>
+<p>Custom Components can be added to API Explorer in the same way as
+<a href="https://docs.servicestack.net/locode/custom-overview#ui">overriding any built-in API Explorer</a>
+component by adding it to your local <code>/wwwroot</code> folder:</p>
+<div class="language-files"><div class="ml-6">
+  <div class="flex items-center text-base leading-8">
+    <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 12 12" width="12" height="12" fill="currentColor"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg>
+    <svg class="mr-1 text-sky-500" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M.513 1.513A1.75 1.75 0 0 1 1.75 1h3.5c.55 0 1.07.26 1.4.7l.9 1.2a.25.25 0 0 0 .2.1H13a1 1 0 0 1 1 1v.5H2.75a.75.75 0 0 0 0 1.5h11.978a1 1 0 0 1 .994 1.117L15 13.25A1.75 1.75 0 0 1 13.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75c0-.464.184-.91.513-1.237Z"></path></svg>
+    <span>modules</span>
+  </div>
+<div class="ml-6">
+  <div class="flex items-center text-base leading-8">
+    <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 12 12" width="12" height="12" fill="currentColor"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg>
+    <svg class="mr-1 text-sky-500" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M.513 1.513A1.75 1.75 0 0 1 1.75 1h3.5c.55 0 1.07.26 1.4.7l.9 1.2a.25.25 0 0 0 .2.1H13a1 1 0 0 1 1 1v.5H2.75a.75.75 0 0 0 0 1.5h11.978a1 1 0 0 1 .994 1.117L15 13.25A1.75 1.75 0 0 1 13.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75c0-.464.184-.91.513-1.237Z"></path></svg>
+    <span>ui</span>
+  </div>
+<div class="ml-6">
+  <div class="flex items-center text-base leading-8">
+    <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 12 12" width="12" height="12" fill="currentColor"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg>
+    <svg class="mr-1 text-sky-500" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M.513 1.513A1.75 1.75 0 0 1 1.75 1h3.5c.55 0 1.07.26 1.4.7l.9 1.2a.25.25 0 0 0 .2.1H13a1 1 0 0 1 1 1v.5H2.75a.75.75 0 0 0 0 1.5h11.978a1 1 0 0 1 .994 1.117L15 13.25A1.75 1.75 0 0 1 13.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75c0-.464.184-.91.513-1.237Z"></path></svg>
+    <span>components</span>
+  </div>
+<div>
+<div class="ml-6 flex items-center text-base leading-8">
+  <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg>
+  <span>ChatMessages.mjs</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>All components added to the <code>/components</code> folder will be automatically registered and available for use.</p>
+<p>That's all that's needed to customize the <code>ChatCompletion</code> Form UI in API Explorer, for more features and
+customizations see the <a href="https://docs.servicestack.net/api-explorer">API Explorer Docs</a>.</p>
+<h2 id="install">Install<a class="header-anchor" href="#install" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>To experience <a href="/posts/ai-chat-ui">AI Chat's UI</a> and its <code>ChatCompletion</code> API Explorer UI for yourself, you can add
+AI Chat to any .NET 8+ project by installing the <strong>ServiceStack.AI.Chat</strong> NuGet package and configuration with:</p>
+<div class="not-prose sh-copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-800">
+                    <div class="pl-4 py-1 pb-1.5 align-middle whitespace-pre text-base text-gray-100"><p>npx add-in chat</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-green-600 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<p>Prerequisites:</p>
+<p>Which drops this simple <a href="https://docs.servicestack.net/modular-startup">Modular Startup</a> that adds the <code>ChatFeature</code>
+and registers a link to its UI on the <a href="https://docs.servicestack.net/metadata-page">Metadata Page</a> if you want it:</p>
+<pre><code class="language-csharp">public class ConfigureAiChat : IHostingStartup
+{
+    public void Configure(IWebHostBuilder builder) =&gt; builder
+        .ConfigureServices((context, services) =&gt; {
+
+            // Docs: https://docs.servicestack.net/ai-chat-api
+            services.AddPlugin(new ChatFeature {
+                EnableProviders = [
+                    &quot;servicestack&quot;,
+                    // &quot;groq&quot;,
+                    // &quot;google_free&quot;,
+                    // &quot;openrouter_free&quot;,
+                    // &quot;ollama&quot;,
+                    // &quot;google&quot;,
+                    // &quot;anthropic&quot;,
+                    // &quot;openai&quot;,
+                    // &quot;grok&quot;,
+                    // &quot;qwen&quot;,
+                    // &quot;z.ai&quot;,
+                    // &quot;mistral&quot;,
+                    // &quot;openrouter&quot;,
+                ]
+            });
+            
+            // Persist AI Chat History, enables analytics at /admin-ui/chat
+            services.AddSingleton&lt;IChatStore,DbChatStore&gt;();
+            // Or store history in monthly partitioned tables in PostgreSQL:
+            // services.AddSingleton&lt;IChatStore, PostgresChatStore&gt;();
+             
+            services.ConfigurePlugin&lt;MetadataFeature&gt;(feature =&gt; {
+                feature.AddPluginLink(&quot;/chat&quot;, &quot;AI Chat&quot;);
+            });
+        });
+}
+</code></pre>
+<h2 id="learn-more-about-ai-chat">Learn more about AI Chat<a class="header-anchor" href="#learn-more-about-ai-chat" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>To dive deeper into what AI Chat can do:</p>
+<ul>
+<li>Read the <a href="https://docs.servicestack.net/ai-chat-api">AI Chat API docs</a> to integrate AI into your own services and apps.</li>
+<li>Explore the <a href="https://docs.servicestack.net/ai-chat-ui">AI Chat UI guide</a> to customize the built-in experience.</li>
+<li>Use <a href="https://docs.servicestack.net/ai-chat-analytics">Admin UI</a> to inspect analytics, monitor usage, and review audit history.</li>
+</ul>
+<div class="pt-12 not-prose flex justify-center">
+<a href="https://docs.servicestack.net/ai-chat-api"
+   class="group relative inline-flex items-center rounded-full bg-gradient-to-r from-sky-400 vithe UX Hot reloading of npm UIsa-cyan-400 to-emerald-400 p-[1.5px] shadow-md">
+    <span class="inline-flex items-center gap-2.5 rounded-full bg-white px-6 py-3 text-base font-semibold text-slate-900 transition group-hover:bg-slate-50">
+    <span class="h-2.5 w-2.5 rounded-full bg-gradient-to-r from-sky-400 to-cyan-400 shadow-[0_0_7px_rgba(56,189,248,0.7)]"></span>
+    <span class="tracking-wide">ServiceStack AI Chat</span>
+    <span class="ml-1 text-slate-400 transition-transform group-hover:translate-x-0.5">&rarr;</span>
+    </span>
+</a>
+</div>
+
+                </div>
+            </div>
+        </article>
+</div>
+
+<div id="comments" data-post="PostComments" class="my-48"></div>
+
+
+<script type="module">
+import { init } from "app.mjs"
+init()
+</script>
+
+<link rel="stylesheet" href="css/highlight.css">
+<script src="lib/js/highlight.js"></script>
+<script>hljs.highlightAll()</script>
+<script src="lib/js/lite-yt-embed.js"></script>
+<script src="mjs/docs.mjs" type="module"></script>
+
+<script type="module">
+import { mount } from "app.mjs"
+
+    const App = {
+        setup() {
+            function nav(url) {
+                window.open(url)
+            }
+            return { nav }
+        }
+    }
+    mount('#post', App)
+</script>
+
+    </main>
+</div>
+
+<footer class="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+  <div class="mx-auto max-w-7xl overflow-hidden py-20 px-6 sm:py-24 lg:px-8">
+    <nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
+      <div class="pb-6">
+        <a href="whatsnew" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">What's New</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="blog" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Blog</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="posts" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Archive</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="speaking" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Speaking</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="uses" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Uses</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="about" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">About</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="privacy" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Privacy</a>
+      </div>
+    </nav>
+    <div class="mt-10 flex justify-center space-x-10">
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Facebook</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Instagram</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Twitter</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">GitHub</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">YouTube</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+    </div>
+    <p class="mt-10 text-center text-xs leading-5 text-gray-500">
+      <a href="https://github.com/NetCoreTemplates/razor-ssg">powered by razor</a>
+    </p>
+  </div>
+</footer>
+
+<script type="module">
+//TODO: Replace with local and production URLs of CreatorKit .NET App or Remove if not using CreatorKit
+import { mail } from 'https://creatorkit.netcore.io/mjs/components/mail.mjs'
+import { post } from 'https://creatorkit.netcore.io/mjs/components/post.mjs'
+
+mail('[data-mail]', { 
+    mailingLists: ['MonthlyNewsletter'] 
+})
+
+post('[data-post]', {
+    commentLink: { 
+        href: '/community-rules',
+        label: 'read the community rules'
+    } 
+})
+</script>
+
+
+<script type="module">
+import { init } from "app.mjs"
+init()
+</script>
+
+
+
+</body>
+</html>

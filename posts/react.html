@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg" href="img/logo.svg">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://razor-ssg.web-templates.io/feed.xml" />
+    <title>React &#x2B; Tailwind &#x2B; TypeScript for AI-First Development</title>
+    <base href="/" />
+    <script>
+    if (location.search === "?dark") localStorage.setItem('color-scheme','dark') 
+    if (location.search === "?light") localStorage.removeItem('color-scheme') 
+    const cls = document.querySelector('html').classList
+    if (localStorage.getItem('color-scheme') === 'dark')
+        cls.add('dark')
+    else
+        cls.remove('dark')
+    </script>
+    <link rel="stylesheet" href="css/app.css">
+    <style>html { scroll-padding-top: 5rem }</style>
+
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+{
+    "imports": {
+        "app.mjs": "./mjs/app.mjs",
+        "vue": "./lib/mjs/vue.min.mjs",
+        "@servicestack/client": "./lib/mjs/servicestack-client.min.mjs",
+        "@servicestack/vue": "./lib/mjs/servicestack-vue.min.mjs"
+    }
+}
+</script>
+    
+    <meta name="twitter:site" content="@RazorSsg" />
+    <meta name="twitter:card" content="summary" />
+    <meta property="og:description" content="First-class React support optimized for AI-assisted development with new React component library &amp; project templates" />
+    <meta property="og:url" content="https://razor-ssg.web-templates.io/posts/react" />
+    <meta property="og:title" content="React &#x2B; Tailwind &#x2B; TypeScript for AI-First Development" />
+    <meta property="og:image" content="https://servicestack.net/img/posts/react/bg.webp" />
+
+
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+<header class="top-0 fixed z-50 h-14 bg-white dark:bg-black opacity-90 w-full shadow pr-3">
+    <div class="flex flex-wrap items-center">
+        <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
+            <div class="cursor-pointer">
+                <a class="navbar-brand flex items-center" href="./">
+                    <svg class="w-8 h-8 sm:ml-2 sm:w-12 sm:h-12" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="currentColor" d="M10 6c1.544 1.76 2.276 4.15 2.217 6.61c3.968 1.67 9.924 6.12 11.181 12.39H28C26.051 14.31 14.918 6.77 10 6zm-2 7c4.67 4.913.81 11.582-4 12h18.97C21.5 18.289 11.95 13.533 8 13z"/></svg>
+                    <span class="hidden sm:block text-2xl font-semibold">MyApp</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-grow flex-shrink flex-nowrap justify-end items-center">
+            <nav class="relative flex flex-grow leading-6 font-semibold text-slate-700 dark:text-slate-200">
+                <ul class="flex flex-wrap items-center justify-end w-full m-0 pb-2 sm:pb-0">
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="whatsnew" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    What's New
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="blog" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Blog
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="podcasts" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Podcasts
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="videos" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Videos
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="creatorkit/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Creator Kit
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="posts/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Archive
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="speaking" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Speaking
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="uses" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Uses
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="about" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    About
+                                </a>
+                            </li>
+                    <li class="relative flex flex-wrap just-fu-start m-0">
+                        <div data-component="DarkModeToggle" class="ml-2 w-10"></div>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</header>
+<script type="module">
+import { mountAll } from "app.mjs"
+mountAll()
+</script>
+
+
+<div class="min-h-screen">
+    <main role="main" class="pt-14 pb-3">
+        
+
+
+
+<link rel="stylesheet" href="css/typography.css">
+<link rel="stylesheet" href="css/lite-yt-embed.css">
+
+<div class="container px-5 mb-32 mx-auto">
+        <article class="mt-20">
+            <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
+                React &#x2B; Tailwind &#x2B; TypeScript for AI-First Development
+            </h1>
+            <div class="flex justify-between">
+                <div class="md:mb-12 flex items-center">
+                        <img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="data:image/svg&#x2B;xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; fill=&#x27;none&#x27; viewBox=&#x27;0 0 24 24&#x27; stroke=&#x27;none&#x27; aria-hidden=&#x27;true&#x27;%3E%3Cpath fill=&#x27;%230891b2&#x27; d=&#x27;M12 2a5 5 0 1 0 5 5a5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3a3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z&#x27;/%3E%3C/svg%3E">
+                    <div class="flex flex-col">
+                    </div>
+                </div>
+                <div class="mb-4 max-w-sm" data-mail="JoinMailingList" data-props="{ submitLabel:'Join our newsletter' }"></div>
+            </div>
+            <div class="mb-8 md:mb-16 sm:mx-0">
+                <div class="sm:mx-0">
+                    <img src="https://servicestack.net/img/posts/react/bg.webp" alt="React &#x2B; Tailwind &#x2B; TypeScript for AI-First Development Background" class="shadow-small">
+                </div>
+            </div>
+            <div class="flex max-w-7xl mx-auto justify-between" style="width:100%;">
+                <div>
+                    <div class="mb-4 flex flex-wrap">
+                            <a href="posts/tagged/react" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">react</a>
+                            <a href="posts/tagged/autoquery" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">autoquery</a>
+                            <a href="posts/tagged/admin" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">admin</a>
+                    </div>
+                        <div class="max-w-3xl mx-auto">
+                            <div class="mb-6 text-lg text-gray-500">
+                                <time datetime="2025-11-13T00:00:00.0000000">November 13, 2025</time>
+                                <span aria-hidden="true">&middot;</span>
+                                <span>9 min read</span>
+                            </div>
+                        </div>
+                </div>
+                <div class="flex flex-grow-0">
+                    <div data-post="PostVotes"></div>
+                    <a href="javascript:;" onclick="document.location.hash='comments'" class="cursor-pointer" title="Jump to comments">
+                        <svg class="ml-4 text-gray-700 mt-1 w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M3 11.2c0 .1 0 .1 0 0c0 .1 0 .1 0 0zM8.3 1C3.9 1 0 3.6 0 6.6c0 2 1.1 3.7 3 4.7s0 .1 0 .1c-.1 1.3-.9 1.7-.9 1.7L.3 14h2c2.5 0 4.3-1.1 5.1-1.9h.8c4.3 0 7.8-2.5 7.8-5.6S12.6 1 8.3 1zm-.1 10.1H7l-.2.2c-.5.5-1.6 1.4-3.3 1.7c.3-.5.5-1.1.5-2v-.3l-.3-.1C1.9 9.7 1 8.3 1 6.6C1 4.2 4.5 2 8.3 2C12 2 15 4 15 6.6c0 2.4-3.1 4.5-6.8 4.5z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="max-w-3xl mx-auto">
+                <div id="post" class="prose lg:prose-xl max-w-none mb-32">
+                    <p>We're witnessing a fundamental shift in how applications are built. AI code generation has evolved from a novelty to a productivity multiplier that's become too significant to ignore. While AI models still require oversight for production backend systems, they excel at generating frontend UIs—compressing development timelines that once took months into days.</p>
+<h2 id="the-rise-of-vibe-coding">The Rise of Vibe Coding<a class="header-anchor" href="#the-rise-of-vibe-coding" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>AI can now generate complete, production-ready UI code. This enables an entirely new development workflow that <a href="https://en.wikipedia.org/wiki/Andrej_Karpathy">Andrej Karpathy</a> has termed <a href="https://en.wikipedia.org/wiki/Vibe_coding">&quot;Vibe Coding&quot;</a>—where developers iteratively guide AI agents to implement features through natural language instructions, where features can be iteratively prototyped, refined and improved within seconds instead of hours.</p>
+<p>This AI-first approach is rapidly maturing, with tools like <a href="https://cursor.com">Cursor</a>, <a href="https://www.claude.com/product/claude-code">Claude Code</a>, and <a href="https://chatgpt.com/features/codex/">Codex</a> becoming the preferred platforms for this new paradigm with new tools designed to get maximum effectiveness of AI models with sophisticated planning
+tools, focused models optimized for code generation and edits and agentic workflows that's able to solidifying each new feature iteration with tests, along with detailed documentation, planning, migrations and usage guides.</p>
+<h2 id="react-tailwind-the-ai-development-standard">React &amp; Tailwind: The AI Development Standard<a class="header-anchor" href="#react-tailwind-the-ai-development-standard" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>React and Tailwind have emerged as the de facto standards for AI-generated UIs. Every major platform for generating applications from prompts has converged on this stack including
+<a href="https://blog.replit.com/react">Replit</a>,
+<a href="https://lovable.dev/blog/best-tailwind-css-component">Lovable</a>,
+<a href="https://aistudio.google.com">Google's AI Studio</a>,
+<a href="https://v0.app">Vercel's v0</a> and <a href="https://claude.ai/code">Claude Code Web</a>.</p>
+<h3 id="typescript">TypeScript<a class="header-anchor" href="#typescript" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Whilst TypeScript is often excluded in one-prompt solutions catering to non-developers, it's still a critical part of the AI development workflow. It provides a type system that helps AI models generate more accurate and maintainable code and TypeScript's static analysis also helps identify errors in the generated code which AI Models have have become really good at correcting—as such it's an integral part in all our React templates.</p>
+<h2 id="how-servicestack-excels-in-ai-first-development">How ServiceStack Excels in AI-First Development<a class="header-anchor" href="#how-servicestack-excels-in-ai-first-development" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>Context is king when developing with AI models. The better the context, the higher the quality of generated code
+and ServiceStack's architecture is uniquely suited for AI-assisted development:</p>
+<h3 id="declarative-typed-apis">Declarative Typed APIs<a class="header-anchor" href="#declarative-typed-apis" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>All ServiceStack APIs follow a flat, declarative structure—The contract is explicit and consistent and LLMs don't need to guess what APIs accept or return.</p>
+<h3 id="end-to-end-type-safety">End-to-End Type Safety<a class="header-anchor" href="#end-to-end-type-safety" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Context quality directly impacts generated code quality. ServiceStack's TypeScript integration provides complete static analysis of what APIs accept, return, and how to bind responses—giving AI models the full context they need.
+The static analysis feedback also directs models to identify and correct any errors in the generated code.</p>
+<h3 id="zero-ambiguity-integration">Zero-Ambiguity Integration<a class="header-anchor" href="#zero-ambiguity-integration" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>AI models thrive on consistency. ServiceStack removes guesswork with a single pattern for all API calls:</p>
+<ul>
+<li>One generic <code>JsonServiceClient</code> for all APIs</li>
+<li>Consistent methods used to send all requests</li>
+<li>Consistent Typed Request DTO → Response DTO flow</li>
+<li>Uniform error handling</li>
+</ul>
+<h3 id="intuitive-project-structure">Intuitive Project Structure<a class="header-anchor" href="#intuitive-project-structure" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>ServiceStack's <a href="https://docs.servicestack.net/physical-project-structure">physical project structure</a> provides clear separation of concerns, with the entire API surface area contained in <a href="https://docs.servicestack.net/physical-project-structure#servicemodel-project">the ServiceModel project</a>—making codebases easy for AI models to navigate and understand.</p>
+<h3 id="minimal-code-surface">Minimal Code Surface<a class="header-anchor" href="#minimal-code-surface" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Less code means fewer opportunities for errors. ServiceStack's high-productivity features minimize the code AI needs to generate:</p>
+<ul>
+<li><strong><a href="https://docs.servicestack.net/autoquery/">AutoQuery APIs</a></strong> - Flexible, queryable APIs defined with just a Request DTO</li>
+<li><strong><a href="https://react.servicestack.net/gallery/autoquerygrid">AutoQueryGrid Component</a></strong> - Complete CRUD UIs in 1 line of code</li>
+<li><strong><a href="https://react.servicestack.net/gallery/autoform">Auto Form Components</a></strong> - Beautiful, validation-bound forms in 1 line of code</li>
+</ul>
+<p>These components are ideal for rapidly building backend management interfaces, freeing developers to focus on differentiating customer-facing features.</p>
+<h2 id="modern-react-project-templates">Modern React Project Templates<a class="header-anchor" href="#modern-react-project-templates" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>We're introducing three production-ready React templates, each optimized for different use cases:</p>
+<p><react-template 
+name="react-vite" 
+description="A lightweight foundation built with React + Vite + TypeScript + Tailwind CSS—the ideal blank slate starting point for AI-generated UIs."></react-template></p>
+<p><react-template 
+name="react-spa" 
+description="A comprehensive single-page application with deep ServiceStack integration and ASP.NET Core Identity Auth, perfect for full-featured web applications."></react-template></p>
+<p><react-template 
+name="nextjs" 
+description="A Next.js template with TypeScript and Tailwind CSS, offering server-side rendering and optimized performance with complete ServiceStack integration."></react-template></p>
+<h2 id="comprehensive-react-component-library">Comprehensive React Component Library<a class="header-anchor" href="#comprehensive-react-component-library" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>All three templates leverage our new <a href="https://react.servicestack.net">React Component Gallery</a>—a high-fidelity port of our proven <a href="https://docs.servicestack.net/vue/">Vue Component Library</a> and <a href="https://blazor.servicestack.net">Blazor Component Library</a>. This comprehensive collection provides everything needed to build highly productive, modern and responsive web applications.</p>
+<div class="not-prose">
+<div class="my-8 max-w-3xl mx-auto rounded-lg overflow-hidden shadow hover:shadow-xl"><p><a href="https://react.servicestack.net"><img src="https://servicestack.net/img/posts/react/react-gallery.webp" alt="" /></a></p>
+</div>
+</div>
+<div><p>Switch to Dark Mode to see how all components looks in Dark Mode:</p>
+<div class="not-prose">
+<div class="my-8 max-w-3xl mx-auto rounded-lg overflow-hidden shadow hover:shadow-xl"><p><a href="https://react.servicestack.net"><img src="https://servicestack.net/img/posts/react/react-gallery-dark.webp" alt="" /></a></p>
+</div>
+</div>
+</div>
+<div><p>ServiceStack's first-class React support positions your applications at the forefront of AI-assisted development. With declarative APIs, complete type safety, and minimal boilerplate, you can leverage AI code generation with confidence while maintaining the quality and maintainability your production systems demand.</p>
+<h2 id="admin-analytics-ui-persistence">Admin Analytics UI &amp; Persistence<a class="header-anchor" href="#admin-analytics-ui-persistence" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>ServiceStack's AI Chat now includes comprehensive chat history persistence and analytics capabilities, providing deep visibility into AI usage patterns, costs, and performance across your infrastructure. Choose between <code>DbChatStore</code> for universal RDBMS compatibility or <code>PostgresChatStore</code> for optimized PostgreSQL performance with monthly table partitioning—both ensuring consistent performance as history grows.</p>
+<p>The Admin UI Analytics dashboard delivers actionable insights through three key views: <strong>Cost Analysis</strong> tracks spending across providers and models with daily and monthly breakdowns, <strong>Token Usage</strong> monitors input and output token consumption to identify optimization opportunities, and <strong>Activity Log</strong> maintains a searchable audit trail with full conversation details. These visualizations enable data-driven decisions about provider selection, cost optimization, and help debug AI features in production by capturing every request and response flowing through AI Chat's UI, external OpenAI endpoints, and internal <code>IChatStore</code> requests.</p>
+<h2 id="typescript-data-models">TypeScript Data Models<a class="header-anchor" href="#typescript-data-models" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>As AI Models are not as adept at generating C# APIs or Migrations yet, they excel at generating TypeScript code, which our
+<a href="https://docs.servicestack.net/autoquery/okai-models">TypeScript Data Models</a> feature can take advantage of by generating all the C# AutoQuery CRUD APIs and DB Migrations needing to support it.</p>
+<p>With just a TypeScript Definition:</p>
+<ul>
+<li><a href="https://github.com/NetCoreTemplates/react-vite/blob/main/MyApp.ServiceModel/Bookings.d.ts">Bookings.d.ts</a></li>
+</ul>
+<p>We can generate all the AutoQuery CRUD APIs and DB Migrations needed to enable a CRUD UI with:</p>
+<div class="not-prose copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-700">
+                    <div class="pl-4 py-1 pb-1.5 align-middle text-lg text-white"><p>npx okai Bookings.d.ts</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-sky-500 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+</div>
+<p>This is enough to generate a complete CRUD UI to manage Bookings
+in your React App with the <a href="https://react.servicestack.net/gallery/autoquerygrid">React AutoQueryGrid Component</a>.
+or with ServiceStack's built-in <a href="https://docs.servicestack.net/locode/">Locode UI</a>:</p>
+<div class="not-prose">
+<div class="my-8 max-w-3xl mx-auto rounded-lg overflow-hidden shadow hover:shadow-xl"><p><a href="https://docs.servicestack.net/locode/"><img src="https://servicestack.net/img/posts/react/bookings-locode.webp" alt="" /></a></p>
+</div>
+</div>
+<div><h3 id="cheat-sheet">Cheat Sheet<a class="header-anchor" href="#cheat-sheet" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>We'll quickly cover the common dev workflow for this feature.</p>
+<p>To create a new Table use <code>init &lt;Table&gt;</code>, e.g:</p>
+<div class="not-prose copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-700">
+                    <div class="pl-4 py-1 pb-1.5 align-middle text-lg text-white"><p>npx okai init Transaction</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-sky-500 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+</div>
+<p>This will generate an empty <code>MyApp.ServiceModel/&lt;Table&gt;.d.ts</code> file along with stub AutoQuery APIs and DB Migration implementations.</p>
+<h4 id="regenerate-autoquery-apis-and-db-migrations">Regenerate AutoQuery APIs and DB Migrations<a class="header-anchor" href="#regenerate-autoquery-apis-and-db-migrations" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>After modifying the TypeScript Data Model to include the desired fields, you can re-run the <code>okai</code> tool to generate the AutoQuery APIs and DB Migrations
+(which can be run anywhere within your Solution):</p>
+<div class="not-prose copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-700">
+                    <div class="pl-4 py-1 pb-1.5 align-middle text-lg text-white"><p>npx okai Transaction.d.ts</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-sky-500 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<p>After you're happy with your Data Model you can run DB Migrations to run the DB Migration and create your RDBMS Table:</p>
+<div class="not-prose copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-700">
+                    <div class="pl-4 py-1 pb-1.5 align-middle text-lg text-white"><p>npm run migrate</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-sky-500 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<h4 id="making-changes-after-first-migration">Making changes after first migration<a class="header-anchor" href="#making-changes-after-first-migration" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>If you want to make further changes to your Data Model, you can re-run the <code>okai</code> tool to update the AutoQuery APIs and DB Migrations, then run the <code>rerun:last</code> npm script to drop and re-run the last migration:</p>
+<div class="not-prose copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-700">
+                    <div class="pl-4 py-1 pb-1.5 align-middle text-lg text-white"><p>npm run rerun:last</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-sky-500 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<h4 id="removing-a-data-model-and-all-generated-code">Removing a Data Model and all generated code<a class="header-anchor" href="#removing-a-data-model-and-all-generated-code" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>If you changed your mind and want to get rid of the RDBMS Table you can revert the last migration:</p>
+<div class="not-prose copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-700">
+                    <div class="pl-4 py-1 pb-1.5 align-middle text-lg text-white"><p>npm run revert:last</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-sky-500 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<p>Which will drop the table and then you can get rid of the AutoQuery APIs, DB Migrations and TypeScript Data model with:</p>
+<div class="not-prose copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-700">
+                    <div class="pl-4 py-1 pb-1.5 align-middle text-lg text-white"><p>npx okai rm Transaction.d.ts</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-sky-500 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<h2 id="ai-first-example">AI-First Example<a class="header-anchor" href="#ai-first-example" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>There are a number of options for starting with an AI generated Application, with all the Instant AI App Generators like
+<a href="https://aistudio.google.com/apps">Google's App Studio</a> able to provide a great starting point. Although currently Professional Developers tend to use
+<a href="https://cursor.com/">Cursor</a>, <a href="https://www.claude.com/product/claude-code">Claude Code</a> or
+<a href="https://openai.com/codex/">Codex</a> as their day-to-day tools of choice.</p>
+<h3 id="use-github-copilot-when-creating-a-new-repository">Use GitHub Copilot when creating a new Repository<a class="header-anchor" href="#use-github-copilot-when-creating-a-new-repository" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>If you're using <a href="https://copilot.github.com/">GitHub Copilot</a> you can also use it to generate a new App
+<a href="https://github.com/new?template_name=react-vite&amp;template_owner=NetCoreTemplates">from the Vite React template </a>:</p>
+<div class="not-prose">
+<div class="my-8 max-w-3xl mx-auto rounded-lg overflow-hidden shadow hover:shadow-xl"><p><a href="https://github.com/new?template_name=react-vite&amp;template_owner=NetCoreTemplates"><img src="https://servicestack.net/img/posts/react/react-new-repo.webp" alt="" /></a></p>
+</div>
+</div>
+<div><p>For the example, I've started with a useful App that I've never created before, a Budget Planner App, using the prompt:</p>
+<h3 id="budget-planner-prompt">Budget Planner Prompt<a class="header-anchor" href="#budget-planner-prompt" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<pre><code>- React 19, TypeScript, TailwindCSS v4
+- Persistence in IndexedDB/localStorage
+- Recharts
+- Vitest with React Testing Library
+
+## Features
+Dashboard
+- Overview of total income, expenses, and remaining budget
+- Monthly summary chart (line graph)
+- Expense categories (pie chart)
+
+Transactions
+- Add/Edit/Delete income or expenses
+- Date filtering/sorting
+
+Budgets
+- Set monthly budget goals per category
+- Progress bars for spending vs. budget
+
+Reports
+- View past months
+- Export
+</code></pre>
+<p>The generated source code for the App was uploaded to: <a href="https://github.com/mythz/budgets.apps.cafe">github.com/mythz/budgets.apps.cafe</a></p>
+<h3 id="budgent-planner-app">Budgent Planner App<a class="header-anchor" href="#budgent-planner-app" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>After a few minutes Copilot creates a PR with what we asked for, even things that we didn't specify in the prompt but could be inferred from the Project Template like <strong>Dark Mode</strong> support where it made use of the existing <code>&lt;DarkModeToggle /&gt;</code>.</p>
+<p><screenshots-gallery :images="{
+'Dashboard': '/img/posts/react/budget/dashboard.webp',
+'Dashboard - Dark Mode': '/img/posts/react/budget/dashboard-dark.webp',
+'Transactions List - Dark Mode': '/img/posts/react/budget/transactions-list-dark.webp',
+'Transactions - Add Expense': '/img/posts/react/budget/transactions-expense.webp',
+'Transactions - Add Expense - Dark Mode': '/img/posts/react/budget/transactions-expense-dark.webp',
+'Transactions - Add Income - Dark Mode': '/img/posts/react/budget/transactions-income-dark.webp',
+'Budgets - Dark Mode': '/img/posts/react/budget/budgets-dark.webp',
+'Reports': '/img/posts/react/budget/reports.webp',
+'Reports - Dark Mode': '/img/posts/react/budget/reports-dark.webp',
+}"></screenshots-gallery></p>
+<h3 id="prompt-ai-to-add-new-features">Prompt AI to add new Features<a class="header-anchor" href="#prompt-ai-to-add-new-features" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>AI Assistance doesn't end after the initial implementation as AI Models and tools are more than capable to
+create 100% of the React UI now, including new features, fixes and other improvements. For this example I used
+Claude Code to Implement Category Auto-Tagging with this prompt:</p>
+<pre><code>Implement Category Auto-Tagging
+
+Allow specifying tags when creating a new transaction.
+When users add a transaction, try to predict the tag from the Description, e.g:
+
+Input: “Starbucks latte” → Suggests category: Food &amp; Drinks
+Input: “Uber to work” → Suggests category: Transport
+
+Implementation:
+
+Maintain a small local list of common keywords + categories.
+Pre-fill category in the transaction form as the user types in the Description.
+</code></pre>
+<p>Which resulted in <a href="https://github.com/mythz/budgets.apps.cafe/commit/e45a17b8dfd2b5983971554ced3e52ded6fa050e">this commit</a> which sees the feature available in the UI:</p>
+<div class="not-prose">
+<div class="my-8 max-w-3xl mx-auto rounded-lg overflow-hidden shadow hover:shadow-xl"><p><img src="https://servicestack.net/img/posts/react/budget/expense-tags-dark.webp" alt="" /></p>
+</div>
+</div>
+</div>
+<div><p>Along with different seed data, tailored for Income and Expenses:</p>
+<ul>
+<li><a href="https://github.com/mythz/budgets.apps.cafe/blob/main/MyApp.Client/src/lib/categoryAutoTag.ts">categoryAutoTag.ts</a></li>
+</ul>
+<p>And 19 passing tests to verify a working implementation:</p>
+<ul>
+<li><a href="https://github.com/mythz/budgets.apps.cafe/blob/main/MyApp.Client/src/lib/categoryAutoTag.test.ts">categoryAutoTag.test.ts</a></li>
+</ul>
+<p>Combined with Vite's instant hot-reload, this creates a remarkably fluid development experience where
+we get to watch our prompts materialize into working features in real-time.</p>
+<p>All this to say that this new development model exists today, and given its significant productivity gains, it's
+very likely to become the future of software development, especially for UIs. Since developers are no longer
+the primary authors of code, our UI choices swing from Developer preferences to UI technologies that AI models
+excel at.</p>
+<p>So whilst we have a preference for Vue given it's more readable syntax and progressive enhancement capabalities, and despite the .NET ecosystem having a strong bias towards Blazor, we're even more excited for the future of React and are committed to providing the best possible support for it.</p>
+</div>
+
+                </div>
+            </div>
+        </article>
+</div>
+
+<div id="comments" data-post="PostComments" class="my-48"></div>
+
+
+<script type="module">
+import { init } from "app.mjs"
+init()
+</script>
+
+<link rel="stylesheet" href="css/highlight.css">
+<script src="lib/js/highlight.js"></script>
+<script>hljs.highlightAll()</script>
+<script src="lib/js/lite-yt-embed.js"></script>
+<script src="mjs/docs.mjs" type="module"></script>
+
+<script type="module">
+import { mount } from "app.mjs"
+
+    const App = {
+        setup() {
+            function nav(url) {
+                window.open(url)
+            }
+            return { nav }
+        }
+    }
+    mount('#post', App)
+</script>
+
+    </main>
+</div>
+
+<footer class="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+  <div class="mx-auto max-w-7xl overflow-hidden py-20 px-6 sm:py-24 lg:px-8">
+    <nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
+      <div class="pb-6">
+        <a href="whatsnew" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">What's New</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="blog" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Blog</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="posts" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Archive</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="speaking" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Speaking</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="uses" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Uses</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="about" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">About</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="privacy" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Privacy</a>
+      </div>
+    </nav>
+    <div class="mt-10 flex justify-center space-x-10">
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Facebook</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Instagram</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Twitter</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">GitHub</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">YouTube</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+    </div>
+    <p class="mt-10 text-center text-xs leading-5 text-gray-500">
+      <a href="https://github.com/NetCoreTemplates/razor-ssg">powered by razor</a>
+    </p>
+  </div>
+</footer>
+
+<script type="module">
+//TODO: Replace with local and production URLs of CreatorKit .NET App or Remove if not using CreatorKit
+import { mail } from 'https://creatorkit.netcore.io/mjs/components/mail.mjs'
+import { post } from 'https://creatorkit.netcore.io/mjs/components/post.mjs'
+
+mail('[data-mail]', { 
+    mailingLists: ['MonthlyNewsletter'] 
+})
+
+post('[data-post]', {
+    commentLink: { 
+        href: '/community-rules',
+        label: 'read the community rules'
+    } 
+})
+</script>
+
+
+<script type="module">
+import { init } from "app.mjs"
+init()
+</script>
+
+
+
+</body>
+</html>

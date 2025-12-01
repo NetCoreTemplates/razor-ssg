@@ -1,0 +1,1250 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg" href="img/logo.svg">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://razor-ssg.web-templates.io/feed.xml" />
+    <title>RDBMS Background Jobs</title>
+    <base href="/" />
+    <script>
+    if (location.search === "?dark") localStorage.setItem('color-scheme','dark') 
+    if (location.search === "?light") localStorage.removeItem('color-scheme') 
+    const cls = document.querySelector('html').classList
+    if (localStorage.getItem('color-scheme') === 'dark')
+        cls.add('dark')
+    else
+        cls.remove('dark')
+    </script>
+    <link rel="stylesheet" href="css/app.css">
+    <style>html { scroll-padding-top: 5rem }</style>
+
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+{
+    "imports": {
+        "app.mjs": "./mjs/app.mjs",
+        "vue": "./lib/mjs/vue.min.mjs",
+        "@servicestack/client": "./lib/mjs/servicestack-client.min.mjs",
+        "@servicestack/vue": "./lib/mjs/servicestack-vue.min.mjs"
+    }
+}
+</script>
+    
+    <meta name="twitter:site" content="@RazorSsg" />
+    <meta name="twitter:card" content="summary" />
+    <meta property="og:description" content="Run Background Jobs and Scheduled Tasks in PostgreSQL, SQL Server or MySQL" />
+    <meta property="og:url" content="https://razor-ssg.web-templates.io/posts/rdbms_jobs" />
+    <meta property="og:title" content="RDBMS Background Jobs" />
+    <meta property="og:image" content="https://servicestack.net/img/posts/background-jobs/bg.webp" />
+
+
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+<header class="top-0 fixed z-50 h-14 bg-white dark:bg-black opacity-90 w-full shadow pr-3">
+    <div class="flex flex-wrap items-center">
+        <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
+            <div class="cursor-pointer">
+                <a class="navbar-brand flex items-center" href="./">
+                    <svg class="w-8 h-8 sm:ml-2 sm:w-12 sm:h-12" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="currentColor" d="M10 6c1.544 1.76 2.276 4.15 2.217 6.61c3.968 1.67 9.924 6.12 11.181 12.39H28C26.051 14.31 14.918 6.77 10 6zm-2 7c4.67 4.913.81 11.582-4 12h18.97C21.5 18.289 11.95 13.533 8 13z"/></svg>
+                    <span class="hidden sm:block text-2xl font-semibold">MyApp</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-grow flex-shrink flex-nowrap justify-end items-center">
+            <nav class="relative flex flex-grow leading-6 font-semibold text-slate-700 dark:text-slate-200">
+                <ul class="flex flex-wrap items-center justify-end w-full m-0 pb-2 sm:pb-0">
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="whatsnew" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    What's New
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="blog" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Blog
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="podcasts" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Podcasts
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="videos" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Videos
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="creatorkit/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Creator Kit
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="posts/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Archive
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="speaking" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Speaking
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="uses" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Uses
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="about" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    About
+                                </a>
+                            </li>
+                    <li class="relative flex flex-wrap just-fu-start m-0">
+                        <div data-component="DarkModeToggle" class="ml-2 w-10"></div>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</header>
+<script type="module">
+import { mountAll } from "app.mjs"
+mountAll()
+</script>
+
+
+<div class="min-h-screen">
+    <main role="main" class="pt-14 pb-3">
+        
+
+
+
+<link rel="stylesheet" href="css/typography.css">
+<link rel="stylesheet" href="css/lite-yt-embed.css">
+
+<div class="container px-5 mb-32 mx-auto">
+        <article class="mt-20">
+            <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
+                RDBMS Background Jobs
+            </h1>
+            <div class="flex justify-between">
+                <div class="md:mb-12 flex items-center">
+                        <img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="data:image/svg&#x2B;xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; fill=&#x27;none&#x27; viewBox=&#x27;0 0 24 24&#x27; stroke=&#x27;none&#x27; aria-hidden=&#x27;true&#x27;%3E%3Cpath fill=&#x27;%230891b2&#x27; d=&#x27;M12 2a5 5 0 1 0 5 5a5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3a3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z&#x27;/%3E%3C/svg%3E">
+                    <div class="flex flex-col">
+                    </div>
+                </div>
+                <div class="mb-4 max-w-sm" data-mail="JoinMailingList" data-props="{ submitLabel:'Join our newsletter' }"></div>
+            </div>
+            <div class="mb-8 md:mb-16 sm:mx-0">
+                <div class="sm:mx-0">
+                    <img src="https://servicestack.net/img/posts/background-jobs/bg.webp" alt="RDBMS Background Jobs Background" class="shadow-small">
+                </div>
+            </div>
+            <div class="flex max-w-7xl mx-auto justify-between" style="width:100%;">
+                <div>
+                    <div class="mb-4 flex flex-wrap">
+                            <a href="posts/tagged/db" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">db</a>
+                            <a href="posts/tagged/ormlite" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">ormlite</a>
+                            <a href="posts/tagged/jobs" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">jobs</a>
+                    </div>
+                        <div class="max-w-3xl mx-auto">
+                            <div class="mb-6 text-lg text-gray-500">
+                                <time datetime="2025-10-23T00:00:00.0000000">October 23, 2025</time>
+                                <span aria-hidden="true">&middot;</span>
+                                <span>23 min read</span>
+                            </div>
+                        </div>
+                </div>
+                <div class="flex flex-grow-0">
+                    <div data-post="PostVotes"></div>
+                    <a href="javascript:;" onclick="document.location.hash='comments'" class="cursor-pointer" title="Jump to comments">
+                        <svg class="ml-4 text-gray-700 mt-1 w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M3 11.2c0 .1 0 .1 0 0c0 .1 0 .1 0 0zM8.3 1C3.9 1 0 3.6 0 6.6c0 2 1.1 3.7 3 4.7s0 .1 0 .1c-.1 1.3-.9 1.7-.9 1.7L.3 14h2c2.5 0 4.3-1.1 5.1-1.9h.8c4.3 0 7.8-2.5 7.8-5.6S12.6 1 8.3 1zm-.1 10.1H7l-.2.2c-.5.5-1.6 1.4-3.3 1.7c.3-.5.5-1.1.5-2v-.3l-.3-.1C1.9 9.7 1 8.3 1 6.6C1 4.2 4.5 2 8.3 2C12 2 15 4 15 6.6c0 2.4-3.1 4.5-6.8 4.5z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="max-w-3xl mx-auto">
+                <div id="post" class="prose lg:prose-xl max-w-none mb-32">
+                    <p>We're excited to announce that we've ported our much loved <a href="https://docs.servicestack.net/background-jobs">Background Jobs</a>
+feature to the popular <strong>PostgreSQL</strong>, <strong>SQL Server</strong> and <strong>MySQL</strong> RDBMS's!</p>
+<p>Since launching <a href="https://servicestack.net/posts/background-jobs">Background Jobs</a> in September 2024, it's become
+one of our most popular features - providing a simple, infrastructure-free solution for managing background jobs
+and scheduled tasks in .NET 8+ Apps. The original implementation used SQLite for its durability, which worked
+beautifully for many use cases thanks to SQLite's low latency, fast disk persistence, and zero infrastructure requirements.</p>
+<p>However, we recognize that many of our customers need the features and scalability of industrial-strength RDBMS systems.
+Whether it's for leveraging existing database infrastructure, meeting enterprise requirements, or utilizing advanced
+database features like native table partitioning - we wanted to ensure Background Jobs could work seamlessly with
+your preferred database platform.</p>
+<h2 id="introducing-databasejobsfeature">Introducing DatabaseJobsFeature<a class="header-anchor" href="#introducing-databasejobsfeature" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>The new <strong>DatabaseJobsFeature</strong> is a purpose-built implementation for PostgreSQL, SQL Server, and MySQL that's
+a drop-in replacement for SQLite's <strong>BackgroundsJobFeature</strong>. It maintains the same simple API, data models,
+and service contracts - making migration from SQLite straightforward while unlocking the power of enterprise RDBMS platforms.</p>
+<p>Best of all, it can be added to an existing .NET 8+ project with a single command using our
+<a href="https://docs.servicestack.net/mix-tool">mix tool</a>:</p>
+<h2 id="quick-start">Quick Start<a class="header-anchor" href="#quick-start" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<h3 id="for-identity-auth-projects">For Identity Auth Projects<a class="header-anchor" href="#for-identity-auth-projects" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>If you're using <a href="https://servicestack.net/start">ServiceStack ASP.NET Identity Auth</a> templates, simply run:</p>
+<div class="not-prose sh-copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-800">
+                    <div class="pl-4 py-1 pb-1.5 align-middle whitespace-pre text-base text-gray-100"><p>x mix db-identity</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-green-600 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<p>This replaces both <code>Configure.BackgroundJobs.cs</code> and <code>Configure.RequestLogs.cs</code> with RDBMS-compatible versions
+that use <code>DatabaseJobsFeature</code> for background jobs and <code>DbRequestLogger</code> for API request logging.</p>
+<h3 id="for-other.net-8-apps">For Other .NET 8+ Apps<a class="header-anchor" href="#for-other.net-8-apps" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>For all other ServiceStack applications, use:</p>
+<div class="not-prose sh-copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-800">
+                    <div class="pl-4 py-1 pb-1.5 align-middle whitespace-pre text-base text-gray-100"><p>x mix db-jobs</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-green-600 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<p>This replaces <code>Configure.BackgroundJobs.cs</code> to use the new <code>DatabaseJobsFeature</code>:</p>
+<pre><code class="language-csharp">public class ConfigureBackgroundJobs : IHostingStartup
+{
+    public void Configure(IWebHostBuilder builder) =&gt; builder
+        .ConfigureServices(services =&gt; {
+            services.AddPlugin(new CommandsFeature());
+            services.AddPlugin(new DatabaseJobsFeature {
+                // Optional: Use a separate named connection
+                // NamedConnection = &quot;jobs&quot;
+            });
+            services.AddHostedService&lt;JobsHostedService&gt;();
+         }).ConfigureAppHost(afterAppHostInit: appHost =&gt; {
+            var services = appHost.GetApplicationServices();
+            var jobs = services.GetRequiredService&lt;IBackgroundJobs&gt;();
+            // Example: Register recurring jobs to run on a schedule
+            // jobs.RecurringCommand&lt;MyCommand&gt;(Schedule.Hourly);
+        });
+}
+
+public class JobsHostedService(ILogger&lt;JobsHostedService&gt; log, IBackgroundJobs jobs)
+    : BackgroundService
+{
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        await jobs.StartAsync(stoppingToken);
+
+        using var timer = new PeriodicTimer(TimeSpan.FromSeconds(3));
+        while (!stoppingToken.IsCancellationRequested &amp;&amp;
+               await timer.WaitForNextTickAsync(stoppingToken))
+        {
+            await jobs.TickAsync();
+        }
+    }
+}
+</code></pre>
+<h2 id="seamless-migration-from-sqlite">Seamless Migration from SQLite<a class="header-anchor" href="#seamless-migration-from-sqlite" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>We've maintained the same <code>IBackgroundJobs</code> interface, data models, and API service contracts, which means:</p>
+<ul>
+<li><strong>Zero code changes</strong> to your existing job enqueueing logic</li>
+<li><strong>Same Admin UI</strong> for monitoring and managing jobs</li>
+<li><strong>Compatible APIs</strong> - all your existing commands and job configurations work as-is</li>
+</ul>
+<p>The only change needed is swapping <code>BackgroundsJobFeature</code> for <code>DatabaseJobsFeature</code> in your configuration!</p>
+<p>Watch our video introduction to Background Jobs to see it in action:</p>
+<lite-youtube class="w-full mx-4 my-4" width="560" height="315" videoid="2Cza_a_rrjA" playlabel="Durable C# Background Jobs and Scheduled Tasks for .NET" style="background-image:url('https://img.youtube.com/vi/2Cza_a_rrjA/maxresdefault.jpg')"></lite-youtube>
+<h2 id="smart-rdbms-optimizations">Smart RDBMS Optimizations<a class="header-anchor" href="#smart-rdbms-optimizations" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>One of the key benefits of SQLite Background Jobs was the ability to maintain completed and failed job history in
+separate <strong>monthly databases</strong> (e.g., <code>jobs_2025-01.db</code>, <code>jobs_2025-02.db</code>). This prevented unbounded database growth
+and made it easy to archive or delete old job history.</p>
+<p>For <code>DatabaseJobsFeature</code>, we've replicated this monthly partitioning strategy using <strong>monthly partitioned tables</strong>
+for the <code>CompletedJob</code> and <code>FailedJob</code> archive tables - but the implementation varies by database platform to leverage
+each RDBMS's strengths.</p>
+<h3 id="postgresql-native-table-partitioning">PostgreSQL - Native Table Partitioning<a class="header-anchor" href="#postgresql-native-table-partitioning" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>PostgreSQL provides native support for table partitioning, allowing us to automatically create monthly partitions using
+<code>PARTITION BY RANGE</code> on the <code>CreatedDate</code> column. The <code>DatabaseJobFeature</code> automatically creates new monthly partitions
+as needed, maintaining the same logical separation as SQLite's monthly .db's while keeping everything within a single
+Postgres DB:</p>
+<pre><code class="language-sql">CREATE TABLE CompletedJob (
+    -- columns...
+    CreatedDate TIMESTAMP NOT NULL,
+    PRIMARY KEY (&quot;Id&quot;,&quot;CreatedDate&quot;)
+) PARTITION BY RANGE (&quot;CreatedDate&quot;);
+
+-- Monthly partitions are automatically created, e.g.:
+CREATE TABLE CompletedJob_2025_01 PARTITION OF CompletedJob
+    FOR VALUES FROM ('2025-01-01') TO ('2025-02-01');
+</code></pre>
+<p>This provides excellent query performance since PostgreSQL can use partition pruning to only scan relevant monthly partitions
+when filtering by <code>CreatedDate</code>.</p>
+<h3 id="sqlserver-mysql-manual-partition-management">SQLServer / MySQL - Manual Partition Management<a class="header-anchor" href="#sqlserver-mysql-manual-partition-management" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>For <strong>SQL Server</strong> and <strong>MySQL</strong>, monthly partitioned tables need to be created <strong>out-of-band</strong>
+(either manually or via cronjob scripts) since they don't support the same level of automatic
+partition management as PostgreSQL. However, this still works well in practice as it uses:</p>
+<ol>
+<li><p><strong>Write-Only Tables</strong> - The <code>CompletedJob</code> and <code>FailedJob</code> tables are write-only append tables. Jobs are never updated after completion or failure, only inserted.</p>
+</li>
+<li><p><strong>CreatedDate Index</strong> - All queries against these tables use the <code>CreatedDate</code> indexed column for filtering and sorting, ensuring efficient access patterns even as the tables grow.</p>
+</li>
+</ol>
+<p>The indexed <code>CreatedDate</code> column ensures that queries remain performant regardless of table size, and the write-only
+nature means there's no complex update logic to manage across partitions.</p>
+<p>This approach maintains the same benefits as SQLite's monthly databases - easy archival, manageable table sizes,
+and efficient queries - while leveraging the scalability and features of enterprise RDBMS systems.</p>
+<h3 id="separate-jobs-database">Separate Jobs Database<a class="header-anchor" href="#separate-jobs-database" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Or if preferred, you can maintain background jobs in a <strong>separate database</strong> from your main application database.
+This separation keeps the write-heavy job processing load off your primary database, allowing you to optimize
+each database independently for its specific workload patterns like maintaining different backup strategies
+for your critical application data vs. job history.</p>
+<pre><code class="language-csharp">// Configure.Db.cs
+services.AddOrmLite(options =&gt; options.UsePostgres(connectionString))
+        .AddPostgres(&quot;jobs&quot;, jobsConnectionString);
+
+// Configure.BackgroundJobs.cs
+services.AddPlugin(new DatabaseJobFeature {
+    NamedConnection = &quot;jobs&quot;
+});
+</code></pre>
+<h3 id="real-time-admin-ui">Real Time Admin UI<a class="header-anchor" href="#real-time-admin-ui" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>The Jobs Admin UI provides a real time view into the status of all background jobs including their progress, completion times,
+Executed, Failed, and Cancelled Jobs, etc. which is useful for monitoring and debugging purposes.</p>
+<p><a href="https://servicestack.net/img/posts/background-jobs/jobs-dashboard.webp"><img src="https://servicestack.net/img/posts/background-jobs/jobs-dashboard.webp" alt="" /></a></p>
+<p>View Real-time progress of queued Jobs</p>
+<p><a href="https://servicestack.net/img/posts/background-jobs/jobs-queue.webp"><img src="https://servicestack.net/img/posts/background-jobs/jobs-queue.webp" alt="" /></a></p>
+<p>View real-time progress logs of executing Jobs</p>
+<p><a href="https://servicestack.net/img/posts/background-jobs/jobs-logs.webp"><img src="https://servicestack.net/img/posts/background-jobs/jobs-logs.webp" alt="" /></a></p>
+<p>View Job Summary and Monthly Databases of Completed and Failed Jobs</p>
+<p><a href="https://servicestack.net/img/posts/background-jobs/jobs-completed.webp"><img src="https://servicestack.net/img/posts/background-jobs/jobs-completed.webp" alt="" /></a></p>
+<p>View full state and execution history of each Job</p>
+<p><a href="https://servicestack.net/img/posts/background-jobs/jobs-failed.webp"><img src="https://servicestack.net/img/posts/background-jobs/jobs-failed.webp" alt="" /></a></p>
+<p>Cancel Running jobs and Requeue failed jobs</p>
+<h2 id="usage">Usage<a class="header-anchor" href="#usage" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>For even greater reuse of your APIs you're able to queue your existing ServiceStack Request DTOs
+as a Background Job in addition to <a href="https://docs.servicestack.net/commands">Commands</a>
+for encapsulating units of logic into internal invokable, inspectable and auto-retryable building blocks.</p>
+<h3 id="queue-commands">Queue Commands<a class="header-anchor" href="#queue-commands" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Any API, Controller or Minimal API can execute jobs with the <code>IBackgroundJobs</code> dependency, e.g.
+here's how you can run a background job to send a new email when an API is called in
+any new Identity Auth template:</p>
+<pre><code class="language-csharp">class MyService(IBackgroundJobs jobs) : Service 
+{
+    public object Any(MyOrder request)
+    {
+        var jobRef = jobs.EnqueueCommand&lt;SendEmailCommand&gt;(new SendEmail {
+            To = &quot;my@email.com&quot;,
+            Subject = $&quot;Received New Order {request.Id}&quot;,
+            BodyText = $&quot;&quot;&quot;
+                       Order Details:
+                       {request.OrderDetails.DumptTable()}
+                       &quot;&quot;&quot;,
+        });
+        //...
+    }
+}
+</code></pre>
+<p>Which records and immediately executes a worker to execute the <code>SendEmailCommand</code> with the specified
+<code>SendEmail</code> Request argument. It also returns a reference to a Job which can be used later to query
+and track the execution of a job.</p>
+<h3 id="queue-apis">Queue APIs<a class="header-anchor" href="#queue-apis" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Alternatively a <code>SendEmail</code> API could be executed with just the Request DTO:</p>
+<pre><code class="language-csharp">var jobRef = jobs.EnqueueApi(new SendEmail {
+    To = &quot;my@email.com&quot;,
+    Subject = $&quot;Received New Order {request.Id}&quot;,
+    BodyText = $&quot;&quot;&quot;
+               Order Details:
+               {request.OrderDetails.DumptTable()}
+               &quot;&quot;&quot;,
+});
+</code></pre>
+<p>Although Sending Emails is typically not an API you want to make externally available and would
+want to <a href="https://docs.servicestack.net/auth/restricting-services">Restrict access</a> or <a href="https://docs.servicestack.net/auth/identity-auth#declarative-validation-attributes">limit usage to specified users</a>.</p>
+<p>In both cases the <code>SendEmail</code> Request is persisted into the Jobs SQLite database for durability
+that gets updated as it progresses through the queue.</p>
+<p>For execution the API or command is resolved from the IOC before being invoked with the Request.
+APIs are executed via the <a href="https://docs.servicestack.net/order-of-operations">MQ Request Pipeline</a>
+and commands executed using the <a href="https://docs.servicestack.net/commands">Commands Feature</a> where
+they'll also be visible in the <a href="https://docs.servicestack.net/commands#command-admin-ui">Commands Admin UI</a>.</p>
+<h3 id="background-job-options">Background Job Options<a class="header-anchor" href="#background-job-options" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>The behavior for each <code>Enqueue*</code> method for executing background jobs can be customized with
+the following options:</p>
+<ul>
+<li><code>Worker</code> - Serially process job using a named worker thread</li>
+<li><code>Callback</code> - Invoke another command with the result of a successful job</li>
+<li><code>DependsOn</code> - Execute jobs after successful completion of a dependent job
+<ul>
+<li>If parent job fails all dependent jobs are cancelled</li>
+</ul>
+</li>
+<li><code>UserId</code> - Execute within an Authenticated User Context</li>
+<li><code>RunAfter</code> - Queue jobs that are only run after a specified date</li>
+<li><code>RetryLimit</code> - Override default retry limit for how many attempts should be made to execute a job</li>
+<li><code>TimeoutSecs</code> - Override default timeout for how long a job should run before being cancelled</li>
+<li><code>RefId</code> - Allow clients to specify a unique Id (e.g Guid) to track job</li>
+<li><code>Tag</code> - Group related jobs under a user specified tag</li>
+<li><code>CreatedBy</code> - Optional field for capturing the owner of a job</li>
+<li><code>BatchId</code> - Group multiple jobs with the same Id</li>
+<li><code>ReplyTo</code> - Optional field for capturing where to send notification for completion of a Job</li>
+<li><code>Args</code> - Optional String Dictionary of Arguments that can be attached to a Job</li>
+</ul>
+<h3 id="feature-overview">Feature Overview<a class="header-anchor" href="#feature-overview" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>It packs most features needed in a Background Jobs solution including:</p>
+<ul>
+<li>Use your App's existing RDBMS (no other infrastructure dependencies)</li>
+<li>Execute existing APIs or versatile Commands
+<ul>
+<li>Commands auto registered in IOC</li>
+</ul>
+</li>
+<li>Scheduled Reoccurring Tasks
+<ul>
+<li>Track Last Job Run</li>
+</ul>
+</li>
+<li>Serially execute jobs with the same named Worker</li>
+<li>Queue Jobs dependent on successful completion of parent Job</li>
+<li>Queue Jobs to be executed after a specified Date</li>
+<li>Execute Jobs within the context of an Authenticated User</li>
+<li>Auto retry failed jobs on a default or per-job limit</li>
+<li>Timeout Jobs on a default or per-job limit</li>
+<li>Cancellable Jobs</li>
+<li>Requeue Failed Jobs</li>
+<li>Execute custom callbacks on successful execution of Job</li>
+<li>Maintain Status, Logs, and Progress of Executing Jobs</li>
+<li>Execute transitive (i.e. non-durable) jobs using named workers</li>
+<li>Attach optional <code>Tag</code>, <code>BatchId</code>, <code>CreatedBy</code>, <code>ReplyTo</code> and <code>Args</code> with Jobs</li>
+</ul>
+<p>Please <a href="https://servicestack.net/ideas">let us know</a> of any other missing features you'd love to see implemented.</p>
+<h2 id="schedule-recurring-tasks">Schedule Recurring Tasks<a class="header-anchor" href="#schedule-recurring-tasks" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>In addition to queueing jobs to run in the background, it also supports scheduling recurring tasks
+to execute APIs or Commands at fixed intervals.</p>
+<lite-youtube class="w-full mx-4 my-4" width="560" height="315" videoid="DtB8KaXXMCM" playlabel="Schedule your Reoccurring Tasks with Background Jobs!" style="background-image:url('https://img.youtube.com/vi/DtB8KaXXMCM/maxresdefault.jpg')"></lite-youtube>
+<p>APIs and Commands can be scheduled to run at either a <code>TimeSpan</code> or
+<a href="https://github.com/HangfireIO/Cronos?tab=readme-ov-file#cron-format">CRON Expression</a> interval, e.g:</p>
+<h3 id="cron-expression-examples">CRON Expression Examples<a class="header-anchor" href="#cron-expression-examples" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<pre><code class="language-csharp">// Every Minute Expression
+jobs.RecurringCommand&lt;CheckUrlsCommand&gt;(Schedule.Cron(&quot;* * * * *&quot;));
+
+// Every Minute Constant
+jobs.RecurringCommand&lt;CheckUrlsCommand&gt;(Schedule.EveryMinute, new CheckUrls {
+    Urls = urls
+});
+</code></pre>
+<h3 id="cron-format">CRON Format<a class="header-anchor" href="#cron-format" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>You can use any <strong>unix-cron format</strong> expression supported by the <a href="https://github.com/HangfireIO/Cronos">HangfireIO/Cronos</a> library:</p>
+<pre><code class="language-txt">|------------------------------- Minute (0-59)
+|     |------------------------- Hour (0-23)
+|     |     |------------------- Day of the month (1-31)
+|     |     |     |------------- Month (1-12; or JAN to DEC)
+|     |     |     |     |------- Day of the week (0-6; or SUN to SAT)
+|     |     |     |     |
+|     |     |     |     |
+*     *     *     *     *
+</code></pre>
+<p>The allowed formats for each field include:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Format of valid values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Minute</td>
+<td>0-59</td>
+</tr>
+<tr>
+<td>Hour</td>
+<td>0-23</td>
+</tr>
+<tr>
+<td>Day of the month</td>
+<td>1-31</td>
+</tr>
+<tr>
+<td>Month</td>
+<td>1-12 (or JAN to DEC)</td>
+</tr>
+<tr>
+<td>Day of the week</td>
+<td>0-6 (or SUN to SAT; or 7 for Sunday)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="matching-all-values">Matching all values<a class="header-anchor" href="#matching-all-values" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>To match all values for a field, use the asterisk: <code>*</code>, e.g here are two examples in which the minute field is left unrestricted:</p>
+<ul>
+<li><code>* 0 1 1 1</code> - the job runs every minute of the midnight hour on January 1st and Mondays.</li>
+<li><code>* * * * *</code> - the job runs every minute (of every hour, of every day of the month, of every month, every day of the week, because each of these fields is unrestricted too).</li>
+</ul>
+<h4 id="matching-a-range">Matching a range<a class="header-anchor" href="#matching-a-range" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>To match a range of values, specify your start and stop values, separated by a hyphen (-). Do not include spaces in the range. Ranges are inclusive. The first value must be less than the second.</p>
+<p>The following equivalent examples run at midnight on Mondays, Tuesdays, Wednesdays, Thursdays, and Fridays (for all months):</p>
+<ul>
+<li><code>0 0 * * 1-5</code></li>
+<li><code>0 0 * * MON-FRI</code></li>
+</ul>
+<h4 id="matching-a-list">Matching a list<a class="header-anchor" href="#matching-a-list" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>Lists can contain any valid value for the field, including ranges. Specify your values, separated by a comma (,). Do not include spaces in the list, e.g:</p>
+<ul>
+<li><code>0 0,12 * * *</code> - the job runs at midnight and noon.</li>
+<li><code>0-5,30-35 * * * *</code> - the job runs in each of the first five minutes of every half hour (at the top of the hour and at half past the hour).</li>
+</ul>
+<h3 id="timespan-interval-examples">TimeSpan Interval Examples<a class="header-anchor" href="#timespan-interval-examples" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<pre><code class="language-csharp">jobs.RecurringCommand&lt;CheckUrlsCommand&gt;(
+    Schedule.Interval(TimeSpan.FromMinutes(1)));
+
+// With Example
+jobs.RecurringApi(Schedule.Interval(TimeSpan.FromMinutes(1)), new CheckUrls {
+    Urls = urls
+});
+</code></pre>
+<p>That can be registered with an optional <strong>Task Name</strong> and <strong>Background Options</strong>, e.g:</p>
+<pre><code class="language-csharp">jobs.RecurringCommand&lt;CheckUrlsCommand&gt;(&quot;Check URLs&quot;, Schedule.EveryMinute, 
+   new() {
+       RunCommand = true // don't persist job
+   });
+</code></pre>
+<div class="info custom-block">
+            <p class="custom-block-title">INFO</p><p>If no name is provided, the Command's Name or APIs Request DTO will be used</p>
+</div>
+<h2 id="interned-cronos">Interned Cronos<a class="header-anchor" href="#interned-cronos" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>A major source of friction in .NET Libraries and most Frameworks from all platforms in general is dependency conflicts.
+E.g. Conflicting versions of JSON.NET have plagued many a .NET library and framework for several years, something that
+never impacted ServiceStack Apps since we maintain our own fast/flexible JSON Serializer and have never had a dependency
+to JSON.NET.</p>
+<p>As supply chain attacks from external OSS libraries have become more common, it's even more important to avoid
+taking dependencies on external libraries where possible.</p>
+<p>As we now have multiple packages that referenced
+<a href="https://github.com/HangfireIO/Cronos">Hangfire's Cronos</a> library we've decided to intern it in ServiceStack,
+removing the previous dependency <strong>ServiceStack.Jobs</strong> had to Cronos. The only issue was that
+<a href="https://github.com/HangfireIO/Cronos/blob/main/src/Cronos/CronParser.cs">CronParser.cs</a> uses unsafe parsing and we
+don't allow <code>&lt;AllowUnsafeBlocks&gt;</code> in any ServiceStack package, so it was rewritten to use Spans in our interned
+<a href="https://github.com/ServiceStack/ServiceStack/blob/main/ServiceStack/src/ServiceStack.Common/Cronos/CronParser.cs">CronParser.cs</a>
+implementation.</p>
+<p>It's released under the same MIT License as Cronos so anyone else is welcome to use it, as is our port of their
+<a href="https://github.com/ServiceStack/ServiceStack/blob/main/ServiceStack/tests/ServiceStack.Common.Tests/CronExpressionTests.cs">CronExpressionTests.cs</a>
+to NUnit.</p>
+<h3 id="idempotent-registration">Idempotent Registration<a class="header-anchor" href="#idempotent-registration" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Scheduled Tasks are idempotent where the same registration with the same name will
+either create or update the scheduled task registration without losing track of the
+last time the Recurring Task, as such it's recommended to always define your App's
+Scheduled Tasks on Startup:</p>
+<pre><code class="language-csharp">public class ConfigureBackgroundJobs : IHostingStartup
+{
+   public void Configure(IWebHostBuilder builder) =&gt; builder
+     .ConfigureServices((context,services) =&gt; {
+         //...
+     }).ConfigureAppHost(afterAppHostInit: appHost =&gt; {
+         var services = appHost.GetApplicationServices();
+         var jobs = services.GetRequiredService&lt;IBackgroundJobs&gt;();
+         
+         // App's Scheduled Tasks Registrations:
+         jobs.RecurringCommand&lt;MyCommand&gt;(Schedule.Hourly);
+     });
+}
+</code></pre>
+<h3 id="background-jobs-admin-ui">Background Jobs Admin UI<a class="header-anchor" href="#background-jobs-admin-ui" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>The last job the Recurring Task ran is also viewable in the Jobs Admin UI:</p>
+<p><a href="https://servicestack.net/img/posts/background-jobs/jobs-scheduled-tasks-last-job.webp"><img src="https://servicestack.net/img/posts/background-jobs/jobs-scheduled-tasks-last-job.webp" alt="" /></a></p>
+<h3 id="executing-non-durable-jobs">Executing non-durable jobs<a class="header-anchor" href="#executing-non-durable-jobs" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p><code>IBackgroundJobs</code> also supports <code>RunCommand*</code> methods for executing background jobs transiently
+(i.e. non-durable), which is useful for commands that want to be serially executed by a named worker
+but don't need to be persisted.</p>
+<h4 id="execute-in-background-and-return-immediately">Execute in Background and return immediately<a class="header-anchor" href="#execute-in-background-and-return-immediately" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>You could use this to queue system emails to be sent by the same <strong>smtp</strong> worker and are happy to
+not have its state and execution history tracked in the Jobs database.</p>
+<pre><code class="language-csharp">var job = jobs.RunCommand&lt;SendEmailCommand&gt;(new SendEmail { ... }, 
+    new() {
+        Worker = &quot;smtp&quot;
+    });
+</code></pre>
+<p>In this case <code>RunCommand</code> returns the actual <code>BackgroundJob</code> instance that will be updated by
+the worker.</p>
+<h4 id="execute-in-background-and-wait-for-completion">Execute in Background and wait for completion<a class="header-anchor" href="#execute-in-background-and-wait-for-completion" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>You can also use <code>RunCommandAsync</code> if you prefer to wait until the job has been executed. Instead
+of a Job it returns the <strong>Result</strong> of the command if it returned one.</p>
+<pre><code class="language-csharp">var result = await jobs.RunCommandAsync&lt;SendEmailCommand&gt;(new SendEmail {...}, 
+    new() {
+        Worker = &quot;smtp&quot;
+    });
+</code></pre>
+<h3 id="serially-execute-jobs-with-named-workers">Serially Execute Jobs with named Workers<a class="header-anchor" href="#serially-execute-jobs-with-named-workers" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>By default jobs are executed immediately in a new Task, we can also change the behavior to
+instead execute jobs one-by-one in a serial queue by specifying them to use the same named
+worker as seen in the example above.</p>
+<p>Alternatively you can annotate the command with the <code>[Worker]</code> attribute if you <strong>always</strong> want
+all jobs executing the command to use the same worker:</p>
+<pre><code class="language-csharp">[Worker(&quot;smtp&quot;)]
+public class SendEmailCommand(IBackgroundJobs jobs) : SyncCommand&lt;SendEmail&gt;
+{
+    //...
+}
+</code></pre>
+<h3 id="use-callbacks-to-process-the-results-of-commands">Use Callbacks to process the results of Commands<a class="header-anchor" href="#use-callbacks-to-process-the-results-of-commands" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Callbacks can be used to extend the lifetime of a job to include processing a callback to process its results.
+This is useful where you would like to reuse the the same command but handle the results differently,
+e.g. the same command can email results or invoke a webhook by using a callback:</p>
+<pre><code class="language-csharp">jobs.EnqueueCommand&lt;CheckUrlsCommand&gt;(new CheckUrls { Urls = allUrls },
+    new() {
+        Callback = nameof(EmailUrlResultsCommand),
+    });
+
+jobs.EnqueueCommand&lt;CheckUrlsCommand&gt;(new CheckUrls { Urls = criticalUrls },
+    new() {
+        Callback = nameof(WebhookUrlResultsCommand),
+        ReplyTo = callbackUrl
+    });
+</code></pre>
+<p>Callbacks that fail are auto-retried the same number of times as their jobs, which if they all fail then
+the entire job is also marked as failed.</p>
+<h3 id="run-job-dependent-on-successful-completion-of-parent">Run Job dependent on successful completion of parent<a class="header-anchor" href="#run-job-dependent-on-successful-completion-of-parent" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Jobs can be queued to only run after the successful completion of another job, this is useful
+for when you need to kick off multiple jobs after a long running task has finished like
+generating monthly reports after monthly data has been aggregated, e.g:</p>
+<pre><code class="language-csharp">var jobRef = jobs.EnqueueCommand&lt;AggregateMonthlyDataCommand&gt;(new Aggregate {
+    Month = DateTime.UtcNow
+});
+
+jobs.EnqueueCommand&lt;GenerateSalesReportCommand&gt;(new () {
+   DependsOn = jobRef.Id,
+});
+
+jobs.EnqueueCommand&lt;GenerateExpenseReportCommand&gt;(new () {
+   DependsOn = jobRef.Id,
+});
+</code></pre>
+<p>Inside your command you can get a reference to your current job with <code>Request.GetBackgroundJob()</code>
+which will have its <code>ParentId</code> populated with the parent job Id and <code>job.ParentJob</code> containing
+a reference to the completed Parent Job where you can access its Request, Results, and other job
+information:</p>
+<pre><code class="language-csharp">public class GenerateSalesReportCommand(ILogger&lt;MyCommandNoArgs&gt; log) 
+    : SyncCommand
+{
+    protected override void Run()
+    {
+        var job = Request.GetBackgroundJob();
+        var parentJob = job.ParentJob;
+    }
+}
+</code></pre>
+<h3 id="atomic-batching-behavior">Atomic Batching Behavior<a class="header-anchor" href="#atomic-batching-behavior" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>We can also use <code>DependsOn</code> to implement atomic batching behavior where from inside our
+executing command we can queue new jobs that are dependent on the successful execution
+of the current job, e.g:</p>
+<pre><code class="language-csharp">public class CheckUrlsCommand(IHttpClientFactory factory, IBackgroundJobs jobs)
+    : AsyncCommand&lt;CheckUrls&gt;
+{
+    protected override async Task RunAsync(CheckUrls req, CancellationToken ct)
+    {
+        var job = Request.GetBackgroundJob();
+
+        var batchId = Guid.NewGuid().ToString(&quot;N&quot;);
+        using var client = factory.CreateClient();
+        foreach (var url in req.Urls)
+        {
+            var msg = new HttpRequestMessage(HttpMethod.Get, url);
+            var response = await client.SendAsync(msg, ct);
+            response.EnsureSuccessStatusCode();
+      
+            jobs.EnqueueCommand&lt;SendEmailCommand&gt;(new SendEmail {
+                To = &quot;my@email.com&quot;,
+                Subject = $&quot;{new Uri(url).Host} status&quot;,
+                BodyText = $&quot;{url} is up&quot;,
+            }, new() {
+                DependsOn = job.Id,
+                BatchId = batchId,
+            });
+        }
+    }
+}
+</code></pre>
+<p>Where any dependent jobs are only executed if the job was successfully completed.
+If instead an exception was thrown during execution, the job will be failed and
+all its dependent jobs cancelled and removed from the queue.</p>
+<h3 id="executing-jobs-with-an-authenticated-user-context">Executing jobs with an Authenticated User Context<a class="header-anchor" href="#executing-jobs-with-an-authenticated-user-context" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>If you have existing logic dependent on a Authenticated <code>ClaimsPrincipal</code> or ServiceStack
+<code>IAuthSession</code> you can have your APIs and Commands also be executed with that user context
+by specifying the <code>UserId</code> the job should be executed as:</p>
+<pre><code class="language-csharp">var openAiRequest = new CreateOpenAiChat {
+   Request = new() {
+       Model = &quot;gpt-4&quot;,
+       Messages = [
+           new() {
+               Content = request.Question
+           }
+       ]
+   },
+}; 
+
+// Example executing API Job with User Context
+jobs.EnqueueApi(openAiRequest, 
+    new() {
+      UserId = Request.GetClaimsPrincipal().GetUserId(),
+      CreatedBy = Request.GetClaimsPrincipal().GetUserName(),
+   });
+
+// Example executing Command Job with User Context
+jobs.EnqueueCommand&lt;CreateOpenAiChatCommand&gt;(openAiRequest, 
+    new() {
+      UserId = Request.GetClaimsPrincipal().GetUserId(),
+      CreatedBy = Request.GetClaimsPrincipal().GetUserName(),
+   });
+</code></pre>
+<p>Inside your API or Command you access the populated User <code>ClaimsPrincipal</code> or
+ServiceStack <code>IAuthSession</code> using the same APIs that you'd use inside your ServiceStack APIs, e.g:</p>
+<pre><code class="language-csharp">public class CreateOpenAiChatCommand(IBackgroundJobs jobs) 
+    : AsyncCommand&lt;CreateOpenAiChat&gt;
+{
+    protected override async Task RunAsync(
+        CreateOpenAiChat request, CancellationToken token)
+    {
+        var user = Request.GetClaimsPrincipal();
+        var session = Request.GetSession();
+        //...
+    }
+}
+</code></pre>
+<h3 id="queue-job-to-run-after-a-specified-date">Queue Job to run after a specified date<a class="header-anchor" href="#queue-job-to-run-after-a-specified-date" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Using <code>RunAfter</code> lets you queue jobs that are only executed after a specified <code>DateTime</code>,
+useful for executing resource intensive tasks at low traffic times, e.g:</p>
+<pre><code class="language-csharp">var jobRef = jobs.EnqueueCommand&lt;AggregateMonthlyDataCommand&gt;(new Aggregate {
+       Month = DateTime.UtcNow
+   }, 
+   new() {
+       RunAfter = DateTime.UtcNow.Date.AddDays(1)
+   });
+</code></pre>
+<h3 id="attach-metadata-to-jobs">Attach Metadata to Jobs<a class="header-anchor" href="#attach-metadata-to-jobs" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>All above Background Job Options have an effect on when and how Jobs are executed.
+There are also a number of properties that can be attached to a Job that can be useful
+in background job processing despite not having any effect on how jobs are executed.</p>
+<p>These properties can be accessed by commands or APIs executing the Job and are visible
+and can be filtered in the Jobs Admin UI to help find and analyze executed jobs.</p>
+<pre><code class="language-csharp">var jobRef = jobs.EnqueueCommand&lt;CreateOpenAiChatCommand&gt;(openAiRequest, 
+   new() {
+      // Group related jobs under a common tag
+      Tag = &quot;ai&quot;,
+      // A User-specified or system generated unique Id to track the job
+      RefId = request.RefId,
+      // Capture who created the job
+      CreatedBy = Request.GetClaimsPrincipal().GetUserName(),
+      // Link jobs together that are sent together in a batch
+      BatchId = batchId,
+      // Capture where to notify the completion of the job to
+      ReplyTo = &quot;https:example.org/callback&quot;,
+      // Additional properties about the job that aren't in the Request  
+      Args = new() {
+          [&quot;Additional&quot;] = &quot;Metadata&quot;
+      }
+   });
+</code></pre>
+<h3 id="querying-a-job">Querying a Job<a class="header-anchor" href="#querying-a-job" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>A job can be queried by either it's auto-incrementing <code>Id</code> Primary Key or by a unique <code>RefId</code>
+that can be user-specified.</p>
+<pre><code class="language-csharp">var jobResult = jobs.GetJob(jobRef.Id);
+
+var jobResult = jobs.GetJobByRefId(jobRef.RefId);
+</code></pre>
+<p>At a minimum a <code>JobResult</code> will contain the Summary Information about a Job as well as the
+full information about a job depending on where it's located:</p>
+<pre><code class="language-csharp">class JobResult
+{
+    // Summary Metadata about a Job in the JobSummary Table 
+    JobSummary Summary
+    // Job that's still in the BackgroundJob Queue
+    BackgroundJob? Queued
+    // Full Job information in Monthly DB CompletedJob Table
+    CompletedJob? Completed
+    // Full Job information in Monthly DB FailedJob Table
+    FailedJob? Failed
+    // Helper to access full Job Information
+    BackgroundJobBase? Job =&gt; Queued ?? Completed ?? Failed 
+}
+</code></pre>
+<h3 id="job-execution-limits">Job Execution Limits<a class="header-anchor" href="#job-execution-limits" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Default Retry and Timeout Limits can be configured on the <code>DatabaseJobFeature</code>:</p>
+<pre><code class="language-csharp">services.AddPlugin(new DatabaseJobFeature
+{
+   DefaultRetryLimit = 2,
+   DefaultTimeout = TimeSpan.FromMinutes(10),
+});
+</code></pre>
+<p>These limits are also overridable on a per-job basis, e.g:</p>
+<pre><code class="language-csharp">var jobRef = jobs.EnqueueCommand&lt;AggregateMonthlyDataCommand&gt;(new Aggregate {
+       Month = DateTime.UtcNow
+   }, 
+   new() {
+      RetryLimit = 3,
+      Timeout = TimeSpan.FromMinutes(30),
+   });
+</code></pre>
+<h3 id="logging-cancellation-an-status-updates">Logging, Cancellation an Status Updates<a class="header-anchor" href="#logging-cancellation-an-status-updates" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>We'll use the command for checking multiple URLs to demonstrate some recommended patterns
+and how to enlist different job processing features.</p>
+<pre><code class="language-csharp">public class CheckUrlsCommand(
+    ILogger&lt;CheckUrlsCommand&gt; logger,
+    IBackgroundJobs jobs,
+    IHttpClientFactory clientFactory) : AsyncCommand&lt;CheckUrls&gt;
+{
+    protected override async Task RunAsync(CheckUrls req, CancellationToken ct)
+    {
+        // 1. Create Logger that Logs and maintains logging in Jobs DB
+        var log = Request.CreateJobLogger(jobs,logger);
+
+        // 2. Get Current Executing Job
+        var job = Request.GetBackgroundJob();
+
+        var result = new CheckUrlsResult {
+            Statuses = new()
+        };
+        using var client = clientFactory.CreateClient();
+        for (var i = 0; i &lt; req.Urls.Count; i++)
+        {
+            // 3. Stop processing Job if it's been cancelled 
+            ct.ThrowIfCancellationRequested();
+
+            var url = req.Urls[i];
+            try
+            {
+                var msg = new HttpRequestMessage(HttpMethod.Get,url);
+                var response = await client.SendAsync(msg, ct);
+
+                result.Statuses[url] = response.IsSuccessStatusCode;
+                log.LogInformation(&quot;{Url} is {Status}&quot;,
+                    url, response.IsSuccessStatusCode ? &quot;up&quot; : &quot;down&quot;);
+
+                // 4. Optional: Maintain explicit progress and status updates
+                log.UpdateStatus(i/(double)req.Urls.Count,$&quot;Checked {i} URLs&quot;);
+            }
+            catch (Exception e)
+            {
+                log.LogError(e, &quot;Error checking {Url}&quot;, url);
+                result.Statuses[url] = false;
+            }
+        }
+
+        // 5. Send Results to WebHook Callback if specified
+        if (job.ReplyTo != null)
+        {
+            jobs.EnqueueCommand&lt;NotifyCheckUrlsCommand&gt;(result,
+                new() {
+                    ParentId = job.Id,
+                    ReplyTo = job.ReplyTo,
+                });
+        }
+    }
+}
+</code></pre>
+<p>We'll cover some of the notable parts useful when executing Jobs:</p>
+<h4 id="job-logger">1. Job Logger<a class="header-anchor" href="#job-logger" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>We can use a Job logger to enable database logging that can be monitored in real-time in the
+Admin Jobs UI. Creating it with both <code>BackgroundJobs</code> and <code>ILogger</code> will return a combined
+logger that both Logs to standard output and to the Jobs database:</p>
+<pre><code class="language-csharp">var log = Request.CreateJobLogger(jobs,logger);
+</code></pre>
+<p>Or just use <code>Request.CreateJobLogger(jobs)</code> to only save logs to the database.</p>
+<h4 id="resolve-executing-job">2. Resolve Executing Job<a class="header-anchor" href="#resolve-executing-job" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>If needed the currently executing job can be accessed with:</p>
+<pre><code class="language-csharp">var job = Request.GetBackgroundJob();
+</code></pre>
+<p>Where you'll be able to access all the metadata the jobs were created with including <code>ReplyTo</code>
+and <code>Args</code>.</p>
+<h4 id="check-if-job-has-been-cancelled">3. Check if Job has been cancelled<a class="header-anchor" href="#check-if-job-has-been-cancelled" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>To be able to cancel a long running job you'll need to periodically check if a Cancellation
+has been requested and throw a <code>TaskCanceledException</code> if it has to short-circuit the command
+which can be done with:</p>
+<pre><code class="language-csharp">ct.ThrowIfCancellationRequested();
+</code></pre>
+<p>You'll typically want to call this at the start of any loops to prevent it from doing any more work.</p>
+<h4 id="optionally-record-progress-and-status-updates">4. Optionally record progress and status updates<a class="header-anchor" href="#optionally-record-progress-and-status-updates" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>By default Background Jobs looks at the last API or Command run and worker used to estimate
+the duration and progress for how long a running job will take.</p>
+<p>If preferred your command can explicitly set a more precise progress and optional status update
+that should be used instead, e.g:</p>
+<pre><code class="language-csharp">log.UpdateStatus(progress:i/(double)req.Urls.Count, $&quot;Checked {i} URLs&quot;);
+</code></pre>
+<p>Although generally the estimated duration and live logs provide a good indication for the progress
+of a job.</p>
+<h4 id="notify-completion-of-job">5. Notify completion of Job<a class="header-anchor" href="#notify-completion-of-job" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>Calling a Web Hook is a good way to notify externally initiated job requests of the completion
+of a job. You could invoke the callback within the command itself but there are a few benefits
+to initiating another job to handle the callback:</p>
+<ul>
+<li>Frees up the named worker immediately to process the next task</li>
+<li>Callbacks are durable, auto-retried and their success recorded like any job</li>
+<li>If a callback fails the entire command doesn't need to be re-run again</li>
+</ul>
+<p>We can queue a callback with the result by passing through the <code>ReplyTo</code> and link it to the
+existing job with:</p>
+<pre><code class="language-csharp">if (job.ReplyTo != null)
+{
+   jobs.EnqueueCommand&lt;NotifyCheckUrlsCommand&gt;(result,
+       new() {
+           ParentId = job.Id,
+           ReplyTo = job.ReplyTo,
+       });
+}
+</code></pre>
+<p>Which we can implement by calling the <code>SendJsonCallbackAsync</code> extension method with the
+Callback URL and the Result DTO it should be called with:</p>
+<pre><code class="language-csharp">public class NotifyCheckUrlsCommand(IHttpClientFactory clientFactory) 
+    : AsyncCommand&lt;CheckUrlsResult&gt;
+{
+    protected override async Task RunAsync(
+        CheckUrlsResult request, CancellationToken token)
+    {
+        await clientFactory.SendJsonCallbackAsync(
+            Request.GetBackgroundJob().ReplyTo, request, token);
+    }
+}
+</code></pre>
+<h4 id="callback-urls">Callback URLs<a class="header-anchor" href="#callback-urls" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p><code>ReplyTo</code> can be any URL which by default will have the result POST'ed back to the URL with a JSON
+Content-Type. Typically URLs will contain a reference Id so external clients can correlate a callback
+with the internal process that initiated the job. If the callback API is publicly available you'll
+want to use an internal Id that can't be guessed so the callback can't be spoofed, like a Guid, e.g:</p>
+<div class="not-prose copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-700">
+                    <div class="pl-4 py-1 pb-1.5 align-middle text-lg text-white"><p><code>https://api.example.com?refId={RefId}</code></p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-sky-500 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<p>If needed the callback URL can be customized on how the HTTP Request callback is sent.</p>
+<p>You can change the HTTP Method used by including it before the URL:</p>
+<div class="not-prose copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-700">
+                    <div class="pl-4 py-1 pb-1.5 align-middle text-lg text-white"><p><code>PUT https://api.example.com</code></p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-sky-500 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<p>If the auth part contains a colon <code>:</code> it's treated as Basic Auth:</p>
+<div class="not-prose copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-700">
+                    <div class="pl-4 py-1 pb-1.5 align-middle text-lg text-white"><p><code>username:password@https://api.example.com</code></p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-sky-500 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<p>If name starts with <code>http.</code> sends a HTTP Header</p>
+<div class="not-prose copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-700">
+                    <div class="pl-4 py-1 pb-1.5 align-middle text-lg text-white"><p><code>http.X-API-Key:myApiKey@https://api.example.com</code></p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-sky-500 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<p>Otherwise it's sent as a Bearer Token:</p>
+<div class="not-prose copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-700">
+                    <div class="pl-4 py-1 pb-1.5 align-middle text-lg text-white"><p><code>myToken123@https://api.example.com</code></p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-sky-500 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<p>Bearer Token or HTTP Headers starting with <code>$</code> is substituted with Environment Variable if exists:</p>
+<div class="not-prose copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-700">
+                    <div class="pl-4 py-1 pb-1.5 align-middle text-lg text-white"><p><code>$API_TOKEN@https://api.example.com</code></p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-sky-500 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<p>When needed headers, passwords, and tokens can be URL encoded if they contain any delimiter characters.</p>
+<h2 id="implementing-commands">Implementing Commands<a class="header-anchor" href="#implementing-commands" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>At a minimum a command need only implement the <a href="https://docs.servicestack.net/commands#commands-feature">IAsyncCommand interface</a>:</p>
+<pre><code class="language-csharp">public interface IAsyncCommand&lt;in T&gt;
+{
+    Task ExecuteAsync(T request);
+}
+</code></pre>
+<p>Which is the singular interface that can execute any command.</p>
+<p>However commands executed via Background Jobs have additional context your commands may need to
+access during execution, including the <code>BackgroundJob</code> itself, the <code>CancellationToken</code> and
+an Authenticated User Context.</p>
+<p>To reduce the effort in creating commands with a <code>IRequest</code> context we've added a number ergonomic
+base classes to better capture the different call-styles a unit of logic can have including
+<strong>Sync</strong> or <strong>Async</strong> execution, whether they require <strong>Input Arguments</strong> or have <strong>Result Outputs</strong>.</p>
+<p>Choosing the appropriate Abstract base class benefits from IDE tooling in generating the method
+signature that needs to be implemented whilst Async commands with Cancellation Tokens in its method
+signature highlights any missing async methods that are called without the token.</p>
+<h3 id="sync-commands">Sync Commands<a class="header-anchor" href="#sync-commands" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<ul>
+<li><code>SyncCommand</code> - Requires No Arguments</li>
+<li><code>SyncCommand&lt;TRequest&gt;</code> - Requires TRequest Argument</li>
+<li><code>SyncCommandWithResult&lt;TResult&gt;</code> - Requires No Args and returns Result</li>
+<li><code>SyncCommandWithResult&lt;TReq,TResult&gt;</code> - Requires Arg and returns Result</li>
+</ul>
+<pre><code class="language-csharp">public record MyArgs(int Id);
+public record MyResult(string Message);
+
+public class MyCommandNoArgs(ILogger&lt;MyCommandNoArgs&gt; log) : SyncCommand
+{
+    protected override void Run()
+    {
+        log.LogInformation(&quot;Called with No Args&quot;);
+    }
+}
+
+public class MyCommandArgs(ILogger&lt;MyCommandNoArgs&gt; log) : SyncCommand&lt;MyArgs&gt;
+{
+    protected override void Run(MyArgs request)
+    {
+        log.LogInformation(&quot;Called with {Id}&quot;, request.Id);
+    }
+}
+
+public class MyCommandWithResult(ILogger&lt;MyCommandNoArgs&gt; log) 
+    : SyncCommandWithResult&lt;MyResult&gt;
+{
+    protected override MyResult Run()
+    {
+        log.LogInformation(&quot;Called with No Args and returns Result&quot;);
+        return new MyResult(&quot;Hello World&quot;);
+    }
+}
+
+public class MyCommandWithArgsAndResult(ILogger&lt;MyCommandNoArgs&gt; log) 
+    : SyncCommandWithResult&lt;MyArgs,MyResult&gt;
+{
+    protected override MyResult Run(MyArgs request)
+    {
+        log.LogInformation(&quot;Called with {Id} and returns Result&quot;, request.Id);
+        return new MyResult(&quot;Hello World&quot;);
+    }
+}
+</code></pre>
+<h3 id="async-commands">Async Commands<a class="header-anchor" href="#async-commands" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<ul>
+<li><code>AsyncCommand</code> - Requires No Arguments</li>
+<li><code>AsyncCommand&lt;TRequest&gt;</code> - Requires TRequest Argument</li>
+<li><code>AsyncCommandWithResult&lt;TResult&gt;</code> - Requires No Args and returns Result</li>
+<li><code>AsyncCommandWithResult&lt;TReq,TResult&gt;</code> - Requires Arg and returns Result</li>
+</ul>
+<pre><code class="language-csharp">public class MyAsyncCommandNoArgs(ILogger&lt;MyCommandNoArgs&gt; log) : AsyncCommand
+{
+    protected override async Task RunAsync(CancellationToken token)
+    {
+        log.LogInformation(&quot;Async called with No Args&quot;);
+    }
+}
+
+public class MyAsyncCommandArgs(ILogger&lt;MyCommandNoArgs&gt; log) 
+    : AsyncCommand&lt;MyArgs&gt;
+{
+    protected override async Task RunAsync(MyArgs request, CancellationToken t)
+    {
+        log.LogInformation(&quot;Async called with {Id}&quot;, request.Id);
+    }
+}
+
+public class MyAsyncCommandWithResult(ILogger&lt;MyCommandNoArgs&gt; log) 
+    : AsyncCommandWithResult&lt;MyResult&gt;
+{
+    protected override async Task&lt;MyResult&gt; RunAsync(CancellationToken token)
+    {
+        log.LogInformation(&quot;Async called with No Args and returns Result&quot;);
+        return new MyResult(&quot;Hello World&quot;);
+    }
+}
+
+public class MyAsyncCommandWithArgsAndResult(ILogger&lt;MyCommandNoArgs&gt; log) 
+    : AsyncCommandWithResult&lt;MyArgs,MyResult&gt;
+{
+    protected override async Task&lt;MyResult&gt; RunAsync(
+        MyArgs request, CancellationToken token)
+    {
+        log.LogInformation(&quot;Called with {Id} and returns Result&quot;, request.Id);
+        return new MyResult(&quot;Hello World&quot;);
+    }
+}
+</code></pre>
+
+                </div>
+            </div>
+        </article>
+</div>
+
+<div id="comments" data-post="PostComments" class="my-48"></div>
+
+
+<script type="module">
+import { init } from "app.mjs"
+init()
+</script>
+
+<link rel="stylesheet" href="css/highlight.css">
+<script src="lib/js/highlight.js"></script>
+<script>hljs.highlightAll()</script>
+<script src="lib/js/lite-yt-embed.js"></script>
+<script src="mjs/docs.mjs" type="module"></script>
+
+<script type="module">
+import { mount } from "app.mjs"
+
+    const App = {
+        setup() {
+            function nav(url) {
+                window.open(url)
+            }
+            return { nav }
+        }
+    }
+    mount('#post', App)
+</script>
+
+    </main>
+</div>
+
+<footer class="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+  <div class="mx-auto max-w-7xl overflow-hidden py-20 px-6 sm:py-24 lg:px-8">
+    <nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
+      <div class="pb-6">
+        <a href="whatsnew" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">What's New</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="blog" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Blog</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="posts" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Archive</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="speaking" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Speaking</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="uses" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Uses</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="about" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">About</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="privacy" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Privacy</a>
+      </div>
+    </nav>
+    <div class="mt-10 flex justify-center space-x-10">
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Facebook</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Instagram</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Twitter</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">GitHub</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">YouTube</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+    </div>
+    <p class="mt-10 text-center text-xs leading-5 text-gray-500">
+      <a href="https://github.com/NetCoreTemplates/razor-ssg">powered by razor</a>
+    </p>
+  </div>
+</footer>
+
+<script type="module">
+//TODO: Replace with local and production URLs of CreatorKit .NET App or Remove if not using CreatorKit
+import { mail } from 'https://creatorkit.netcore.io/mjs/components/mail.mjs'
+import { post } from 'https://creatorkit.netcore.io/mjs/components/post.mjs'
+
+mail('[data-mail]', { 
+    mailingLists: ['MonthlyNewsletter'] 
+})
+
+post('[data-post]', {
+    commentLink: { 
+        href: '/community-rules',
+        label: 'read the community rules'
+    } 
+})
+</script>
+
+
+<script type="module">
+import { init } from "app.mjs"
+init()
+</script>
+
+
+
+</body>
+</html>

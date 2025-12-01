@@ -1,0 +1,1015 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg" href="img/logo.svg">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://razor-ssg.web-templates.io/feed.xml" />
+    <title>AI Chat - A Simple OpenAI Chat Completions API, UI &amp; Client LLM Gateway</title>
+    <base href="/" />
+    <script>
+    if (location.search === "?dark") localStorage.setItem('color-scheme','dark') 
+    if (location.search === "?light") localStorage.removeItem('color-scheme') 
+    const cls = document.querySelector('html').classList
+    if (localStorage.getItem('color-scheme') === 'dark')
+        cls.add('dark')
+    else
+        cls.remove('dark')
+    </script>
+    <link rel="stylesheet" href="css/app.css">
+    <style>html { scroll-padding-top: 5rem }</style>
+
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+{
+    "imports": {
+        "app.mjs": "./mjs/app.mjs",
+        "vue": "./lib/mjs/vue.min.mjs",
+        "@servicestack/client": "./lib/mjs/servicestack-client.min.mjs",
+        "@servicestack/vue": "./lib/mjs/servicestack-vue.min.mjs"
+    }
+}
+</script>
+    
+    <meta name="twitter:site" content="@RazorSsg" />
+    <meta name="twitter:card" content="summary" />
+    <meta property="og:description" content="Unlock the value of OpenAI Chat APIs using a simple, serializable ChatCompletion DTO that works everywhere" />
+    <meta property="og:url" content="https://razor-ssg.web-templates.io/posts/ai-chat" />
+    <meta property="og:title" content="AI Chat - A Simple OpenAI Chat Completions API, UI &amp; Client LLM Gateway" />
+    <meta property="og:image" content="https://servicestack.net/img/posts/ai-chat/bg.webp" />
+
+
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+<header class="top-0 fixed z-50 h-14 bg-white dark:bg-black opacity-90 w-full shadow pr-3">
+    <div class="flex flex-wrap items-center">
+        <div class="absolute z-10 top-2 left-2 sm:static flex-shrink flex-grow-0">
+            <div class="cursor-pointer">
+                <a class="navbar-brand flex items-center" href="./">
+                    <svg class="w-8 h-8 sm:ml-2 sm:w-12 sm:h-12" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="currentColor" d="M10 6c1.544 1.76 2.276 4.15 2.217 6.61c3.968 1.67 9.924 6.12 11.181 12.39H28C26.051 14.31 14.918 6.77 10 6zm-2 7c4.67 4.913.81 11.582-4 12h18.97C21.5 18.289 11.95 13.533 8 13z"/></svg>
+                    <span class="hidden sm:block text-2xl font-semibold">MyApp</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-grow flex-shrink flex-nowrap justify-end items-center">
+            <nav class="relative flex flex-grow leading-6 font-semibold text-slate-700 dark:text-slate-200">
+                <ul class="flex flex-wrap items-center justify-end w-full m-0 pb-2 sm:pb-0">
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="whatsnew" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    What's New
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="blog" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Blog
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="podcasts" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Podcasts
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="videos" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Videos
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="creatorkit/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Creator Kit
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="posts/" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Archive
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="speaking" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Speaking
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="uses" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    Uses
+                                </a>
+                            </li>
+                            <li class="relative flex flex-wrap just-fu-start m-0">
+                                <a href="about" class="p-4 flex items-center justify-start mw-full hover:text-sky-500 dark:hover:text-sky-400">
+                                    About
+                                </a>
+                            </li>
+                    <li class="relative flex flex-wrap just-fu-start m-0">
+                        <div data-component="DarkModeToggle" class="ml-2 w-10"></div>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</header>
+<script type="module">
+import { mountAll } from "app.mjs"
+mountAll()
+</script>
+
+
+<div class="min-h-screen">
+    <main role="main" class="pt-14 pb-3">
+        
+
+
+
+<link rel="stylesheet" href="css/typography.css">
+<link rel="stylesheet" href="css/lite-yt-embed.css">
+
+<div class="container px-5 mb-32 mx-auto">
+        <article class="mt-20">
+            <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
+                AI Chat - A Simple OpenAI Chat Completions API, UI &amp; Client LLM Gateway
+            </h1>
+            <div class="flex justify-between">
+                <div class="md:mb-12 flex items-center">
+                        <img class="w-12 h-12 rounded-full mr-4 text-cyan-600" src="data:image/svg&#x2B;xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; fill=&#x27;none&#x27; viewBox=&#x27;0 0 24 24&#x27; stroke=&#x27;none&#x27; aria-hidden=&#x27;true&#x27;%3E%3Cpath fill=&#x27;%230891b2&#x27; d=&#x27;M12 2a5 5 0 1 0 5 5a5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3a3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z&#x27;/%3E%3C/svg%3E">
+                    <div class="flex flex-col">
+                    </div>
+                </div>
+                <div class="mb-4 max-w-sm" data-mail="JoinMailingList" data-props="{ submitLabel:'Join our newsletter' }"></div>
+            </div>
+            <div class="mb-8 md:mb-16 sm:mx-0">
+                <div class="sm:mx-0">
+                    <img src="https://servicestack.net/img/posts/ai-chat/bg.webp" alt="AI Chat - A Simple OpenAI Chat Completions API, UI &amp; Client LLM Gateway Background" class="shadow-small">
+                </div>
+            </div>
+            <div class="flex max-w-7xl mx-auto justify-between" style="width:100%;">
+                <div>
+                    <div class="mb-4 flex flex-wrap">
+                            <a href="posts/tagged/llms" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">llms</a>
+                            <a href="posts/tagged/ai" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">ai</a>
+                            <a href="posts/tagged/openai" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">openai</a>
+                            <a href="posts/tagged/chat" class="mr-2 text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">chat</a>
+                    </div>
+                        <div class="max-w-3xl mx-auto">
+                            <div class="mb-6 text-lg text-gray-500">
+                                <time datetime="2025-11-17T00:00:00.0000000">November 17, 2025</time>
+                                <span aria-hidden="true">&middot;</span>
+                                <span>16 min read</span>
+                            </div>
+                        </div>
+                </div>
+                <div class="flex flex-grow-0">
+                    <div data-post="PostVotes"></div>
+                    <a href="javascript:;" onclick="document.location.hash='comments'" class="cursor-pointer" title="Jump to comments">
+                        <svg class="ml-4 text-gray-700 mt-1 w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M3 11.2c0 .1 0 .1 0 0c0 .1 0 .1 0 0zM8.3 1C3.9 1 0 3.6 0 6.6c0 2 1.1 3.7 3 4.7s0 .1 0 .1c-.1 1.3-.9 1.7-.9 1.7L.3 14h2c2.5 0 4.3-1.1 5.1-1.9h.8c4.3 0 7.8-2.5 7.8-5.6S12.6 1 8.3 1zm-.1 10.1H7l-.2.2c-.5.5-1.6 1.4-3.3 1.7c.3-.5.5-1.1.5-2v-.3l-.3-.1C1.9 9.7 1 8.3 1 6.6C1 4.2 4.5 2 8.3 2C12 2 15 4 15 6.6c0 2.4-3.1 4.5-6.8 4.5z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="max-w-3xl mx-auto">
+                <div id="post" class="prose lg:prose-xl max-w-none mb-32">
+                    <p>We're excited to introduce <strong>AI Chat</strong> — a refreshingly simple solution for integrating AI into your applications by
+unlocking the full value of the OpenAI Chat API. Unlike most other OpenAI SDKs and Frameworks, all of AI Chat's features
+are centered around arguably the most important API in our time - OpenAI's simple <a href="https://platform.openai.com/docs/api-reference/chat">Chat Completion API</a>
+i.e. the primary API used to access Large Language Models (LLMs).</p>
+<h2 id="ai-chat-ui">AI Chat UI<a class="header-anchor" href="#ai-chat-ui" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p><a href="/posts/ai-chat">AI Chat</a> also allows you to offer a curated ChatGPT-like UI to your users where you're able to
+change the branding to suit your App, control the API Keys, billing, and sanctioned providers your users can access to
+maintain your own <strong>Fast, Local, and Private</strong> access to AI from within your own organization.</p>
+<h2 id="install">Install<a class="header-anchor" href="#install" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>AI Chat can be added to any .NET 8+ project by installing the <strong>ServiceStack.AI.Chat</strong> NuGet package and configuration with:</p>
+<div class="not-prose sh-copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-800">
+                    <div class="pl-4 py-1 pb-1.5 align-middle whitespace-pre text-base text-gray-100"><p>npx add-in chat</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-green-600 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<p>Which drops this simple <a href="https://docs.servicestack.net/modular-startup">Modular Startup</a> that adds the <code>ChatFeature</code>
+and registers a link to its UI on the <a href="https://docs.servicestack.net/metadata-page">Metadata Page</a> if you want it:</p>
+<pre><code class="language-csharp">public class ConfigureAiChat : IHostingStartup
+{
+    public void Configure(IWebHostBuilder builder) =&gt; builder
+        .ConfigureServices((context, services) =&gt; {
+
+            // Docs: https://docs.servicestack.net/ai-chat-api
+            services.AddPlugin(new ChatFeature {
+                EnableProviders = [
+                    &quot;servicestack&quot;,
+                    // &quot;groq&quot;,
+                    // &quot;google_free&quot;,
+                    // &quot;openrouter_free&quot;,
+                    // &quot;ollama&quot;,
+                    // &quot;google&quot;,
+                    // &quot;anthropic&quot;,e
+                    // &quot;openai&quot;,
+                    // &quot;grok&quot;,
+                    // &quot;qwen&quot;,
+                    // &quot;z.ai&quot;,
+                    // &quot;mistral&quot;,
+                    // &quot;openrouter&quot;,
+                ]
+            });
+            
+            // Persist AI Chat History, enables analytics at /admin-ui/chat
+            services.AddSingleton&lt;IChatStore,DbChatStore&gt;();
+            // Or store history in monthly partitioned tables in PostgreSQL:
+            // services.AddSingleton&lt;IChatStore, PostgresChatStore&gt;();
+             
+            services.ConfigurePlugin&lt;MetadataFeature&gt;(feature =&gt; {
+                feature.AddPluginLink(&quot;/chat&quot;, &quot;AI Chat&quot;);
+            });
+        });
+}
+</code></pre>
+<h3 id="identity-auth-or-valid-api-key">Identity Auth or Valid API Key<a class="header-anchor" href="#identity-auth-or-valid-api-key" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>AI Chat makes of ServiceStack's new <a href="/posts/apikey_auth_apis">API Keys or Identity Auth APIs</a> which allows usage
+for both Authenticated Identity Auth users otherwise unauthenticated users will need to provide a valid API Key:</p>
+<div class="shadow"><p><a href="https://servicestack.net/img/posts/ai-chat/ai-chat-ui-apikey.webp"><img src="https://servicestack.net/img/posts/ai-chat/ai-chat-ui-apikey.webp" alt="" /></a></p>
+</div>
+<p>If needed <code>ValidateRequest</code> can be used to further restrict access to AI Chat's UI and APIs, e.g. you can restrict access
+to API Keys with the <code>Admin</code> scope with:</p>
+<pre><code class="language-csharp">services.AddPlugin(new ChatFeature {
+    ValidateRequest = async req =&gt; 
+        req.GetApiKey()?.HasScope(RoleNames.Admin) == true 
+            ? null 
+            : HttpResult.Redirect(&quot;/admin-ui&quot;),
+});
+</code></pre>
+<h3 id="import-export">Import / Export<a class="header-anchor" href="#import-export" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>All data is stored locally in the users local browser's IndexedDB. When needed you can backup and transfer your
+entire chat history between different browsers using the <strong>Export</strong> and <strong>Import</strong> features on the home page.</p>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/ai-chat/llms-home.webp"><img src="https://servicestack.net/img/posts/ai-chat/llms-home.webp" alt="llms-home.webp" /></a></p>
+</div>
+<h2 id="simple-and-flexible-ui">Simple and Flexible UI<a class="header-anchor" href="#simple-and-flexible-ui" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>Like all of <a href="https://servicestack.net/auto-ui">ServiceStack's built-in UIs</a>, AI Chat is also <a href="https://docs.servicestack.net/locode/custom-overview">naturally customizable</a>
+where you can override any of <a href="https://github.com/ServiceStack/ServiceStack/tree/main/ServiceStack/src/ServiceStack.AI.Chat/chat">AI Chat's Vue Components</a>
+and override them with your own by placing them in your
+<a href="https://github.com/ServiceStack/ServiceStack/tree/main/ServiceStack/tests/AdhocNew/wwwroot/chat">/wwwroot/chat</a> folder:</p>
+<div class="language-files"><div class="ml-6">
+  <div class="flex items-center text-base leading-8">
+    <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 12 12" width="12" height="12" fill="currentColor"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg>
+    <svg class="mr-1 text-sky-500" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M.513 1.513A1.75 1.75 0 0 1 1.75 1h3.5c.55 0 1.07.26 1.4.7l.9 1.2a.25.25 0 0 0 .2.1H13a1 1 0 0 1 1 1v.5H2.75a.75.75 0 0 0 0 1.5h11.978a1 1 0 0 1 .994 1.117L15 13.25A1.75 1.75 0 0 1 13.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75c0-.464.184-.91.513-1.237Z"></path></svg>
+    <span>wwwroot</span>
+  </div>
+<div class="ml-6">
+  <div class="flex items-center text-base leading-8">
+    <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 12 12" width="12" height="12" fill="currentColor"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg>
+    <svg class="mr-1 text-sky-500" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M.513 1.513A1.75 1.75 0 0 1 1.75 1h3.5c.55 0 1.07.26 1.4.7l.9 1.2a.25.25 0 0 0 .2.1H13a1 1 0 0 1 1 1v.5H2.75a.75.75 0 0 0 0 1.5h11.978a1 1 0 0 1 .994 1.117L15 13.25A1.75 1.75 0 0 1 13.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75c0-.464.184-.91.513-1.237Z"></path></svg>
+    <span>chat</span>
+  </div>
+<div>
+<div class="ml-6 flex items-center text-base leading-8">
+  <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg>
+  <span>Brand.mjs</span>
+</div>
+<div class="ml-6 flex items-center text-base leading-8">
+  <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg>
+  <span>Welcome.mjs</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Where you'll be able to customize the appearance and behavior of AI Chat's UI to match your App's branding and needs.</p>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/ai-chat/ai-chat-custom-ui.webp"><img src="https://servicestack.net/img/posts/ai-chat/ai-chat-custom-ui.webp" alt="" /></a></p>
+</div>
+<h2 id="customize">Customize<a class="header-anchor" href="#customize" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>The built-in <a href="https://github.com/ServiceStack/ServiceStack/blob/main/ServiceStack/src/ServiceStack.AI.Chat/chat/ui.json">ui.json</a>
+configuration can be overridden with your own to use your preferred system prompts and other defaults by adding them to your local folder:</p>
+<div class="language-files"><div class="ml-6">
+  <div class="flex items-center text-base leading-8">
+    <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 12 12" width="12" height="12" fill="currentColor"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg>
+    <svg class="mr-1 text-sky-500" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M.513 1.513A1.75 1.75 0 0 1 1.75 1h3.5c.55 0 1.07.26 1.4.7l.9 1.2a.25.25 0 0 0 .2.1H13a1 1 0 0 1 1 1v.5H2.75a.75.75 0 0 0 0 1.5h11.978a1 1 0 0 1 .994 1.117L15 13.25A1.75 1.75 0 0 1 13.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75c0-.464.184-.91.513-1.237Z"></path></svg>
+    <span>wwwroot</span>
+  </div>
+<div class="ml-6">
+  <div class="flex items-center text-base leading-8">
+    <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 12 12" width="12" height="12" fill="currentColor"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg>
+    <svg class="mr-1 text-sky-500" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M.513 1.513A1.75 1.75 0 0 1 1.75 1h3.5c.55 0 1.07.26 1.4.7l.9 1.2a.25.25 0 0 0 .2.1H13a1 1 0 0 1 1 1v.5H2.75a.75.75 0 0 0 0 1.5h11.978a1 1 0 0 1 .994 1.117L15 13.25A1.75 1.75 0 0 1 13.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75c0-.464.184-.91.513-1.237Z"></path></svg>
+    <span>chat</span>
+  </div>
+<div>
+<div class="ml-6 flex items-center text-base leading-8">
+  <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg>
+  <span>llms.json</span>
+</div>
+<div class="ml-6 flex items-center text-base leading-8">
+  <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg>
+  <span>ui.json</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Alternatively <code>ConfigJson</code> and <code>UiConfigJson</code> can be used to load custom JSON configuration from a different source, e.g:</p>
+<pre><code class="language-csharp">services.AddPlugin(new ChatFeature {
+    // Use custom llms.json configuration
+    ConfigJson = vfs.GetFile(&quot;App_Data/llms.json&quot;).ReadAllText(),
+
+    // Use custom ui.json configuration
+    UiConfigJson = vfs.GetFile(&quot;App_Data/ui.json&quot;).ReadAllText(),
+});
+
+</code></pre>
+<h2 id="rich-markdown-syntax-highlighting">Rich Markdown &amp; Syntax Highlighting<a class="header-anchor" href="#rich-markdown-syntax-highlighting" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>To maximize readability there's full support for Markdown and Syntax highlighting for the most popular programming
+languages.</p>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/ai-chat/llms-syntax.webp"><img src="https://servicestack.net/img/posts/ai-chat/llms-syntax.webp" alt="llms-syntax.webp" /></a></p>
+</div>
+<p>To quickly and easily make use of AI Responses, <strong>Copy Code</strong> icons are readily available on hover of all messages
+and code blocks.</p>
+<h2 id="rich-multimodal-inputs">Rich, Multimodal Inputs<a class="header-anchor" href="#rich-multimodal-inputs" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>The Chat UI goes beyond just text and can take advantage of the multimodal capabilities of modern LLMs
+with support for Image, Audio, and File inputs.</p>
+<h3 id="image-inputs-analysis">🖼️ 1. Image Inputs &amp; Analysis<a class="header-anchor" href="#image-inputs-analysis" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Images can be uploaded directly into your conversations with vision-capable models for comprehensive image analysis.</p>
+<p>Visual AI Responses are highly dependent on the model used. This is a typical example of the visual analysis provided by the latest Gemini Flash of our <a href="https://servicestack.net/img/logo.png">ServiceStack Logo</a>:</p>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/ai-chat/llms-image.webp"><img src="https://servicestack.net/img/posts/ai-chat/llms-image.webp" alt="llms-image.webp" /></a></p>
+</div>
+<h3 id="audio-input-transcription">🎤 2. Audio Input &amp; Transcription<a class="header-anchor" href="#audio-input-transcription" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Likewise you can upload Audio files and have them transcribed and analyzed by multi-modal models with audio capabilities.</p>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/ai-chat/llms-audio.webp"><img src="https://servicestack.net/img/posts/ai-chat/llms-audio.webp" alt="llms-audio.webp" /></a></p>
+</div>
+<p>Example of processing audio input. Audio files can be uploaded with system and user prompts
+to instruct the model to transcribe and summarize its content where its
+multi-modal capabilities are integrated right within the chat interface.</p>
+<h3 id="file-and-pdf-attachments">📎 3. File and PDF Attachments<a class="header-anchor" href="#file-and-pdf-attachments" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>In addition to images and audio, you can also upload documents, PDFs, and other files to
+capable models to extract insights, summarize content or analyze.</p>
+<p><strong>Document Processing Use Cases:</strong></p>
+<ul>
+<li><strong>PDF Analysis</strong>: Upload PDF documents for content extraction and analysis</li>
+<li><strong>Data Extraction</strong>: Extract specific information from structured documents</li>
+<li><strong>Document Summarization</strong>: Get concise summaries of lengthy documents</li>
+<li><strong>Query Content</strong>: Ask questions about specific content in documents</li>
+<li><strong>Batch Processing</strong>: Upload multiple files for comparative analysis</li>
+</ul>
+<p>Perfect for research, document review, data analysis, and content extractions.</p>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/ai-chat/llms-files.webp"><img src="https://servicestack.net/img/posts/ai-chat/llms-files.webp" alt="llms-files.webp" /></a></p>
+</div>
+<h2 id="custom-ai-chat-requests">Custom AI Chat Requests<a class="header-anchor" href="#custom-ai-chat-requests" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>Send Custom Chat Completion requests through the settings dialog, allowing Users to fine-tune
+their AI requests with advanced options including:</p>
+<ul>
+<li><strong>Temperature</strong> <code>(0-2)</code> for controlling response randomness</li>
+<li><strong>Max Completion Tokens</strong> to limit response length</li>
+<li><strong>Seed</strong> values for deterministic sampling</li>
+<li><strong>Top P</strong> <code>(0-1)</code> for nucleus sampling</li>
+<li><strong>Frequency</strong> &amp; <strong>Presence Penalty</strong> <code>(-2.0 to 2.0)</code> for reducing repetition</li>
+<li><strong>Stop</strong> Sequences to control where the API stops generating</li>
+<li><strong>Reasoning Effort</strong> constraints for reasoning models</li>
+<li><strong>Top Logprobs</strong> <code>(0-20)</code> for token probability analysis</li>
+<li><strong>Verbosity</strong> settings</li>
+</ul>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/ai-chat/llms-settings.webp"><img src="https://servicestack.net/img/posts/ai-chat/llms-settings.webp" alt="llms-settings.webp" /></a></p>
+</div>
+<h2 id="enable-disable-providers">Enable / Disable Providers<a class="header-anchor" href="#enable-disable-providers" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p><strong>Admin</strong> Users can manage which providers they want enabled or disabled at runtime.
+Providers are invoked in the order they're defined in <code>llms.json</code> that supports the requested model.
+If a provider fails, it tries the next available one.</p>
+<p>By default Providers with Free tiers are enabled first, followed by local providers and then premium
+cloud providers which can all be enabled or disabled in the UI:</p>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/ai-chat/llms-providers.webp"><img src="https://servicestack.net/img/posts/ai-chat/llms-providers.webp" alt="llms-providers.webp" /></a></p>
+</div>
+<h2 id="search-history">Search History<a class="header-anchor" href="#search-history" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>Quickly find past conversations with built-in search:</p>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/ai-chat/llms-search-python.webp"><img src="https://servicestack.net/img/posts/ai-chat/llms-search-python.webp" alt="llms-search-python.webp" /></a></p>
+</div>
+<h2 id="smart-autocomplete-for-models-system-prompts">Smart Autocomplete for Models &amp; System Prompts<a class="header-anchor" href="#smart-autocomplete-for-models-system-prompts" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>Autocomplete components are used to quickly find and select the preferred model and system prompt.</p>
+<p>Only models from enabled providers will appear in the drop down, which will be available immediately after
+providers are enabled.</p>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/ai-chat/llms-autocomplete.webp"><img src="https://servicestack.net/img/posts/ai-chat/llms-autocomplete.webp" alt="llms-autocomplete.webp" /></a></p>
+</div>
+<h2 id="comprehensive-system-prompt-library">Comprehensive System Prompt Library<a class="header-anchor" href="#comprehensive-system-prompt-library" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>Access a curated collection of 200+ professional system prompts designed for various use cases, from technical assistance to creative writing.</p>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/ai-chat/llms-system-prompt.webp"><img src="https://servicestack.net/img/posts/ai-chat/llms-system-prompt.webp" alt="llms-system-prompt.webp" /></a></p>
+</div>
+<p>System Prompts be can added, removed &amp; sorted in your <code>ui.json</code></p>
+<pre><code class="language-json">{
+  &quot;prompts&quot;: [
+    {
+      &quot;id&quot;: &quot;it-expert&quot;,
+      &quot;name&quot;: &quot;Act as an IT Expert&quot;,
+      &quot;value&quot;: &quot;I want you to act as an IT expert. You will be responsible...&quot;
+    },
+    ...
+  ]
+}
+</code></pre>
+<h3 id="reasoning">Reasoning<a class="header-anchor" href="#reasoning" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Access the thinking process of advanced AI models with specialized rendering for reasoning and chain-of-thought responses:</p>
+<div class="wideshot"><p><a href="https://servicestack.net/img/posts/ai-chat/llms-reasoning.webp"><img src="https://servicestack.net/img/posts/ai-chat/llms-reasoning.webp" alt="llms-reasoning.webp" /></a></p>
+</div>
+<h2 id="ai-solutions-get-outdated-quickly">AI Solutions get outdated quickly<a class="header-anchor" href="#ai-solutions-get-outdated-quickly" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>We've had several attempts at adding a valuable layer of functionality for harnessing AI into our Apps, including:</p>
+<ul>
+<li><a href="https://servicestack.net/posts/chat-gpt-agents">GptAgentFeature</a> - Use Semantic Kernel to implement our own Chain-of-Thought functionality to develop Autonomous agents</li>
+<li><a href="https://servicestack.net/posts/typescript-typechat-examples">TypeScript TypeChat</a> - Use Semantic Kernel to implement all of TypeScript's TypeChat examples in .NET</li>
+<li><a href="https://servicestack.net/posts/servicestack-ai">ServiceStack.AI</a> - TypeChat providers and unified Abstractions over AWS, Azure and Google Cloud AI Providers</li>
+</ul>
+<p>The problem being that we wouldn't consider any of these solutions to be relevant today, any &quot;smarts&quot; or opinionated
+logic added look to become irrelevant as AI models get more capable and intelligent.</p>
+<h2 id="the-problem-with-complex-abstractions">The Problem with Complex Abstractions<a class="header-anchor" href="#the-problem-with-complex-abstractions" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>Over the years, we've seen AI integration libraries grow in complexity. Take
+<a href="https://github.com/microsoft/semantic-kernel">Microsoft Semantic Kernel</a> - a sprawling codebase
+that maintains its own opinionated abstractions that aren't serializable and has endured several breaking changes
+over the years. After investing development effort in catching up with their breaking changes we're now told to
+<a href="https://learn.microsoft.com/en-us/agent-framework/migration-guide/from-semantic-kernel/">Migrate to Agent Framework</a>.</p>
+<p>The fundamental issue? These complex abstractions didn't prove to be reusable. Microsoft's own next competing solution
+<a href="https://github.com/microsoft/agent-framework">Agent Framework</a> - doesn't even use Semantic Kernel Abstractions.
+Instead, it maintains its own non-serializable complex abstractions, repeating the same architectural issues.</p>
+<p>This pattern of building heavyweight, non-portable abstractions creates vendor lock-in, adds friction, hinders reuse,
+and limits how and where it can be used. After getting very little value from Semantic Kernel, we don't plan for any
+rewrites to follow adoption of their next over-engineered framework.</p>
+<h2 id="back-to-openai-chat">Back to OpenAI Chat<a class="header-anchor" href="#back-to-openai-chat" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>The only AI Abstraction we feel confident that has any longevity in this space, that wont be subject to breaking changes
+and rewrites is the underlying OpenAI Chat Completion API itself.</p>
+<p>The API with the most utility, with all the hard work of having AI Providers adopt this common API already
+done for us, we just have to facilitate calling it.</p>
+<p>Something so simple that it can be easily called from a shell script:</p>
+<pre><code class="language-bash">RESPONSE=$(curl https://api.openai.com/v1/chat/completions \
+  -H &quot;Authorization: Bearer $OPENAI_API_KEY&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{
+    &quot;model&quot;: &quot;gpt-5&quot;,
+    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Capital of France?&quot;}]
+  }')
+
+echo &quot;$RESPONSE&quot; | jq -r '.choices[0].message.content'
+</code></pre>
+<p>Shouldn't require complex libraries over several NuGet packages to make use of.</p>
+<p>The simplest and obvious solution is design around the core <code>ChatCompletion</code> DTO itself - a simple, serializable,
+implementation-free data structure that maps directly to the OpenAI Chat API request body maintained in
+<a href="https://github.com/ServiceStack/ServiceStack/blob/main/ServiceStack/src/ServiceStack.AI.Chat/ChatCompletion.cs">ChatCompletion.cs</a>
+with all its functionality encapsulated (no third-party dependencies) within the new <strong>ServiceStack.AI.Chat</strong> NuGet package.</p>
+<p>Using DTOs gives us all the natural <a href="https://docs.servicestack.net/advantages-of-message-based-web-services">advantages of message-based APIs</a>
+whose clean POCO models helps us <a href="https://docs.servicestack.net/service-complexity-and-dto-roles">fight against complexity</a>.</p>
+<h3 id="why-this-matters">Why This Matters<a class="header-anchor" href="#why-this-matters" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Because <code>ChatCompletion</code> is a plain serializable DTO, you can:</p>
+<ul>
+<li><strong>Store it in a database</strong> - Save conversation history, audit AI requests, or implement retry logic</li>
+<li><strong>Use it in client workflows</strong> - Pass the same DTO between frontend and backend without transformations</li>
+<li><strong>Send it through message queues</strong> - Build asynchronous AI processing pipelines with RabbitMQ and others</li>
+<li><strong>Debug easily</strong> - Inspect the exact JSON being sent to OpenAI</li>
+<li><strong>Test easily</strong> - Mock AI responses with simple DTOs or JSON payloads</li>
+<li><strong>Use it outside the library</strong> - The DTO works independently of any specific client implementation</li>
+</ul>
+<p>More importantly, because it's a <strong>Request DTO</strong>, we unlock a wealth of ServiceStack features for free,
+since most of ServiceStack's functionality is designed around Request DTOs — which we'll explore later.</p>
+<h2 id="install-1">Install<a class="header-anchor" href="#install-1" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>AI Chat can be added to any .NET 8+ project by installing the <strong>ServiceStack.AI.Chat</strong> NuGet package and configuration with:</p>
+<div class="not-prose sh-copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-800">
+                    <div class="pl-4 py-1 pb-1.5 align-middle whitespace-pre text-base text-gray-100"><p>npx add-in chat</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-green-600 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<p>Which drops this simple <a href="https://docs.servicestack.net/modular-startup">Modular Startup</a> that adds the <code>ChatFeature</code>
+and registers a link to its UI on the <a href="https://docs.servicestack.net/metadata-page">Metadata Page</a> if you want it:</p>
+<pre><code class="language-csharp">public class ConfigureAiChat : IHostingStartup
+{
+    public void Configure(IWebHostBuilder builder) =&gt; builder
+        .ConfigureServices((context, services) =&gt; {
+
+            // Docs: https://docs.servicestack.net/ai-chat-api
+            services.AddPlugin(new ChatFeature {
+                EnableProviders = [
+                    &quot;servicestack&quot;,
+                    // &quot;groq&quot;,
+                    // &quot;google_free&quot;,
+                    // &quot;openrouter_free&quot;,
+                    // &quot;ollama&quot;,
+                    // &quot;google&quot;,
+                    // &quot;anthropic&quot;,
+                    // &quot;openai&quot;,
+                    // &quot;grok&quot;,
+                    // &quot;qwen&quot;,
+                    // &quot;z.ai&quot;,
+                    // &quot;mistral&quot;,
+                    // &quot;openrouter&quot;,
+                ]
+            });
+            
+            // Persist AI Chat History, enables analytics at /admin-ui/chat
+            services.AddSingleton&lt;IChatStore,DbChatStore&gt;();
+            // Or store history in monthly partitioned tables in PostgreSQL:
+            // services.AddSingleton&lt;IChatStore, PostgresChatStore&gt;();
+             
+            services.ConfigurePlugin&lt;MetadataFeature&gt;(feature =&gt; {
+                feature.AddPluginLink(&quot;/chat&quot;, &quot;AI Chat&quot;);
+            });
+        });
+}
+</code></pre>
+<h2 id="simple-not-simplistic">Simple, Not Simplistic<a class="header-anchor" href="#simple-not-simplistic" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>How simple is it to use? It's just as you'd expect, your App logic need only bind to a simple <code>IChatClient</code> interface
+that accepts a Typed <code>ChatCompletion</code> Request DTO and returns a Typed <code>ChatResponse</code> DTO:</p>
+<pre><code class="language-csharp">public interface IChatClient
+{
+    Task&lt;ChatResponse&gt; ChatAsync(
+        ChatCompletion request, CancellationToken token=default);
+}
+</code></pre>
+<p>An impl-free easily substitutable interface for calling any OpenAI-compatible Chat API, using clean
+Typed <code>ChatCompletion</code> and <code>ChatResponse</code> DTOs.</p>
+<p>Unfortunately since the API needs to be typed and .NET Serializers don't have support for de/serializing union types
+yet, the DTO adopts OpenAI's more verbose and flexible multi-part Content Type which looks like:</p>
+<pre><code class="language-csharp">IChatClient client = CreateClient();
+
+var request = new ChatCompletion
+{
+    Model = &quot;gpt-5&quot;,
+    Messages = [
+        new() {
+            Role = &quot;user&quot;,
+            Content = [
+                new AiTextContent {
+                    Type = &quot;text&quot;, Text = &quot;Capital of France?&quot;
+                }
+            ],
+        }
+    ]
+};
+
+var response = await client.ChatAsync(request);
+</code></pre>
+<p>To improve the UX we've added a <a href="https://github.com/ServiceStack/ServiceStack/blob/main/ServiceStack/src/ServiceStack.AI.Chat/Message.cs">Message.cs</a> helper
+which encapsulates the boilerplate of sending <strong>Text</strong>, <strong>Image</strong>, <strong>Audio</strong> and <strong>Files</strong> into more
+succinct and readable code where you'd typically only need to write:</p>
+<pre><code class="language-csharp">var request = new ChatCompletion
+{
+    Model = &quot;gpt-5&quot;,
+    Messages = [
+        Message.SystemPrompt(&quot;You are a helpful assistant&quot;),
+        Message.Text(&quot;Capital of France?&quot;),
+    ]
+};
+var response = await client.ChatAsync(request);
+string? answer = response.GetAnswer(); 
+</code></pre>
+<h3 id="same-chatcompletion-dto-used-everywhere">Same ChatCompletion DTO, Used Everywhere<a class="header-anchor" href="#same-chatcompletion-dto-used-everywhere" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>That's all that's required for your internal App Logic to access your App's configured AI Models. However, as
+AI Chat also makes its own OpenAI Compatible API available, your external .NET Clients can use the
+<strong>same exact DTO</strong> to get the <strong>same Response</strong> by calling your API with a
+<a href="https://docs.servicestack.net/csharp-client">C# Service Client</a>:</p>
+<pre><code class="language-csharp">var client = new JsonApiClient(BaseUrl) {
+    BearerToken = apiKey
+};
+var response = await client.SendAsync(request);
+</code></pre>
+<h3 id="support-for-text-images-audio-files">Support for Text, Images, Audio &amp; Files<a class="header-anchor" href="#support-for-text-images-audio-files" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>For Multi-modal LLMs which support it, you can also send Images, Audio &amp; File attachments with your AI Request
+using <strong>URLs</strong>, e.g:</p>
+<pre><code class="language-csharp">var image = new ChatCompletion
+{
+    Model = &quot;qwen2.5vl&quot;,
+    Messages = [
+        Message.Image(imageUrl:&quot;https://example.org/image.webp&quot;,
+            text:&quot;Describe the key features of the input image&quot;),
+    ]
+}
+
+var audio = new ChatCompletion
+{
+    Model = &quot;gpt-4o-audio-preview&quot;,
+    Messages = [
+        Message.Audio(data:&quot;https://example.org/speaker.mp3&quot;,
+            text:&quot;Please transcribe and summarize this audio file&quot;),
+    ]
+};
+
+var file = new ChatCompletion
+{
+    Model = &quot;gemini-flash-latest&quot;,
+    Messages = [
+        Message.File(
+            fileData:&quot;https://example.org/order.pdf&quot;,
+            text:&quot;Please summarize this document&quot;),
+    ]
+};
+</code></pre>
+<h4 id="relative-file-path">Relative File Path<a class="header-anchor" href="#relative-file-path" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>If a <a href="https://docs.servicestack.net/virtual-file-system">VirtualFiles Provider</a> was configured, you can specify a relative path instead:</p>
+<pre><code class="language-csharp">var image = new ChatCompletion
+{
+    Model = &quot;qwen2.5vl&quot;,
+    Messages = [
+        Message.Image(imageUrl:&quot;/path/to/image.webp&quot;,
+            text:&quot;Describe the key features of the input image&quot;),
+    ]
+};
+</code></pre>
+<h4 id="manual-download-embedding">Manual Download &amp; Embedding<a class="header-anchor" href="#manual-download-embedding" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>Alternatively you can embed and send the raw Base64 Data or Data URI yourself:</p>
+<pre><code class="language-csharp">var bytes = await &quot;https://example.org/image.webp&quot;.GetBytesFromUrlAsync();
+var dataUri = $&quot;data:image/webp;base64,{Convert.ToBase64String(bytes)}&quot;;
+var image = new ChatCompletion
+{
+    Model = &quot;qwen2.5vl&quot;,
+    Messages = [
+        Message.Image(imageUrl:dataUri,
+            text:&quot;Describe the key features of the input image&quot;),
+    ]
+};
+</code></pre>
+<p>Although sending references to external resources allows keeping AI Requests payloads small, making them
+easier to store in Databases, send in MQs and client workflows, etc.</p>
+<p>This illustrates some of the &quot;value-added&quot; features of AI Chat where it will automatically download any URL Resources
+and embed it as Base64 Data in the <code>ChatCompletion</code> Request DTO.</p>
+<h3 id="configure-downloads">Configure Downloads<a class="header-anchor" href="#configure-downloads" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Relative paths can be enabled by configuring a <code>VirtualFiles</code> Provider to refer to a safe path that you want to allow
+access to.</p>
+<p>Whilst URLs are downloaded by default, but its behavior can be customized with <code>ValidateUrl</code> or replaced entirely with
+<code>DownloadUrlAsBase64Async</code>:</p>
+<pre><code class="language-csharp">services.AddPlugin(new ChatFeature {
+    // Enable Relative Path Downloads
+    VirtualFiles = new FileSystemVirtualFiles(assetDir),
+
+    // Validate URLs before download
+    ValidateUrl = url =&gt; {
+        if (!IsAllowedUrl(url))
+            throw HttpError.Forbidden(&quot;URL not allowed&quot;);
+    },
+    
+    // Use Custom URL Downloader
+    // DownloadUrlAsBase64Async = async (provider, url) =&gt; {
+    //     var (base64, mimeType) = await MyDownloadAsync(url);
+    //     return (base64, mimeType);
+    // },
+});
+</code></pre>
+<h2 id="configure-ai-providers">Configure AI Providers<a class="header-anchor" href="#configure-ai-providers" aria-label="Permalink">&ZeroWidthSpace;</a></h2>
+<p>By default AI Chat is configured with a list of providers in its <code>llms.json</code>
+which is pre-configured with the best models from the leading LLM providers.</p>
+<p>The easiest way to use a custom <code>llms.json</code> is to add a local modified copy of
+<a href="https://github.com/ServiceStack/ServiceStack/blob/main/ServiceStack/src/ServiceStack.AI.Chat/chat/llms.json">llms.json</a>
+to your App's <code>/wwwroot/chat</code> folder:</p>
+<div class="language-files"><div class="ml-6">
+  <div class="flex items-center text-base leading-8">
+    <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 12 12" width="12" height="12" fill="currentColor"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg>
+    <svg class="mr-1 text-sky-500" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M.513 1.513A1.75 1.75 0 0 1 1.75 1h3.5c.55 0 1.07.26 1.4.7l.9 1.2a.25.25 0 0 0 .2.1H13a1 1 0 0 1 1 1v.5H2.75a.75.75 0 0 0 0 1.5h11.978a1 1 0 0 1 .994 1.117L15 13.25A1.75 1.75 0 0 1 13.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75c0-.464.184-.91.513-1.237Z"></path></svg>
+    <span>wwwroot</span>
+  </div>
+<div class="ml-6">
+  <div class="flex items-center text-base leading-8">
+    <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 12 12" width="12" height="12" fill="currentColor"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg>
+    <svg class="mr-1 text-sky-500" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M.513 1.513A1.75 1.75 0 0 1 1.75 1h3.5c.55 0 1.07.26 1.4.7l.9 1.2a.25.25 0 0 0 .2.1H13a1 1 0 0 1 1 1v.5H2.75a.75.75 0 0 0 0 1.5h11.978a1 1 0 0 1 .994 1.117L15 13.25A1.75 1.75 0 0 1 13.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75c0-.464.184-.91.513-1.237Z"></path></svg>
+    <span>chat</span>
+  </div>
+<div>
+<div class="ml-6 flex items-center text-base leading-8">
+  <svg class="mr-1 text-slate-600 inline-block select-none align-text-bottom overflow-visible" aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg>
+  <span>llms.json</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>If you just need to change which providers are enabled you can specify them in <code>EnableProviders</code>:</p>
+<pre><code class="language-csharp">services.AddPlugin(new ChatFeature {
+    // Specify which providers you want to enable
+    EnableProviders =
+    [
+        &quot;openrouter_free&quot;,
+        &quot;groq&quot;,
+        &quot;google_free&quot;,
+        &quot;codestral&quot;,
+        &quot;ollama&quot;,
+        &quot;openrouter&quot;,
+        &quot;google&quot;,
+        &quot;anthropic&quot;,
+        &quot;openai&quot;,
+        &quot;grok&quot;,
+        &quot;qwen&quot;,
+        &quot;z.ai&quot;,
+        &quot;mistral&quot;,
+    ],
+
+    // Use custom llms.json configuration
+    ConfigJson = vfs.GetFile(&quot;App_Data/llms.json&quot;).ReadAllText(),
+});
+</code></pre>
+<p>Alternatively you can use <code>ConfigJson</code> to load a custom JSON provider configuration from a different source, which
+you'll want to use if you prefer to keep your provider configuration and API Keys all in <code>llms.json</code>.</p>
+<h3 id="llms.json-openai-provider-configuration">llms.json - OpenAI Provider Configuration<a class="header-anchor" href="#llms.json-openai-provider-configuration" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p><a href="https://github.com/ServiceStack/ServiceStack/blob/main/ServiceStack/src/ServiceStack.AI.Chat/chat/llms.json">llms.json</a>
+contains a list of OpenAI Compatible Providers you want to make available along with a user-defined <strong>model alias</strong>
+you want to use for model routing along with the provider-specific model name it maps to when the model is used
+with that provider, e.g:</p>
+<pre><code class="language-json">{
+  &quot;providers&quot;: {
+    &quot;openrouter&quot;: {
+      &quot;enabled&quot;: false,
+      &quot;type&quot;: &quot;OpenAiProvider&quot;,
+      &quot;base_url&quot;: &quot;https://openrouter.ai/api&quot;,
+      &quot;api_key&quot;: &quot;$OPENROUTER_API_KEY&quot;,
+      &quot;models&quot;: {
+        &quot;grok-4&quot;: &quot;x-ai/grok-4&quot;,
+        &quot;glm-4.5-air&quot;: &quot;z-ai/glm-4.5-air&quot;,
+        &quot;kimi-k2&quot;: &quot;moonshotai/kimi-k2&quot;,
+        &quot;deepseek-v3.1:671b&quot;: &quot;deepseek/deepseek-chat&quot;,
+        &quot;llama4:400b&quot;: &quot;meta-llama/llama-4-maverick&quot;
+      }
+    },
+    &quot;anthropic&quot;: {
+      &quot;enabled&quot;: false,
+      &quot;type&quot;: &quot;OpenAiProvider&quot;,
+      &quot;base_url&quot;: &quot;https://api.anthropic.com&quot;,
+      &quot;api_key&quot;: &quot;$ANTHROPIC_API_KEY&quot;,
+      &quot;models&quot;: {
+        &quot;claude-sonnet-4-0&quot;: &quot;claude-sonnet-4-0&quot;
+      }
+    },
+    &quot;ollama&quot;: {
+      &quot;enabled&quot;: false,
+      &quot;type&quot;: &quot;OllamaProvider&quot;,
+      &quot;base_url&quot;: &quot;http://localhost:11434&quot;,
+      &quot;models&quot;: {},
+      &quot;all_models&quot;: true
+    },
+    &quot;google&quot;: {
+      &quot;enabled&quot;: false,
+      &quot;type&quot;: &quot;GoogleProvider&quot;,
+      &quot;api_key&quot;: &quot;$GOOGLE_API_KEY&quot;,
+      &quot;models&quot;: {
+        &quot;gemini-flash-latest&quot;: &quot;gemini-flash-latest&quot;,
+        &quot;gemini-flash-lite-latest&quot;: &quot;gemini-flash-lite-latest&quot;,
+        &quot;gemini-2.5-pro&quot;: &quot;gemini-2.5-pro&quot;,
+        &quot;gemini-2.5-flash&quot;: &quot;gemini-2.5-flash&quot;,
+        &quot;gemini-2.5-flash-lite&quot;: &quot;gemini-2.5-flash-lite&quot;
+      },
+      &quot;safety_settings&quot;: [
+        {
+          &quot;category&quot;: &quot;HARM_CATEGORY_DANGEROUS_CONTENT&quot;,
+          &quot;threshold&quot;: &quot;BLOCK_ONLY_HIGH&quot;
+        }
+      ],
+      &quot;thinking_config&quot;: {
+        &quot;thinkingBudget&quot;: 1024,
+        &quot;includeThoughts&quot;: true
+      }
+    },
+    //...
+  }
+}
+</code></pre>
+<p>The only non-OpenAI Chat Provider AI Chat supports is <code>GoogleProvider</code>, where an exception was made to add explicit
+support for Gemini's Models given its low cost and generous free quotas.</p>
+<h3 id="provider-api-keys">Provider API Keys<a class="header-anchor" href="#provider-api-keys" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>API Keys can be either be specified within the <code>llms.json</code> itself, alternatively API Keys starting with <code>$</code> like
+<code>$GOOGLE_API_KEY</code> will first try to resolve it from <code>Variables</code> before falling back to checking Environment Variables.</p>
+<pre><code class="language-csharp">services.AddPlugin(new ChatFeature {
+    EnableProviders =
+    [
+        &quot;openrouter&quot;,
+        &quot;anthropic&quot;,
+        &quot;google&quot;,
+    ],
+    Variables =
+    {
+        [&quot;OPENROUTER_API_KEY&quot;] = secrets.OPENROUTER_API_KEY,
+        [&quot;ANTHROPIC_API_KEY&quot;] = secrets.ANTHROPIC_API_KEY,
+        [&quot;GOOGLE_API_KEY&quot;] = secrets.GOOGLE_API_KEY,
+    }
+});
+</code></pre>
+<h3 id="model-routing-and-failover">Model Routing and Failover<a class="header-anchor" href="#model-routing-and-failover" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>Providers are invoked in the order they're defined in <code>llms.json</code> that supports the requested model.
+If a provider fails, it tries the next available provider.</p>
+<p>This enables scenarios like:</p>
+<ul>
+<li>Routing different request types to different providers</li>
+<li>Optimize by Cost, Performance, Reliability, or Privacy</li>
+<li>A/B testing different models</li>
+<li>Added resilience with fallback when a provider is unavailable</li>
+</ul>
+<p>The model aliases don't need to identify a model directly, e.g. you could use your own artificial names for use-cases
+you need like <code>image-captioner</code>, <code>audio-transcriber</code>, <code>pdf-extractor</code> then map them to different models different providers
+should use to achieve the desired task.</p>
+<h4 id="use-model-routing-with-fallback">Use Model Routing with Fallback<a class="header-anchor" href="#use-model-routing-with-fallback" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>To make use of the model routing and fallback you would call <code>ChatAsync</code> on <code>IChatClient</code> directly:</p>
+<pre><code class="language-csharp">class MyService(IChatClient client)
+{
+    public async Task&lt;object&gt; Any(DefaultChat request)
+    {
+        return await client.ChatAsync(new ChatCompletion {
+            Model = &quot;glm-4.6&quot;,
+            Messages = [
+                Message.Text(request.UserPrompt)
+            ],
+        });
+    }
+}
+</code></pre>
+<h4 id="use-specific-provider">Use Specific Provider<a class="header-anchor" href="#use-specific-provider" aria-label="Permalink">&ZeroWidthSpace;</a></h4>
+<p>Alternatively to use a specific provider, you can use <code>IChatClients</code> dependency <code>GetClient(providerId)</code> method
+to resolve the provider then calling <code>ChatAsync</code> will only use that provider:</p>
+<pre><code class="language-csharp">class MyService(IChatClients clients)
+{
+    public async Task&lt;object&gt; Any(ProviderChat request)
+    {
+        var groq = clients.GetClient(&quot;groq&quot;);
+        return await groq.ChatAsync(new ChatCompletion {
+            Model = &quot;kimi-k2&quot;,
+            Messages = [
+                Message.Text(request.UserPrompt)
+            ],
+        });
+    }
+}
+</code></pre>
+<h3 id="compatible-with-llms.py">Compatible with llms.py<a class="header-anchor" href="#compatible-with-llms.py" aria-label="Permalink">&ZeroWidthSpace;</a></h3>
+<p>The other benefit of simple configuration and simple solutions, is that they're easy to implement. A perfect example
+of this being that this is the 2nd implementation done using this configuration. The same configuration, UI, APIs
+and functionality is also available in our <a href="https://github.com/ServiceStack/llms">llms.py</a> Python CLI and server gateway we've developed
+in order to have a dependency-free LLM Gateway solution needed in our ComfyUI Agents.</p>
+<div class="not-prose sh-copy cp flex cursor-pointer mb-3" onclick="copy(this)">
+                <div class="flex-grow bg-gray-800">
+                    <div class="pl-4 py-1 pb-1.5 align-middle whitespace-pre text-base text-gray-100"><p>pip install llms-py</p>
+</div>
+                    </div>
+                <div class="flex">
+                    <div class="bg-green-600 text-white p-1.5 pb-0">
+                        <svg class="copied w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="nocopy w-6 h-6" title="copy" fill='none' stroke='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+<p>This also means you can use and test your own custom <code>llms.json</code> configuration on the command-line or in shell
+automation scripts:</p>
+<pre><code class="language-sh"># Simple question
+llms &quot;Explain quantum computing&quot;
+
+# With specific model
+llms -m gemini-2.5-pro &quot;Write a Python function to sort a list&quot;
+
+# With system prompt
+llms -s &quot;You are a helpful coding assistant&quot; &quot;Reverse a string in Python?&quot;
+
+# With image (vision models)
+llms --image image.jpg &quot;What's in this image?&quot;
+llms --image https://example.com/photo.png &quot;Describe this photo&quot;
+
+# Display full JSON Response
+llms &quot;Explain quantum computing&quot; --raw
+
+# Start the UI and an OpenAI compatible API on port 8000:
+llms --serve 8000
+</code></pre>
+<p>Incidentally, as <a href="https://servicestack.net/posts/llms-py-ui">llms.py UI</a> and AI Chat utilize the same UI you can use its
+<strong>import/export</strong> features to transfer your AI Chat History between them.</p>
+<p>Check out the <a href="https://github.com/ServiceStack/llms">llms.py GitHub repo</a> for even more features.</p>
+
+                </div>
+            </div>
+        </article>
+</div>
+
+<div id="comments" data-post="PostComments" class="my-48"></div>
+
+
+<script type="module">
+import { init } from "app.mjs"
+init()
+</script>
+
+<link rel="stylesheet" href="css/highlight.css">
+<script src="lib/js/highlight.js"></script>
+<script>hljs.highlightAll()</script>
+<script src="lib/js/lite-yt-embed.js"></script>
+<script src="mjs/docs.mjs" type="module"></script>
+
+<script type="module">
+import { mount } from "app.mjs"
+
+    const App = {
+        setup() {
+            function nav(url) {
+                window.open(url)
+            }
+            return { nav }
+        }
+    }
+    mount('#post', App)
+</script>
+
+    </main>
+</div>
+
+<footer class="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+  <div class="mx-auto max-w-7xl overflow-hidden py-20 px-6 sm:py-24 lg:px-8">
+    <nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
+      <div class="pb-6">
+        <a href="whatsnew" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">What's New</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="blog" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Blog</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="posts" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Archive</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="speaking" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Speaking</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="uses" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Uses</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="about" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">About</a>
+      </div>
+
+      <div class="pb-6">
+        <a href="privacy" class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50">Privacy</a>
+      </div>
+    </nav>
+    <div class="mt-10 flex justify-center space-x-10">
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Facebook</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Instagram</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Twitter</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">GitHub</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+
+      <a href="#" class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">YouTube</span>
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+    </div>
+    <p class="mt-10 text-center text-xs leading-5 text-gray-500">
+      <a href="https://github.com/NetCoreTemplates/razor-ssg">powered by razor</a>
+    </p>
+  </div>
+</footer>
+
+<script type="module">
+//TODO: Replace with local and production URLs of CreatorKit .NET App or Remove if not using CreatorKit
+import { mail } from 'https://creatorkit.netcore.io/mjs/components/mail.mjs'
+import { post } from 'https://creatorkit.netcore.io/mjs/components/post.mjs'
+
+mail('[data-mail]', { 
+    mailingLists: ['MonthlyNewsletter'] 
+})
+
+post('[data-post]', {
+    commentLink: { 
+        href: '/community-rules',
+        label: 'read the community rules'
+    } 
+})
+</script>
+
+
+<script type="module">
+import { init } from "app.mjs"
+init()
+</script>
+
+
+
+</body>
+</html>
