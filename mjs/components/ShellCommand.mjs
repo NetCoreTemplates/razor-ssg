@@ -23,7 +23,7 @@ export default {
 
             <!-- Right side - Copy button -->
             <div class="flex items-center gap-2 ml-4">
-                <button
+                <button type="button"
                     @click="copy"
                     :class="[
                         'flex items-center justify-center p-2 rounded-md',
