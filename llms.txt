@@ -4,6 +4,7 @@
 
 Blog posts:
  - [Built-In Identity Auth Admin UI](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2024-02-10_identity-auth-admin-ui.md)
+ - [.NET 10's new OpenAPI Scalar + Swagger UIs](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2025-12-03_openapi-net10.md)
  - [Creating a custom Explorer UI for OpenAIs Chat API](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2025-11-25_ai-chat-explorer.md)
  - [Introducing Razor SSG](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2023-03-30_razor-ssg.md)
  - [AI Chat - A Simple OpenAI Chat Completions API, UI & Client LLM Gateway](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2025-11-17_ai-chat.md)
@@ -12,24 +13,16 @@ Blog posts:
  - [AI Chat history persistence and Admin Analytics UI](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2025-11-20_ai-chat-analytics.md)
  - [OpenAPI v3 and Swagger UI](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2024-02-08_openapi-v3.md)
  - [In Depth Interactive API Analytics for PostgreSQL, SQL Server & MySQL](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2025-10-21_rdbms_analytics.md)
- - [Migrating from Jekyll to VitePress](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2021-11-01_jekyll-to-vitepress.md)
  - [New Blogging features in Razor SSG](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2023-08-23_razor-ssg-new-blog-features.md)
- - [In pursuit of the best value US cloud provider](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2022-09-06_hetzner-cloud.md)
  - [RDBMS Background Jobs](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2025-10-23_rdbms_jobs.md)
  - [Podcasts now in Razor SSG](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2024-10-02_razor-ssg-podcasts.md)
  - [OrmLite new Configuration Model and Defaults](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2025-10-15_ormlite-new-configuration.md)
  - [Simple, Modern JavaScript](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2023-02-01_javascript.md)
- - [Getting Started](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2023-01-21_start.md)
  - [React + Tailwind + TypeScript for AI-First Development](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2025-11-13_react.md)
  - [Protect same APIs with API Keys or Identity Auth](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2025-10-27_apikey_auth_apis.md)
- - [Deployment with GitHub Actions](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2023-01-01_deploy.md)
- - [Develop using JetBrains Rider](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2023-01-11_rider.md)
  - [ServiceStack Endpoint Routing](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2024-02-07_servicestack-endpoint-routing.md)
- - [Tailwind Typography](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2022-12-31_typography.md)
  - [ASP.NET Core JWT Identity Auth](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2024-02-11_jwt-identity-auth.md)
- - [Develop using Visual Studio](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2023-01-10_vs.md)
  - [Ask ServiceStack Docs - Introducing AI Search](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2025-11-12_typesense-ai-search.md)
- - [Real-time search with Typesense](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2021-11-08_typesense.md)
  - [FREE Gemini, Minimax M2, GLM 4.6, Kimi K2](https://raw.githubusercontent.com/NetCoreTemplates/razor-ssg/refs/heads/main/MyApp/_posts/2025-11-21_ai-chat-servicestack.md)
 
 Razor SSG

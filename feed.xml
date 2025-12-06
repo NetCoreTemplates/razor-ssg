@@ -10,14 +10,27 @@
     </image>
     <generator>razor-ssg</generator>
     <copyright></copyright>
-    <lastBuildDate>Tue, 02 Dec 2025 14:48:30 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 06 Dec 2025 03:22:27 GMT</lastBuildDate>
     <managingEditor>email@example.org (Razor SSG)</managingEditor>
     <webMaster>email@example.org (Razor SSG)</webMaster>
     <atom:link href="https://razor-ssg.web-templates.io/feed.xml" rel="self" type="application/rss+xml" />
     <item>
+        <title>.NET 10&#x27;s new OpenAPI Scalar &#x2B; Swagger UIs</title>
+        <link>https://razor-ssg.web-templates.io/posts/openapi-net10</link>
+        <author>brandon@email.org (Brandon Foley)</author>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/openapi-net10</guid>
+        <pubDate>Wed, 03 Dec 2025 00:00:00 GMT</pubDate>
+        <atom:updated>2025-12-03T00:00:00Z</atom:updated>
+        <category>.net10</category>
+        <category>openapi</category>
+        <category>swagger</category>
+        <category>scalar</category>
+        <description>ServiceStack v10 adds first-class .NET 10 support and new OpenAPI for Swagger and Scalar UIs.</description>
+    </item>
+    <item>
         <title>Creating a custom Explorer UI for OpenAIs Chat API</title>
         <link>https://razor-ssg.web-templates.io/posts/ai-chat-explorer</link>
-        <author> ()</author>
+        <author>lucy@email.org (Lucy Bates)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/ai-chat-explorer</guid>
         <pubDate>Tue, 25 Nov 2025 00:00:00 GMT</pubDate>
         <atom:updated>2025-11-25T00:00:00Z</atom:updated>
@@ -30,7 +43,7 @@
     <item>
         <title>FREE Gemini, Minimax M2, GLM 4.6, Kimi K2</title>
         <link>https://razor-ssg.web-templates.io/posts/ai-chat-servicestack</link>
-        <author> ()</author>
+        <author>gayle@email.org (Gayle Smith)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/ai-chat-servicestack</guid>
         <pubDate>Fri, 21 Nov 2025 00:00:00 GMT</pubDate>
         <atom:updated>2025-11-21T00:00:00Z</atom:updated>
@@ -44,7 +57,7 @@
     <item>
         <title>AI Chat history persistence and Admin Analytics UI</title>
         <link>https://razor-ssg.web-templates.io/posts/ai-chat-analytics</link>
-        <author> ()</author>
+        <author>brandon@email.org (Brandon Foley)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/ai-chat-analytics</guid>
         <pubDate>Thu, 20 Nov 2025 00:00:00 GMT</pubDate>
         <atom:updated>2025-11-20T00:00:00Z</atom:updated>
@@ -58,7 +71,7 @@
     <item>
         <title>AI Chat - A Simple OpenAI Chat Completions API, UI &amp; Client LLM Gateway</title>
         <link>https://razor-ssg.web-templates.io/posts/ai-chat</link>
-        <author> ()</author>
+        <author>lucy@email.org (Lucy Bates)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/ai-chat</guid>
         <pubDate>Mon, 17 Nov 2025 00:00:00 GMT</pubDate>
         <atom:updated>2025-11-17T00:00:00Z</atom:updated>
@@ -71,7 +84,7 @@
     <item>
         <title>React &#x2B; Tailwind &#x2B; TypeScript for AI-First Development</title>
         <link>https://razor-ssg.web-templates.io/posts/react</link>
-        <author> ()</author>
+        <author>gayle@email.org (Gayle Smith)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/react</guid>
         <pubDate>Thu, 13 Nov 2025 00:00:00 GMT</pubDate>
         <atom:updated>2025-11-13T00:00:00Z</atom:updated>
@@ -83,7 +96,7 @@
     <item>
         <title>Ask ServiceStack Docs - Introducing AI Search</title>
         <link>https://razor-ssg.web-templates.io/posts/typesense-ai-search</link>
-        <author> ()</author>
+        <author>brandon@email.org (Brandon Foley)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/typesense-ai-search</guid>
         <pubDate>Wed, 12 Nov 2025 00:00:00 GMT</pubDate>
         <atom:updated>2025-11-12T00:00:00Z</atom:updated>
@@ -95,7 +108,7 @@
     <item>
         <title>Protect same APIs with API Keys or Identity Auth</title>
         <link>https://razor-ssg.web-templates.io/posts/apikey_auth_apis</link>
-        <author> ()</author>
+        <author>lucy@email.org (Lucy Bates)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/apikey_auth_apis</guid>
         <pubDate>Mon, 27 Oct 2025 00:00:00 GMT</pubDate>
         <atom:updated>2025-10-27T00:00:00Z</atom:updated>
@@ -107,7 +120,7 @@
     <item>
         <title>RDBMS Background Jobs</title>
         <link>https://razor-ssg.web-templates.io/posts/rdbms_jobs</link>
-        <author> ()</author>
+        <author>gayle@email.org (Gayle Smith)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/rdbms_jobs</guid>
         <pubDate>Thu, 23 Oct 2025 00:00:00 GMT</pubDate>
         <atom:updated>2025-10-23T00:00:00Z</atom:updated>
@@ -119,7 +132,7 @@
     <item>
         <title>In Depth Interactive API Analytics for PostgreSQL, SQL Server &amp; MySQL</title>
         <link>https://razor-ssg.web-templates.io/posts/rdbms_analytics</link>
-        <author> ()</author>
+        <author>brandon@email.org (Brandon Foley)</author>
         <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/rdbms_analytics</guid>
         <pubDate>Tue, 21 Oct 2025 00:00:00 GMT</pubDate>
         <atom:updated>2025-10-21T00:00:00Z</atom:updated>
@@ -130,17 +143,6 @@
         <category>sqlserver</category>
         <category>mysql</category>
         <description>Comprehensive and Interactive RDBMS API Analytics in Admin UI, deep insights into API usage, performance, users, API Keys &amp; IPs</description>
-    </item>
-    <item>
-        <title>RDBMS Async Tasks Builder</title>
-        <link>https://razor-ssg.web-templates.io/posts/ormlite-async-task-builder</link>
-        <author> ()</author>
-        <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/ormlite-async-task-builder</guid>
-        <pubDate>Mon, 20 Oct 2025 00:00:00 GMT</pubDate>
-        <atom:updated>2025-10-20T00:00:00Z</atom:updated>
-        <category>db</category>
-        <category>ormlite</category>
-        <description>Effortlessly run multiple async DB Requests in parallel with OrmLite&#x27;s new Async Tasks Builder</description>
     </item>
 </channel>
 </rss>
