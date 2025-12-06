@@ -2,7 +2,7 @@
 title: In Depth Interactive API Analytics for PostgreSQL, SQL Server & MySQL
 summary: Comprehensive and Interactive RDBMS API Analytics in Admin UI, deep insights into API usage, performance, users, API Keys & IPs
 tags: [analytics,admin-ui,apis,postgresql,sqlserver,mysql]
-author: Demis Bellot
+author: Brandon Foley
 image: https://servicestack.net/img/posts/analytics/bg.webp
 ---
 

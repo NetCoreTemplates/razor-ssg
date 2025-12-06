@@ -2,7 +2,7 @@
 title: Ask ServiceStack Docs - Introducing AI Search
 summary: Learn about the new AI Search feature - Typesense Conversational RAG for ServiceStack Docs
 tags: [llms,ai,docs]
-author: Demis Bellot
+author: Brandon Foley
 image: https://servicestack.net/img/posts/typesense-ai-search/bg.webp
 ---
 

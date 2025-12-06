@@ -2,7 +2,7 @@
 title: RDBMS Background Jobs
 summary: Run Background Jobs and Scheduled Tasks in PostgreSQL, SQL Server or MySQL
 tags: [db,ormlite,jobs]
-author: Demis Bellot
+author: Gayle Smith
 image: https://servicestack.net/img/posts/background-jobs/bg.webp
 ---
 
