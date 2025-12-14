@@ -9,6 +9,9 @@ import VueComponentLibrary from "./components/VueComponentLibrary.mjs"
 import ProjectTemplate from "./components/ProjectTemplate.mjs"
 import ProjectCreator from "./components/ProjectCreator.mjs"
 import { PagingNav, FileLayout } from './components/CreatorKitDocs.mjs'
+import CopyBlock from "../posts/components/CopyBlock.mjs"
+import VibeTemplate from "../posts/components/VibeTemplate.mjs"
+import ScreenshotsGallery from "../posts/components/ScreenshotsGallery.mjs"
 
 let client = null, Apps = []
 let AppData = {
@@ -55,6 +58,9 @@ const Components = {
     ProjectCreator,
     PagingNav,
     FileLayout,
+    CopyBlock,
+    VibeTemplate,
+    ScreenshotsGallery,
 }
 const CustomElements = [
     'lite-youtube'

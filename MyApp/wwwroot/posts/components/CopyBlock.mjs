@@ -1,14 +1,17 @@
 import { ref } from "vue"
 
 export default {
-    template:`
-    <div :class="['group relative overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700',
-                  'bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800',
-                  'shadow-sm hover:shadow-md transition-all duration-200']"
-         @click="copy">
-        <!-- Background pattern -->
-        <div class="absolute inset-0 bg-grid-slate-100 dark:bg-grid-slate-800 opacity-50"
-             style="background-image: radial-gradient(circle, rgba(0,0,0,0.05) 1px, transparent 1px); background-size: 16px 16px;" />
+    template: `
+    <div :class="[
+            'not-prose copy-block group relative overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700',
+            'bg-slate-50 dark:bg-gradient-to-br dark:from-slate-900 dark:to-slate-800',
+            'shadow-sm hover:shadow-md transition-all duration-200',
+        ]"
+        @click="copy"
+    >
+        <!-- Background pattern - only visible in dark mode -->
+        <div class="absolute inset-0 opacity-0 dark:opacity-50"
+            :style="{ backgroundImage: 'radial-gradient(circle, rgba(0,0,0,0.05) 1px, transparent 1px)', backgroundSize: '16px 16px' }" />
 
         <div class="relative flex items-center justify-between px-4 py-3">
             <!-- Left side - Terminal icon and command -->
@@ -16,12 +19,12 @@ export default {
                 <svg class="w-4 h-4 text-slate-500 dark:text-slate-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19h8"/><path d="m4 17 6-6-6-6"/></svg>
                 <div class="flex items-center gap-2 min-w-0 flex-1">
                     <code ref="commandRef" class="text-sm font-mono text-slate-900 dark:text-slate-100 truncate">
-                        <slot>{{text}}</slot>
+                        <slot></slot>
                     </code>
                 </div>
             </div>
 
-            <!-- Right side - Copy button -->
+            <!-- Right side - Language badge and copy button -->
             <div class="flex items-center gap-2 ml-4">
                 <button
                     @click="copy"
@@ -36,12 +39,14 @@ export default {
                     :aria-label="copied ? 'Copied!' : 'Copy command'"
                 >
                     <svg v-if="copied" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-                    <svg v-else class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                    <svg v-else class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
                 </button>
             </div>
         </div>
-    </div>`,
-    props: ['text'],
+    </div>
+    `,
+    props: {
+    },
     setup(props) {
         const copied = ref(false)
         const commandRef = ref(null)
@@ -50,7 +55,7 @@ export default {
             e.preventDefault()
 
             // Get the text content from the command element
-            const textToCopy = commandRef.value?.textContent?.trim() || ""
+            const textToCopy = commandRef.value?.textContent || ""
 
             try {
                 // Use modern Clipboard API
