@@ -1,3 +1,1029 @@
+# Replacing Legacy UIs in an AI-First world
+Source: https://razor-ssg.web-templates.io/posts/replacing-legacy-uis
+
+Software Development has reached an inflection point where AI Models and tools are now good enough to rebuild complete application UIs in hours, not months. 
+This fundamentally changes the economics of modernizing legacy applications where for many legacy frontends, it’s finally cheaper to rewrite than to keep refactoring legacy code bases.
+
+## The Legacy UI Problem
+
+Like old buildings, legacy UIs accumulate years of technical debt that makes renovation increasingly expensive:
+
+- **Layers of workarounds** - Code built on top of framework limitations that no longer exist
+- **Outdated patterns** - Solutions to problems that modern frameworks solve elegantly out-of-the-box
+- **Dependency hell** - Ancient package versions with security vulnerabilities and incompatible upgrades
+- **Framework quirks** - Intimate knowledge required of deprecated APIs and edge cases
+- **Integration friction** - Every new feature must navigate the minefield of existing code
+
+Traditional renovation means dealing with all these nuances. Each new feature requires understanding why things were done a certain way, working around old limitations, and maintaining compatibility with outdated patterns. It's like trying to add a second floor to your house whilst still living in it, technically possible, but an expensive, delicate, and compromised endeavor that's rarely done.
+
+## AI-Powered UI Transformation
+
+Modern AI models have transformed UI development from a time-intensive rewrite into a rapid transformation process. By utilizing an AI-first development approach (aka Vibe Coding) we can now leverage existing codebases as detailed specifications they can use as a blueprint, telling them exactly what to build.
+
+Something AI Models excel at is code transformations, they are remarkable at understanding the intent of code and transforming code from one framework to another, a perfect fit for rewriting legacy UIs.
+
+#### Context is King
+
+With AI code generation, the more details and context you provide, the closer the output matches your intent. With existing code-bases there is no ambiguity, the AI gets to know exactly what features it needs to build and how they work.
+
+### What Makes This Possible
+
+The key insight is that **your existing codebase is the perfect specification** as Legacy UIs already define:
+
+- All features and functionality
+- User interactions and workflows
+- Data structures and API contracts
+- Edge cases and business logic
+- Visual layouts and component hierarchy
+
+With just an existing code-base and a detailed migration plan, AI models can translate it to modern frameworks with remarkable accuracy to 90% completion in minutes, whilst you can Vibe Code the rest to get it over the line.
+
+### What Framework to Choose?
+
+Up until now, the framework to choose was mostly up to developers personal preferences; in our case we preferred Vue, given its readability and progressive enhancement capabilities. But with an AI-first development model, you're no longer writing the code directly, you're task becomes feeding AI Models text prompts and context on what features to implement, so it's more important to choose a framework that AI Models understand well. Currently, that's:
+
+### The Optimal Stack for AI Development
+
+Through this process, we've identified the most effective technology stack for AI-assisted development:
+
+- **Next.js 16** - Modern React framework with excellent AI model familiarity
+- **React 19** - Component patterns that AI models understand deeply
+- **TypeScript** - Type safety that helps AI generate correct code
+- **Tailwind CSS v4** - Utility-first styling that AI excels at composing
+
+This stack represents the sweet spot where AI models have the most training data, the clearest patterns, and the best ability to generate cohesive, loosely coupled, high-quality code, and what was used for the new [techstacks.io](https://techstacks.io).
+
+## A Real-World Example: TechStacks
+
+<screenshots-gallery class="not-prose mb-8" grid-class="grid grid-cols-1 md:grid-cols-2 gap-4" 
+  :images="{
+    'Old Home': 'https://docs.servicestack.net/img/pages/react/replacing-legacy-uis/vuetify-home.webp',
+    'New Home': 'https://docs.servicestack.net/img/pages/react/replacing-legacy-uis/react-home.webp',
+}"></screenshots-gallery>
+
+Whilst the TechStacks C# ServiceStack backend is over a decade old, its UI has undergone multiple migrations, 
+with the last version rewritten 7 years ago. 
+
+- **v1**: [Angular 1 + Bootstrap](https://github.com/ServiceStackApps/TechStacks)
+- **v2**: [Nuxt.js 1.4 + Vuetify 1](https://github.com/NetCoreApps/TechStacks)
+- **v3**: [Next.js 16 + React 19 + Tailwindcss v4](https://github.com/NetCoreApps/techstacks.io) (Vibe Coded UI / Preserved backend .NET APIs)
+
+The previous migration from **Angular 1 / Bootstrap** to **Nuxt.js / Vuetify** was done over **several weeks** whilst the last AI completed migration to **React / Tailwindcss** was done within a couple of days. 
+
+The actual migration and Vibe coded walkthrough itself **only took a few hours**, as the majority of the time was spent moving the existing deployment from an AWS ECS / RDS setup to a much less expensive Hetzner + PostgreSQL setup, [deployed using GitHub Actions](https://github.com/NetCoreApps/techstacks.io/tree/main/.github/workflows) and [Kamal](https://kamal-deploy.org).
+
+### Migration Scope
+
+This wasn't a trivial update. The migration involved:
+
+- **20 pages** with complex routing and dynamic content
+- **23 components** including complex forms and interactive elements
+- Complete conversion from Vuetify/Bootstrap to React 19/Tailwindcss
+- Migration from JavaScript to strict TypeScript
+- Replaced Vuetify with Tailwind CSS + [@servicestack/react](https://react.servicestack.net) components
+- Implementation of modern patterns (Server Components, App Router)
+
+### Where to start:
+
+1. **Create a detailed Migration Plan** - It's vital for big migrations (and other large code generation tasks) to have a detailed plan of what needs to be done, how it will be done, and what the end result will be.
+
+### The Migration Prompt
+
+As it's a vital part of AI Assisted development, most AI Tools have planning tools built-in, Since Anthropic gave out
+free credits to their [Claude Code on the web](https://www.claude.com/blog/claude-code-on-the-web) we used it to create 
+the Migration plan:
+
+```txt
+Create a detailed plan for completely rewriting this old Nuxt.js Vuetify website into a 
+new modern beautiful Next.js 16 Web App utilizing the existing C# ServiceStack back-end.
+    
+The entire UI can be erased to make way for a modern, visually stunning React 19, 
+TypeScript and Tailwindcss v4 App.
+    
+Use the existing Nuxt Vuetify pages to learn how to call its C# ServiceStack APIs with 
+the TypeScript JsonServiceClient and Typed DTOs in ./TechStacks/src/shared/dtos.ts.
+    
+Do not generate code, only generate a comprehensive detailed plan for how to rewrite 
+the UI layer for the existing C# back-end APIs. All Data is already available in the 
+existing C# APIs.
+```
+
+The result of which was the [NEXTJS_MIGRATION_PLAN.md](https://github.com/NetCoreApps/techstacks.io/blob/main/NEXTJS_MIGRATION_PLAN.md).
+
+After reviewing the plan and making the necessary changes to match what you want to build it's time to execute the migration. 
+
+### Executing the Migration
+
+We took a copy of the existing **Nuxt.js / Vuetify code-base** with the **migration plan** and instructed Claude Code to execute the migration with the prompt: 
+
+```
+Implement the NEXTJS_MIGRATION_PLAN.md
+```
+
+With access to both the Migration Plan and existing code-base, Claude Code was able to generate the entire new Next.js UI within 10-20 minutes, for less than $10 (in free credits).
+
+The initial AI-generated code wasn't perfect, but it generated an excellent starting point that converted most of the existing Nuxt/Vuetify implementation into a modern Next.js App, with its preferred project structure.
+
+### Vibe Code the rest
+
+The most time consuming part of the migration is walking through the entire Application, in tandem with your existing App to test that everything functions as it did before. Fortunately you never need to take the reins to get it over the line, as now that we have a modern AI-friendly Next.js/React/Tailwind UI we can just use Vibe Coding to prompt the AI Models to implement any missing features or fix any issues that you find along the way.
+
+If this is your first time using AI Models for all development, it can seem like unrealistic magic from the future. 
+But not only is it possible, it's the most productive development model we've ever experienced, and is all likely to be the future of software development.
+
+### Old vs New UI
+
+Here's a sample set of screenshots of the old vs new UIs:
+
+<screenshots-gallery :images="{
+    'Old Home': '/img/posts/replacing-legacy-uis/vuetify-home.webp',
+    'New Home': '/img/posts/replacing-legacy-uis/react-home.webp',
+    'Old Edit Post': '/img/posts/replacing-legacy-uis/vuetify-post-edit.webp',
+    'New Edit Post': '/img/posts/replacing-legacy-uis/react-post-edit.webp',
+    'Old Top': '/img/posts/replacing-legacy-uis/vuetify-top.webp',
+    'New Top': '/img/posts/replacing-legacy-uis/react-top.webp',
+    'Old TechStacks': '/img/posts/replacing-legacy-uis/vuetify-stacks.webp',
+    'New TechStacks': '/img/posts/replacing-legacy-uis/react-stacks.webp',
+    'Old Edit TechStack': '/img/posts/replacing-legacy-uis/vuetify-stacks-edit.webp',
+    'New Edit TechStack': '/img/posts/replacing-legacy-uis/react-stacks-edit.webp',
+    'Old Technology': '/img/posts/replacing-legacy-uis/vuetify-tech.webp',
+    'New Technology': '/img/posts/replacing-legacy-uis/react-tech.webp',
+    'Old Favorites': '/img/posts/replacing-legacy-uis/vuetify-favorites.webp',
+    'New Favorites': '/img/posts/replacing-legacy-uis/react-favorites.webp',
+}"></screenshots-gallery>
+
+Whilst we keep the old UI around for reference, you can view both UIs side-by-side at:
+
+- Old (AWS + ECS + RDS): https://vuetify.techstacks.io
+- New (Hetzner + PostgreSQL): https://techstacks.io
+
+### Why UIs Are Perfect Candidates for Replacement
+
+Unlike backend systems where "tear down and rebuild" is far riskier and requires a more methodical approach, UIs are uniquely suited for complete replacement:
+
+**1. WYSIWYG Validation**
+The end result is immediately visible. You can see if it works correctly just by using it. No hidden business logic, no subtle data corruption bugs - it just needs to look and behave right.
+
+**2. Clear API Boundaries**
+When your UI integrates with existing, battle-tested backend APIs, you're building on proven business logic. The API contract is your safety boundary — preventing you from accidentally introducing server-side vulnerabilities or data corruption.
+
+**3. No Legacy Baggage**
+Start fresh without inheriting:
+- Workarounds for bugs in older framework versions but never updated
+- CSS hacks for IE11 compatibility that we no longer need
+- State management patterns designed before modern solutions existed
+- Build configurations accumulated over years of framework updates
+
+**4. Better Modern Frameworks**
+Today's frameworks solve problems that required custom code in legacy stacks:
+- Server Components eliminate entire categories of client-side state management
+- Modern CSS (Grid, Flexbox, Container Queries) replaces brittle layout hacks
+- TypeScript catches errors that required runtime checks and defensive coding
+- Built-in optimizations (code splitting, lazy loading) that were manual before
+
+**5. Separation of Concerns**
+The UI layer is just the presentation layer. All the critical business logic, validation, authorization, and data integrity remains safely in the backend where it's been tested and proven over years of production use.
+
+### The AI-First Advantage
+
+The real return on migrating isn’t the one-time rewrite, it’s the velocity that's gained afterward. After migrating to an AI‑native stack (Next.js, React, TypeScript, Tailwind), AI agents are better able to reliably implement new features asynchronously, i.e. without human intervention. 
+
+Changes like **"Add dark mode support"**, **"Implement infinite scrolling"** or **"Add export to CSV"** become natural‑language prompts instead of full developer-assigned tickets. Iteration cycles of most UI features get compressed down to seconds, where it now takes less time to get AI Agents to implement features than it would take to describe the feature to a developer. Code becomes a disposable resource that's become cheap to write, where complete UI rewrites, prototypes, and experiments are now feasible.
+
+Most importantly, a high quality product is the result of multiple dev iterations, i.e. continuously improving on features until they work exactly as intended and AI Agents enables far greater iteration velocity than hand coded implementations, at a fraction of the cost – that's able to supercharge the productivity of existing developers.
+
+This is the primary benefit of rewriting to an AI‑native stack: creating a new foundation that enables **"Vibe Coding"** - where UI changes are described by text prompts and implemented by AI Agents.
+
+Work that once took hours of human effort can now be done using AI Agents in minutes, with the migration typically paying for itself within the first few features.
+
+## Looking Forward
+
+We're at the beginning of a fundamental shift in how we approach software development. AI Assistance has become a mandatory tool for developers, amplifying their capabilities and automating away tedious, repetitive work. 
+AI models are only going to get better at understanding codebases and generating accurate implementations. The frameworks and patterns that work best with AI will become the new standard.
+
+For organizations with legacy applications, it means **modernization is now economically viable**. Barriers that made UI rewrites prohibitively expensive have eroded. What was once a multi-month project requiring dedicated teams is now achievable in days with AI assistance.
+
+## From .NET APIs to AI First UIs
+
+The unprecedented productivity of AI Assisted development has transformed our roadmap which is now firmly centered on developing the ideal .NET AI‑first development stack, powered by a growing suite of React / TypeScript / Tailwind CSS templates and components, the ultimate UX of hot-reloading npm UIs and built on our highly capable & performant .NET backend APIs. 
+
+
+<div class="pt-12 not-prose flex justify-center">
+<a href="https://react-templates.net"
+   class="group relative inline-flex items-center rounded-full bg-gradient-to-r from-sky-400 via-cyan-400 to-emerald-400 p-[1.5px] shadow-md">
+    <span class="inline-flex items-center gap-2.5 rounded-full bg-white px-6 py-3 text-base font-semibold text-slate-900 transition group-hover:bg-slate-50">
+    <span class="h-2.5 w-2.5 rounded-full bg-gradient-to-r from-sky-400 to-cyan-400 shadow-[0_0_7px_rgba(56,189,248,0.7)]"></span>
+    <span class="tracking-wide">ServiceStack + React</span>
+    <span class="ml-1 text-slate-400 transition-transform group-hover:translate-x-0.5">&rarr;</span>
+    </span>
+</a>
+</div>
+
+
+# New .NET 10 + Angular 21 ASP.NET Identity Auth Tailwind SPA Template
+Source: https://razor-ssg.web-templates.io/posts/angular-template
+
+We're excited to announce the release of our new **Angular 21 SPA Template** - a modern, full-stack template combining the latest Angular 21 frontend with a powerful .NET 10 backend powered by ServiceStack.
+
+<vibe-template
+  template="angular-spa"
+  title="Angular SPA"
+  description="Minimal foundation for a Single Page Application (SPA) statically generated by Angular. Perfect for dashboards, internal tools, admin panels, and highly interactive apps where SEO isn't a priority."
+  href="https://angular-spa.web-templates.io"
+  screenshot="https://docs.servicestack.net/img/pages/templates/angular-spa.webp"
+  github-template="https://github.com/new?template_name=angular-spa&template_owner=NetCoreTemplates"></vibe-template>
+
+## What's New
+
+### Angular with Modern Features
+
+- **Standalone Components** - No NgModules, cleaner component architecture
+- **Signal-based State Management** - Reactive state with Angular's new signals API
+- **TypeScript 5.9** - Latest TypeScript features and improved type safety
+- **Tailwind CSS 4** - Utility-first styling with dark mode support
+
+### .NET 10 Backend
+
+- **ServiceStack v10** - High-performance .NET APIs with AutoQuery CRUD
+- **Entity Framework Core 10** - For ASP.NET Core Identity
+- **OrmLite** - Fast, typed POCO ORM for application data
+- **SQLite** - Zero-configuration database (easily swap for PostgreSQL, SQL Server, etc.)
+
+### Upgrading to an production RDBMS
+
+To switch from SQLite to PostgreSQL/SQL Server/MySQL:
+
+1. Install preferred RDBMS (`ef-postgres`, `ef-mysql`, `ef-sqlserver`), e.g:
+
+:::sh {.mb-8}
+npx add-in ef-postgres
+:::
+
+2. Install `db-identity` to also switch to use this RDBMS for [Background Jobs](https://docs.servicestack.net/rdbms-background-jobs) and [Request Logs Analytics](https://docs.servicestack.net/admin-ui-rdbms-analytics):
+
+:::sh {.mb-8}
+npx add-in db-identity
+:::
+
+## Simplified .NET + Angular Development Workflow
+
+- Single endpoint `https://localhost:5001` for both .NET and Angular UI (no dev certs required)
+- ASP.NET Core proxies requests to Angular dev server (port 4200)
+- Hot Module Replacement (HMR) support for instant UI updates
+- WebSocket proxying for Angular HMR functionality
+
+![](https://docs.servicestack.net/img/pages/templates/angular-dev.svg)
+
+## .NET Angular App with Static Export
+
+**Angular SPA** uses **static export**, where a production build of the Angular App is generated at deployment and published together with the .NET App in its `/wwwroot` folder, utilizing static file serving to render its UI.
+
+This minimal `angular-spa` starting template is perfect for your next AI Assisted project, offering a streamlined foundation for building modern web applications with **Angular 21** and **.NET 10**:
+
+![](https://docs.servicestack.net/img/pages/templates/static-prod.svg)
+
+## Key Features
+
+### 🔐 ASP.NET Core Identity Authentication
+
+Full authentication system with beautifully styled Tailwind CSS pages:
+- User registration and login
+- Email confirmation
+- Password reset
+- Profile management
+- Role-based authorization
+
+### ⚡ Rapid AutoQuery CRUD dev workflow
+
+Quickly generate complete C# [CRUD APIs](https://docs.servicestack.net/autoquery/crud) and [DB Migrations](https://docs.servicestack.net/ormlite/db-migrations) from simple [TypeScript data models](https://localhost:5002/autoquery/okai-models):
+
+1. Create a new feature
+
+:::sh
+npx okai init MyFeature
+:::
+
+2. Define your TypeScript data models in `MyFeature.d.ts`, e.g:
+
+:::sh
+code MyApp.ServiceModel/MyFeature.d.ts
+:::
+
+3. When ready, generate C# APIs and migrations
+
+:::sh
+npx okai MyFeature.d.ts
+:::
+
+4. Apply database migrations
+
+:::sh
+npm run migrate
+:::
+
+### Use AI for quick scaffolding
+
+To help quickly scaffold your data models and features, use ServiceStack's AI assistant. Example of creating AutoQuery CRUD APIs for managing products:
+
+:::sh
+npx okai "Manage products price and inventory"
+:::
+
+### 📊 Background Jobs
+
+Durable background job processing with:
+- Command-based job execution
+- Recurring job scheduling
+- SMTP email sending via background workers
+
+### 📝 Request Logging
+
+SQLite-backed request logging for:
+- API request tracking
+- Error monitoring
+- Performance analysis
+
+### 🔍 Built-in Admin UIs
+
+- **/ui** - ServiceStack API Explorer
+- **/admin-ui** - Database management, user administration
+- **/swagger** - OpenAPI documentation (development mode)
+
+## Architecture Highlights
+
+### Hybrid Development Model
+
+During development, `dotnet watch` starts both the .NET backend and Angular dev server with Hot Module Replacement. In production, Angular builds to static files served directly by ASP.NET Core.
+
+### Modular Configuration
+
+Clean separation of concerns with `IHostingStartup` pattern:
+- [Configure.AppHost.cs](https://github.com/NetCoreTemplates/angular-spa/blob/main/MyApp/Configure.AppHost.cs) - Main ServiceStack AppHost registration
+- [Configure.Auth.cs](https://github.com/NetCoreTemplates/angular-spa/blob/main/MyApp/Configure.Auth.cs) - ServiceStack AuthFeature with ASP.NET Core Identity integration
+- [Configure.AutoQuery.cs](https://github.com/NetCoreTemplates/angular-spa/blob/main/MyApp/Configure.AutoQuery.cs) - AutoQuery features and audit events
+- [Configure.Db.cs](https://github.com/NetCoreTemplates/angular-spa/blob/main/MyApp/Configure.Db.cs) - Database setup (OrmLite for app data, EF Core for Identity)
+- [Configure.Db.Migrations.cs](https://github.com/NetCoreTemplates/angular-spa/blob/main/MyApp/Configure.Db.Migrations.cs) - Runs OrmLite and EF DB Migrations and creates initial users
+- [Configure.BackgroundJobs.cs](https://github.com/NetCoreTemplates/angular-spa/blob/main/MyApp/Configure.BackgroundJobs.cs) - Background job processing
+- [Configure.HealthChecks.cs](https://github.com/NetCoreTemplates/angular-spa/blob/main/MyApp/Configure.HealthChecks.cs) - Health monitoring endpoint
+
+This pattern keeps [Program.cs](https://github.com/NetCoreTemplates/angular-spa/blob/main/MyApp/Program.cs) clean and separates concerns.
+
+### Type-Safe API Client
+
+Auto-generated TypeScript DTOs ensure type safety across the stack:
+
+```typescript
+import { QueryBookings } from '@/dtos'
+
+const response = await client.api(new QueryBookings({ minCost: 100 }))
+if (response.succeeded) {
+    console.log(response.response!.results)
+}
+```
+
+## Deployment Ready
+
+GitHub Actions workflows included for:
+- **CI/CD** - Automated build and test
+- **Container Builds** - Docker image creation
+- **Kamal Deployment** - One-command production deployment with SSL
+
+### Kamal Deployments
+
+All deployments include the GitHub Action workflows to deploy your App to [any Linux Server with Kamal](https://docs.servicestack.net/kamal-deploy) using Docker, SSH and GitHub Container Registry (ghcr).
+
+Where you can host it on a [Hetzner US Cloud](https://www.hetzner.com/cloud) VM for as low as **$5 per month** or if you have multiple Apps you can deploy them all to a single VM which we're doing for our .NET Template Live Demos which runs **30 Docker Apps** on a **8GB RAM/80GB SSD** dedicated VM for **$15 /month**.
+
+## AI-Assisted Development with CLAUDE.md
+
+As part of our objectives of improving developer experience and embracing modern AI-assisted development workflows - all new .NET React templates include a comprehensive `AGENTS.md` file designed to optimize AI-assisted development workflows.
+
+### What is CLAUDE.md?
+
+`CLAUDE.md` and [AGENTS.md](https://agents.md) onboards Claude (and other AI assistants) to your codebase by using a structured documentation file that provides it with complete context about your project's architecture, conventions, and technology choices. This enables more accurate code generation, better suggestions, and faster problem-solving.
+
+### What's Included
+
+Each template's `AGENTS.md` contains:
+
+- **Project Architecture Overview** - Technology stack, design patterns, and key architectural decisions
+- **Project Structure** - Gives Claude a map of the codebase
+- **ServiceStack Conventions** - DTO patterns, Service implementation, AutoQuery, Authentication, and Validation
+- **React Integration** - TypeScript DTO generation, API client usage, component patterns, and form handling
+- **Database Patterns** - OrmLite setup, migrations, and data access patterns
+- **Common Development Tasks** - Step-by-step guides for adding APIs, implementing features, and extending functionality
+- **Testing & Deployment** - Test patterns and deployment workflows
+
+### Extending with Project-Specific Details
+
+The existing `CLAUDE.md` serves as a solid foundation, but for best results, you should extend it with project-specific details like the purpose of the project, key parts and features of the project and any unique conventions you've adopted.
+
+### Benefits
+
+- **Faster Onboarding** - New developers (and AI assistants) understand project conventions immediately
+- **Consistent Code Generation** - AI tools generate code following your project's patterns
+- **Better Context** - AI assistants can reference specific ServiceStack patterns and conventions
+- **Reduced Errors** - Clear documentation of framework-specific conventions
+- **Living Documentation** - Keep it updated as your project evolves
+
+### How to Use
+
+Claude Code and most AI Assistants already support automatically referencing `CLAUDE.md` and `AGENTS.md` files, for others you can just include it in your prompt context when asking for help, e.g:
+
+> Using my project's AGENTS.md, can you help me add a new AutoQuery API for managing Products?
+
+The AI will understand your App's ServiceStack conventions, React setup, and project structure, providing more accurate and contextual assistance.
+
+### Getting Started
+
+All new [angular-spa.web-templates.io](https://angular-spa.web-templates.io) include [AGENTS.md](https://github.com/NetCoreTemplates/angular-spa/blob/main/AGENTS.md) by default. For existing projects, you can adapt the template to document your App's conventions, patterns and technology choices.
+
+## Feature Tour
+
+Angular's structured approach to modern web development is ideal for large complex Applications that stitches together various technologies, handling authentication, designing responsive UIs, and managing complex state which the new Angular SPA template embraces to provide a productive starting point with a robust foundation packed with essential features right out of the box.
+
+1. **Built-in Identity Authentication:** Secured out-of-the-box, this template integrates seamlessly with ASP.NET Core Identity, providing ready-to-use registration, login, and User Admin management features.
+2. **Tailwind v4 CSS:** Rewritten to use Tailwind v4 CSS, allowing you to rapidly build beautiful, responsive designs directly in your markup.
+3. **Dark Mode Support:** Cater to user preferences with built-in, easily toggleable dark mode support, styled elegantly with Tailwind.
+4. **Customizable DataGrid Component:** Effortlessly display tabular data with the included customizable DataGrid. Easily adapt it for sorting, filtering and displaying your specific data structures.
+5. **Reusable Input Components with Validation:** The template includes reusable, pre-styled input components (e.g., text input, selects) with built-in support for validation bound forms and contextual displaying of validation errors.
+6. **RxJS & Signals Support:** Modern Angular reactivity: whether you prefer the established power of **RxJS Observables** or the new granular reactivity of **Angular Signals**, our template is structured to support *both* programming models.
+
+We'll take a quick tour to explore the templates features:
+
+### Home Page
+
+The home page sports a responsive Tailwind design where all its components are encapsulated within its 
+[/app/home](https://github.com/NetCoreTemplates/angular-spa/tree/main/MyApp.Client/src/app/home)
+with its logic maintained in `*.ts` files and its presentation UI optionally maintained in a separate `*.html` file.
+
+<screenshots-gallery class="not-prose mb-8" grid-class="grid grid-cols-1 md:grid-cols-2 gap-4" :images="{
+  'Home': 'https://docs.servicestack.net/img/pages/templates/angular-spa.webp',
+  'Home - Dark Mode': 'https://docs.servicestack.net/img/pages/templates/angular-spa-dark.webp',
+}"></screenshots-gallery>
+
+### Dark Mode
+
+The [dark-mode-toggle.component.ts](https://github.com/NetCoreTemplates/angular-spa/blob/main/MyApp.Client/src/components/dark-mode-toggle.component.ts)
+and [theme.service.ts](https://github.com/NetCoreTemplates/angular-spa/blob/main/MyApp.Client/src/components/services/theme.service.ts)
+handles switching between Light and Dark Mode which is initially populated from the Users OS preference.
+
+### Weather
+
+The Weather page maintained in [/app/weather](https://github.com/NetCoreTemplates/angular-spa/tree/main/MyApp.Client/src/app/weather) 
+provides a good example of utilizing an RxJS Observable programming model with the 
+[api-http-client.service.ts](https://github.com/NetCoreTemplates/angular-spa/blob/main/MyApp.Client/src/components/services/api-http-client.service.ts)
+that extends Angular's Observable HttpClient with an additional `api` method that lets you use your Services typed `dtos.ts`
+TypeScript DTOs to enable type-safe integration with your back-end services: 
+
+```ts
+import { Forecast, GetWeatherForecast, ResponseStatus } from 'src/dtos'
+import { ApiHttpClient } from 'src/components/services/api-http-client.service'
+
+export class WeatherComponent {
+  http = inject(ApiHttpClient);
+
+  public error: ResponseStatus | null = null;
+  public forecasts: Forecast[] = [];
+
+  getForecasts() {
+    this.http.api(new GetWeatherForecast({ date:'2025-04-01' })).subscribe({
+        next:(result) => {
+            this.error = null;
+            this.forecasts = result;
+        },
+        error:(error) => {
+            this.error = error;
+        }
+    });
+  }
+}
+```
+
+Whilst its [weather.component.html](https://github.com/NetCoreTemplates/angular-spa/blob/main/MyApp.Client/src/app/weather/weather.component.html)
+template showcases the new [data-grid.component.ts](https://github.com/NetCoreTemplates/angular-spa/blob/main/MyApp.Client/src/components/data-grid.component.ts)
+to display a beautiful tailwind DataGrid with just:
+
+```html
+<data-grid [items]="forecasts"></data-grid>
+```
+
+:::{.not-prose .p-4 .mx-auto .max-w-3xl .shadow .rounded-lg}
+[![](https://docs.servicestack.net/img/pages/templates/angular-spa/angular-datagrid-default.webp)](https://angular-spa.web-templates.io/weather)
+:::
+
+It's a direct port of our [Vue DataGrid](https://docs.servicestack.net/vue/datagrid) that also supports
+the same customizations allowing for custom Headers and Column fields, e.g:
+
+```html
+<data-grid [items]="forecasts">
+    <ng-template #dateHeader>
+        <div class="flex items-center">
+            <span class="font-bold text-green-700 uppercase">Date</span>
+        </div>
+    </ng-template>
+
+    <ng-template #date let-x="date">{{ x | date:'MMMM d, yyyy' }}</ng-template>
+    <ng-template #temperatureC let-x="temperatureC">
+        {{ x }}&deg;
+    </ng-template>
+    <ng-template #temperatureF let-x="temperatureF">
+        {{ x }}&deg;
+    </ng-template>
+    <ng-template #summary let-x="summary">{{ x }}</ng-template>
+</data-grid>
+```
+
+Which renders the expected:
+
+:::{.not-prose .p-4 .mx-auto .max-w-3xl .shadow .rounded-lg}
+[![](https://docs.servicestack.net/img/pages/templates/angular-spa/angular-datagrid-custom.webp)](https://angular-spa.web-templates.io/weather)
+:::
+
+## Todos MVC
+
+The Todos MVC App maintained in [/app/todomvc](https://github.com/NetCoreTemplates/angular-spa/tree/main/MyApp.Client/src/app/todomvc) 
+demonstrates how to create the popular [todomvc.com](https://todomvc.com) App in Angular 19.
+
+:::{.not-prose .p-4 .mx-auto .max-w-3xl .shadow .rounded-lg}
+[![](https://docs.servicestack.net/img/pages/templates/angular-spa/angular-todos.webp)](https://angular-spa.web-templates.io/todomvc)
+:::
+
+It's another example of building a simple CRUD Application with Angular RxJS Observables and your APIs TypeScript DTOs.
+
+This snippet shows how to query and create Todos with the `ApiHttpClient`:
+
+```ts
+import { Todo, QueryTodos, CreateTodo, ResponseStatus } from 'src/dtos'
+import { ApiHttpClient } from 'src/components/services/api-http-client.service'
+
+export class TodoMvcComponent implements OnInit {
+    client = inject(ApiHttpClient);
+    error: ResponseStatus | null = null;
+    todos: Todo[] = [];
+    newTodoText = '';
+    
+    loadTodos(): void {
+        this.client.api(new QueryTodos()).subscribe({
+            next: (todos) => {
+                this.todos = todos.results;
+            },
+            error: (err) => {
+                this.error = err;
+            }
+        });
+    }
+
+    addTodo(): void {
+        if (!this.newTodoText.trim()) return;
+
+        this.client.api(new CreateTodo({
+            text: this.newTodoText.trim()
+        })).subscribe({
+            next: (todo) => {
+                this.todos.push(todo);
+                this.newTodoText = '';
+            },
+            error: (err) => {
+                this.error = err;
+                console.error('Error adding todo:', err);
+            }
+        });
+    }
+    //...
+}
+```
+
+## Bookings
+
+All other examples in the template uses Angular's newer Signal for reactivity and the standard ServiceStack `JsonServiceClient` 
+used in all other TypeScript/JS Apps.
+
+The Bookings Pages are maintained in [/app/bookings](https://github.com/NetCoreTemplates/angular-spa/tree/main/MyApp.Client/src/app/bookings)
+and showcases a more complete example of developing a CRUD UI in Angular starting with an example of how to encapsulate
+route information for a feature in an isolated [booking.routes.ts](https://github.com/NetCoreTemplates/angular-spa/blob/main/MyApp.Client/src/app/bookings/booking.routes.ts):
+
+```ts
+import { Routes } from '@angular/router';
+import { BookingListComponent } from './booking-list.component';
+import { BookingCreateComponent } from './booking-create.component';
+import { BookingEditComponent } from './booking-edit.component';
+import { authGuard } from 'src/guards';
+
+export const BOOKING_ROUTES: Routes = [
+  { 
+    path: 'bookings', 
+    component: BookingListComponent,
+    canActivate: [authGuard]
+  },
+  { 
+    path: 'bookings/create', 
+    component: BookingCreateComponent,
+    canActivate: [authGuard]
+  },
+  { 
+    path: 'bookings/edit/:id', 
+    component: BookingEditComponent,
+    canActivate: [authGuard]
+  }
+];
+```
+
+The use of the Route `authGuard` ensures only Authenticated Users can access these routes, as well as redirecting 
+non-authenticated users to the Sign In page.
+
+### Bookings List 
+
+:::{.not-prose .p-4 .mx-auto .max-w-3xl .shadow .rounded-lg}
+[![](https://docs.servicestack.net/img/pages/templates/angular-spa/angular-bookings-list.webp)](https://angular-spa.web-templates.io/bookings)
+:::
+
+The bookings list component shows an example of using Angular's Signals with the `JsonServiceClient` together with
+an `ApiState` context to enable data bound forms and validation errors:
+
+```ts
+@Component({
+    templateUrl: './booking-list.component.html',
+    providers: [
+        ...provideApiState()
+    ],
+    //...
+})
+export class BookingListComponent implements OnInit {
+    private router = inject(Router);
+    private client = inject(JsonServiceClient);
+    api = inject(ApiState);
+
+    // Signals for state
+    allBookings = signal<Booking[]>([]);
+
+    ngOnInit(): void {
+        this.loadBookings();
+    }
+
+    async loadBookings(): Promise<void> {
+        this.api.begin();
+
+        const api = await this.client.api(new QueryBookings({
+            orderByDesc: 'BookingStartDate',
+        }));
+        if (api.succeeded) {
+            this.allBookings.set(api.response!.results);
+        }
+
+        this.api.complete(api.error);
+    }
+}
+```
+
+Using `provideApiState()` implicitly injects the populated API context containing both the APIs Loading and Error state into child components saving you from having to explicitly inject it into each component.
+
+E.g. the `<form-loading>` component will display when API Requests are in-flight whilst API Error Responses are displayed
+after receiving failed API Responses:
+
+```html
+<app-page title="Bookings" class="max-w-6xl">
+
+    <form-loading text="Loading Bookings..."></form-loading>
+    <error-summary></error-summary>
+
+    @if (allBookings().length > 0) {
+    <data-grid [items]="allBookings()">...</data-grid>
+    }
+    @else {
+    <div class="text-center py-4 bg-gray-50 rounded-md">
+        <p class="text-gray-500">No bookings found</p>
+    </div>
+    }
+    
+</app-page>
+```
+
+### Create Booking
+
+The [booking-create.component.ts](https://github.com/NetCoreTemplates/angular-spa/blob/main/MyApp.Client/src/app/bookings/booking-create.component.ts) shows the standard pattern of calling ServiceStack Typed APIs to 
+save forms whilst saving any validation errors to the `ApiState` context:
+
+```ts
+async save(): Promise<void> {
+    this.api.begin();
+
+    const request = new CreateBooking(this.booking());
+    const api = await this.client.api(request);
+    if (api.succeeded) {
+        // Navigate back to bookings list after successful save
+        this.router.navigate(['/bookings']);
+    }
+
+    this.api.complete(api.error);
+}
+```
+
+Where any contextual validation will be displayed next to the input field:
+
+:::{.not-prose .p-4 .mx-auto .max-w-3xl .shadow .rounded-lg}
+[![](https://docs.servicestack.net/img/pages/templates/angular-spa/angular-booking-create-validation.webp)](https://angular-spa.web-templates.io/bookings/create)
+:::
+
+### Edit Booking
+
+The [booking-edit.component.ts](https://github.com/NetCoreTemplates/angular-spa/blob/main/MyApp.Client/src/app/bookings/booking-edit.component.ts)
+shows an example of using the `JsonServiceClient` with Signals to get and modify bookings:
+
+```ts
+export class BookingEditComponent implements OnInit {
+    private route = inject(ActivatedRoute);
+    private router = inject(Router);
+    private client = inject(JsonServiceClient);
+    meta = inject(MetadataService);
+    api = inject(ApiState);
+
+    // Signals
+    booking = signal<Booking>(new Booking());
+
+    ngOnInit(): void {
+        // Get booking ID from route params
+        const id = this.route.snapshot.paramMap.get('id');
+        if (id) {
+            this.fetchBooking(parseInt(id, 10));
+        } else {
+            this.api.setErrorMessage('Booking ID is required');
+        }
+    }
+
+    async fetchBooking(id: number): Promise<void> {
+        this.api.begin();
+
+        const api = await this.client.api(new QueryBookings({id}));
+        if (api.succeeded) {
+            this.booking.set(api.response!.results[0]);
+        }
+
+        this.api.complete(api.error);
+    }
+
+    async save(): Promise<void> {
+        this.api.begin();
+
+        const api = await this.client.api(new UpdateBooking(this.booking()));
+        if (api.succeeded) {
+            this.router.navigate(['/bookings']);
+        }
+
+        this.api.complete(api.error);
+    }
+}
+```
+
+:::{.not-prose .p-4 .mx-auto .max-w-3xl .shadow .rounded-lg}
+[![](https://docs.servicestack.net/img/pages/templates/angular-spa/angular-booking-edit.webp)](https://angular-spa.web-templates.io/bookings/edit/1)
+:::
+
+It shows an example of a validation bound form bounded to a signal instance of a `Booking` DTO with summary and
+contextual validation and utilization of your API's metadata with `meta.enumOptions('RoomType')` which populates
+the `<select>` drop down with the C# `RoomType` enum values:
+
+```html
+<app-page title="Edit Booking">
+<form-loading></form-loading>
+
+@if (booking().id) {
+<form class="grid gap-4 py-4" (ngSubmit)="save()">
+  <input class="hidden" type="submit" />
+  <fieldset [disabled]="api.loading()">
+  <error-summary except="name,roomType,roomNumber,cost,bookingStartDate,notes" class="mb-4"></error-summary>
+    <div class="grid grid-cols-6 gap-6">
+        <div class="col-span-6 sm:col-span-3">
+            <text-input id="name" name="name" required placeholder="Name for this booking"
+                        [(ngModel)]="booking().name"></text-input>
+        </div>
+        <div class="col-span-6 sm:col-span-3">
+            <select-input id="roomType" name="roomType" [options]="meta.enumOptions('RoomType')"
+                          [(ngModel)]="booking().roomType"></select-input>
+        </div>
+        <div class="col-span-6 sm:col-span-3">
+            <text-input type="number" id="roomNumber" name="roomNumber" min="0" required
+                        [(ngModel)]="booking().roomNumber"></text-input>
+        </div>
+        <div class="col-span-6 sm:col-span-3">
+            <text-input type="number" id="cost" name="cost" min="0" required
+                        [(ngModel)]="booking().cost"></text-input>
+        </div>
+        <div class="col-span-6 sm:col-span-3">
+            <text-input type="date" id="bookingStartDate" name="bookingStartDate" required
+                        [(ngModel)]="booking().bookingStartDate"></text-input>
+        </div>
+        <div class="col-span-6 sm:col-span-3">
+            <text-input type="date" id="bookingEndDate" name="bookingEndDate"
+                        [(ngModel)]="booking().bookingEndDate"></text-input>
+        </div>
+        <div class="col-span-6">
+            <textarea-input id="notes" name="notes" rows="6" placeholder="Notes about this booking"
+                            [(ngModel)]="booking().notes"></textarea-input>
+        </div>
+    </div>
+  </fieldset>
+  <div class="flex justify-between">
+    <div>
+        <confirm-delete (delete)="delete()"></confirm-delete>
+    </div>
+    <div class="flex flex-wrap sm:flex-nowrap gap-4">
+        <secondary-button (click)="close()">
+            Close
+        </secondary-button>
+        @if (booking().cancelled) {
+        <primary-button type="button" color="green" [disabled]="api.loading()" (click)="cancelBooking(false)">
+            Restore Booking
+        </primary-button>
+        }
+        @else {
+        <primary-button type="button" color="red" [disabled]="api.loading()" (click)="cancelBooking(true)">
+            Cancel Booking
+        </primary-button>
+        }
+        <primary-button type="submit" [disabled]="api.loading()">
+            {{ api.loading() ? 'Saving...' : 'Save Booking' }}
+        </primary-button>
+    </div>
+  </div>
+</form>
+}
+@else {
+<error-summary></error-summary>
+}
+</app-page>
+```
+
+
+# New Vibe Codable .NET 10 React Templates
+Source: https://razor-ssg.web-templates.io/posts/vibecode-react-templates
+
+Over the last few months our primary focus has been on enabling first-class support for React, this is a contrast from our own decade-long personal preference for Vue which has better affinity with HTML and its support for progressive enhancement enabling a [Simple, Modern JavaScript](https://servicestack.net/posts/javascript) development workflow without requiring npm or any build tools and why it was chosen for all of ServiceStack's [built-in UIs](https://servicestack.net/auto-ui). Whilst our [focus for Blazor](https://servicestack.net/blazor) was driven by .NET's preference for Blazor given it's primary positioning by the .NET team.
+
+### Software Development has changed forever
+
+Software Development has reached an inflection point where AI Models and tools are now good enough to build features in minutes, not hours and rewrite mid-sized application UIs in hours, not months. This fundamentally changes the economics of Software Development.
+
+Whatever our developer preferences were have become significantly less important in the age of AI where the most important factor is now which frameworks AI Models are most proficient in.
+
+### The Optimal Stack for AI Development
+
+With an AI-first development model, you're no longer writing the code directly, your task becomes feeding AI Models text prompts and context on what features to implement, so it's more important to choose a framework that AI Models understand well. Currently, that's:
+
+- **Next.js 16** - Modern React framework with excellent AI model familiarity
+- **React 19** - Component patterns that AI models understand deeply
+- **TypeScript** - Type safety that helps AI generate correct code
+- **Tailwind CSS v4** - Utility-first styling that AI excels at composing
+
+This stack represents the sweet spot where AI models have the most training data, the clearest patterns, and the best ability to generate cohesive, loosely coupled, high-quality code - where it's the de facto standard for instant AI-generated Apps from 
+[Replit](https://blog.replit.com/react),
+[Lovable](https://lovable.dev/blog/best-tailwind-css-component),
+[Google's AI Studio](https://aistudio.google.com),
+[Vercel's v0](https://v0.app) and [Claude Code Web](https://claude.ai/code).
+
+### react-templates.net
+
+The culmination of our work on React support is being poured into the new [react-templates.net](https://react-templates.net) website:
+
+[![](https://docs.servicestack.net/img/pages/react/react-templates.net.webp)](https://react-templates.net)
+
+<div class="mb-12 not-prose flex justify-center">
+  <a href="https://react-templates.net" class="text-3xl text-indigo-600 hover:text-indigo-800">https://react-templates.net</a>
+</div>
+
+### Ultimate Developer Experience
+
+As we expect this to be the future of software development, we've focused on creating the best possible developer experience for all React templates, starting with removing the complexity of needing to manage 2 independent dev servers and local self-signed dev SSL certificates.
+
+Instead you're able to run `dotnet watch` or `dotnet run` to run your React App like every other .NET App, where it's accessible at `https://localhost:5001`: 
+
+![](https://docs.servicestack.net/img/pages/react/info/react-static-dev.svg)
+
+During development the new `NodeProxy` takes care of routing all non-matching routes to the underlying Node server, it also takes care of proxying the HotModuleReload (HMR) WebSocket connections of Next.js or Vite React Apps, where we finally get to experience the benefits that Vite/Next.js developers have been enjoying for years, with fast, stateful, iterative feedback loops.
+
+### Seamless fusion of .NET APIs, Razor Pages and React UIs
+
+Another benefit of this architecture of the .NET App handling all Requests and only proxying unknown requests to the Node server is that it enables a seamless fusion of .NET Razor Pages and React UIs. As many customers have customized Identity Auth flows we've included the 
+[Tailwind Identity Auth Razor Pages](https://github.com/NetCoreTemplates/react-static/tree/main/MyApp/Areas/Identity/Pages) from the [razor](https://github.com/NetCoreTemplates/razor) template into all new .NET React Templates.
+
+This ability to seamlessly integrate React components within Razor Pages enables a gradual migration strategy, allowing teams to incrementally modernize legacy ASP.NET websites by progressively replacing individual pages or sections with React UIs without requiring a complete rewrite or disrupting existing functionality.
+
+### .NET React Templates with Static Exports
+
+All existing SPA Templates have only used **static exports**, where at deployment a production build of the Node App is generated and published together with the .NET App in its `/wwwroot` folder, utilizing static file serving to render its UI:
+
+![](https://docs.servicestack.net/img/pages/react/info/react-static-prod.svg)
+
+This continues to be the case for **4/5 of the .NET React Templates**, starting with 2x new `react-static` and `next-static` minimal starting templates - perfect base for your next Vibe Coding project, starting with the simplest template:
+
+## Vibe Codable .NET React Templates
+
+<vibe-template
+  template="react-static"
+  title="React Static"
+  description="Minimal foundation for a classic Single Page Application (SPA) statically generated by Vite. Perfect for dashboards, internal tools, admin panels, and highly interactive apps where SEO isn't a priority."
+  href="https://react-templates.net/docs/templates/react-static"
+  screenshot="https://github.com/ServiceStack/docs.servicestack.net/blob/main/MyApp/wwwroot/img/pages/react/react-static.webp?raw=true"
+  github-template="https://github.com/new?template_name=react-static&template_owner=NetCoreTemplates"></vibe-template>
+
+When your App needs the features from a full-featured Web Framework like Next.js with file-based routing and SEO you choose from the Next.js templates starting with:
+
+<vibe-template
+  template="next-static"
+  title="Next.js Static"
+  description="The ultimate solution for public-facing websites. Combines the SEO and performance of Static Site Generation (SSG) with a dynamic .NET API. Ideal for marketing sites, landing pages, blogs, and content-focused sites that benefit from SEO."
+  href="https://react-templates.net/docs/templates/next-static"
+  screenshot="https://github.com/ServiceStack/docs.servicestack.net/blob/main/MyApp/wwwroot/img/pages/react/next-static.webp?raw=true"
+  github-template="https://github.com/new?template_name=next-static&template_owner=NetCoreTemplates"></vibe-template>
+
+Like React Static, Next.js Static is a static export of a Next.js App, but what about when you need the full power of Next.js? For that you can use:
+
+<vibe-template
+  template="next-rsc"
+  title="Next.js RSC"
+  description="The cutting edge of React. Leverage the full uncompromising power of Next.js React Server Components to access .NET APIs directly on the server, reducing bundle size and improving performance."
+  href="https://react-templates.net/docs/templates/next-rsc"
+  screenshot="https://servicestack.net/img/pages/react/next-rsc.webp"
+  github-template="https://github.com/new?template_name=next-rsc&template_owner=NetCoreTemplates"></vibe-template>
+
+
+### Next.js in Production
+
+Using full Next.js does mean we also need to have a Next.js runtime at production, which looks like:
+
+![](https://docs.servicestack.net/img/pages/react/info/next-rsc-prod.svg)
+
+Fortunately Docker simplifies managing both .NET and Node servers as a single deployable unit, with the next-rsc custom [Dockerfile](https://github.com/NetCoreTemplates/next-rsc/blob/main/Dockerfile) handling the orchestration.
+
+### Full-Featured React Templates
+
+In addition to the minimal starting templates above, we've also created 2 full-featured React Templates providing a good reference implementation for integrating several React features including Blog, MDX, Todos and shadcn/ui components alongside .NET features like API Keys, AI Chat & Swagger UI.
+
+<vibe-template
+  template="react-spa"
+  title="React SPA"
+  description="A feature-rich React Single Page Application powered by Vite. Includes Blog functionality, Todos, shadcn/ui components, API Keys management, AI Chat capabilities, and Swagger UI - all integrated with a robust .NET backend."
+  href="https://react-templates.net/docs/templates/react-spa"
+  screenshot="https://github.com/ServiceStack/docs.servicestack.net/blob/main/MyApp/wwwroot/img/pages/react/react-spa.webp?raw=true"></vibe-template>
+
+<vibe-template
+  template="nextjs"
+  title="Next.js"
+  description="A comprehensive Next.js template showcasing the full power of integrating React with .NET. Features a complete Blog with MDX, Todos implementation, shadcn/ui components, API Keys management, AI Chat integration, and Swagger UI for API exploration."
+  href="/docs/templates/nextjs"
+  screenshot="https://github.com/ServiceStack/docs.servicestack.net/blob/main/MyApp/wwwroot/img/pages/react/nextjs.webp?raw=true"></vibe-template>
+
+### Kamal Deployments
+
+All deployments include the GitHub Action workflows to deploy your App to [any Linux Server with Kamal](https://react-templates.net/docs/deployments) using Docker, SSH and GitHub Container Registry (ghcr).
+
+Where you can host it on a [Hetzner US Cloud](https://www.hetzner.com/cloud) VM for as low as **$5 per month** or if you have multiple Apps you can deploy them all to a single VM which we're doing for our .NET Template Live Demos which runs **30 Docker Apps** on a **8GB RAM/80GB SSD** dedicated VM for **$15 /month**.
+
+## AI-Assisted Development with CLAUDE.md
+
+As part of our objectives of improving developer experience and embracing modern AI-assisted development workflows - all new .NET React templates include a comprehensive `AGENTS.md` file designed to optimize AI-assisted development workflows.
+
+### What is CLAUDE.md?
+
+`CLAUDE.md` and [AGENTS.md](https://agents.md) onboards Claude (and other AI assistants) to your codebase by using a structured documentation file that provides it with complete context about your project's architecture, conventions, and technology choices. This enables more accurate code generation, better suggestions, and faster problem-solving.
+
+### What's Included
+
+Each template's `AGENTS.md` contains:
+
+- **Project Architecture Overview** - Technology stack, design patterns, and key architectural decisions
+- **Project Structure** - Gives Claude a map of the codebase
+- **ServiceStack Conventions** - DTO patterns, Service implementation, AutoQuery, Authentication, and Validation
+- **React Integration** - TypeScript DTO generation, API client usage, component patterns, and form handling
+- **Database Patterns** - OrmLite setup, migrations, and data access patterns
+- **Common Development Tasks** - Step-by-step guides for adding APIs, implementing features, and extending functionality
+- **Testing & Deployment** - Test patterns and deployment workflows
+
+### Extending with Project-Specific Details
+
+The existing `CLAUDE.md` serves as a solid foundation, but for best results, you should extend it with project-specific details like the purpose of the project, key parts and features of the project and any unique conventions you've adopted.
+
+### Benefits
+
+- **Faster Onboarding** - New developers (and AI assistants) understand project conventions immediately
+- **Consistent Code Generation** - AI tools generate code following your project's patterns
+- **Better Context** - AI assistants can reference specific ServiceStack patterns and conventions
+- **Reduced Errors** - Clear documentation of framework-specific conventions
+- **Living Documentation** - Keep it updated as your project evolves
+
+### How to Use
+
+Claude Code and most AI Assistants already support automatically referencing `CLAUDE.md` and `AGENTS.md` files, for others you can just include it in your prompt context when asking for help, e.g:
+
+> Using my project's AGENTS.md, can you help me add a new AutoQuery API for managing Products?
+
+The AI will understand your App's ServiceStack conventions, React setup, and project structure, providing more accurate and contextual assistance.
+
+### Getting Started
+
+All new [react-templates.net](https://react-templates.net) include [AGENTS.md](https://github.com/NetCoreTemplates/react-static/blob/main/AGENTS.md) by default. For existing projects, you can adapt the template to document your App's conventions, patterns and technology choices.
+
+
 # .NET 10's new OpenAPI Scalar + Swagger UIs
 Source: https://razor-ssg.web-templates.io/posts/openapi-net10
 
