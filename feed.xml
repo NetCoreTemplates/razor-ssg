@@ -10,10 +10,22 @@
     </image>
     <generator>razor-ssg</generator>
     <copyright></copyright>
-    <lastBuildDate>Sun, 14 Dec 2025 17:15:13 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 13 Aug 2026 12:05:20 GMT</lastBuildDate>
     <managingEditor>email@example.org (Razor SSG)</managingEditor>
     <webMaster>email@example.org (Razor SSG)</webMaster>
     <atom:link href="https://razor-ssg.web-templates.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+        <title>Next.js React Server Components - Secure Design</title>
+        <link>https://razor-ssg.web-templates.io/posts/nextjs-rsc-secure-design</link>
+        <author>gayle@email.org (Gayle Smith)</author>
+        <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/nextjs-rsc-secure-design</guid>
+        <pubDate>Mon, 15 Dec 2025 00:00:00 GMT</pubDate>
+        <atom:updated>2025-12-15T00:00:00Z</atom:updated>
+        <category>react</category>
+        <category>nextjs</category>
+        <category>security</category>
+        <description>How the Next.js RSC template architecture protects against React Server Components vulnerabilities through process isolation and defense-in-depth security</description>
+    </item>
     <item>
         <title>Replacing Legacy UIs in an AI-First world</title>
         <link>https://razor-ssg.web-templates.io/posts/replacing-legacy-uis</link>
@@ -129,18 +141,6 @@
         <category>autoquery</category>
         <category>admin</category>
         <description>First-class React support optimized for AI-assisted development with new React component library &amp; project templates</description>
-    </item>
-    <item>
-        <title>Ask ServiceStack Docs - Introducing AI Search</title>
-        <link>https://razor-ssg.web-templates.io/posts/typesense-ai-search</link>
-        <author>brandon@email.org (Brandon Foley)</author>
-        <guid isPermaLink="false">https://razor-ssg.web-templates.io/posts/typesense-ai-search</guid>
-        <pubDate>Wed, 12 Nov 2025 00:00:00 GMT</pubDate>
-        <atom:updated>2025-11-12T00:00:00Z</atom:updated>
-        <category>llms</category>
-        <category>ai</category>
-        <category>docs</category>
-        <description>Learn about the new AI Search feature - Typesense Conversational RAG for ServiceStack Docs</description>
     </item>
 </channel>
 </rss>
