@@ -13,18 +13,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
-      - name: setup .net core
+      - name: setup .net
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: 10.0.x
+          dotnet-version: '10.0.x'
 
       - name: build
         working-directory: ./MyApp
         run: |
           dotnet --info
-          dotnet build .
+          dotnet build -c Release
 
       - name: Assign default GitHub URL base path
         env:
@@ -60,15 +60,18 @@ jobs:
 
       - name: prerender
         working-directory: ./MyApp
+        env:
+          ASPNETCORE_ENVIRONMENT: Production
+          DOTNET_ENVIRONMENT: Production
         run: |
           site_base_href=${{ env.ssg_base_href }}
           if [ ! -z "$site_base_href" ]
           then
             echo "Prerendering for deployment to $site_base_href"
-            dotnet run --no-launch-profile --AppTasks=prerender --configuration Release --environment Production --BaseHref "$site_base_href"
+            dotnet run -c Release --no-launch-profile --AppTasks=prerender --BaseHref "$site_base_href"
           else
-            echo "Prerendering for deployment to $(cat ./wwwroot/CNAME)"
-            dotnet run --no-launch-profile --AppTasks=prerender --configuration Release --environment Production
+            echo "Prerendering for deployment to $custom_domain"
+            dotnet run -c Release --no-launch-profile --AppTasks=prerender --BaseUrl "$site_base_url"
           fi
 
       # Deploy UI to GitHub Pages
