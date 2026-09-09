@@ -1,6 +1,6 @@
 /* Options:
-Date: 2023-03-15 22:18:50
-Version: 6.71
+Date: 2026-09-09 14:29:06
+Version: 10.15
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: https://localhost:5001
 
@@ -14,7 +14,7 @@ BaseUrl: https://localhost:5001
 
 "use strict";
 export class ResponseError {
-    /** @param {{errorCode?:string,fieldName?:string,message?:string,meta?:{ [index: string]: string; }}} [init] */
+    /** @param {{errorCode?:string,fieldName?:string,message?:string,meta?:{ [index:string]: string; }}} [init] */
     constructor(init) { Object.assign(this, init) }
     /** @type {string} */
     errorCode;
@@ -22,31 +22,31 @@ export class ResponseError {
     fieldName;
     /** @type {string} */
     message;
-    /** @type {{ [index: string]: string; }} */
+    /** @type {?{ [index:string]: string; }} */
     meta;
 }
 export class ResponseStatus {
-    /** @param {{errorCode?:string,message?:string,stackTrace?:string,errors?:ResponseError[],meta?:{ [index: string]: string; }}} [init] */
+    /** @param {{errorCode?:string,message?:string,stackTrace?:string,errors?:ResponseError[],meta?:{ [index:string]: string; }}} [init] */
     constructor(init) { Object.assign(this, init) }
     /** @type {string} */
     errorCode;
-    /** @type {string} */
+    /** @type {?string} */
     message;
-    /** @type {string} */
+    /** @type {?string} */
     stackTrace;
-    /** @type {ResponseError[]} */
+    /** @type {?ResponseError[]} */
     errors;
-    /** @type {{ [index: string]: string; }} */
+    /** @type {?{ [index:string]: string; }} */
     meta;
 }
 export class StringResponse {
-    /** @param {{result?:string,meta?:{ [index: string]: string; },responseStatus?:ResponseStatus}} [init] */
+    /** @param {{result?:string,meta?:{ [index:string]: string; },responseStatus?:ResponseStatus}} [init] */
     constructor(init) { Object.assign(this, init) }
     /** @type {string} */
     result;
-    /** @type {{ [index: string]: string; }} */
+    /** @type {?{ [index:string]: string; }} */
     meta;
-    /** @type {ResponseStatus} */
+    /** @type {?ResponseStatus} */
     responseStatus;
 }
 export class Hello {
